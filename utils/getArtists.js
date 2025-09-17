@@ -21,7 +21,7 @@ const getArtistsSample = (sampleEvents) => {
 };
 
 const getArtistsProd = async () => {
-  const PATH = "https://www.sandiegohousemusic.com/api/allevents/";
+  const PATH = "https://grooverooster.com/api/allevents/";
   await fetch(PATH, { mode: "cors" })
     .then(function (response) {
       response.json.then((res) => {
@@ -187,7 +187,7 @@ const setURL = (id) => {
   if (process.env.NODE_ENV === "development") {
     url = `http://localhost:3000/api/artists/${id}`;
   } else {
-    url = `https://www.sandiegohousemusic.com/api/artists/${id}`;
+    url = `https://grooverooster.com/api/artists/${id}`;
   }
 
   return url;
@@ -239,7 +239,7 @@ export const getArtistLastFM = async (name) => {
       const url =
         process.env.NODE_ENV === "development"
           ? `http://localhost:3000/api/lastfm/artistgetinfo/${name}`
-          : `https://www.sandiegohousemusic.com/api/lastfm/artistgetinfo/${name}`;
+          : `https://grooverooster.com/api/lastfm/artistgetinfo/${name}`;
 
       const response = await fetch(url, { mode: "no-cors" });
       if (!response.ok) return null;

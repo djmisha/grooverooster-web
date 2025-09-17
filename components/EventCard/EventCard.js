@@ -60,7 +60,7 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
         className="bg-white w-28 h-28 bg-no-repeat bg-cover rounded-md mr-5"
         style={{
           backgroundImage:
-            "url('https://www.sandiegohousemusic.com/images/housemusic192.png')",
+            "url('https://grooverooster.com/images/housemusic192.png')",
         }}
       >
         <ArtistImage id={artistId} imageUrl={imageUrl} />

@@ -1,10 +1,10 @@
 {
-  "name": "sandiegohousemusic.com",
-  "short_name": "sdhousemusic",
+  "name": "grooverooster.com",
+  "short_name": "grooverooster",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ce3197","theme_color": "#ce3197",
-  "description": "House music events in your city, USA.",
+  "description": "Dance music events in your city in North America.",
   "icons": [{
     "src": "assets/images/housemusic48.png",
     "sizes": "48x48",

@@ -69,7 +69,7 @@ const Hamburger = () => {
           width={200}
           height={67}
           src="/images/logo.jpeg"
-          alt="sandiegohousemusic.com"
+          alt="grooverooster.com"
           className="max-w-full h-auto"
         />
       </div>

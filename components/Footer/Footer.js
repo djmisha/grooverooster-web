@@ -10,7 +10,7 @@ const Footer = () => {
             width={200}
             height={67}
             src="/images/logo.jpeg"
-            alt="sandiegohousemusic.com"
+            alt="grooverooster.com"
             className="max-w-full h-auto"
           />
         </div>
@@ -124,8 +124,8 @@ const Footer = () => {
 
       <div className="max-w-6xl mx-auto pt-8 border-t border-gray-200 text-center ">
         <p className="my-2 text-gray-400 text-xs">
-          &copy; 2010 - {new Date().getFullYear()} sandiegohousemusic.com. All
-          rights reserved. <Link href="/privacy-policy">Privacy Policy</Link>.
+          &copy; 2010 - {new Date().getFullYear()} grooverooster.com. All rights
+          reserved. <Link href="/privacy-policy">Privacy Policy</Link>.
         </p>
       </div>
     </footer>

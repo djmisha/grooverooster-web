@@ -17,7 +17,7 @@ const EventDetails = ({ event }) => {
         className="bg-white w-28 h-28 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto"
         style={{
           backgroundImage:
-            "url('https://www.sandiegohousemusic.com/images/housemusic192.png')",
+            "url('https://grooverooster.com/images/housemusic192.png')",
         }}
       >
         <ArtistImage id={artistList[0]?.id} imageUrl={imageUrl} />

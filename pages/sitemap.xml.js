@@ -1,13 +1,13 @@
 import { getLocations } from "../utils/getLocations";
 import { allArtists } from "../utils/getArtists";
 
-const URL = "https://www.sandiegohousemusic.com";
+const URL = "https://grooverooster.com";
 
 function generateSiteMap(locations, artists) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
-       <loc>https://www.sandiegohousemusic.com</loc>
+       <loc>https://grooverooster.com</loc>
      </url>
      ${locations
        .map(({ slug }) => {
