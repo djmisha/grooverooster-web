@@ -7,6 +7,10 @@
 //   user: User;
 // }
 
+export default function ChangePasswordPage({ user }: any) {
+  return <></>;
+}
+
 // export default function ChangePasswordPage({ user }: ChangePasswordPageProps) {
 //   return (
 //     <>
