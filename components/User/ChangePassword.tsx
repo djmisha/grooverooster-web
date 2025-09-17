@@ -1,13 +1,9 @@
-import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { useState, useContext } from "react";
+import { AppContext } from "../../features/AppContext";
 import Button from "../Button/Button";
 
-// Initialize Supabase client directly
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 export default function ChangePassword({ user }) {
+  const { supabase } = useContext(AppContext);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -26,7 +22,7 @@ export default function ChangePassword({ user }) {
     }
 
     try {
-      // Direct initialization to ensure auth is available
+      // Use supabase from context
       const { error: updateError } = await supabase.auth.updateUser({
         password: newPassword,
       });
