@@ -7,21 +7,21 @@ export default function Layout({ children, home }) {
   return (
     <div>
       <Head>
-        <link rel="icon" href="/images/housemusic48.png" />
+        <link rel="icon" href="/images/favicon.ico" />
 
         <meta
           name="description"
           content="Find house music and dance events in a city near you. Let's Party!"
         />
-        <meta property="og:image" content="/images/housemusic512.png" />
+        <meta property="og:image" content="/images/logo.png" />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <link rel="apple-touch-icon" href="/images/housemusic512.png"></link>
+        <link rel="apple-touch-icon" href="/images/logo.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
       <main>{children}</main>
-      {process.env.NODE_ENV != "development" && (
+      {/* {process.env.NODE_ENV != "development" && (
         <div>
           <Script id="PostHog">
             {`
@@ -43,7 +43,7 @@ export default function Layout({ children, home }) {
             `}
           </Script>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

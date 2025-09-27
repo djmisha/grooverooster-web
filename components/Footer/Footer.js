@@ -7,9 +7,9 @@ const Footer = () => {
       <div className="mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 mb-10">
         <div className="flex items-start mt-8 min-w-[200px] col-span-1 md:col-span-1">
           <Image
-            width={200}
-            height={67}
-            src="/images/logo.jpeg"
+            width={150}
+            height={150}
+            src="/images/logo.png"
             alt="grooverooster.com"
             className="max-w-full h-auto"
           />
@@ -50,7 +50,7 @@ const Footer = () => {
             </Link>
           </div>
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <h3 className="text-gray-700 mb-3 text-base">Partners</h3>
+            <h3 className="text-gray-700 mb-3 text-base">Data Partners</h3>
             <Link
               href="https://djmisha.com"
               target="_blank"
@@ -76,7 +76,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <h3 className="text-gray-800 mb-6 text-lg">Follow Us</h3>
           <div className="flex gap-5">
             <a
@@ -119,7 +119,7 @@ const Footer = () => {
               />
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="max-w-6xl mx-auto pt-8 border-t border-gray-200 text-center ">

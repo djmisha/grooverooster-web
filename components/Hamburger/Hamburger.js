@@ -64,12 +64,12 @@ const Hamburger = () => {
         </div>
       )}
 
-      <div className="p-4 border-t border-gray-200 flex justify-center">
+      <div className="p-8 border-t border-gray-200 flex justify-center">
         <Image
-          width={200}
-          height={67}
-          src="/images/logo.jpeg"
-          alt="grooverooster.com"
+          width={150}
+          height={150}
+          src="/images/logo.png"
+          alt="Groove Rooster"
           className="max-w-full h-auto"
         />
       </div>
