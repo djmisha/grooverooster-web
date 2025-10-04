@@ -23,11 +23,11 @@ const FRONTEND_OPEN_ENDPOINTS = [
  */
 function isFrontendOpenEndpoint(path) {
   // Remove query parameters for matching
-  const cleanPath = path.split('?')[0];
-  
+  const cleanPath = path.split("?")[0];
+
   return FRONTEND_OPEN_ENDPOINTS.some((endpoint) => {
     // Exact match or starts with the endpoint path
-    return cleanPath === endpoint || cleanPath.startsWith(endpoint + '/');
+    return cleanPath === endpoint || cleanPath.startsWith(endpoint + "/");
   });
 }
 
@@ -82,7 +82,7 @@ function secureApiEndpoint(req, res) {
   const requestPath = req.url || "";
 
   // Add logging to debug security issues
-  console.log('[API Security Check]', {
+  console.log("[API Security Check]", {
     path: requestPath,
     method: req.method,
     hasAuth: !!authHeader,
@@ -101,19 +101,22 @@ function secureApiEndpoint(req, res) {
       "Access-Control-Allow-Headers",
       "Content-Type, Authorization"
     );
-    console.log('[API Security] OPTIONS request allowed');
+    console.log("[API Security] OPTIONS request allowed");
     return { allowed: true, isPreflight: true };
   }
 
   // Check if this endpoint should remain open for frontend calls
   if (isFrontendOpenEndpoint(requestPath)) {
-    console.log('[API Security] Endpoint allowed (frontend open):', requestPath);
+    console.log(
+      "[API Security] Endpoint allowed (frontend open):",
+      requestPath
+    );
     return { allowed: true };
   }
 
   // All other endpoints require bearer token
   if (!authHeader) {
-    console.warn('[API Security] Missing auth header for:', {
+    console.warn("[API Security] Missing auth header for:", {
       path: requestPath,
       method: req.method,
       host: req.headers.host,
@@ -125,7 +128,7 @@ function secureApiEndpoint(req, res) {
   }
 
   if (!validateBearerToken(authHeader)) {
-    console.warn('[API Security] Invalid token for:', requestPath);
+    console.warn("[API Security] Invalid token for:", requestPath);
     return {
       allowed: false,
       error: "Unauthorized: Invalid authentication token",
@@ -133,7 +136,7 @@ function secureApiEndpoint(req, res) {
   }
 
   // Token is valid
-  console.log('[API Security] Token validated successfully for:', requestPath);
+  console.log("[API Security] Token validated successfully for:", requestPath);
   return { allowed: true };
 }
 
