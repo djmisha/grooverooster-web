@@ -13,6 +13,7 @@ const FRONTEND_OPEN_ENDPOINTS = [
   "/api/supabase/gettopartists",
   "/api/saveTags",
   "/api/frontend/events",
+  "/api/sdhm", // San Diego events API endpoint
 ];
 
 /**
@@ -21,7 +22,13 @@ const FRONTEND_OPEN_ENDPOINTS = [
  * @returns {boolean} - True if endpoint should be open
  */
 function isFrontendOpenEndpoint(path) {
-  return FRONTEND_OPEN_ENDPOINTS.some((endpoint) => path.startsWith(endpoint));
+  // Remove query parameters for matching
+  const cleanPath = path.split('?')[0];
+  
+  return FRONTEND_OPEN_ENDPOINTS.some((endpoint) => {
+    // Exact match or starts with the endpoint path
+    return cleanPath === endpoint || cleanPath.startsWith(endpoint + '/');
+  });
 }
 
 /**
@@ -74,6 +81,16 @@ function secureApiEndpoint(req, res) {
   const authHeader = req.headers.authorization;
   const requestPath = req.url || "";
 
+  // Add logging to debug security issues
+  console.log('[API Security Check]', {
+    path: requestPath,
+    method: req.method,
+    hasAuth: !!authHeader,
+    host: req.headers.host,
+    referer: req.headers.referer,
+    origin: req.headers.origin,
+  });
+
   // Handle preflight OPTIONS requests
   if (req.method === "OPTIONS") {
     res.setHeader(
@@ -84,16 +101,23 @@ function secureApiEndpoint(req, res) {
       "Access-Control-Allow-Headers",
       "Content-Type, Authorization"
     );
+    console.log('[API Security] OPTIONS request allowed');
     return { allowed: true, isPreflight: true };
   }
 
   // Check if this endpoint should remain open for frontend calls
   if (isFrontendOpenEndpoint(requestPath)) {
+    console.log('[API Security] Endpoint allowed (frontend open):', requestPath);
     return { allowed: true };
   }
 
   // All other endpoints require bearer token
   if (!authHeader) {
+    console.warn('[API Security] Missing auth header for:', {
+      path: requestPath,
+      method: req.method,
+      host: req.headers.host,
+    });
     return {
       allowed: false,
       error: "Unauthorized: Missing authentication token",
@@ -101,6 +125,7 @@ function secureApiEndpoint(req, res) {
   }
 
   if (!validateBearerToken(authHeader)) {
+    console.warn('[API Security] Invalid token for:', requestPath);
     return {
       allowed: false,
       error: "Unauthorized: Invalid authentication token",
@@ -108,6 +133,7 @@ function secureApiEndpoint(req, res) {
   }
 
   // Token is valid
+  console.log('[API Security] Token validated successfully for:', requestPath);
   return { allowed: true };
 }
 
