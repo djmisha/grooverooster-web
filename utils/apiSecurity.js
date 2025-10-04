@@ -11,6 +11,7 @@
 // Endpoints that remain open for frontend calls (no token required)
 const FRONTEND_OPEN_ENDPOINTS = [
   "/api/supabase/gettopartists",
+  "/api/supabase/posttopartists",
   "/api/saveTags",
   "/api/frontend/events",
   // "/api/sdhm",
@@ -81,16 +82,6 @@ function secureApiEndpoint(req, res) {
   const authHeader = req.headers.authorization;
   const requestPath = req.url || "";
 
-  // Add logging to debug security issues
-  console.log("[API Security Check]", {
-    path: requestPath,
-    method: req.method,
-    hasAuth: !!authHeader,
-    host: req.headers.host,
-    referer: req.headers.referer,
-    origin: req.headers.origin,
-  });
-
   // Handle preflight OPTIONS requests
   if (req.method === "OPTIONS") {
     res.setHeader(
@@ -101,26 +92,16 @@ function secureApiEndpoint(req, res) {
       "Access-Control-Allow-Headers",
       "Content-Type, Authorization"
     );
-    console.log("[API Security] OPTIONS request allowed");
     return { allowed: true, isPreflight: true };
   }
 
   // Check if this endpoint should remain open for frontend calls
   if (isFrontendOpenEndpoint(requestPath)) {
-    console.log(
-      "[API Security] Endpoint allowed (frontend open):",
-      requestPath
-    );
     return { allowed: true };
   }
 
   // All other endpoints require bearer token
   if (!authHeader) {
-    console.warn("[API Security] Missing auth header for:", {
-      path: requestPath,
-      method: req.method,
-      host: req.headers.host,
-    });
     return {
       allowed: false,
       error: "Unauthorized: Missing authentication token",
@@ -128,7 +109,6 @@ function secureApiEndpoint(req, res) {
   }
 
   if (!validateBearerToken(authHeader)) {
-    console.warn("[API Security] Invalid token for:", requestPath);
     return {
       allowed: false,
       error: "Unauthorized: Invalid authentication token",
@@ -136,7 +116,6 @@ function secureApiEndpoint(req, res) {
   }
 
   // Token is valid
-  console.log("[API Security] Token validated successfully for:", requestPath);
   return { allowed: true };
 }
 

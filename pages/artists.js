@@ -76,6 +76,9 @@ const Artists = ({ uniqueArtists }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // TODO: This needs to be reworked. We should not be posting every time the page is loaded.
+  // We should have a separate process that runs periodically to update the top artists in Supabase.
+  // This could be a server-side cron job or a webhook that triggers when new data is available.
   useEffect(() => {
     if (!hasFetched.current && apiEvents) {
       async function postData() {
