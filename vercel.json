@@ -9,8 +9,7 @@
         }
       ],
       "destination": "https://www.grooverooster.com/:path*",
-      "permanent": true,
-      "statusCode": 308
+      "permanent": true
     }
   ],
   "headers": [
