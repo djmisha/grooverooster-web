@@ -126,9 +126,9 @@ export async function getServerSideProps({ params, query, req, res }) {
     try {
       // Only fetch if this is actually a state-only request (no city)
       if (!stateInfo.city) {
-        const apiUrl = `${req ? `http://${req.headers.host}` : ""}/api/events/${
-          stateInfo.id
-        }`;
+        const apiUrl = `${
+          req ? `http://www.${req.headers.host}` : ""
+        }/api/events/${stateInfo.id}`;
         const response = await fetch(apiUrl);
 
         if (response.ok) {

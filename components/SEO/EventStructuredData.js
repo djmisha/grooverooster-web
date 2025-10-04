@@ -64,7 +64,7 @@ const EventStructuredData = ({ event, currentUrl }) => {
     const generateEventUrl = () => {
       try {
         // Use grooverooster.com as the base URL structure
-        const baseUrl = "https://grooverooster.com";
+        const baseUrl = "https://www.grooverooster.com";
 
         // Extract location from current URL or use a default
         let location = "events";
@@ -78,7 +78,7 @@ const EventStructuredData = ({ event, currentUrl }) => {
         return `${baseUrl}/${location}#event-${id}`;
       } catch (error) {
         console.warn("Could not generate event URL:", error);
-        return link || `https://grooverooster.com/events#event-${id}`;
+        return link || `https:/www.grooverooster.com/events#event-${id}`;
       }
     };
 
@@ -136,7 +136,7 @@ const EventStructuredData = ({ event, currentUrl }) => {
 
     // Generate image URL
     const generateImageUrl = () => {
-      const baseUrl = "https://grooverooster.com";
+      const baseUrl = "https://www.grooverooster.com";
 
       if (artistList.length > 0 && artistList[0].id) {
         return `${baseUrl}/images/artists/${artistList[0].id}.jpg`;

@@ -125,11 +125,11 @@ export default function Page() {
               <strong>Website</strong> refers to San Diego House Music,
               accessible from{" "}
               <Link
-                href="https://grooverooster.com/"
+                href="https://www.grooverooster.com/"
                 rel="external nofollow noopener"
                 target="_blank"
               >
-                https://grooverooster.com/
+                https://www.grooverooster.com/
               </Link>
             </p>
           </li>
