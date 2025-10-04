@@ -13,7 +13,7 @@ const FRONTEND_OPEN_ENDPOINTS = [
   "/api/supabase/gettopartists",
   "/api/saveTags",
   "/api/frontend/events",
-  "/api/sdhm",
+  // "/api/sdhm",
 ];
 
 /**
