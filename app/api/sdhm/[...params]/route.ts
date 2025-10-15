@@ -1,6 +1,7 @@
-import secureApiEndpoint from "../../../utils/apiSecurity";
-import { transformEventsArray } from "../../../utils/eventTransformer";
-import localArtists from "../../../localArtistsDB.json";
+import { NextResponse } from "next/server";
+import secureApiEndpoint from "../../../../utils/apiSecurity";
+import { transformEventsArray } from "../../../../utils/eventTransformer";
+import localArtists from "../../../../localArtistsDB.json";
 
 /**
  * Calculate similarity between two strings using Levenshtein distance
@@ -241,7 +242,6 @@ const processSDHMEvents = (rawEvents, city = "") => {
   }
 };
 
-import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,

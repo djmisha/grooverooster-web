@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import EventCard from "../../components/EventCard/EventCard";
 import NavigationBar from "../../components/Navigation/NavigataionBar";
 import { searchFilter } from "../../utils/searchFilter";
@@ -17,6 +19,7 @@ const EventsModule = ({
   eventId,
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { openEventId, setOpenEventId } = useEventModalManager(); // Use the hook
   let [filterVisible, setFilterVisible] = useState(false);
   const [events, setEvents] = useState(initialEvents);
@@ -86,8 +89,8 @@ const EventsModule = ({
         ? `/events/${locationData.slug}`
         : `/events/${locationData.slug}?page=${pageNumber}`;
 
-    // Use router.push with shallow: true to avoid full page reload
-    router.push(newUrl + "#top", undefined, { shallow: true });
+    // Use router.push to navigate
+    router.push(newUrl + "#top");
   };
 
   // Function to handle clearing filters and returning to remembered page
@@ -101,7 +104,7 @@ const EventsModule = ({
         ? `/events/${locationData.slug}`
         : `/events/${locationData.slug}?page=${lastPageBeforeFilter}`;
 
-    router.push(newUrl + "#top", undefined, { shallow: true });
+    router.push(newUrl + "#top");
   };
 
   const displayEvents = getPaginatedEvents();

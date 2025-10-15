@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../components/layout";
-import { getCanonicalUrl } from "../utils/canonicalUrl";
+import Layout from "../../components/layout";
+import { getCanonicalUrl } from "../../utils/canonicalUrl";
 
 export default function Page() {
   const canonicalUrl = getCanonicalUrl('/privacy-policy');

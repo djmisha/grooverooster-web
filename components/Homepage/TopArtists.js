@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { shuffleArray, filterSurpriseGuest } from "../../utils/utilities";
 import TopArtistsCard from "../TopArtistsCard/TopArtistsCard";

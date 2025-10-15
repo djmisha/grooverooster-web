@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useContext } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { AppContext } from "../../features/AppContext";

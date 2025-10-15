@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../features/AppContext.js";
 import { getSDHMEventsClient } from "../../utils/getEvents";

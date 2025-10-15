@@ -1,3 +1,5 @@
+"use client";
+
 import HomeSearchAutocomplete from "../SearchAutoComplete/HomeSearchAutocomplete";
 import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
 

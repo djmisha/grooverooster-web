@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { makePageHeadline } from "../../utils/utilities";
 import NavigationBar from "../Navigation/NavigataionBar";

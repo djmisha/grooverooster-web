@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext, useEffect, useState, useCallback, useMemo } from "react";
 import type { User } from "@supabase/supabase-js";
 import Link from "next/link";

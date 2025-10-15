@@ -1,4 +1,6 @@
-import { useRouter } from "next/router";
+"use client";
+
+import { useRouter } from "next/navigation";
 import { useState, useContext } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { AppContext } from "../../features/AppContext";

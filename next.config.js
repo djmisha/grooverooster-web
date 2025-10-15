@@ -10,11 +10,9 @@ const nextConfig = {
     ],
   },
   reactStrictMode: true,
-  exportPathMap: async function (defaultPathMap) {
-    const paths = { ...defaultPathMap };
-    delete paths["/auth/confirm"];
-    return paths;
-  },
+  // Note: exportPathMap is not supported with App Router
+  // If you need to exclude routes from static export, use route.js with { dynamic: 'force-static' }
 };
 
 module.exports = nextConfig;
+
