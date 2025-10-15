@@ -19,6 +19,7 @@ import {
 import { useState } from "react";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuList from "../Navigation/MenuList";
+import DatePickerFilter from "./DatePickerFilter";
 
 const EventsFilter = ({ events, setSearchTerm }) => {
   const [isDateMenuOpen, setIsDateMenuOpen] = useState(false);
@@ -110,20 +111,11 @@ const EventsFilter = ({ events, setSearchTerm }) => {
               isOpen={isDateMenuOpen}
               onClose={() => setIsDateMenuOpen(false)}
             >
-              <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="m-0 mb-4 text-xl font-semibold text-black">
-                  Dates
-                </h2>
-                <MenuList
-                  navItems={dates}
-                  navItemsWithCounts={datesWithCounts}
-                  text="date"
-                  isOpen={isDateMenuOpen}
-                  title="Dates"
-                  setSearchTerm={setSearchTerm}
-                  onClose={() => setIsDateMenuOpen(false)}
-                />
-              </div>
+              <DatePickerFilter
+                events={events}
+                setSearchTerm={setSearchTerm}
+                onClose={() => setIsDateMenuOpen(false)}
+              />
             </MenuOverlay>
           </div>
           <div className="flex-1 flex items-center justify-center">
