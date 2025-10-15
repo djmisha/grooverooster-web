@@ -85,17 +85,6 @@ export const getLocationData = (slug) => {
   };
 };
 
-// returns the slug of the location for the homepage link
-export const locationUrl = (data, hasCity) => {
-  let slug;
-  const { city, state } = data;
-
-  if (hasCity) slug = toSlug(city);
-  else slug = toSlug(state);
-
-  return slug;
-};
-
 // Create internal events URL path for a location
 export const getLocationEventsUrl = (location) => {
   if (!location) return null;

@@ -53,15 +53,6 @@ export const makeArtists = (data) => {
   return allArtists;
 };
 
-export const makeLocations = () => {
-  let locations = getLocations();
-  locations = locations.map((loc) => {
-    return loc.city || loc.state;
-  });
-
-  return locations;
-};
-
 export const cityOrState = (city, state) => {
   const string = city ? `${city}, ${state}` : `${state}`;
   return string;
@@ -109,18 +100,6 @@ export const shuffleArray = (array) => {
   return newArray;
 };
 
-/**
- * Creates string for image file
- */
-
-export const makeImageUrl = (string) => {
-  const url = "/images/artists/";
-  const cleanString = string.split("'").join("&#39").split("/").join("&#47");
-  const imageURL = `${url}${cleanString}.jpg`;
-
-  return imageURL;
-};
-
 export const ToSlugArtist = (string) => {
   if (!string) return "undefined";
 
@@ -154,22 +133,6 @@ export function filterSurpriseGuest(artists) {
     );
   });
 }
-
-export const formatDateToHuman = (dateString) => {
-  if (!dateString) return dateString;
-
-  try {
-    const date = new Date(dateString);
-    const options = {
-      weekday: "long",
-      month: "short",
-      day: "numeric",
-    };
-    return date.toLocaleDateString("en-US", options);
-  } catch (error) {
-    return dateString; // Return original if formatting fails
-  }
-};
 
 export const makePromoters = (data) => {
   // Count occurrences of each event name

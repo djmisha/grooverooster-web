@@ -367,15 +367,6 @@ export const getLocationId = (locations, city, state) => {
   return id;
 };
 
-export const matchesCity = (city) => {
-  let hasCity = false;
-  locations.forEach((location) => {
-    if (location.city === city) hasCity = true;
-  });
-
-  return hasCity;
-};
-
 // Enhanced version of UserLocationService using IP-based detection
 export const UserLocationService = async () => {
   try {
