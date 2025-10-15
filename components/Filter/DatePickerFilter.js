@@ -1,11 +1,9 @@
 import { useState, useMemo } from "react";
 import { Calendar } from "@/components/ui/calendar";
-import { format, parse, isWithinInterval, startOfDay, endOfDay } from "date-fns";
+import { format, parse, startOfDay, endOfDay } from "date-fns";
 
 const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
-  const [selectedDate, setSelectedDate] = useState(undefined);
   const [dateRange, setDateRange] = useState(undefined);
-  const [isRangeMode, setIsRangeMode] = useState(false);
 
   // Get dates that have events for visual feedback
   const eventDates = useMemo(() => {
@@ -23,37 +21,31 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
     return dates;
   }, [events]);
 
-  // Handle single date selection
-  const handleSingleDateSelect = (date) => {
-    setSelectedDate(date);
-    setDateRange(undefined);
-  };
-
-  // Handle date range selection
+  // Handle date range selection (works for both single date and range)
   const handleRangeSelect = (range) => {
     setDateRange(range);
-    setSelectedDate(undefined);
   };
 
   // Apply date filter
   const handleApply = () => {
-    if (!selectedDate && !dateRange?.from) {
+    if (!dateRange?.from) {
       return;
     }
     
-    if (isRangeMode && dateRange?.from) {
-      // Filter by date range
+    // Check if it's a single date or a range
+    if (dateRange.to && dateRange.from.getTime() !== dateRange.to.getTime()) {
+      // Date range selected
       const fromDate = startOfDay(dateRange.from);
-      const toDate = dateRange.to ? endOfDay(dateRange.to) : endOfDay(dateRange.from);
+      const toDate = endOfDay(dateRange.to);
       
       const fromStr = format(fromDate, "MMM d");
       const toStr = format(toDate, "MMM d");
       
       // Set search term with formatted display
       setSearchTerm(`Date range: ${fromStr} through ${toStr}|daterange:${format(fromDate, "yyyy-MM-dd")}:${format(toDate, "yyyy-MM-dd")}`);
-    } else if (selectedDate) {
-      // Filter by single date
-      const targetDate = startOfDay(selectedDate);
+    } else {
+      // Single date selected
+      const targetDate = startOfDay(dateRange.from);
       const dateStr = format(targetDate, "MMM d");
       
       // Set search term with formatted display
@@ -65,7 +57,6 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
 
   // Clear/Reset filter
   const handleClear = () => {
-    setSelectedDate(undefined);
     setDateRange(undefined);
     // Don't close the popover - user can continue selecting dates
   };
@@ -84,59 +75,18 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
       <h2 className="m-0 mb-4 text-xl font-normal text-blue">
         Filter by Date
       </h2>
-      
-      {/* Toggle between single date and range */}
-      <div className="mb-4 flex gap-2 justify-center">
-        <button
-          onClick={() => {
-            setIsRangeMode(false);
-            setDateRange(undefined);
-          }}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-            !isRangeMode
-              ? "bg-pink text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          Single Date
-        </button>
-        <button
-          onClick={() => {
-            setIsRangeMode(true);
-            setSelectedDate(undefined);
-          }}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-            isRangeMode
-              ? "bg-pink text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          Date Range
-        </button>
-      </div>
 
-      {/* Calendar */}
+      {/* Calendar - works for both single date and range */}
       <div className="flex justify-center mb-4">
-        {isRangeMode ? (
-          <Calendar
-            mode="range"
-            selected={dateRange}
-            onSelect={handleRangeSelect}
-            numberOfMonths={1}
-            className="rounded-md border"
-            modifiers={modifiers}
-            modifiersClassNames={modifiersClassNames}
-          />
-        ) : (
-          <Calendar
-            mode="single"
-            selected={selectedDate}
-            onSelect={handleSingleDateSelect}
-            className="rounded-md border"
-            modifiers={modifiers}
-            modifiersClassNames={modifiersClassNames}
-          />
-        )}
+        <Calendar
+          mode="range"
+          selected={dateRange}
+          onSelect={handleRangeSelect}
+          numberOfMonths={1}
+          className="rounded-md border"
+          modifiers={modifiers}
+          modifiersClassNames={modifiersClassNames}
+        />
       </div>
 
       {/* Action buttons */}
