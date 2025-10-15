@@ -12,6 +12,7 @@ import { AppContext } from "../features/AppContext";
 import { getLocations } from "../utils/getLocations";
 import { createClient as createServerClient } from "../utils/supabase/server-props";
 import Locator from "../components/Locator/Locator";
+import { getCanonicalUrl } from "../utils/canonicalUrl";
 
 export async function getServerSideProps(context) {
   const locations = getLocations();
@@ -57,6 +58,7 @@ export async function getServerSideProps(context) {
 export default function Home({ locations, profile, defaultLocation }) {
   const isLoggedIn = !!profile;
   const { setProfile } = useContext(AppContext);
+  const canonicalUrl = getCanonicalUrl('/');
 
   // Update AppContext with profile data when component mounts
   useEffect(() => {
@@ -64,7 +66,7 @@ export default function Home({ locations, profile, defaultLocation }) {
   }, [profile, setProfile]);
 
   return (
-    <Layout home>
+    <Layout home canonicalUrl={canonicalUrl}>
       <Head>
         <title>{siteTitle}</title>
         <meta

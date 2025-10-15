@@ -3,7 +3,7 @@ import Script from "next/script";
 
 export const siteTitle = "House Music & EDM Events Across North America";
 
-export default function Layout({ children, home }) {
+export default function Layout({ children, home, canonicalUrl }) {
   return (
     <div>
       <Head>
@@ -19,6 +19,7 @@ export default function Layout({ children, home }) {
 
         <link rel="apple-touch-icon" href="/images/logo.png"></link>
         <meta name="theme-color" content="#317EFB" />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       </Head>
       <main>{children}</main>
       {/* {process.env.NODE_ENV != "development" && (

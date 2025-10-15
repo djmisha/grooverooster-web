@@ -11,15 +11,17 @@ import EventCard from "../../components/EventCard/EventCard";
 import GoogleAutoAds from "../../components/3rdParty/googleAds";
 import NavigationBar from "../../components/Navigation/NavigataionBar";
 import { useEventModalManager } from "../../hooks/useEventModal";
+import { getCanonicalUrl } from "../../utils/canonicalUrl";
 
 export default function Artist({ artistData, events, lastFMdata }) {
-  const { name, id } = artistData;
+  const { name, id, slug } = artistData;
   const { openEventId, setOpenEventId } = useEventModalManager();
   const title = `${name} - Upcoming Events & Artist Informaton`;
   const description = `${name} Tour Dates, Shows, Concert Tickets & Live Streams. Learn more about ${name}`;
+  const canonicalUrl = getCanonicalUrl(`/artist/${slug}`);
 
   return (
-    <Layout>
+    <Layout canonicalUrl={canonicalUrl}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
