@@ -1,0 +1,71 @@
+import { Metadata } from "next";
+import Layout from "../../../components/layout";
+import {
+  getArtistData,
+  getArtistEvents,
+  getArtistLastFM,
+} from "../../../utils/getArtists";
+import ArtistImage from "../../../components/Artists/ArtistImage";
+import ArtistBio from "../../../components/Artists/ArtistBio";
+import GoogleAutoAds from "../../../components/3rdParty/googleAds";
+import NavigationBar from "../../../components/Navigation/NavigataionBar";
+import { getCanonicalUrl } from "../../../utils/canonicalUrl";
+import ArtistEventsClient from "./ArtistEventsClient";
+
+interface ArtistPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: ArtistPageProps): Promise<Metadata> {
+  const { id } = await params;
+  
+  try {
+    const artistData = await getArtistData(id);
+    const title = `${artistData.name} - Upcoming Events & Artist Information`;
+    const description = `${artistData.name} Tour Dates, Shows, Concert Tickets & Live Streams. Learn more about ${artistData.name}`;
+
+    return {
+      title,
+      description,
+    };
+  } catch (error) {
+    return {
+      title: "Artist Not Found",
+    };
+  }
+}
+
+export default async function Artist({ params }: ArtistPageProps) {
+  const { id } = await params;
+  
+  try {
+    const artistData = await getArtistData(id);
+    const events = await getArtistEvents(artistData.id);
+    const lastFMdata = await getArtistLastFM(artistData.name);
+    const { name, slug } = artistData;
+    const canonicalUrl = getCanonicalUrl(`/artist/${slug}`);
+
+    return (
+      <Layout canonicalUrl={canonicalUrl}>
+        <GoogleAutoAds />
+        <NavigationBar />
+        <div className="text-center [&_h1]:border-none [&_h1]:text-center pt-10">
+          <div className="artist-header">
+            <ArtistImage id={artistData.id} />
+            <h1>{name}</h1>
+          </div>
+          <ArtistBio name={name} lastFMdata={lastFMdata} />
+          {events?.length != 0 && (
+            <>
+              <h2 className="text-xl mb-4">{name} Upcoming Events</h2>
+              <ArtistEventsClient events={events} />
+            </>
+          )}
+        </div>
+      </Layout>
+    );
+  } catch (error) {
+    const { notFound } = await import("next/navigation");
+    notFound();
+  }
+}
