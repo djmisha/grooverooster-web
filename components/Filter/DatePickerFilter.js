@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { format, parse, isWithinInterval, startOfDay, endOfDay } from "date-fns";
-import { toast } from "sonner";
 
 const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
   const [selectedDate, setSelectedDate] = useState(undefined);
   const [dateRange, setDateRange] = useState(undefined);
   const [isRangeMode, setIsRangeMode] = useState(false);
+
+  // Get dates that have events for visual feedback
+  const eventDates = useMemo(() => {
+    const dates = new Set();
+    events.forEach((event) => {
+      if (event.date) {
+        try {
+          const eventDate = parse(event.date, "yyyy-MM-dd", new Date());
+          dates.add(startOfDay(eventDate).getTime());
+        } catch (error) {
+          console.error("Error parsing date:", error);
+        }
+      }
+    });
+    return dates;
+  }, [events]);
 
   // Handle single date selection
   const handleSingleDateSelect = (date) => {
@@ -23,90 +38,55 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
   // Apply date filter
   const handleApply = () => {
     if (!selectedDate && !dateRange?.from) {
-      toast.error("Please select a date or date range");
       return;
     }
-
-    let filteredCount = 0;
     
     if (isRangeMode && dateRange?.from) {
       // Filter by date range
       const fromDate = startOfDay(dateRange.from);
       const toDate = dateRange.to ? endOfDay(dateRange.to) : endOfDay(dateRange.from);
       
-      events.forEach((event) => {
-        if (event.date) {
-          try {
-            const eventDate = parse(event.date, "yyyy-MM-dd", new Date());
-            const isInRange = isWithinInterval(eventDate, { start: fromDate, end: toDate });
-            if (isInRange) {
-              filteredCount++;
-            }
-          } catch (error) {
-            console.error("Error parsing date:", error);
-          }
-        }
-      });
-
-      const fromStr = format(fromDate, "MMM d, yyyy");
-      const toStr = format(toDate, "MMM d, yyyy");
+      const fromStr = format(fromDate, "MMM d");
+      const toStr = format(toDate, "MMM d");
       
-      if (filteredCount > 0) {
-        toast.success(`Showing ${filteredCount} event${filteredCount !== 1 ? 's' : ''} from ${fromStr} to ${toStr}`);
-        // Set search term to trigger filter
-        setSearchTerm(`daterange:${format(fromDate, "yyyy-MM-dd")}:${format(toDate, "yyyy-MM-dd")}`);
-      } else {
-        toast.error(`No events found from ${fromStr} to ${toStr}`);
-      }
+      // Set search term with formatted display
+      setSearchTerm(`Date range: ${fromStr} through ${toStr}|daterange:${format(fromDate, "yyyy-MM-dd")}:${format(toDate, "yyyy-MM-dd")}`);
     } else if (selectedDate) {
       // Filter by single date
       const targetDate = startOfDay(selectedDate);
+      const dateStr = format(targetDate, "MMM d");
       
-      events.forEach((event) => {
-        if (event.date) {
-          try {
-            const eventDate = parse(event.date, "yyyy-MM-dd", new Date());
-            if (startOfDay(eventDate).getTime() === targetDate.getTime()) {
-              filteredCount++;
-            }
-          } catch (error) {
-            console.error("Error parsing date:", error);
-          }
-        }
-      });
-
-      const dateStr = format(targetDate, "MMMM d, yyyy");
-      
-      if (filteredCount > 0) {
-        toast.success(`Showing ${filteredCount} event${filteredCount !== 1 ? 's' : ''} on ${dateStr}`);
-        // Set search term to trigger filter
-        setSearchTerm(`date:${format(targetDate, "yyyy-MM-dd")}`);
-      } else {
-        toast.error(`No events found on ${dateStr}`);
-      }
+      // Set search term with formatted display
+      setSearchTerm(`Date: ${dateStr}|date:${format(targetDate, "yyyy-MM-dd")}`);
     }
 
-    if (filteredCount > 0) {
-      onClose();
-    }
+    onClose();
   };
 
   // Clear/Reset filter
   const handleClear = () => {
     setSelectedDate(undefined);
     setDateRange(undefined);
-    toast.info("Date filter cleared");
     onClose();
   };
 
+  // Custom day renderer to add dots for dates with events
+  const modifiers = {
+    hasEvent: (date) => eventDates.has(startOfDay(date).getTime()),
+  };
+
+  const modifiersClassNames = {
+    hasEvent: "has-event-dot",
+  };
+
   return (
-    <div className="p-4 max-h-[80vh] overflow-y-auto">
-      <h2 className="m-0 mb-4 text-xl font-semibold text-black">
+    <div className="p-4 pt-6 max-h-[80vh] overflow-y-auto">
+      <h2 className="m-0 mb-4 text-xl font-normal text-blue">
         Filter by Date
       </h2>
       
       {/* Toggle between single date and range */}
-      <div className="mb-4 flex gap-2">
+      <div className="mb-4 flex gap-2 justify-center">
         <button
           onClick={() => {
             setIsRangeMode(false);
@@ -144,6 +124,8 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
             onSelect={handleRangeSelect}
             numberOfMonths={1}
             className="rounded-md border"
+            modifiers={modifiers}
+            modifiersClassNames={modifiersClassNames}
           />
         ) : (
           <Calendar
@@ -151,12 +133,14 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
             selected={selectedDate}
             onSelect={handleSingleDateSelect}
             className="rounded-md border"
+            modifiers={modifiers}
+            modifiersClassNames={modifiersClassNames}
           />
         )}
       </div>
 
       {/* Action buttons */}
-      <div className="flex gap-2 justify-end">
+      <div className="flex gap-2 justify-center">
         <button
           onClick={handleClear}
           className="px-4 py-2 rounded-md text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"

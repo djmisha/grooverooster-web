@@ -4,10 +4,17 @@ import { parse, isWithinInterval, startOfDay, endOfDay } from "date-fns";
 export const searchFilter = (searchTerm, events) => {
   let results = [];
   
+  // Extract the actual filter term if it contains a pipe separator (display|filter format)
+  let actualSearchTerm = searchTerm;
+  if (searchTerm.includes("|")) {
+    const parts = searchTerm.split("|");
+    actualSearchTerm = parts[1]; // Use the second part for actual filtering
+  }
+  
   // Check if this is a date-based filter
-  if (searchTerm.startsWith("date:")) {
+  if (actualSearchTerm.startsWith("date:")) {
     // Single date filter: "date:YYYY-MM-DD"
-    const dateStr = searchTerm.substring(5);
+    const dateStr = actualSearchTerm.substring(5);
     const targetDate = startOfDay(parse(dateStr, "yyyy-MM-dd", new Date()));
     
     events.forEach((article) => {
@@ -23,9 +30,9 @@ export const searchFilter = (searchTerm, events) => {
         }
       }
     });
-  } else if (searchTerm.startsWith("daterange:")) {
+  } else if (actualSearchTerm.startsWith("daterange:")) {
     // Date range filter: "daterange:YYYY-MM-DD:YYYY-MM-DD"
-    const parts = searchTerm.substring(10).split(":");
+    const parts = actualSearchTerm.substring(10).split(":");
     if (parts.length === 2) {
       const fromDate = startOfDay(parse(parts[0], "yyyy-MM-dd", new Date()));
       const toDate = endOfDay(parse(parts[1], "yyyy-MM-dd", new Date()));
@@ -46,7 +53,7 @@ export const searchFilter = (searchTerm, events) => {
     }
   } else {
     // Original string-based search
-    const regexString = new RegExp(cleanString(searchTerm), "i"); // used to be 'gi' but was not searching date correctly
+    const regexString = new RegExp(cleanString(actualSearchTerm), "i"); // used to be 'gi' but was not searching date correctly
 
     events.forEach((article) => {
       const { id, formattedDate, venue, artistList, name } = article;
