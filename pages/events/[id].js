@@ -9,6 +9,7 @@ import { makePageTitle, makePageDescription } from "../../utils/utilities";
 import EventsModule from "../../components/EventsModule/EventsModule";
 import StateLandingPage from "../../components/StateLandingPage/StateLandingPage";
 import { getSDHMEvents, parseData } from "../../utils/getEvents";
+import { getCanonicalUrl } from "../../utils/canonicalUrl";
 
 export default function Location({
   locationData,
@@ -22,11 +23,12 @@ export default function Location({
   if (isState && stateInfo) {
     const title = makePageTitle(null, stateInfo.name);
     const description = makePageDescription(null, stateInfo.name);
+    const canonicalUrl = getCanonicalUrl(`/events/${stateInfo.slug}`);
 
     // If state has cities, show city links
     if (stateInfo.hasCities) {
       return (
-        <Layout>
+        <Layout canonicalUrl={canonicalUrl}>
           <Head>
             <title>{title}</title>
             <meta name="description" content={description} />
@@ -47,7 +49,7 @@ export default function Location({
 
     // If state has no cities, show events directly (like a city page)
     return (
-      <Layout>
+      <Layout canonicalUrl={canonicalUrl}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={description} />
@@ -69,12 +71,13 @@ export default function Location({
   }
 
   // Default behavior for city/regular location pages
-  const { city, state, id } = locationData;
+  const { city, state, id, slug } = locationData;
   const title = makePageTitle(city, state);
   const description = makePageDescription(city, state);
+  const canonicalUrl = getCanonicalUrl(`/events/${slug}`);
 
   return (
-    <Layout>
+    <Layout canonicalUrl={canonicalUrl}>
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

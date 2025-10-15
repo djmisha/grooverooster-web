@@ -3,6 +3,7 @@ import Layout from "../components/layout";
 import CitiesStates from "../components/Homepage/CitiesStates";
 import { getLocations } from "../utils/getLocations";
 import NavigationBar from "../components/Navigation/NavigataionBar";
+import { getCanonicalUrl } from "../utils/canonicalUrl";
 
 export async function getServerSideProps() {
   const locations = await getLocations();
@@ -14,8 +15,10 @@ export async function getServerSideProps() {
 }
 
 const CitiesPage = ({ locations }) => {
+  const canonicalUrl = getCanonicalUrl('/cities');
+  
   return (
-    <Layout>
+    <Layout canonicalUrl={canonicalUrl}>
       <Head>
         <title>Events By City</title>
         <meta

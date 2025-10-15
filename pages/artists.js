@@ -14,6 +14,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "../components/ui/pagination";
+import { getCanonicalUrl } from "../utils/canonicalUrl";
 
 const title = "Top Touring EDM DJ's & Artists";
 
@@ -57,6 +58,7 @@ const Artists = ({ uniqueArtists }) => {
   const filteredArtists = filterSurpriseGuest(uniqueArtists);
   const apiEvents = filteredArtists.slice(0, 30);
   const hasFetched = useRef(false);
+  const canonicalUrl = getCanonicalUrl('/artists');
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -104,7 +106,7 @@ const Artists = ({ uniqueArtists }) => {
   }, [apiEvents]);
 
   return (
-    <Layout>
+    <Layout canonicalUrl={canonicalUrl}>
       <Head>
         <title>
           {title} - Page {currentPage}
