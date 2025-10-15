@@ -62,7 +62,7 @@ function Calendar({
         .calendar-with-dots .has-event-dot::after {
           content: '';
           position: absolute;
-          bottom: 2px;
+          bottom: 6px;
           left: 50%;
           transform: translateX(-50%);
           width: 4px;

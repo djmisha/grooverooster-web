@@ -67,7 +67,7 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
   const handleClear = () => {
     setSelectedDate(undefined);
     setDateRange(undefined);
-    onClose();
+    // Don't close the popover - user can continue selecting dates
   };
 
   // Custom day renderer to add dots for dates with events
