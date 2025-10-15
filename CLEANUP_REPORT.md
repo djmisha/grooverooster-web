@@ -5,7 +5,7 @@
 
 ## Executive Summary
 
-This cleanup removed **28 files** and **50+ npm packages**, eliminating over **11,500 lines** of dead code. The changes significantly reduce bundle size and improve maintainability without affecting any functionality.
+This cleanup removed **27 files** and **50+ npm packages**, eliminating over **11,500 lines** of dead code. The changes significantly reduce bundle size and improve maintainability without affecting any functionality.
 
 ## Methodology
 
@@ -14,7 +14,7 @@ This cleanup removed **28 files** and **50+ npm packages**, eliminating over **1
 3. **Dependency Analysis:** Verified npm packages not imported anywhere
 4. **Incremental Validation:** Ran ESLint after each batch of removals
 
-## Files Removed (28 total)
+## Files Removed (27 total)
 
 ### Dashboard/Sidebar Components (10 files)
 - `components/app-sidebar.tsx` - Dashboard sidebar (never imported)
@@ -30,7 +30,7 @@ This cleanup removed **28 files** and **50+ npm packages**, eliminating over **1
 
 **Rationale:** These components were part of an incomplete or abandoned dashboard implementation. None were imported anywhere in the application.
 
-### ShadCN UI Components (14 files)
+### ShadCN UI Components (13 files)
 - `components/ui/breadcrumb.tsx`
 - `components/ui/drawer.tsx`
 - `components/ui/chart.tsx`
@@ -45,10 +45,11 @@ This cleanup removed **28 files** and **50+ npm packages**, eliminating over **1
 - `components/ui/select.tsx`
 - `components/ui/table.tsx`
 - `components/ui/tabs.tsx`
-- `components/ui/CloseButton.jsx`
 - `components/ui/ToastProvider.js`
 
 **Rationale:** These ShadCN UI components were never imported. The sidebar was only used by the removed app-sidebar. ToastProvider.js was a duplicate using `react-hot-toast` while the app uses `sonner` via ToastProvider.sonner.js.
+
+**Note:** CloseButton.jsx was initially removed but restored as it's used by MenuOverlay.jsx.
 
 ### Utility Files (3 files)
 - `utils/artistevents.sample.json` - Sample data not referenced anywhere
@@ -110,12 +111,12 @@ Estimated bundle size reduction:
 - **Total:** ~950 KB reduction in dependencies
 - **Code:** ~11,500 lines removed
 
-## Remaining Active Components
+**Remaining Active Components:**
 
-### UI Components (12 files actively used)
+### UI Components (13 files actively used)
 - button, input, pagination, separator, sheet
 - skeleton, toggle, tooltip, sonner
-- MenuOverlay, MenuTrigger, ToastProvider.sonner
+- MenuOverlay, MenuTrigger, ToastProvider.sonner, CloseButton
 
 ### Verification
 All remaining components are imported and used in the application. No false positives removed.
@@ -155,7 +156,7 @@ All remaining components are imported and used in the application. No false posi
 
 ## Files Changed
 
-- **Deleted:** 28 files
+- **Deleted:** 27 files
 - **Modified:** 3 utility files (removed unused functions)
 - **Dependencies:** Removed 50+ packages from package.json
 
