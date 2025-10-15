@@ -67,6 +67,12 @@ const Filter = ({
         emoji = "🎉";
       }
 
+      // Extract display term if it contains a pipe separator (display|filter format)
+      let displayTerm = searchTerm;
+      if (searchTerm.includes("|")) {
+        displayTerm = searchTerm.split("|")[0];
+      }
+
       // Dismiss any existing toast first
       if (toastIdRef.current) {
         toast.dismiss(toastIdRef.current);
@@ -81,7 +87,7 @@ const Filter = ({
             <div className="text-xl flex-shrink-0">{emoji}</div>
             <div className="flex-1 text-sm text-gray-700 break-words">
               {resultCount} {resultCount === 1 ? "result" : "results"} for{" "}
-              <span className="font-semibold text-gray-900">{searchTerm}</span>
+              <span className="font-semibold text-gray-900">{displayTerm}</span>
             </div>
             <button
               onClick={() => {
