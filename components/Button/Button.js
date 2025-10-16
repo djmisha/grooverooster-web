@@ -1,3 +1,14 @@
+/**
+ * Button component that renders either a link or button element with consistent styling
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Button content
+ * @param {string} [props.variant="primary"] - Button style variant ("primary" or "secondary")
+ * @param {string} [props.href] - If provided, renders as an anchor tag
+ * @param {Function} [props.onClick] - Click handler for button element
+ * @param {string} [props.className] - Additional CSS classes
+ * @param {Object} props.props - Additional props passed to the element
+ * @returns {JSX.Element} Styled button or anchor element
+ */
 const Button = ({
   children,
   variant = "primary",
