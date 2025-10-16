@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import secureApiEndpoint from "../../../utils/apiSecurity";
 
+// Force this route to be dynamic
+export const dynamic = 'force-dynamic';
+
 export const config = {
   api: {
     responseLimit: false,

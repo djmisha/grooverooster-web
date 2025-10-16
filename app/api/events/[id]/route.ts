@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import secureApiEndpoint from "../../../../utils/apiSecurity";
 
+// Force this route to be dynamic to ensure date filtering uses current date
+export const dynamic = 'force-dynamic';
+
 const CACHE_MAX_AGE = 21600; // 6 hours in seconds
 
 export async function GET(

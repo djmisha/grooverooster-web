@@ -3,6 +3,9 @@ import secureApiEndpoint from "../../../../utils/apiSecurity";
 import { transformEventsArray } from "../../../../utils/eventTransformer";
 import localArtists from "../../../../localArtistsDB.json";
 
+// Force this route to be dynamic to ensure date filtering uses current date
+export const dynamic = 'force-dynamic';
+
 /**
  * Calculate similarity between two strings using Levenshtein distance
  * @param {string} str1 - First string
