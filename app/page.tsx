@@ -26,6 +26,9 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
+// Force dynamic rendering since this page uses cookies
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const locations = getLocations();
 
