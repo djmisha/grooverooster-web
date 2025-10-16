@@ -23,7 +23,7 @@ export default async function ArtistsPage() {
   const EDMURL = "https://edmtrain.com/api/events?";
   const URL = EDMURL + "&client=" + KEY;
 
-  let uniqueArtists = [];
+  let uniqueArtists: any[] = [];
 
   try {
     const apiResponse = await fetch(URL, { cache: "no-store" });
