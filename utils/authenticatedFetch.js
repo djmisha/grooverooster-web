@@ -22,8 +22,7 @@ export async function authenticatedFetch(endpoint, options = {}) {
   } else {
     // Server-side: try environment variable, fallback to localhost for dev
     baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
-              process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` :
-              "http://localhost:3000";
+              (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
   }
   
   const url = endpoint.startsWith("http") ? endpoint : `${baseUrl}${endpoint}`;
