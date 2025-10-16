@@ -24,7 +24,7 @@ export default async function Home() {
   const locations = getLocations();
 
   // Get user data if logged in
-  let user = null;
+  let user: any = null;
   let profile: any = null;
   let defaultLocation: any = null;
 
