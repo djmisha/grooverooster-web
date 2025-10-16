@@ -6,6 +6,12 @@ import {
   detectUserLocation,
 } from "../../utils/locationService";
 
+/**
+ * QuickLocationFinder component detects user location and provides quick access to local events
+ * @param {Object} props - Component props
+ * @param {string} [props.className=""] - Additional CSS classes
+ * @returns {JSX.Element} Location finder button or null if location already detected
+ */
 const QuickLocationFinder = ({ className = "" }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [hasLocationCookie, setHasLocationCookie] = useState(false);

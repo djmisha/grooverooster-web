@@ -8,6 +8,10 @@ import EventCard from "../EventCard/EventCard";
 import Button from "../Button/Button";
 import { useEventModalManager } from "../../hooks/useEventModal";
 
+/**
+ * Locator component displays nearby events based on user's current location
+ * @returns {JSX.Element} Location-based events list with load more functionality
+ */
 const Locator = () => {
   const { currentUserLocation } = useContext(AppContext);
   const { openEventId, setOpenEventId } = useEventModalManager();
