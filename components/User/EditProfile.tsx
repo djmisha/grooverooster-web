@@ -1,6 +1,8 @@
+"use client";
+
 import { useState, useEffect, useContext, useCallback, useMemo } from "react";
 import type { User } from "@supabase/supabase-js";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { AppContext } from "../../features/AppContext";
 import locations from "../../utils/locations.json";
 

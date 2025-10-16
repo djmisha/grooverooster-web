@@ -2,19 +2,36 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+let supabase;
+let supabaseAdmin;
+
+// Only create clients if environment variables are available
+if (supabaseUrl && supabaseKey) {
+  supabase = createClient(supabaseUrl, supabaseKey);
+} else {
+  console.warn("Supabase environment variables not configured");
+  // Create a mock client that returns safe defaults
+  supabase = null;
+}
 
 // Create a Supabase admin client with service role key
-const supabaseAdmin = createClient(
-  supabaseUrl,
-  process.env.SUPABASE_SERVICE_ROLE_KEY,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  }
-);
+if (supabaseUrl && supabaseServiceKey) {
+  supabaseAdmin = createClient(
+    supabaseUrl,
+    supabaseServiceKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+} else {
+  console.warn("Supabase admin environment variables not configured");
+  supabaseAdmin = null;
+}
 
 export default supabase;
 export { supabaseAdmin };

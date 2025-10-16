@@ -1,18 +1,20 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Modal from "../Modal/VerifyModal";
 import Button from "../Button/Button";
 
 const Verify = () => {
   const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (router.query.code) {
+    if (searchParams.get('code')) {
       setShowModal(true);
     }
-  }, [router.query]);
+  }, [searchParams]);
 
   const closeModal = () => {
     setShowModal(false);

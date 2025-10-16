@@ -1,15 +1,16 @@
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export const useCurrentUrl = () => {
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [currentUrl, setCurrentUrl] = useState('');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setCurrentUrl(window.location.href);
     }
-  }, [router.asPath]);
+  }, [pathname, searchParams]);
 
   return currentUrl;
 };

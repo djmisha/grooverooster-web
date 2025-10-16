@@ -1,3 +1,5 @@
+"use client";
+
 import LocationSelectModal from "./LocationSelectModal";
 import Hamburger from "../Hamburger/Hamburger";
 import BackToTop from "../BackToTop/BackToTop";
