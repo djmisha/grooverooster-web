@@ -79,20 +79,23 @@ function validateBearerToken(token) {
  * @returns {object} - { allowed: boolean, error?: string }
  */
 function secureApiEndpoint(req, res) {
-  const authHeader = req.headers.authorization;
+  // Handle both Next.js App Router (Request) and Pages Router (req object)
+  const authHeader = req.headers.get ? req.headers.get("authorization") : req.headers.authorization;
   const userAgent = req.headers.get ? req.headers.get("user-agent") : req.headers["user-agent"];
   const requestPath = req.url || "";
 
   // Handle preflight OPTIONS requests
   if (req.method === "OPTIONS") {
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization"
-    );
+    if (res && res.setHeader) {
+      res.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS"
+      );
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization"
+      );
+    }
     return { allowed: true, isPreflight: true };
   }
 
