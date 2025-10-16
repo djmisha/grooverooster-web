@@ -5,7 +5,7 @@ import Hero from "../components/Homepage/Hero";
 import TopArtists from "../components/Homepage/TopArtists";
 import WelcomeMessage from "../components/Homepage/WelcomeMessage";
 import Layout, { siteTitle } from "../components/layout";
-import NavigationBar from "../components/Navigation/NavigataionBar";
+import ClientNavigationBar from "./ClientNavigationBar";
 import { getLocations } from "../utils/getLocations";
 import { createClient } from "../utils/supabase/server";
 import Locator from "../components/Locator/Locator";
@@ -57,7 +57,7 @@ export default async function Home() {
   return (
     <Layout home canonicalUrl={canonicalUrl}>
       <HomeClient profile={profile} />
-      <NavigationBar setSearchTerm={() => {}} locationData={{}} />
+      <ClientNavigationBar />
       <Verify />
       <Hero />
       <WelcomeMessage />

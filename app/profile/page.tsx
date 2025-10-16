@@ -1,6 +1,6 @@
 import type { User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
-import NavigationBar from "../../components/Navigation/NavigataionBar";
+import ClientNavigationBar from "./ClientNavigationBar";
 import EditProfile from "../../components/User/EditProfile";
 import { createClient } from "../../utils/supabase/server";
 import { Metadata } from "next";
@@ -20,7 +20,7 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <NavigationBar setSearchTerm={() => {}} locationData={{}} />
+      <ClientNavigationBar />
       <EditProfile user={data.user} />
     </>
   );

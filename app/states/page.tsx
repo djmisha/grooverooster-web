@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Layout from "../../components/layout";
 import CitiesStates from "../../components/Homepage/CitiesStates";
 import { getLocations } from "../../utils/getLocations";
-import NavigationBar from "../../components/Navigation/NavigataionBar";
+import ClientNavigationBar from "./ClientNavigationBar";
 import { getCanonicalUrl } from "../../utils/canonicalUrl";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default async function StatesPage() {
   
   return (
     <Layout home={false} canonicalUrl={canonicalUrl}>
-      <NavigationBar setSearchTerm={() => {}} locationData={{}} />
+      <ClientNavigationBar />
       <h1>Events By State</h1>
       <CitiesStates locations={locations} showStatesOnly={true} />
     </Layout>

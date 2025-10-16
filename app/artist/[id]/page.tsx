@@ -8,7 +8,7 @@ import {
 import ArtistImage from "../../../components/Artists/ArtistImage";
 import ArtistBio from "../../../components/Artists/ArtistBio";
 import GoogleAutoAds from "../../../components/3rdParty/googleAds";
-import NavigationBar from "../../../components/Navigation/NavigataionBar";
+import ClientNavigationBar from "./ClientNavigationBar";
 import { getCanonicalUrl } from "../../../utils/canonicalUrl";
 import ArtistEventsClient from "./ArtistEventsClient";
 
@@ -48,7 +48,7 @@ export default async function Artist({ params }: ArtistPageProps) {
     return (
       <Layout home={false} canonicalUrl={canonicalUrl}>
         <GoogleAutoAds />
-        <NavigationBar setSearchTerm={() => {}} locationData={{}} />
+        <ClientNavigationBar />
         <div className="text-center [&_h1]:border-none [&_h1]:text-center pt-10">
           <div className="artist-header">
             <ArtistImage id={artistData.id} imageUrl={undefined} />
