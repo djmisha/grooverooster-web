@@ -3,6 +3,18 @@ import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
 import MenuList from "./MenuList";
 
+/**
+ * NavItem component renders a navigation item with a dropdown overlay menu
+ * @param {Object} props - Component props
+ * @param {string} props.image - Path to the icon image
+ * @param {string} props.text - Display text for the nav item
+ * @param {string} props.title - Title displayed in the overlay menu
+ * @param {Array} props.navItems - Array of menu items to display
+ * @param {Function} props.setSearchTerm - Function to set search term
+ * @param {boolean} props.isLocation - Whether this is a location nav item
+ * @param {boolean} props.isHome - Whether this is displayed on the home page
+ * @returns {JSX.Element} Navigation item with overlay menu
+ */
 const NavItem = ({
   image,
   text,
@@ -14,6 +26,9 @@ const NavItem = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  /**
+   * Closes the overlay menu
+   */
   const handleClose = () => {
     setIsOpen(false);
   };

@@ -19,6 +19,12 @@ export const metadata: Metadata = {
   description: "Find the best electronic music events, shows, and festivals in your city. Track your favorite artists and never miss a beat.",
 };
 
+/**
+ * Root layout component that wraps the entire application
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components to render
+ * @returns {JSX.Element} Root HTML structure with providers and global styles
+ */
 export default function RootLayout({
   children,
 }: {
