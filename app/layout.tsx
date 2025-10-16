@@ -1,15 +1,15 @@
 import { AppProvider } from "../features/AppContext";
-// import { Poppins } from "next/font/google"; // Commented for build test
+import { Poppins } from "next/font/google";
 import ToastProvider from "../components/ui/ToastProvider.sonner";
 import "../styles/tailwind.css";
 import "../styles/global.scss";
 import type { Metadata } from "next";
 
-// const poppins = Poppins({
-//   weight: ["200", "400", "600"],
-//   style: ["normal", "italic"],
-//   subsets: ["latin"],
-// });
+const poppins = Poppins({
+  weight: ["200", "400", "600"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: {
@@ -26,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body> {/* className={poppins.className} - commented for build test */}
+      <body className={poppins.className}>
         <AppProvider>
           {children}
           <ToastProvider />
