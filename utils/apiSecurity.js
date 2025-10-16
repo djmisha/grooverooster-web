@@ -81,10 +81,6 @@ function validateBearerToken(token) {
 function secureApiEndpoint(req, res) {
   const authHeader = req.headers.authorization;
   const requestPath = req.url || "";
-  
-  console.log('[apiSecurity] Request path:', requestPath);
-  console.log('[apiSecurity] Auth header:', authHeader ? 'Present' : 'Missing');
-  console.log('[apiSecurity] Request method:', req.method);
 
   // Handle preflight OPTIONS requests
   if (req.method === "OPTIONS") {
@@ -100,27 +96,19 @@ function secureApiEndpoint(req, res) {
   }
 
   // Check if this endpoint should remain open for frontend calls
-  const isOpen = isFrontendOpenEndpoint(requestPath);
-  console.log('[apiSecurity] Is frontend open endpoint:', isOpen);
-  
-  if (isOpen) {
+  if (isFrontendOpenEndpoint(requestPath)) {
     return { allowed: true };
   }
 
   // All other endpoints require bearer token
   if (!authHeader) {
-    console.error('[apiSecurity] Missing auth header');
     return {
       allowed: false,
       error: "Unauthorized: Missing authentication token",
     };
   }
-  
-  const isValid = validateBearerToken(authHeader);
-  console.log('[apiSecurity] Token validation result:', isValid);
 
-  if (!isValid) {
-    console.error('[apiSecurity] Invalid token');
+  if (!validateBearerToken(authHeader)) {
     return {
       allowed: false,
       error: "Unauthorized: Invalid authentication token",
@@ -128,7 +116,6 @@ function secureApiEndpoint(req, res) {
   }
 
   // Token is valid
-  console.log('[apiSecurity] Token validated successfully');
   return { allowed: true };
 }
 

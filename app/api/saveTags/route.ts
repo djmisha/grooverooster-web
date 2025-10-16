@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../features/Supabase";
-import secureApiEndpoint from "../../../utils/apiSecurity";
+import { secureAppRouterEndpoint } from "../../../utils/appRouterSecurity";
 
 export async function POST(request: Request) {
   // Check if Supabase is configured
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   }
 
   // Apply security checks
-  const security = secureApiEndpoint(request, null as any);
+  const security = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

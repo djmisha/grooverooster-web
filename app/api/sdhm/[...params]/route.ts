@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import secureApiEndpoint from "../../../../utils/apiSecurity";
+import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 import { transformEventsArray } from "../../../../utils/eventTransformer";
 import localArtists from "../../../../localArtistsDB.json";
 
@@ -250,36 +250,16 @@ export async function GET(
   request: Request,
   context: { params: Promise<{ params: string[] }> }
 ) {
-  console.log('[SDHM API] Request received');
-  
-  // Adapt App Router Request to Pages Router format for security check
-  const url = new URL(request.url);
-  const adaptedReq = {
-    url: url.pathname,
-    method: request.method,
-    headers: {
-      authorization: request.headers.get('authorization') || request.headers.get('Authorization'),
-    },
-  };
-  
-  console.log('[SDHM API] Auth header:', adaptedReq.headers.authorization ? 'Present' : 'Missing');
-  console.log('[SDHM API] Request path:', adaptedReq.url);
-  
   // Apply security checks
-  const security = secureApiEndpoint(adaptedReq as any, null as any);
-  
-  console.log('[SDHM API] Security check result:', security);
+  const security = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {
-    console.error('[SDHM API] Security check failed:', security.error);
     return NextResponse.json(
       { error: security.error || "Unauthorized access" },
       { status: 401 }
     );
   }
-  
-  console.log('[SDHM API] Security check passed');
 
   try {
     const { params } = await context.params;

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import secureApiEndpoint from "../../../../../utils/apiSecurity";
+import { secureAppRouterEndpoint } from "../../../../../utils/appRouterSecurity";
 import { authenticatedFetch } from "../../../../../utils/authenticatedFetch";
 
 export async function GET(
@@ -7,7 +7,7 @@ export async function GET(
   context: { params: Promise<{ params: string[] }> }
 ) {
   // Apply security checks
-  const security = secureApiEndpoint(request, null as any);
+  const security = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

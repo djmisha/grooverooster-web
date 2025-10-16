@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import supabase from "../../../../features/Supabase";
-import secureApiEndpoint from "../../../../utils/apiSecurity";
+import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 
 const fetchExistingArtists = async () => {
   let allArtists: any[] = [];
@@ -32,7 +32,7 @@ const fetchExistingArtists = async () => {
 
 export async function GET(request: Request) {
   // Apply security checks
-  const security = secureApiEndpoint(request, null as any);
+  const security = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

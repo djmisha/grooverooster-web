@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import secureApiEndpoint from "../../../utils/apiSecurity";
+import { secureAppRouterEndpoint } from "../../../utils/appRouterSecurity";
 
 // Force this route to be dynamic
 export const dynamic = 'force-dynamic';
@@ -12,7 +12,7 @@ export const config = {
 
 export async function GET(request: Request) {
   // Apply security checks
-  const security = secureApiEndpoint(request, null as any);
+  const security = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {
