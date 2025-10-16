@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Dashboard",
 };
 
+/**
+ * Dashboard page component - displays user dashboard with profile and preferences
+ * @returns {Promise<JSX.Element>} User dashboard page or redirect to login
+ */
 // Force dynamic rendering since this page uses cookies
 export const dynamic = 'force-dynamic';
 

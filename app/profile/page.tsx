@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Profile",
 };
 
+/**
+ * Profile page component allows users to edit their profile information
+ * @returns {Promise<JSX.Element>} Profile edit page or redirect to login
+ */
 // Force dynamic rendering since this page uses cookies
 export const dynamic = 'force-dynamic';
 

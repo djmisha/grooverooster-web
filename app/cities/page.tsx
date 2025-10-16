@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Events By City",
 };
 
+/**
+ * Cities page component displays events organized by city
+ * @returns {Promise<JSX.Element>} Cities listing page
+ */
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1.0,
