@@ -99,10 +99,8 @@ export default function ChangePassword({ user }) {
           <Button
             href="#"
             variant="primary"
-            onClick={null}
             disabled={isLoading}
             type="submit"
-            className={null}
           >
             {isLoading ? "Updating..." : "Update Password"}
           </Button>
