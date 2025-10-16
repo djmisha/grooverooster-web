@@ -3,6 +3,14 @@ import { supabaseAdmin } from "../../../features/Supabase";
 import secureApiEndpoint from "../../../utils/apiSecurity";
 
 export async function POST(request: Request) {
+  // Check if Supabase is configured
+  if (!supabaseAdmin) {
+    return NextResponse.json(
+      { error: "Database not configured" },
+      { status: 503 }
+    );
+  }
+
   // Apply security checks
   const security = secureApiEndpoint(request, null as any);
 

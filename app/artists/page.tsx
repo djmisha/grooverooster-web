@@ -23,21 +23,24 @@ export default async function ArtistsPage() {
   const EDMURL = "https://edmtrain.com/api/events?";
   const URL = EDMURL + "&client=" + KEY;
 
-  let apiResponse;
+  let uniqueArtists = [];
 
   try {
-    apiResponse = await fetch(URL);
+    const apiResponse = await fetch(URL, { cache: "no-store" });
+    
+    if (!apiResponse.ok) {
+      console.error(`HTTP error! status: ${apiResponse.status}`);
+      // Return empty list if API fails during build
+      return <ArtistsClient uniqueArtists={[]} />;
+    }
+
+    const json = await apiResponse.json();
+    uniqueArtists = getArtistsCounts(json.data);
   } catch (error: any) {
     console.error("Fetch failed: ", error);
-    throw new Error(`Fetch failed: ${error.message}`);
+    // Return empty list if fetch fails during build
+    return <ArtistsClient uniqueArtists={[]} />;
   }
-
-  if (!apiResponse.ok) {
-    throw new Error(`HTTP error! status: ${apiResponse.status}`);
-  }
-
-  const json = await apiResponse.json();
-  const uniqueArtists = getArtistsCounts(json.data);
 
   return <ArtistsClient uniqueArtists={uniqueArtists} />;
 }

@@ -69,6 +69,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     // Only fetch user data if profile is not already initialized from server props
     if (isProfileInitialized.current) return;
+    if (!supabase) return; // Skip if supabase is not configured
 
     const fetchUserAndProfile = async () => {
       const {
