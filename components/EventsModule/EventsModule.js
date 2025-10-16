@@ -15,7 +15,10 @@ import { useEventModalManager } from "../../hooks/useEventModal";
  * EventsModule component displays events list with filtering, search, and pagination
  * @param {Object} props - Component props
  * @param {Object} props.locationData - Location information
- * @param {Array} props.allEvents - Array of all events to display
+ * @param {boolean} props.isHome - Whether this is the home page
+ * @param {Array} props.events - Array of all events to display
+ * @param {number} [props.initialPage=1] - Initial page number for pagination
+ * @param {string} props.eventId - Optional event ID to highlight
  * @returns {JSX.Element} Events module with navigation, filters, and pagination
  */
 const EventsModule = ({
