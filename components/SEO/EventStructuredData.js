@@ -1,6 +1,13 @@
 import { useMemo } from "react";
 import setDates from "../../utils/setDates";
 
+/**
+ * EventStructuredData component renders JSON-LD structured data for event SEO
+ * @param {Object} props - Component props
+ * @param {Object} props.event - Event object with details
+ * @param {string} props.currentUrl - Current page URL
+ * @returns {JSX.Element|null} Script tag with JSON-LD structured data or null
+ */
 const EventStructuredData = ({ event, currentUrl }) => {
   const structuredData = useMemo(() => {
     if (!event) return null;

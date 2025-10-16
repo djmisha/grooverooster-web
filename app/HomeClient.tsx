@@ -10,6 +10,12 @@ import WelcomeMessage from "../components/Homepage/WelcomeMessage";
 import ClientNavigationBar from "./ClientNavigationBar";
 import Locator from "../components/Locator/Locator";
 
+/**
+ * HomeClient component renders the client-side home page content
+ * @param {Object} props - Component props
+ * @param {any} props.profile - User profile data from server
+ * @returns {JSX.Element} Home page client components
+ */
 export default function HomeClient({ profile }: { profile: any }) {
   const { setProfile } = useContext(AppContext);
 
