@@ -11,6 +11,13 @@ import EventsFiltered from "../../components/Filter/EventsFilter";
 import EventsPagination from "../../components/EventsPagination/EventsPagination";
 import { useEventModalManager } from "../../hooks/useEventModal";
 
+/**
+ * EventsModule component displays events list with filtering, search, and pagination
+ * @param {Object} props - Component props
+ * @param {Object} props.locationData - Location information
+ * @param {Array} props.allEvents - Array of all events to display
+ * @returns {JSX.Element} Events module with navigation, filters, and pagination
+ */
 const EventsModule = ({
   locationData,
   isHome,
