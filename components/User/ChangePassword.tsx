@@ -97,7 +97,6 @@ export default function ChangePassword({ user }) {
 
         <div className="mt-3">
           <Button
-            href="#"
             variant="primary"
             disabled={isLoading}
             type="submit"

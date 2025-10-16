@@ -7,14 +7,14 @@ export async function GET(
   const { id } = await context.params;
   const KEY = process.env.NEXT_PUBLIC_API_KEY_EDMTRAIN;
   const EDMURL = process.env.NEXT_PUBLIC_API_URL_EDMTRAIN_ARTIST;
-  
+
   if (!EDMURL || !KEY) {
     return NextResponse.json(
       { error: "Missing API configuration" },
       { status: 500 }
     );
   }
-  
+
   const URL = `${EDMURL}${id}&client=${KEY}`;
 
   try {
