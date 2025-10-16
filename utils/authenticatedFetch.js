@@ -12,12 +12,19 @@
 export async function authenticatedFetch(endpoint, options = {}) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const url = endpoint.startsWith("http") ? endpoint : `${baseUrl}${endpoint}`;
+  
+  const token = process.env.INTERNAL_API_TOKEN;
+  console.log('[authenticatedFetch] Token from env:', token ? 'Present' : 'Missing');
+  console.log('[authenticatedFetch] Endpoint:', endpoint);
+  console.log('[authenticatedFetch] Full URL:', url);
 
   const defaultHeaders = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.INTERNAL_API_TOKEN}`,
+    Authorization: `Bearer ${token}`,
     "User-Agent": "NextJS-Internal-Client",
   };
+  
+  console.log('[authenticatedFetch] Authorization header:', defaultHeaders.Authorization);
 
   const mergedOptions = {
     ...options,
