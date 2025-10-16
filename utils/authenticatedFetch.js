@@ -45,11 +45,28 @@ export async function authenticatedFetch(endpoint, options = {}) {
     },
   };
 
+  // Debug logging
+  console.log("[authenticatedFetch] Making request:", {
+    endpoint,
+    url,
+    hasInternalToken: !!process.env.INTERNAL_API_TOKEN,
+    hasAuthHeader: !!defaultHeaders.Authorization,
+    userAgent: defaultHeaders["User-Agent"],
+    headers: Object.keys(mergedOptions.headers),
+  });
+
   try {
     const response = await fetch(url, mergedOptions);
 
     if (!response.ok) {
       const errorData = await response.text();
+      console.error("[authenticatedFetch] Request failed:", {
+        endpoint,
+        url,
+        status: response.status,
+        statusText: response.statusText,
+        errorData,
+      });
       throw new Error(`API call failed: ${response.status} - ${errorData}`);
     }
 

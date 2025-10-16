@@ -84,6 +84,17 @@ function secureApiEndpoint(req, res) {
   const userAgent = req.headers.get ? req.headers.get("user-agent") : req.headers["user-agent"];
   const requestPath = req.url || "";
 
+  // Debug logging
+  console.log("[apiSecurity] Checking request:", {
+    requestPath,
+    method: req.method,
+    hasAuthHeader: !!authHeader,
+    authHeaderType: authHeader ? (authHeader.startsWith("Bearer") ? "Bearer token" : "Other") : "none",
+    userAgent: userAgent || "none",
+    isInternalClient: userAgent && userAgent.includes("NextJS-Internal-Client"),
+    isFrontendOpen: isFrontendOpenEndpoint(requestPath),
+  });
+
   // Handle preflight OPTIONS requests
   if (req.method === "OPTIONS") {
     if (res && res.setHeader) {
@@ -96,21 +107,25 @@ function secureApiEndpoint(req, res) {
         "Content-Type, Authorization"
       );
     }
+    console.log("[apiSecurity] Allowing OPTIONS preflight request");
     return { allowed: true, isPreflight: true };
   }
 
   // Check if this endpoint should remain open for frontend calls
   if (isFrontendOpenEndpoint(requestPath)) {
+    console.log("[apiSecurity] Allowing frontend open endpoint");
     return { allowed: true };
   }
 
   // Allow internal server-to-server calls (Next.js server components calling internal APIs)
   if (userAgent && userAgent.includes("NextJS-Internal-Client")) {
+    console.log("[apiSecurity] Allowing internal server-to-server call");
     return { allowed: true };
   }
 
   // All other endpoints require bearer token
   if (!authHeader) {
+    console.error("[apiSecurity] Rejecting request: Missing authentication token");
     return {
       allowed: false,
       error: "Unauthorized: Missing authentication token",
@@ -118,6 +133,7 @@ function secureApiEndpoint(req, res) {
   }
 
   if (!validateBearerToken(authHeader)) {
+    console.error("[apiSecurity] Rejecting request: Invalid authentication token");
     return {
       allowed: false,
       error: "Unauthorized: Invalid authentication token",
@@ -125,6 +141,7 @@ function secureApiEndpoint(req, res) {
   }
 
   // Token is valid
+  console.log("[apiSecurity] Allowing request with valid token");
   return { allowed: true };
 }
 
