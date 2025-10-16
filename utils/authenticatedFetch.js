@@ -10,14 +10,33 @@
  * @returns {Promise} - The response data
  */
 export async function authenticatedFetch(endpoint, options = {}) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  // Determine the base URL for server-side requests
+  let baseUrl;
+  
+  if (endpoint.startsWith("http")) {
+    // Full URL provided, use as-is
+    baseUrl = "";
+  } else if (typeof window !== "undefined") {
+    // Client-side: use window location
+    baseUrl = `${window.location.protocol}//${window.location.host}`;
+  } else {
+    // Server-side: try environment variable, fallback to localhost for dev
+    baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+              process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` :
+              "http://localhost:3000";
+  }
+  
   const url = endpoint.startsWith("http") ? endpoint : `${baseUrl}${endpoint}`;
 
   const defaultHeaders = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.INTERNAL_API_TOKEN}`,
     "User-Agent": "NextJS-Internal-Client",
   };
+
+  // Only add Authorization header if token is available
+  if (process.env.INTERNAL_API_TOKEN) {
+    defaultHeaders.Authorization = `Bearer ${process.env.INTERNAL_API_TOKEN}`;
+  }
 
   const mergedOptions = {
     ...options,

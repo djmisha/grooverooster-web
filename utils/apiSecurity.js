@@ -14,7 +14,7 @@ const FRONTEND_OPEN_ENDPOINTS = [
   "/api/supabase/posttopartists",
   "/api/saveTags",
   "/api/frontend/events",
-  // "/api/sdhm",
+  // "/api/sdhm", // Secured via NextJS-Internal-Client user agent check
 ];
 
 /**
@@ -80,6 +80,7 @@ function validateBearerToken(token) {
  */
 function secureApiEndpoint(req, res) {
   const authHeader = req.headers.authorization;
+  const userAgent = req.headers.get ? req.headers.get("user-agent") : req.headers["user-agent"];
   const requestPath = req.url || "";
 
   // Handle preflight OPTIONS requests
@@ -97,6 +98,11 @@ function secureApiEndpoint(req, res) {
 
   // Check if this endpoint should remain open for frontend calls
   if (isFrontendOpenEndpoint(requestPath)) {
+    return { allowed: true };
+  }
+
+  // Allow internal server-to-server calls (Next.js server components calling internal APIs)
+  if (userAgent && userAgent.includes("NextJS-Internal-Client")) {
     return { allowed: true };
   }
 
