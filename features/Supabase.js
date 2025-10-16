@@ -1,3 +1,7 @@
+/**
+ * Supabase client configuration and initialization
+ * Creates both regular and admin Supabase client instances
+ */
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;

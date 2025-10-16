@@ -13,8 +13,17 @@ import {
   saveLocationToCookie,
 } from "../utils/locationService";
 
+/**
+ * Application context for managing global state including location and user profile
+ */
 export const AppContext = createContext();
 
+/**
+ * AppProvider component that provides global application state to children components
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Child components to wrap with context
+ * @returns {JSX.Element} Context provider with application state
+ */
 export const AppProvider = ({ children }) => {
   const [locationCtx, setLocationCtx] = useState([]);
   const [currentUserLocation, setCurrentUserLocation] = useState(null);
@@ -29,6 +38,10 @@ export const AppProvider = ({ children }) => {
     }
   }, [profile]);
 
+  /**
+   * Adds a new location to the location context array if it doesn't already exist
+   * @param {Object} location - Location object to add
+   */
   const addLocation = (location) => {
     setLocationCtx((prevLocations) => {
       // Check if a location with the same id already exists in the array
@@ -44,6 +57,10 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  /**
+   * Sets the current user location and saves it to cookie
+   * @param {Object} location - Location object to set as current
+   */
   const setUserLocation = (location) => {
     setCurrentUserLocation(location);
     if (location) {
@@ -52,6 +69,9 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Clears the current user location and removes it from cookie
+   */
   const clearUserLocation = () => {
     setCurrentUserLocation(null);
     saveLocationToCookie(null);
