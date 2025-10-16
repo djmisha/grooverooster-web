@@ -10,18 +10,24 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
+    if (error || !data?.user) {
+      redirect("/login");
+    }
+
+    return (
+      <>
+        <ClientNavigationBar />
+        <EditProfile user={data.user} />
+      </>
+    );
+  } catch (error) {
+    // If Supabase is not configured or there's an error, redirect to login
+    console.error("Error in profile page:", error);
     redirect("/login");
   }
-
-  return (
-    <>
-      <ClientNavigationBar />
-      <EditProfile user={data.user} />
-    </>
-  );
 }

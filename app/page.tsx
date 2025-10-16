@@ -23,33 +23,40 @@ export const metadata: Metadata = {
 export default async function Home() {
   const locations = getLocations();
 
-  // Use server-side client to check authentication status
-  const supabase = await createClient();
-  const { data: userData } = await supabase.auth.getUser();
-
   // Get user data if logged in
-  const user = userData?.user || null;
+  let user = null;
   let profile: any = null;
   let defaultLocation: any = null;
 
-  // If user is logged in, fetch their profile
-  if (user) {
-    const { data: profileData } = await supabase
-      .from("profiles")
-      .select("*") // Fetch all fields instead of just specific ones
-      .eq("id", user.id)
-      .single();
+  try {
+    // Use server-side client to check authentication status
+    const supabase = await createClient();
+    const { data: userData } = await supabase.auth.getUser();
+    user = userData?.user || null;
 
-    profile = profileData || null;
+    // If user is logged in, fetch their profile
+    if (user) {
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("*") // Fetch all fields instead of just specific ones
+        .eq("id", user.id)
+        .single();
 
-    // If profile has default location, fetch the location data
-    if (profile?.default_location_id) {
-      // Convert default_location_id to number to ensure correct comparison
-      const locationId = parseInt(profile.default_location_id, 10);
+      profile = profileData || null;
 
-      // Find the location in the locations array
-      defaultLocation = locations.find((loc: any) => loc.id === locationId) || null;
+      // If profile has default location, fetch the location data
+      if (profile?.default_location_id) {
+        // Convert default_location_id to number to ensure correct comparison
+        const locationId = parseInt(profile.default_location_id, 10);
+
+        // Find the location in the locations array
+        defaultLocation = locations.find((loc: any) => loc.id === locationId) || null;
+      }
     }
+  } catch (error) {
+    // Supabase not configured or error fetching user data
+    // Continue without authentication
+    console.error("Error initializing Supabase:", error);
   }
 
   const canonicalUrl = getCanonicalUrl('/');

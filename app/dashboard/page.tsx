@@ -16,39 +16,45 @@ interface UserProfile {
 }
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-  const locations = getLocations();
+  try {
+    const supabase = await createClient();
+    const locations = getLocations();
 
-  const { data, error } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
+    if (error || !data?.user) {
+      redirect("/login");
+    }
+
+    const user = data.user;
+    let profile: UserProfile | null = null;
+    let defaultLocation: any = null;
+
+    // Fetch user profile
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    profile = profileData || null;
+
+    // If profile has default location, fetch the location data
+    if (profile?.default_location_id) {
+      const locationId = parseInt(String(profile.default_location_id), 10);
+      defaultLocation = locations.find((loc: any) => loc.id === locationId) || null;
+    }
+
+    return (
+      <UserDashboard
+        user={user}
+        profile={profile}
+        defaultLocation={defaultLocation}
+      />
+    );
+  } catch (error) {
+    // If Supabase is not configured or there's an error, redirect to login
+    console.error("Error in dashboard:", error);
     redirect("/login");
   }
-
-  const user = data.user;
-  let profile: UserProfile | null = null;
-  let defaultLocation: any = null;
-
-  // Fetch user profile
-  const { data: profileData } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
-
-  profile = profileData || null;
-
-  // If profile has default location, fetch the location data
-  if (profile?.default_location_id) {
-    const locationId = parseInt(String(profile.default_location_id), 10);
-    defaultLocation = locations.find((loc: any) => loc.id === locationId) || null;
-  }
-
-  return (
-    <UserDashboard
-      user={user}
-      profile={profile}
-      defaultLocation={defaultLocation}
-    />
-  );
 }

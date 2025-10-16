@@ -8,13 +8,19 @@ export const metadata: Metadata = {
 };
 
 export default async function PrivatePage() {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
+    if (error || !data?.user) {
+      redirect("/");
+    }
+
+    return <h1>Hello, {data.user.email || "user"}!</h1>;
+  } catch (error) {
+    // If Supabase is not configured or there's an error, redirect to home
+    console.error("Error in private page:", error);
     redirect("/");
   }
-
-  return <h1>Hello, {data.user.email || "user"}!</h1>;
 }
