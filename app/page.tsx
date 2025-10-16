@@ -1,14 +1,7 @@
 import { Metadata, Viewport } from "next";
-import Verify from "../components/Auth/Verify";
-import Footer from "../components/Footer/Footer";
-import Hero from "../components/Homepage/Hero";
-import TopArtists from "../components/Homepage/TopArtists";
-import WelcomeMessage from "../components/Homepage/WelcomeMessage";
 import Layout, { siteTitle } from "../components/layout";
-import ClientNavigationBar from "./ClientNavigationBar";
 import { getLocations } from "../utils/getLocations";
 import { createClient } from "../utils/supabase/server";
-import Locator from "../components/Locator/Locator";
 import { getCanonicalUrl } from "../utils/canonicalUrl";
 import HomeClient from "./HomeClient";
 
@@ -73,14 +66,6 @@ export default async function Home() {
   return (
     <Layout home canonicalUrl={canonicalUrl}>
       <HomeClient profile={profile} />
-      <ClientNavigationBar />
-      <Verify />
-      <Hero />
-      <WelcomeMessage />
-      <Locator />
-      <TopArtists />
-      {/* <SignupCTA /> */}
-      <Footer />
     </Layout>
   );
 }
