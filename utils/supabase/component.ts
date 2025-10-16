@@ -1,5 +1,9 @@
 import { createBrowserClient } from "@supabase/ssr";
 
+/**
+ * Creates a Supabase browser client for use in React components
+ * @returns {Object|null} Supabase browser client instance or null if environment variables are not configured
+ */
 export function createClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;

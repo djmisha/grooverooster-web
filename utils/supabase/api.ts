@@ -1,6 +1,12 @@
 import { createServerClient, serializeCookieHeader } from "@supabase/ssr";
 import { type NextApiRequest, type NextApiResponse } from "next";
 
+/**
+ * Creates a Supabase server client for API routes with cookie handling
+ * @param {NextApiRequest} req - Next.js API request object
+ * @param {NextApiResponse} res - Next.js API response object
+ * @returns {Object} Supabase server client instance
+ */
 export default function createClient(
   req: NextApiRequest,
   res: NextApiResponse
