@@ -14,7 +14,7 @@ import { FaRegCalendar, FaRegBuilding, FaUsers, FaVideo } from "react-icons/fa";
  * EventCard component displays a single event with artist, date, venue information and modal functionality
  * @param {Object} props - Component props
  * @param {Object} props.event - Event object containing all event details
- * @param {string} props.openEventId - ID of currently open event modal
+ * @param {number|null} props.openEventId - ID of currently open event modal
  * @param {Function} props.setOpenEventId - Function to set the open event ID
  * @returns {JSX.Element} Event card component with modal
  */
