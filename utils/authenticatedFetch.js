@@ -30,6 +30,7 @@ export async function authenticatedFetch(endpoint, options = {}) {
   const defaultHeaders = {
     "Content-Type": "application/json",
     "User-Agent": "NextJS-Internal-Client",
+    "X-Internal-Request": "true", // Custom header for internal identification
   };
 
   // Only add Authorization header if token is available
@@ -52,6 +53,7 @@ export async function authenticatedFetch(endpoint, options = {}) {
     hasInternalToken: !!process.env.INTERNAL_API_TOKEN,
     hasAuthHeader: !!defaultHeaders.Authorization,
     userAgent: defaultHeaders["User-Agent"],
+    internalRequest: defaultHeaders["X-Internal-Request"],
     headers: Object.keys(mergedOptions.headers),
   });
 

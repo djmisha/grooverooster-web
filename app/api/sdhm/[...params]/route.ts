@@ -250,6 +250,18 @@ export async function GET(
   request: Request,
   context: { params: Promise<{ params: string[] }> }
 ) {
+  // Debug: Log all incoming headers
+  console.log("[SDHM API Route] Incoming request headers:");
+  const headerEntries = Array.from(request.headers.entries());
+  headerEntries.forEach(([key, value]) => {
+    // Mask authorization header for security
+    if (key.toLowerCase() === 'authorization') {
+      console.log(`  ${key}: ${value.substring(0, 10)}...`);
+    } else {
+      console.log(`  ${key}: ${value}`);
+    }
+  });
+
   // Apply security checks
   const security = secureApiEndpoint(request, null as any);
 

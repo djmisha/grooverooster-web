@@ -82,6 +82,7 @@ function secureApiEndpoint(req, res) {
   // Handle both Next.js App Router (Request) and Pages Router (req object)
   const authHeader = req.headers.get ? req.headers.get("authorization") : req.headers.authorization;
   const userAgent = req.headers.get ? req.headers.get("user-agent") : req.headers["user-agent"];
+  const internalRequest = req.headers.get ? req.headers.get("x-internal-request") : req.headers["x-internal-request"];
   const requestPath = req.url || "";
 
   // Debug logging
@@ -91,7 +92,8 @@ function secureApiEndpoint(req, res) {
     hasAuthHeader: !!authHeader,
     authHeaderType: authHeader ? (authHeader.startsWith("Bearer") ? "Bearer token" : "Other") : "none",
     userAgent: userAgent || "none",
-    isInternalClient: userAgent && userAgent.includes("NextJS-Internal-Client"),
+    internalRequest: internalRequest || "none",
+    isInternalClient: (userAgent && userAgent.includes("NextJS-Internal-Client")) || internalRequest === "true",
     isFrontendOpen: isFrontendOpenEndpoint(requestPath),
   });
 
@@ -104,7 +106,7 @@ function secureApiEndpoint(req, res) {
       );
       res.setHeader(
         "Access-Control-Allow-Headers",
-        "Content-Type, Authorization"
+        "Content-Type, Authorization, X-Internal-Request"
       );
     }
     console.log("[apiSecurity] Allowing OPTIONS preflight request");
@@ -118,7 +120,8 @@ function secureApiEndpoint(req, res) {
   }
 
   // Allow internal server-to-server calls (Next.js server components calling internal APIs)
-  if (userAgent && userAgent.includes("NextJS-Internal-Client")) {
+  // Check both User-Agent and custom X-Internal-Request header
+  if ((userAgent && userAgent.includes("NextJS-Internal-Client")) || internalRequest === "true") {
     console.log("[apiSecurity] Allowing internal server-to-server call");
     return { allowed: true };
   }
