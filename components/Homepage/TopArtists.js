@@ -6,6 +6,10 @@ import TopArtistsCard from "../TopArtistsCard/TopArtistsCard";
 import Button from "../Button/Button";
 import ButtonWrapper from "../Button/ButtonWrapper";
 
+/**
+ * TopArtists component displays a randomized grid of top performing artists
+ * @returns {JSX.Element} Top artists section with load more functionality
+ */
 const TopArtists = () => {
   const [randomArtists, setRandomArtists] = useState([]);
   const [artists, setArtists] = useState([]);

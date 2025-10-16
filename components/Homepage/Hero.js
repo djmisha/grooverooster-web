@@ -3,6 +3,10 @@
 import HomeSearchAutocomplete from "../SearchAutoComplete/HomeSearchAutocomplete";
 import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
 
+/**
+ * Hero component displays the main hero section with search and location finder
+ * @returns {JSX.Element} Hero section with background gradient and search functionality
+ */
 const Hero = () => {
   return (
     <div className="relative h-dvh flex items-center justify-center bg-gradient-to-br from-[#18181c] to-[#0a0a0c]">
