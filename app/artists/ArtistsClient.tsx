@@ -66,7 +66,7 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
   }, [apiEvents]);
 
   return (
-    <Layout canonicalUrl={canonicalUrl}>
+    <Layout home={false} canonicalUrl={canonicalUrl}>
       <>
         <div className="text-center my-6">
           <h1>Top Touring Artists</h1>
@@ -168,7 +168,7 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
           </div>
         )}
       </>
-      <NavigationBar />
+      <NavigationBar setSearchTerm={() => {}} locationData={{}} />
     </Layout>
   );
 };

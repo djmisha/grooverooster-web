@@ -29,8 +29,8 @@ export default async function Home() {
 
   // Get user data if logged in
   const user = userData?.user || null;
-  let profile = null;
-  let defaultLocation = null;
+  let profile: any = null;
+  let defaultLocation: any = null;
 
   // If user is logged in, fetch their profile
   if (user) {
@@ -57,7 +57,7 @@ export default async function Home() {
   return (
     <Layout home canonicalUrl={canonicalUrl}>
       <HomeClient profile={profile} />
-      <NavigationBar />
+      <NavigationBar setSearchTerm={() => {}} locationData={{}} />
       <Verify />
       <Hero />
       <WelcomeMessage />

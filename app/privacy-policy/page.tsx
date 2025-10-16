@@ -1,24 +1,21 @@
-import Head from "next/head";
 import Link from "next/link";
 import Layout from "../../components/layout";
 import { getCanonicalUrl } from "../../utils/canonicalUrl";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  other: {
+    "impact-site-verification": "5cfd0d65-e35f-46d0-888f-cd6252e7d10c",
+  },
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+};
 
 export default function Page() {
   const canonicalUrl = getCanonicalUrl('/privacy-policy');
   
   return (
     <Layout home canonicalUrl={canonicalUrl}>
-      <Head>
-        <title>Privacy Policy</title>
-        <meta
-          name="impact-site-verification"
-          value="5cfd0d65-e35f-46d0-888f-cd6252e7d10c"
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-        ></meta>
-      </Head>
       <>
         <h1>Privacy Policy</h1>
         <p>Last updated: July 29, 2025</p>

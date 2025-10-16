@@ -15,8 +15,8 @@ export default async function StatesPage() {
   const canonicalUrl = getCanonicalUrl('/states');
   
   return (
-    <Layout canonicalUrl={canonicalUrl}>
-      <NavigationBar />
+    <Layout home={false} canonicalUrl={canonicalUrl}>
+      <NavigationBar setSearchTerm={() => {}} locationData={{}} />
       <h1>Events By State</h1>
       <CitiesStates locations={locations} showStatesOnly={true} />
     </Layout>

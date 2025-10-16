@@ -10,7 +10,7 @@ import localArtists from "../../../../localArtistsDB.json";
  * @param {string} city - City name for venue normalization
  * @returns {number} - Similarity score between 0 and 1
  */
-const calculateSimilarity = (str1, str2, city = "") => {
+const calculateSimilarity = (str1: any, str2: any, city: string = ""): number => {
   if (!str1 || !str2) return 0;
 
   // Normalize strings: lowercase, remove extra spaces, common words
@@ -42,7 +42,7 @@ const calculateSimilarity = (str1, str2, city = "") => {
   }
 
   // Calculate Levenshtein distance
-  const matrix = [];
+  const matrix: number[][] = [];
   const len1 = normalizedStr1.length;
   const len2 = normalizedStr2.length;
 
@@ -120,8 +120,8 @@ const removeDuplicateEvents = (events, city = "") => {
  * @param {Array} events - Array of events
  * @returns {Array} - Array sorted by date
  */
-const sortEventsByDate = (events) => {
-  return events.sort((a, b) => {
+const sortEventsByDate = (events: any[]) => {
+  return events.sort((a: any, b: any) => {
     // Handle cases where date might be null or undefined
     if (!a.date && !b.date) return 0;
     if (!a.date) return 1; // Put events without dates at the end
@@ -132,7 +132,7 @@ const sortEventsByDate = (events) => {
     const dateB = new Date(b.date);
 
     // Sort in ascending order (earliest first)
-    return dateA - dateB;
+    return dateA.getTime() - dateB.getTime();
   });
 };
 

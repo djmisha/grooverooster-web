@@ -46,12 +46,12 @@ export default async function Artist({ params }: ArtistPageProps) {
     const canonicalUrl = getCanonicalUrl(`/artist/${slug}`);
 
     return (
-      <Layout canonicalUrl={canonicalUrl}>
+      <Layout home={false} canonicalUrl={canonicalUrl}>
         <GoogleAutoAds />
-        <NavigationBar />
+        <NavigationBar setSearchTerm={() => {}} locationData={{}} />
         <div className="text-center [&_h1]:border-none [&_h1]:text-center pt-10">
           <div className="artist-header">
-            <ArtistImage id={artistData.id} />
+            <ArtistImage id={artistData.id} imageUrl={undefined} />
             <h1>{name}</h1>
           </div>
           <ArtistBio name={name} lastFMdata={lastFMdata} />

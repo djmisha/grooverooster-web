@@ -54,6 +54,7 @@ export default async function Location({ params, searchParams }: LocationPagePro
     if (!stateInfo) {
       const { notFound } = await import("next/navigation");
       notFound();
+      return null; // TypeScript doesn't know notFound() never returns
     }
 
     const canonicalUrl = getCanonicalUrl(`/events/${stateInfo.slug}`);
@@ -61,7 +62,7 @@ export default async function Location({ params, searchParams }: LocationPagePro
     // If state has cities, show city links
     if (stateInfo.hasCities) {
       return (
-        <Layout canonicalUrl={canonicalUrl}>
+        <Layout home={false} canonicalUrl={canonicalUrl}>
           <StateLandingPage
             stateName={stateInfo.name}
             cities={stateInfo.cities}
@@ -77,7 +78,7 @@ export default async function Location({ params, searchParams }: LocationPagePro
     }
 
     // If state has no cities, fetch events directly via EDM TRAIN API
-    let events = [];
+    let events: any[] = [];
     try {
       if (!stateInfo.city) {
         const apiUrl = `http://${host}/api/events/${stateInfo.id}`;
@@ -100,8 +101,8 @@ export default async function Location({ params, searchParams }: LocationPagePro
     }
 
     return (
-      <Layout canonicalUrl={canonicalUrl}>
-        <EventsModule
+      <Layout home={false} canonicalUrl={canonicalUrl}>
+        <EventsModule isHome={false}
           key={stateInfo.id}
           locationData={{
             id: stateInfo.id,
@@ -123,10 +124,11 @@ export default async function Location({ params, searchParams }: LocationPagePro
   if (!locationData.id) {
     const { notFound } = await import("next/navigation");
     notFound();
+    return null; // TypeScript doesn't know notFound() never returns
   }
 
   // Call the SDHM API and process events
-  let events = [];
+  let events: any[] = [];
   try {
     events = await getSDHMEvents(locationData.id, locationData.city);
   } catch (error) {
@@ -138,8 +140,8 @@ export default async function Location({ params, searchParams }: LocationPagePro
   const canonicalUrl = getCanonicalUrl(`/events/${locationData.slug}`);
 
   return (
-    <Layout canonicalUrl={canonicalUrl}>
-      <EventsModule
+    <Layout home={false} canonicalUrl={canonicalUrl}>
+      <EventsModule isHome={false}
         key={locationData.id}
         locationData={locationData}
         events={events}
