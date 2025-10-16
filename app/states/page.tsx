@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import Layout from "../../components/layout";
 import CitiesStates from "../../components/Homepage/CitiesStates";
 import { getLocations } from "../../utils/getLocations";
@@ -7,7 +7,13 @@ import { getCanonicalUrl } from "../../utils/canonicalUrl";
 
 export const metadata: Metadata = {
   title: "Events By State",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
 };
 
 export default async function StatesPage() {

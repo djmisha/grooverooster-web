@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import Verify from "../components/Auth/Verify";
 import Footer from "../components/Footer/Footer";
 import Hero from "../components/Homepage/Hero";
@@ -17,7 +17,13 @@ export const metadata: Metadata = {
   other: {
     "impact-site-verification": "5cfd0d65-e35f-46d0-888f-cd6252e7d10c",
   },
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
 };
 
 export default async function Home() {

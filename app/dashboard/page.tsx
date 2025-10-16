@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Dashboard",
 };
 
+// Force dynamic rendering since this page uses cookies
+export const dynamic = 'force-dynamic';
+
 interface UserProfile {
   id: string;
   default_location_id?: string | number;

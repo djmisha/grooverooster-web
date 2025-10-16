@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Profile",
 };
 
+// Force dynamic rendering since this page uses cookies
+export const dynamic = 'force-dynamic';
+
 export default async function ProfilePage() {
   try {
     const supabase = await createClient();

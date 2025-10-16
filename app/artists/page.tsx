@@ -1,12 +1,18 @@
 import { getArtistsCounts } from "../../utils/getArtists";
 import ArtistsClient from "./ArtistsClient";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 
 const title = "Top Touring EDM DJ's & Artists";
 
 export const metadata: Metadata = {
   title: title,
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0",
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
 };
 
 // Revalidate every 1 month (2419200 seconds)
