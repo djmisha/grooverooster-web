@@ -7,7 +7,15 @@ export async function GET(
   const { id } = await context.params;
   const KEY = process.env.NEXT_PUBLIC_API_KEY_EDMTRAIN;
   const EDMURL = process.env.NEXT_PUBLIC_API_URL_EDMTRAIN_ARTIST;
-  const URL = EDMURL + id + "&client=" + KEY;
+  
+  if (!EDMURL || !KEY) {
+    return NextResponse.json(
+      { error: "Missing API configuration" },
+      { status: 500 }
+    );
+  }
+  
+  const URL = `${EDMURL}${id}&client=${KEY}`;
 
   try {
     const apiResponse = await fetch(URL);
@@ -19,6 +27,7 @@ export async function GET(
       },
     });
   } catch (error: any) {
+    console.error(`Failed to parse URL from ${URL}`);
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
