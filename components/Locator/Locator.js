@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useContext } from "react";
-import { AppContext } from "../../features/AppContext.js";
+import { AppContext } from "../../features/AppContext";
 import { getSDHMEventsClient } from "../../utils/getEvents";
 import { ToSlugArtist } from "../../utils/utilities";
 import EventCard from "../EventCard/EventCard";
