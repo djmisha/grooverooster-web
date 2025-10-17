@@ -1,5 +1,12 @@
 import PropTypes from "prop-types";
 
+/**
+ * ArtistImage component displays an artist image with fallback support
+ * @param {Object} props - Component props
+ * @param {number} [props.id] - Artist ID to construct local image path
+ * @param {string} [props.imageUrl] - Remote image URL (e.g., from Ticketmaster)
+ * @returns {JSX.Element} Artist image div with background image and fallback
+ */
 const ArtistImage = ({ id, imageUrl }) => {
   // Determine which image to use based on props
   let finalUrl;

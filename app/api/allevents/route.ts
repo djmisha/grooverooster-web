@@ -10,6 +10,11 @@ export const config = {
   },
 };
 
+/**
+ * GET handler for retrieving all events from all locations
+ * @param {Request} request - HTTP request object
+ * @returns {Promise<NextResponse>} JSON response with all events data
+ */
 export async function GET(request: Request) {
   // Apply security checks
   const security = secureAppRouterEndpoint(request);

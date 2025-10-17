@@ -8,7 +8,10 @@ export const metadata: Metadata = {
   title: title,
 };
 
-export const viewport: Viewport = {
+/**
+ * Artists page component displays list of top touring EDM DJs and artists
+ * @returns {Promise<JSX.Element>} Artists listing page
+ */export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1.0,
   maximumScale: 1.0,

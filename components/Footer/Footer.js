@@ -1,6 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 
+/**
+ * Footer component displays site navigation, data partners, and copyright information
+ * @returns {JSX.Element} Footer section with navigation links and branding
+ */
 const Footer = () => {
   return (
     <footer className="py-20 px-4 pb-10 bg-white text-gray-400 border-t-2 border-gray-200 mt-10">

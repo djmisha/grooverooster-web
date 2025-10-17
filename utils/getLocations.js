@@ -1,10 +1,20 @@
 import locations from "./locations.json";
 
+/**
+ * Converts a string to a URL-friendly slug
+ * @param {string} string - The string to convert to a slug
+ * @returns {string} - Lowercase string with spaces replaced by dashes
+ */
 // replace space with dash & lowercase
 export const toSlug = (string) => {
   return string.split(" ").join("-").toLowerCase();
 };
 
+/**
+ * Separates locations into cities and states, then sorts and combines them
+ * @param {Array} locations - Array of location objects containing city/state data
+ * @returns {Array} - Combined array with cities first (alphabetically), then states (alphabetically)
+ */
 // add city and state to the locations array
 const addCityAndState = (locations) => {
   const cities = [];
@@ -45,6 +55,10 @@ const addCityAndState = (locations) => {
 
 export const allLocations = addCityAndState(locations);
 
+/**
+ * Gets all locations with slugs for homepage display
+ * @returns {Array} Array of location objects with id, city, state, and slug properties
+ */
 // gets all locations for homepage
 export const getLocations = () => {
   return allLocations.map((location) => {
@@ -61,6 +75,11 @@ export const getLocations = () => {
   });
 };
 
+/**
+ * Matches a slug with location data and returns location information
+ * @param {string} slug - URL slug to match (e.g., "san-diego" or "california")
+ * @returns {Object} Location data object with slug and matching location properties
+ */
 // Matches Slug with Location and returns data about location
 export const getLocationData = (slug) => {
   let cityData = null;
@@ -85,6 +104,11 @@ export const getLocationData = (slug) => {
   };
 };
 
+/**
+ * Creates internal events URL path for a location
+ * @param {Object} location - Location object with city or state property
+ * @returns {string|null} URL path in format "/events/slug" or null if invalid
+ */
 // Create internal events URL path for a location
 export const getLocationEventsUrl = (location) => {
   if (!location) return null;
@@ -103,6 +127,11 @@ export const getLocationEventsUrl = (location) => {
   return `/events/${slug}`;
 };
 
+/**
+ * Gets location slug for URL generation
+ * @param {Object} location - Location object with city or state property
+ * @returns {string|null} URL slug or null if invalid
+ */
 // Get location slug for URL generation
 export const getLocationSlug = (location) => {
   if (!location) return null;
@@ -117,11 +146,21 @@ export const getLocationSlug = (location) => {
   return null;
 };
 
+/**
+ * Validates if a location has a valid URL path
+ * @param {Object} location - Location object to validate
+ * @returns {boolean} True if location has a city or state, false otherwise
+ */
 // Validate if a location has a valid URL path
 export const hasValidLocationUrl = (location) => {
   return !!(location && (location.city || location.state));
 };
 
+/**
+ * Checks if a slug corresponds to a state (not a city)
+ * @param {string} slug - URL slug to check
+ * @returns {boolean} True if slug represents a state, false otherwise
+ */
 // Check if a slug corresponds to a state (not a city)
 export const isStateLandingPage = (slug) => {
   const stateEntry = allLocations.find(
@@ -130,6 +169,11 @@ export const isStateLandingPage = (slug) => {
   return !!stateEntry;
 };
 
+/**
+ * Gets all cities within a specific state
+ * @param {string} stateSlug - URL slug of the state
+ * @returns {Array} Array of city objects with id, name, slug, and state properties
+ */
 // Get all cities within a specific state
 export const getCitiesInState = (stateSlug) => {
   // First find the state name from the slug
@@ -153,6 +197,11 @@ export const getCitiesInState = (stateSlug) => {
   return cities;
 };
 
+/**
+ * Gets state information including all cities within that state
+ * @param {string} stateSlug - URL slug of the state
+ * @returns {Object|null} State info object with id, name, slug, cities array, and hasCities flag, or null if not found
+ */
 // Get state information from slug
 export const getStateInfo = (stateSlug) => {
   const stateEntry = allLocations.find(

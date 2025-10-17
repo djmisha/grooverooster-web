@@ -1,3 +1,8 @@
+/**
+ * Formats artist bio by cleaning HTML and adding line breaks
+ * @param {string} bio - Raw bio text with HTML
+ * @returns {string} Formatted bio text
+ */
 // @TODO - add line breaks before read more, add paragraph style for CC license
 export const formatBio = (bio) => {
   if (!bio) return "";

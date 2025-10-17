@@ -1,5 +1,10 @@
 import { formatBio } from "./ArtistBio.helpers";
 
+/**
+ * Saves tags to the database via API
+ * @param {Array} tags - Array of tag objects to save
+ * @returns {Promise<void>}
+ */
 const saveTags = async (tags) => {
   // Save tags to the database or API
   // removing for now to save function requests

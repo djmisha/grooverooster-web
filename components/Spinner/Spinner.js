@@ -1,5 +1,12 @@
 import Image from "next/image";
 
+/**
+ * Spinner component displays a loading indicator with optional text
+ * @param {Object} props - Component props
+ * @param {boolean} props.isLoading - Whether to show the loading spinner
+ * @param {string} [props.text="loading"] - Loading text to display
+ * @returns {JSX.Element} Loading spinner with text
+ */
 const Spinner = ({ isLoading, text = "loading" }) => (
   <div className="spinner">
     <div>

@@ -3,6 +3,13 @@ import ArtistImage from "../Artists/ArtistImage";
 import { ToSlugArtist } from "../../utils/utilities";
 import { FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
 
+/**
+ * TopArtistsCard component displays an artist card with event count and locations
+ * @param {Object} props - Component props
+ * @param {Object} props.artist - Artist object with id, name, count, and locations
+ * @param {boolean} [props.showCounts=true] - Whether to show event counts
+ * @returns {JSX.Element} Artist card with link to artist page
+ */
 const TopArtistsCard = ({ artist, showCounts = true }) => {
   const { id, name, count, locations } = artist;
 

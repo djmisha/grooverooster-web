@@ -3,6 +3,14 @@ import Script from "next/script";
 
 export const siteTitle = "House Music & EDM Events Across North America";
 
+/**
+ * Layout component that provides page structure with SEO meta tags
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Page content
+ * @param {boolean} props.home - Whether this is the home page
+ * @param {string} props.canonicalUrl - Canonical URL for SEO
+ * @returns {JSX.Element} Page layout with head tags and main content
+ */
 export default function Layout({ children, home, canonicalUrl }) {
   return (
     <div>

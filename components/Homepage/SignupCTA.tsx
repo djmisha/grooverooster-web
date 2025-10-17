@@ -1,5 +1,9 @@
 import Signup from "../User/Signup";
 
+/**
+ * SignupCTA component displays a call-to-action section encouraging user signup
+ * @returns {JSX.Element} Signup CTA section with benefits list and signup form
+ */
 export default function SignupCTA() {
   return (
     <section className="flex justify-between p-8 bg-gray-50 rounded-lg shadow-md my-8 flex-col md:flex-row">

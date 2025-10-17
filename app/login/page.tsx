@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   title: "Login",
 };
 
+/**
+ * LoginPage component renders the login page
+ * @returns {JSX.Element} Login page with form and signup link
+ */
 export default function LoginPage() {
   return (
     <main>

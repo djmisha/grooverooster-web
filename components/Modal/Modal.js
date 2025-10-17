@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
+/**
+ * Modal component that displays content in an overlay with scroll lock
+ * @param {Object} props - Component props
+ * @param {React.ElementType} props.component - Component to render inside the modal
+ * @param {Function} props.onClose - Callback function when modal is closed
+ * @returns {JSX.Element} Modal overlay with content
+ */
 const Modal = ({ component: Component, onClose }) => {
   // Disable body scroll when modal is open
   useEffect(() => {

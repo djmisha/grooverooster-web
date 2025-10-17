@@ -10,6 +10,14 @@ import {
 import NavItem from "../Navigation/NavItem";
 import BackToTop from "../BackToTop/BackToTop";
 import {
+
+/**
+ * EventsFilter component provides filtering UI for events by venue, artist, date, and promoter
+ * @param {Object} props - Component props
+ * @param {Array} props.events - Array of events to generate filter options from
+ * @param {Function} props.setSearchTerm - Function to set the active search/filter term
+ * @returns {JSX.Element} Filter navigation items and back-to-top button
+ */
   FaCalendarAlt,
   FaMapMarkerAlt,
   FaUsers,
