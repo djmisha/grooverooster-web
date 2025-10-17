@@ -62,7 +62,9 @@ export const searchFilter = (searchTerm, events) => {
     const regexString = new RegExp(cleanString(actualSearchTerm), "i"); // used to be 'gi' but was not searching date correctly
 
     events.forEach((article) => {
-      const { id, formattedDate, venue, artistList, name } = article;
+      const { id, formattedDate, venue, artistlist, name } = article;
+      // Support both old and new field names
+      const artistList = artistlist || article.artistList || [];
       const { name: venueName } = venue;
 
       if (regexString.test(cleanString(formattedDate))) {
