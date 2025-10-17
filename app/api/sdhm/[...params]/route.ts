@@ -104,8 +104,9 @@ const removeDuplicateEvents = (events, city = "") => {
     });
 
     if (duplicateIndex !== -1) {
-      // Prefer ticketmaster data over other sources
-      if (event.eventSource === "ticketmaster") {
+      // Prefer ticketmaster data over other sources (support both old and new field names)
+      const eventSource = event.source || event.eventSource;
+      if (eventSource === "ticketmaster") {
         acc[duplicateIndex] = event;
       }
       // Otherwise keep the first one (which could be ticketmaster or any other source)
