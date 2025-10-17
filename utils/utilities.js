@@ -44,7 +44,9 @@ export const makeDates = (data) => {
 export const makeArtists = (data) => {
   let allArtists = [];
   data.map((item) => {
-    return item.artistList.map((artist) => {
+    // Support both old and new field names
+    const artistList = item.artistlist || item.artistList || [];
+    return artistList.map((artist) => {
       allArtists.push(artist.name);
     });
   });

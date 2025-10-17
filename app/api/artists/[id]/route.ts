@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
 
 export async function GET(
   request: Request,
@@ -21,7 +22,13 @@ export async function GET(
     const apiResponse = await fetch(URL);
     const data = await apiResponse.json();
 
-    return NextResponse.json(data, {
+    // Transform EDM Train legacy format to new SDHM format
+    const transformedData = {
+      ...data,
+      data: transformEDMTrainEventsArray(data.data || []),
+    };
+
+    return NextResponse.json(transformedData, {
       headers: {
         "Cache-Control": "s-maxage=604800",
       },

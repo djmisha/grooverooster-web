@@ -13,7 +13,10 @@ import Button from "../Button/Button";
  * @returns {JSX.Element} Event details view with artist, date, venue, and ticket link
  */
 const EventDetails = ({ event }) => {
-  const { date, artistList, name, venue, link, eventSource, imageUrl } = event;
+  const { date, artistlist, name, venue, link, source, imageUrl } = event;
+  // Support both old and new field names during transition
+  const artistList = artistlist || event.artistList || [];
+  const eventSource = source || event.eventSource;
   const { name: venueName, address } = venue;
   const { dayOfWeek, dayMonth, daySchema } = setDates(date);
 

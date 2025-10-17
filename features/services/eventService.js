@@ -212,8 +212,10 @@ const addNewEventsfromEDMTrain = async (data, locationId) => {
     });
 
     // Process artist list and prepare artist-event relationships
-    if (event.artistList && Array.isArray(event.artistList)) {
-      event.artistList.forEach((artist) => {
+    // Support both old and new field names
+    const artistList = event.artistlist || event.artistList;
+    if (artistList && Array.isArray(artistList)) {
+      artistList.forEach((artist) => {
         const key = `${event.id}_${artist.id}`;
         artistMap.set(key, {
           event_id: event.id,

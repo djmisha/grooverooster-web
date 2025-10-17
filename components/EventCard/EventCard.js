@@ -23,15 +23,20 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
   const currentUrl = useCurrentUrl();
   const {
     date,
-    artistList,
+    artistlist,
     name,
     venue,
     isVisible,
-    eventSource,
-    festivalInd,
-    livestreamInd,
+    source,
+    festivalind,
+    livestreamind,
     imageUrl,
   } = event;
+  // Support both old and new field names during transition
+  const artistList = artistlist || event.artistList || [];
+  const eventSource = source || event.eventSource;
+  const festivalInd = festivalind !== undefined ? festivalind : event.festivalInd;
+  const livestreamInd = livestreamind !== undefined ? livestreamind : event.livestreamInd;
   const { name: venueName } = venue;
   const { dayOfWeek, dayMonth, daySchema } = setDates(date);
 
