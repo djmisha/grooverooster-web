@@ -12,22 +12,27 @@ import {
   getSavedLocation,
   saveLocationToCookie,
 } from "../utils/locationService";
+import { AppContextValue, Location, Profile } from "../types";
 
 /**
  * Application context for managing global state including location and user profile
  */
-export const AppContext = createContext();
+export const AppContext = createContext<AppContextValue | undefined>(undefined);
+
+interface AppProviderProps {
+  children: React.ReactNode;
+}
 
 /**
  * AppProvider component that provides global application state to children components
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Child components to wrap with context
- * @returns {JSX.Element} Context provider with application state
+ * @param props - Component props
+ * @param props.children - Child components to wrap with context
+ * @returns Context provider with application state
  */
-export const AppProvider = ({ children }) => {
-  const [locationCtx, setLocationCtx] = useState([]);
-  const [currentUserLocation, setCurrentUserLocation] = useState(null);
-  const [profile, setProfile] = useState(null);
+export const AppProvider = ({ children }: AppProviderProps) => {
+  const [locationCtx, setLocationCtx] = useState<Location[]>([]);
+  const [currentUserLocation, setCurrentUserLocation] = useState<Location | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const supabase = createClient();
   const isProfileInitialized = useRef(false);
 
@@ -40,9 +45,9 @@ export const AppProvider = ({ children }) => {
 
   /**
    * Adds a new location to the location context array if it doesn't already exist
-   * @param {Object} location - Location object to add
+   * @param location - Location object to add
    */
-  const addLocation = (location) => {
+  const addLocation = (location: Location) => {
     setLocationCtx((prevLocations) => {
       // Check if a location with the same id already exists in the array
       const locationExists = prevLocations.some(
@@ -59,9 +64,9 @@ export const AppProvider = ({ children }) => {
 
   /**
    * Sets the current user location and saves it to cookie
-   * @param {Object} location - Location object to set as current
+   * @param location - Location object to set as current
    */
-  const setUserLocation = (location) => {
+  const setUserLocation = (location: Location) => {
     setCurrentUserLocation(location);
     if (location) {
       saveLocationToCookie(location);
