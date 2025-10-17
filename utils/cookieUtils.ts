@@ -4,9 +4,9 @@
 
 /**
  * Delete a cookie by name
- * @param {string} name - Cookie name
+ * @param name - Cookie name
  */
-export const deleteCookie = (name) => {
+export const deleteCookie = (name: string): void => {
   try {
     document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`;
   } catch (error) {
@@ -16,11 +16,11 @@ export const deleteCookie = (name) => {
 
 /**
  * Set a cookie with specified name, value, and options
- * @param {string} name - Cookie name
- * @param {string} value - Cookie value (will be JSON stringified if object)
- * @param {number} days - Expiration in days (default: 30)
+ * @param name - Cookie name
+ * @param value - Cookie value (will be JSON stringified if object)
+ * @param days - Expiration in days (default: 30)
  */
-export const setCookie = (name, value, days = 30) => {
+export const setCookie = (name: string, value: any, days: number = 30): void => {
   try {
     if (value === null || value === undefined) {
       deleteCookie(name);
@@ -42,10 +42,10 @@ export const setCookie = (name, value, days = 30) => {
 
 /**
  * Get a cookie value by name
- * @param {string} name - Cookie name
- * @returns {string|null} Cookie value or null if not found
+ * @param name - Cookie name
+ * @returns Cookie value or null if not found
  */
-export const getCookie = (name) => {
+export const getCookie = (name: string): any => {
   try {
     const nameEQ = name + "=";
     const ca = document.cookie.split(";");
@@ -71,9 +71,9 @@ export const getCookie = (name) => {
 
 /**
  * Check if cookies are enabled in the browser
- * @returns {boolean} True if cookies are enabled
+ * @returns True if cookies are enabled
  */
-export const areCookiesEnabled = () => {
+export const areCookiesEnabled = (): boolean => {
   try {
     setCookie("test", "test", 1);
     const result = getCookie("test") === "test";
