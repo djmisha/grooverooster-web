@@ -1,6 +1,5 @@
 import { Metadata, Viewport } from "next";
 import Layout, { siteTitle } from "../components/layout";
-import { getLocations } from "../utils/getLocations";
 import { createClient } from "../utils/supabase/server";
 import { getCanonicalUrl } from "../utils/canonicalUrl";
 import HomeClient from "./HomeClient";
@@ -27,12 +26,9 @@ export const dynamic = "force-dynamic";
  * @returns {Promise<JSX.Element>} The home page with user profile and location data
  */
 export default async function Home() {
-  const locations = getLocations();
-
   // Get user data if logged in
   let user: any = null;
   let profile: any = null;
-  let defaultLocation: any = null;
 
   try {
     // Use server-side client to check authentication status
@@ -49,16 +45,6 @@ export default async function Home() {
         .single();
 
       profile = profileData || null;
-
-      // If profile has default location, fetch the location data
-      if (profile?.default_location_id) {
-        // Convert default_location_id to number to ensure correct comparison
-        const locationId = parseInt(profile.default_location_id, 10);
-
-        // Find the location in the locations array
-        defaultLocation =
-          locations.find((loc: any) => loc.id === locationId) || null;
-      }
     }
   } catch (error) {
     // Supabase not configured or error fetching user data

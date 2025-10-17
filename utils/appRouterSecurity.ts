@@ -5,12 +5,18 @@
 
 import secureApiEndpoint from "./apiSecurity";
 
+interface SecurityResult {
+  allowed: boolean;
+  error?: string;
+  isPreflight?: boolean;
+}
+
 /**
  * Secure an App Router API endpoint
  * @param request - Next.js App Router Request object
  * @returns Security check result
  */
-export function secureAppRouterEndpoint(request: Request) {
+export function secureAppRouterEndpoint(request: Request): SecurityResult {
   // Adapt App Router Request to Pages Router format for security check
   const url = new URL(request.url);
   const adaptedReq = {

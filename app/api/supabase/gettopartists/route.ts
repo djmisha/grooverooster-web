@@ -3,17 +3,22 @@ import { supabaseAdmin } from "../../../../features/Supabase";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 
 const getData = async () => {
+  if (!supabaseAdmin) {
+    throw new Error("Supabase admin client not initialized");
+  }
+
   try {
     const { data, error } = await supabaseAdmin.from("topartists").select("*");
 
     if (error) {
       console.error("Error fetching data: ", error);
-      return;
+      return null;
     }
 
     return data;
   } catch (error) {
     console.error("Unexpected error occurred: ", error);
+    return null;
   }
 };
 

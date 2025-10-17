@@ -3,6 +3,10 @@ import supabase from "../../../../features/Supabase";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 
 const setData = async (artists: any[]) => {
+  if (!supabase) {
+    throw new Error("Supabase client not initialized");
+  }
+
   try {
     // Delete all rows
     const { error: deleteError } = await supabase
@@ -16,7 +20,7 @@ const setData = async (artists: any[]) => {
     }
 
     // Insert new rows
-    const { data, error: insertError } = await supabase
+    const { error: insertError } = await supabase
       .from("topartists")
       .insert(artists);
 

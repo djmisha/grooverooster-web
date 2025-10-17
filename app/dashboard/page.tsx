@@ -1,4 +1,3 @@
-import type { User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import UserDashboard from "../../components/User/UserDashboard";
 import { createClient } from "../../utils/supabase/server";

@@ -68,6 +68,6 @@ export default async function Artist({ params }: ArtistPageProps) {
     );
   } catch (error) {
     const { notFound } = await import("next/navigation");
-    notFound();
+    return notFound();
   }
 }

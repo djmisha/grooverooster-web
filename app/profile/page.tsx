@@ -1,4 +1,3 @@
-import type { User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import ClientNavigationBar from "./ClientNavigationBar";
 import EditProfile from "../../components/User/EditProfile";

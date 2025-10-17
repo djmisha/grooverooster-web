@@ -25,14 +25,14 @@ export async function generateMetadata({
   if (isStateLandingPage(slug)) {
     const stateInfo = getStateInfo(slug);
     if (stateInfo) {
-      const title = makePageTitle(null, stateInfo.name);
-      const description = makePageDescription(null, stateInfo.name);
+      const title = makePageTitle(undefined, stateInfo.name);
+      const description = makePageDescription(undefined, stateInfo.name);
       return { title, description };
     }
   }
 
   const locationData = getLocationData(slug);
-  if (locationData.id) {
+  if (locationData && locationData.id) {
     const { city, state } = locationData;
     const title = makePageTitle(city, state);
     const description = makePageDescription(city, state);
@@ -85,7 +85,7 @@ export default async function Location({
     // If state has no cities, fetch events directly via EDM TRAIN API
     let events: any[] = [];
     try {
-      if (!stateInfo.city) {
+      if (!stateInfo.hasCities) {
         const apiUrl = `http://${host}/api/events/${stateInfo.id}`;
         const response = await fetch(apiUrl, { cache: "no-store" });
 
@@ -97,7 +97,7 @@ export default async function Location({
           events = [];
         }
       } else {
-        console.warn("Skipping state API call - city present in location data");
+        console.warn("Skipping state API call - cities present in state");
         events = [];
       }
     } catch (error) {
@@ -127,7 +127,7 @@ export default async function Location({
   // Default behavior for city/regular location pages
   const locationData = getLocationData(slug);
 
-  if (!locationData.id) {
+  if (!locationData || !locationData.id) {
     const { notFound } = await import("next/navigation");
     notFound();
     return null; // TypeScript doesn't know notFound() never returns
@@ -136,13 +136,12 @@ export default async function Location({
   // Call the SDHM API and process events
   let events: any[] = [];
   try {
-    events = await getSDHMEvents(locationData.id, locationData.city);
+    events = await getSDHMEvents(locationData.id as number, locationData.city || '');
   } catch (error) {
     console.error("Error fetching events from SDHM API:", error);
     events = [];
   }
 
-  const { city, state } = locationData;
   const canonicalUrl = getCanonicalUrl(`/events/${locationData.slug}`);
 
   return (

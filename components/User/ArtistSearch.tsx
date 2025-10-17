@@ -23,7 +23,8 @@ const ArtistSearch = ({ userId, onArtistAdded }: ArtistSearchProps) => {
     text: string;
   } | null>(null);
 
-  const { supabase } = useContext(AppContext);
+  const context = useContext(AppContext);
+  const supabase = context?.supabase;
 
   // Fetch current favorite artist ids
   useEffect(() => {

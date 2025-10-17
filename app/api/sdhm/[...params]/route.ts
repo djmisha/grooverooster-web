@@ -21,7 +21,7 @@ const calculateSimilarity = (
   if (!str1 || !str2) return 0;
 
   // Normalize strings: lowercase, remove extra spaces, common words
-  const normalize = (str) => {
+  const normalize = (str: string): string => {
     const cityPattern = city ? `|${city.toLowerCase()}` : "";
     const regex = new RegExp(
       `\\b(nightclub|club|theater|theatre|venue${cityPattern})\\b`,
@@ -87,8 +87,8 @@ const calculateSimilarity = (
  * @param {string} city - City name for venue normalization
  * @returns {Array} - Array with duplicates removed
  */
-const removeDuplicateEvents = (events, city = "") => {
-  return events.reduce((acc, event) => {
+const removeDuplicateEvents = (events: any[], city: string = ""): any[] => {
+  return events.reduce((acc: any[], event: any) => {
     const duplicateIndex = acc.findIndex((e) => {
       // Must be the same date
       if (e.date !== event.date) return false;
@@ -149,8 +149,8 @@ const sortEventsByDate = (events: any[]) => {
  * @param {Array} events - Array of events
  * @returns {Array} - Formatted events array
  */
-const formatTicketMasterwithImagesArtists = (events) => {
-  return events.map((event) => {
+const formatTicketMasterwithImagesArtists = (events: any[]): any[] => {
+  return events.map((event: any) => {
     // Check if artistlist is not empty and event name exists (using new schema field name)
     if (
       event.source === "ticketmaster" &&
@@ -187,7 +187,7 @@ const formatTicketMasterwithImagesArtists = (events) => {
  * @param {Date|string} date - Date object or date string
  * @returns {string} - Date in YYYY-MM-DD format
  */
-const toDateString = (date) => {
+const toDateString = (date: Date | string): string => {
   if (typeof date === "string") {
     return date.split("T")[0]; // Extract date part from ISO string
   }
@@ -206,7 +206,7 @@ const toDateString = (date) => {
  * @param {Array} events - Array of events
  * @returns {Array} - Array with past events removed
  */
-const filterPastEvents = (events) => {
+const filterPastEvents = (events: any[]): any[] => {
   const todayString = toDateString(new Date());
 
   return events.filter((event) => {
@@ -220,7 +220,7 @@ const filterPastEvents = (events) => {
  * @param {Array} events - Array of events
  * @returns {Array} - Array with formattedDate and isVisible fields added
  */
-const addFormattedFields = (events) => {
+const addFormattedFields = (events: any[]): any[] => {
   return events.map((event) => ({
     ...event,
     isVisible: true,
@@ -234,7 +234,7 @@ const addFormattedFields = (events) => {
  * @param {string} city - City name for venue normalization
  * @returns {Array} - Processed and filtered events array
  */
-const processSDHMEvents = (rawEvents, city = "") => {
+const processSDHMEvents = (rawEvents: any[], city: string = ""): any[] => {
   if (!Array.isArray(rawEvents) || rawEvents.length === 0) {
     return [];
   }

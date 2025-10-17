@@ -22,7 +22,8 @@ const FavoriteArtists = ({ userId }: FavoriteArtistsProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [draggedItem, setDraggedItem] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const { supabase } = useContext(AppContext);
+  const context = useContext(AppContext);
+  const supabase = context?.supabase;
 
   // Detect if we're on mobile
   useEffect(() => {

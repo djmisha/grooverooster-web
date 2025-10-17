@@ -2,14 +2,14 @@
  * Supabase client configuration and initialization
  * Creates both regular and admin Supabase client instances
  */
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-let supabase;
-let supabaseAdmin;
+let supabase: SupabaseClient | null;
+let supabaseAdmin: SupabaseClient | null;
 
 // Only create clients if environment variables are available
 if (supabaseUrl && supabaseKey) {

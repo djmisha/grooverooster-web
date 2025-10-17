@@ -3,6 +3,10 @@ import supabase from "../../../../features/Supabase";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 
 const fetchExistingArtists = async () => {
+  if (!supabase) {
+    throw new Error("Supabase client not initialized");
+  }
+
   let allArtists: any[] = [];
   let from = 0;
   const limit = 900;

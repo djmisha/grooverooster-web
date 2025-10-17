@@ -7,7 +7,8 @@ import { AppContext } from "../../features/AppContext";
 
 export default function Login() {
   const router = useRouter();
-  const { supabase } = useContext(AppContext);
+  const context = useContext(AppContext);
+  const supabase = context?.supabase;
 
   // Login form state
   const [email, setEmail] = useState("");

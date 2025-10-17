@@ -129,8 +129,8 @@ export interface ArtistsResponse {
 // Component Prop Types
 export interface EventCardProps {
   event: Event;
-  openEventId: string | number | null;
-  setOpenEventId: (id: string | number | null) => void;
+  openEventId: EventId | null;
+  setOpenEventId: (id: EventId | null) => void;
 }
 
 export interface FilterProps {
