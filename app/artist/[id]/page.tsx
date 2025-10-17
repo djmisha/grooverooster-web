@@ -16,9 +16,11 @@ interface ArtistPageProps {
   params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: ArtistPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ArtistPageProps): Promise<Metadata> {
   const { id } = await params;
-  
+
   try {
     const artistData = await getArtistData(id);
     const title = `${artistData.name} - Upcoming Events & Artist Information`;
@@ -37,7 +39,7 @@ export async function generateMetadata({ params }: ArtistPageProps): Promise<Met
 
 export default async function Artist({ params }: ArtistPageProps) {
   const { id } = await params;
-  
+
   try {
     const artistData = await getArtistData(id);
     const events = await getArtistEvents(artistData.id);

@@ -22,7 +22,7 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
   const filteredArtists = filterSurpriseGuest(uniqueArtists);
   const apiEvents = filteredArtists.slice(0, 30);
   const hasFetched = useRef(false);
-  const canonicalUrl = getCanonicalUrl('/artists');
+  const canonicalUrl = getCanonicalUrl("/artists");
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);

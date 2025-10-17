@@ -325,16 +325,14 @@ export const formatTicketMasterwithImagesArtists = (events) => {
     // Support both old and new field names, check if artistlist is not empty and event name exists
     const artistList = event.artistlist || event.artistList || [];
     const eventSource = event.source || event.eventSource;
-    
+
     if (
       eventSource === "ticketmaster" &&
       artistList.length != 0 &&
       event.name
     ) {
       const matchedArtist = localArtists.find((artist) => {
-        return (
-          artistList[0].name.toLowerCase() == artist.name.toLowerCase()
-        );
+        return artistList[0].name.toLowerCase() == artist.name.toLowerCase();
       });
 
       // If a match is found, use the local artist's name and ID for image to work

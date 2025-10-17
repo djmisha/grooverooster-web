@@ -1,5 +1,5 @@
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 /**
  * Custom hook that returns the current full URL of the page
@@ -8,10 +8,10 @@ import { useEffect, useState } from 'react';
 export const useCurrentUrl = (): string => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [currentUrl, setCurrentUrl] = useState('');
+  const [currentUrl, setCurrentUrl] = useState("");
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setCurrentUrl(window.location.href);
     }
   }, [pathname, searchParams]);

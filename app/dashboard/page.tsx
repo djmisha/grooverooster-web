@@ -14,7 +14,7 @@ export const metadata: Metadata = {
  * @returns {Promise<JSX.Element>} User dashboard page or redirect to login
  */
 // Force dynamic rendering since this page uses cookies
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 interface UserProfile {
   id: string;
@@ -49,7 +49,8 @@ export default async function DashboardPage() {
     // If profile has default location, fetch the location data
     if (profile?.default_location_id) {
       const locationId = parseInt(String(profile.default_location_id), 10);
-      defaultLocation = locations.find((loc: any) => loc.id === locationId) || null;
+      defaultLocation =
+        locations.find((loc: any) => loc.id === locationId) || null;
     }
 
     return (

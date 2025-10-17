@@ -3,7 +3,7 @@ import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
 
 // Force this route to be dynamic to ensure date filtering uses current date
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 const CACHE_MAX_AGE = 21600; // 6 hours in seconds
 

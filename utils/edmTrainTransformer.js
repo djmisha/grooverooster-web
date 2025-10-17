@@ -30,15 +30,18 @@ export function transformEDMTrainEventData(legacyEvent) {
       latitude: legacyEvent.venue?.latitude,
       longitude: legacyEvent.venue?.longitude,
     },
-    artistlist: legacyEvent.artistList?.map((artist) => ({
-      id: artist.id,
-      name: artist.name,
-      link: artist.link,
-      b2bInd: artist.b2bInd,
-    })) || [],
+    artistlist:
+      legacyEvent.artistList?.map((artist) => ({
+        id: artist.id,
+        name: artist.name,
+        link: artist.link,
+        b2bInd: artist.b2bInd,
+      })) || [],
     source: legacyEvent.eventSource,
     isVisible: true,
-    formattedDate: legacyEvent.date ? setDates(legacyEvent.date).dayMonthYear : null,
+    formattedDate: legacyEvent.date
+      ? setDates(legacyEvent.date).dayMonthYear
+      : null,
   };
 }
 

@@ -1,4 +1,9 @@
-import { ReactNode, MouseEventHandler, AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
+import {
+  ReactNode,
+  MouseEventHandler,
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+} from "react";
 
 type ButtonProps = {
   children: ReactNode;
@@ -37,14 +42,22 @@ const Button = ({
 
   if (href) {
     return (
-      <a href={href} className={buttonClass} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <a
+        href={href}
+        className={buttonClass}
+        {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
+      >
         {children}
       </a>
     );
   }
 
   return (
-    <button className={buttonClass} onClick={onClick} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <button
+      className={buttonClass}
+      onClick={onClick}
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
       {children}
     </button>
   );

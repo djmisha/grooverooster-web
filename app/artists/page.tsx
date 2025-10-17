@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 /**
  * Artists page component displays list of top touring EDM DJs and artists
  * @returns {Promise<JSX.Element>} Artists listing page
- */export const viewport: Viewport = {
-  width: 'device-width',
+ */ export const viewport: Viewport = {
+  width: "device-width",
   initialScale: 1.0,
   maximumScale: 1.0,
   userScalable: false,
@@ -30,7 +30,7 @@ export default async function ArtistsPage() {
 
   try {
     const apiResponse = await fetch(URL, { cache: "no-store" });
-    
+
     if (!apiResponse.ok) {
       console.error(`HTTP error! status: ${apiResponse.status}`);
       // Return empty list if API fails during build

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 // Force dynamic rendering since this page uses cookies
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function PrivatePage() {
   try {

@@ -4,7 +4,7 @@ import localArtists from "../../../../localArtistsDB.json";
 import setDates from "../../../../utils/setDates";
 
 // Force this route to be dynamic to ensure date filtering uses current date
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 /**
  * Calculate similarity between two strings using Levenshtein distance
@@ -13,7 +13,11 @@ export const dynamic = 'force-dynamic';
  * @param {string} city - City name for venue normalization
  * @returns {number} - Similarity score between 0 and 1
  */
-const calculateSimilarity = (str1: any, str2: any, city: string = ""): number => {
+const calculateSimilarity = (
+  str1: any,
+  str2: any,
+  city: string = ""
+): number => {
   if (!str1 || !str2) return 0;
 
   // Normalize strings: lowercase, remove extra spaces, common words
@@ -258,7 +262,6 @@ const processSDHMEvents = (rawEvents, city = "") => {
   }
 };
 
-
 export async function GET(
   request: Request,
   context: { params: Promise<{ params: string[] }> }
@@ -374,7 +377,8 @@ export async function GET(
       },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=43200, stale-while-revalidate=86400",
+          "Cache-Control":
+            "public, s-maxage=43200, stale-while-revalidate=86400",
         },
       }
     );

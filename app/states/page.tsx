@@ -14,7 +14,7 @@ export const metadata: Metadata = {
  * @returns {Promise<JSX.Element>} States listing page
  */
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1.0,
   maximumScale: 1.0,
   userScalable: false,
@@ -22,8 +22,8 @@ export const viewport: Viewport = {
 
 export default async function StatesPage() {
   const locations = await getLocations();
-  const canonicalUrl = getCanonicalUrl('/states');
-  
+  const canonicalUrl = getCanonicalUrl("/states");
+
   return (
     <Layout home={false} canonicalUrl={canonicalUrl}>
       <ClientNavigationBar />

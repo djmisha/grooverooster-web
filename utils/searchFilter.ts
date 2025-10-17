@@ -8,22 +8,25 @@ import { Event, EventId, SearchTerm } from "../types";
  * @param events - Array of event objects to filter
  * @returns Filtered array of events with isVisible property set accordingly
  */
-export const searchFilter = (searchTerm: SearchTerm, events: Event[]): Event[] | undefined => {
+export const searchFilter = (
+  searchTerm: SearchTerm,
+  events: Event[]
+): Event[] | undefined => {
   const results: EventId[] = [];
-  
+
   // Extract the actual filter term if it contains a pipe separator (display|filter format)
   let actualSearchTerm = searchTerm;
   if (searchTerm.includes("|")) {
     const parts = searchTerm.split("|");
     actualSearchTerm = parts[1]; // Use the second part for actual filtering
   }
-  
+
   // Check if this is a date-based filter
   if (actualSearchTerm.startsWith("date:")) {
     // Single date filter: "date:YYYY-MM-DD"
     const dateStr = actualSearchTerm.substring(5);
     const targetDate = startOfDay(parse(dateStr, "yyyy-MM-dd", new Date()));
-    
+
     events.forEach((article) => {
       const { id, date } = article;
       if (date) {
@@ -43,7 +46,7 @@ export const searchFilter = (searchTerm: SearchTerm, events: Event[]): Event[] |
     if (parts.length === 2) {
       const fromDate = startOfDay(parse(parts[0], "yyyy-MM-dd", new Date()));
       const toDate = endOfDay(parse(parts[1], "yyyy-MM-dd", new Date()));
-      
+
       events.forEach((article) => {
         const { id, date } = article;
         if (date) {
