@@ -15,12 +15,15 @@ const EventStructuredData = ({ event, currentUrl }) => {
     const {
       id,
       name: eventName,
-      artistList = [],
+      artistlist,
       venue,
       date,
-      startTime,
+      starttime,
       link,
     } = event;
+    // Support both old and new field names during transition
+    const artistList = artistlist || event.artistList || [];
+    const startTime = starttime || event.startTime;
 
     const { dayOfWeek, dayMonth, daySchema } = setDates(date);
 

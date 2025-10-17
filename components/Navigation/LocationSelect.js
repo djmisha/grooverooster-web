@@ -51,7 +51,7 @@ const LocationSelect = ({ image, text, title, navItems }) => {
               {searchTerm && (
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-transparent border-none text-2xl text-gray-500 cursor-pointer p-1 leading-none rounded-full w-8 h-8 flex items-center justify-center transition-[color,background-color] duration-200 ease-[ease] hover:text-gray-600 hover:bg-black/10 focus:outline-none focus:text-indigo-600 focus:bg-indigo-600/10"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-transparent border-none text-2xl text-gray-500 cursor-pointer p-1 leading-none rounded-full w-8 h-8 flex items-center justify-center transition-[color,background-color] duration-200 ease hover:text-gray-600 hover:bg-black/10 focus:outline-none focus:text-indigo-600 focus:bg-indigo-600/10"
                   onClick={() => setSearchTerm("")}
                   aria-label="Clear search"
                 >
@@ -65,7 +65,7 @@ const LocationSelect = ({ image, text, title, navItems }) => {
                 <Link
                   href={slug}
                   key={index + item}
-                  className="flex justify-between items-center cursor-pointer py-2 px-0 no-underline text-black transition-colors duration-200 ease-[ease] flex-shrink-0 hover:bg-indigo-600/10"
+                  className="flex justify-between items-center cursor-pointer py-2 px-0 no-underline text-black transition-colors duration-200 ease flex-shrink-0 hover:bg-indigo-600/10"
                   onClick={handleClose}
                 >
                   {item}
