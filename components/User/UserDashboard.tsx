@@ -358,40 +358,40 @@ export default function UserDashboard({
       {/* Fixed Bottom Tab Navigation */}
       <div className="fixed bottom-0 left-0 right-0 flex bg-white border-t border-gray-300 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-[1000] pb-[env(safe-area-inset-bottom)]">
         <button
-          className={`flex-1 flex flex-col items-center justify-center py-2 px-1 pb-3 bg-transparent border-none text-xs cursor-pointer transition-all duration-300 ease-[ease] text-gray-600 relative min-h-[60px] hover:bg-gray-50 md:min-h-[70px] md:py-1.5 md:pb-2.5 ${
+          className={`flex-1 flex flex-col items-center justify-center py-2 px-1 pb-3 bg-transparent border-none text-xs cursor-pointer transition-all duration-300 ease text-gray-600 relative min-h-[60px] hover:bg-gray-50 md:min-h-[70px] md:py-1.5 md:pb-2.5 ${
             activeTab === "location"
               ? "text-blue-500 before:content-[''] before:absolute before:top-1.5 before:left-1/2 before:-translate-x-1/2 before:w-1 before:h-1 before:bg-blue-500 before:rounded-full [&>.tabIcon]:scale-110 [&>.tabLabel]:font-semibold"
               : ""
           }`}
           onClick={() => setActiveTab("location")}
         >
-          <FaMapMarkerAlt className="tabIcon w-6 h-6 mb-1 transition-all duration-300 ease-[ease] md:w-5 md:h-5 max-[480px]:w-[18px] max-[480px]:h-[18px] max-[360px]:mb-0" />
+          <FaMapMarkerAlt className="tabIcon w-6 h-6 mb-1 transition-all duration-300 ease md:w-5 md:h-5 max-[480px]:w-[18px] max-[480px]:h-[18px] max-[360px]:mb-0" />
           <span className="tabLabel font-medium whitespace-nowrap text-[11px] md:text-[10px] max-[480px]:text-[9px] max-[360px]:hidden">
             Locations
           </span>
         </button>
         <button
-          className={`flex-1 flex flex-col items-center justify-center py-2 px-1 pb-3 bg-transparent border-none text-xs cursor-pointer transition-all duration-300 ease-[ease] text-gray-600 relative min-h-[60px] hover:bg-gray-50 md:min-h-[70px] md:py-1.5 md:pb-2.5 ${
+          className={`flex-1 flex flex-col items-center justify-center py-2 px-1 pb-3 bg-transparent border-none text-xs cursor-pointer transition-all duration-300 ease text-gray-600 relative min-h-[60px] hover:bg-gray-50 md:min-h-[70px] md:py-1.5 md:pb-2.5 ${
             activeTab === "artist"
               ? "text-blue-500 before:content-[''] before:absolute before:top-1.5 before:left-1/2 before:-translate-x-1/2 before:w-1 before:h-1 before:bg-blue-500 before:rounded-full [&>.tabIcon]:scale-110 [&>.tabLabel]:font-semibold"
               : ""
           }`}
           onClick={() => setActiveTab("artist")}
         >
-          <FaMusic className="tabIcon w-6 h-6 mb-1 transition-all duration-300 ease-[ease] md:w-5 md:h-5 max-[480px]:w-[18px] max-[480px]:h-[18px] max-[360px]:mb-0" />
+          <FaMusic className="tabIcon w-6 h-6 mb-1 transition-all duration-300 ease md:w-5 md:h-5 max-[480px]:w-[18px] max-[480px]:h-[18px] max-[360px]:mb-0" />
           <span className="tabLabel font-medium whitespace-nowrap text-[11px] md:text-[10px] max-[480px]:text-[9px] max-[360px]:hidden">
             Artists
           </span>
         </button>
         <button
-          className={`flex-1 flex flex-col items-center justify-center py-2 px-1 pb-3 bg-transparent border-none text-xs cursor-pointer transition-all duration-300 ease-[ease] text-gray-600 relative min-h-[60px] hover:bg-gray-50 md:min-h-[70px] md:py-1.5 md:pb-2.5 ${
+          className={`flex-1 flex flex-col items-center justify-center py-2 px-1 pb-3 bg-transparent border-none text-xs cursor-pointer transition-all duration-300 ease text-gray-600 relative min-h-[60px] hover:bg-gray-50 md:min-h-[70px] md:py-1.5 md:pb-2.5 ${
             activeTab === "settings"
               ? "text-blue-500 before:content-[''] before:absolute before:top-1.5 before:left-1/2 before:-translate-x-1/2 before:w-1 before:h-1 before:bg-blue-500 before:rounded-full [&>.tabIcon]:scale-110 [&>.tabLabel]:font-semibold"
               : ""
           }`}
           onClick={() => setActiveTab("settings")}
         >
-          <FaCog className="tabIcon w-6 h-6 mb-1 transition-all duration-300 ease-[ease] md:w-5 md:h-5 max-[480px]:w-[18px] max-[480px]:h-[18px] max-[360px]:mb-0" />
+          <FaCog className="tabIcon w-6 h-6 mb-1 transition-all duration-300 ease md:w-5 md:h-5 max-[480px]:w-[18px] max-[480px]:h-[18px] max-[360px]:mb-0" />
           <span className="tabLabel font-medium whitespace-nowrap text-[11px] md:text-[10px] max-[480px]:text-[9px] max-[360px]:hidden">
             Settings
           </span>
