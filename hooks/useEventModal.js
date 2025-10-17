@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 /**
  * Custom hook for managing event modal state with URL hash integration
  * Handles opening/closing modals and syncing with URL hash fragments
- * 
+ *
  * @param {number} eventId - The ID of the event this hook manages
  * @param {number|null} openEventId - The currently open event ID from parent
  * @param {function} setOpenEventId - Function to update the parent's open event ID
@@ -12,8 +12,8 @@ import { useState, useEffect, useCallback } from 'react';
 export const useEventModal = (eventId, openEventId, setOpenEventId) => {
   // Parse hash from URL to get event ID
   const parseEventIdFromHash = useCallback(() => {
-    if (typeof window === 'undefined') return null;
-    
+    if (typeof window === "undefined") return null;
+
     const hash = window.location.hash;
     const match = hash.match(/^#event-(.+)$/);
     if (match) {
@@ -26,18 +26,18 @@ export const useEventModal = (eventId, openEventId, setOpenEventId) => {
 
   // Update URL hash with event ID
   const updateUrlHash = useCallback((eventId) => {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     try {
       const currentUrl = new URL(window.location);
       if (eventId) {
         currentUrl.hash = `event-${eventId}`;
       } else {
-        currentUrl.hash = '';
+        currentUrl.hash = "";
       }
-      window.history.pushState(null, '', currentUrl);
+      window.history.pushState(null, "", currentUrl);
     } catch (error) {
-      console.warn('Could not update URL hash:', error);
+      console.warn("Could not update URL hash:", error);
     }
   }, []);
 
@@ -66,7 +66,7 @@ export const useEventModal = (eventId, openEventId, setOpenEventId) => {
 /**
  * Hook for managing multiple event modals (for parent components)
  * Handles the shared state across multiple EventCard components
- * 
+ *
  * @returns {object} - Object containing shared modal state and handlers
  */
 export const useEventModalManager = () => {
@@ -74,8 +74,8 @@ export const useEventModalManager = () => {
 
   // Parse hash from URL on mount
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     const hash = window.location.hash;
     const match = hash.match(/^#event-(.+)$/);
     if (match) {
@@ -101,10 +101,10 @@ export const useEventModalManager = () => {
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    
+    window.addEventListener("hashchange", handleHashChange);
+
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener("hashchange", handleHashChange);
     };
   }, []);
 

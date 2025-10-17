@@ -16,7 +16,8 @@ export const metadata: Metadata = {
     default: "GrooveRooster - Discover Electronic Music Events Near You",
     template: "%s | GrooveRooster",
   },
-  description: "Find the best electronic music events, shows, and festivals in your city. Track your favorite artists and never miss a beat.",
+  description:
+    "Find the best electronic music events, shows, and festivals in your city. Track your favorite artists and never miss a beat.",
 };
 
 /**

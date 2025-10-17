@@ -38,10 +38,7 @@ const UserWelcome = ({ defaultLocation }: UserWelcomeProps) => {
                 {cityOrState(defaultLocation.city, defaultLocation.state)}
               </span>
             </p>
-            <Button
-              href={`/events/${defaultLocation.slug}`}
-              variant="primary"
-            >
+            <Button href={`/events/${defaultLocation.slug}`} variant="primary">
               View events in{" "}
               {cityOrState(defaultLocation.city, defaultLocation.state)}
             </Button>
@@ -49,10 +46,7 @@ const UserWelcome = ({ defaultLocation }: UserWelcomeProps) => {
         ) : (
           <div className="text-lg sm:text-base text-gray-600 mb-6">
             <p>You haven&apos;t set a default location yet.</p>
-            <Button
-              href="/profile"
-              variant="primary"
-            >
+            <Button href="/profile" variant="primary">
               Set your default location
             </Button>
           </div>

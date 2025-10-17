@@ -22,16 +22,12 @@ if (supabaseUrl && supabaseKey) {
 
 // Create a Supabase admin client with service role key
 if (supabaseUrl && supabaseServiceKey) {
-  supabaseAdmin = createClient(
-    supabaseUrl,
-    supabaseServiceKey,
-    {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-      },
-    }
-  );
+  supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
 } else {
   console.warn("Supabase admin environment variables not configured");
   supabaseAdmin = null;

@@ -23,7 +23,7 @@ export async function GET(
   try {
     const apiResponse = await fetch(URL);
     const data = await apiResponse.json();
-    
+
     return NextResponse.json(data, {
       headers: {
         "Cache-Control": "s-maxage=2592000",

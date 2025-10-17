@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../utils/appRouterSecurity";
 
 // Force this route to be dynamic
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export const config = {
   api: {
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
   try {
     const apiResponse = await fetch(URL);
     const data = await apiResponse.json();
-    
+
     return NextResponse.json(data, {
       headers: {
         "Cache-Control": "s-maxage=604800",

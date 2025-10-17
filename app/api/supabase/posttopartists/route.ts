@@ -44,11 +44,11 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    
+
     if (!body) {
       return NextResponse.json({ message: "Missing body" }, { status: 400 });
     }
-    
+
     await setData(body);
     return NextResponse.json({ message: "Success" });
   } catch (error: any) {

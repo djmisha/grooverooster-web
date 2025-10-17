@@ -3,7 +3,7 @@
  * Adapts Next.js App Router Request objects to work with the Pages Router security middleware
  */
 
-import secureApiEndpoint from './apiSecurity';
+import secureApiEndpoint from "./apiSecurity";
 
 /**
  * Secure an App Router API endpoint
@@ -17,7 +17,9 @@ export function secureAppRouterEndpoint(request: Request) {
     url: url.pathname,
     method: request.method,
     headers: {
-      authorization: request.headers.get('authorization') || request.headers.get('Authorization'),
+      authorization:
+        request.headers.get("authorization") ||
+        request.headers.get("Authorization"),
     },
   };
 

@@ -47,7 +47,10 @@ export async function GET(request: Request) {
     const artists = await fetchExistingArtists();
 
     // Send a response with the fetched artists
-    return NextResponse.json({ message: "Artists fetched successfully", artists });
+    return NextResponse.json({
+      message: "Artists fetched successfully",
+      artists,
+    });
   } catch (error: any) {
     console.error("Error in handler:", error);
     return NextResponse.json(
