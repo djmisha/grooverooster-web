@@ -1,6 +1,10 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+/**
+ * Custom hook that returns the current full URL of the page
+ * @returns {string} Current URL including protocol, host, pathname and search params
+ */
 export const useCurrentUrl = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();

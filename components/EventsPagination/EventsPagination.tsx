@@ -9,6 +9,9 @@ import {
   PaginationEllipsis,
 } from "@/components/ui/pagination";
 
+/**
+ * Interface for EventsPagination component props
+ */
 interface EventsPaginationProps {
   currentPage: number;
   totalEvents: number;
@@ -16,6 +19,11 @@ interface EventsPaginationProps {
   onPageChange: (pageNumber: number) => void;
 }
 
+/**
+ * EventsPagination component renders pagination controls for events list
+ * @param {EventsPaginationProps} props - Component props
+ * @returns {JSX.Element|null} Pagination controls or null if only one page
+ */
 const EventsPagination: React.FC<EventsPaginationProps> = ({
   currentPage,
   totalEvents,

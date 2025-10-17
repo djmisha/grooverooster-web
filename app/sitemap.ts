@@ -2,6 +2,10 @@ import { MetadataRoute } from "next";
 import { getLocations } from "../utils/getLocations";
 import { allArtists } from "../utils/getArtists";
 
+/**
+ * Generates the sitemap for the website with all locations and artists
+ * @returns {MetadataRoute.Sitemap} Sitemap array with all URLs
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   const URL = "https://www.grooverooster.com";
   const locations = getLocations();

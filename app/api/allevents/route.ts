@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../utils/appRouterSecurity";
+import { transformEDMTrainEventsArray } from "../../../utils/edmTrainTransformer";
 
 // Force this route to be dynamic
 export const dynamic = 'force-dynamic';
@@ -10,6 +11,11 @@ export const config = {
   },
 };
 
+/**
+ * GET handler for retrieving all events from all locations
+ * @param {Request} request - HTTP request object
+ * @returns {Promise<NextResponse>} JSON response with all events data
+ */
 export async function GET(request: Request) {
   // Apply security checks
   const security = secureAppRouterEndpoint(request);
@@ -30,7 +36,13 @@ export async function GET(request: Request) {
     const apiResponse = await fetch(URL);
     const data = await apiResponse.json();
     
-    return NextResponse.json(data, {
+    // Transform EDM Train legacy format to new SDHM format
+    const transformedData = {
+      ...data,
+      data: transformEDMTrainEventsArray(data.data || []),
+    };
+    
+    return NextResponse.json(transformedData, {
       headers: {
         "Cache-Control": "s-maxage=604800",
       },

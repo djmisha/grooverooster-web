@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
 
 export async function GET(
   request: Request,
@@ -7,21 +8,27 @@ export async function GET(
   const { id } = await context.params;
   const KEY = process.env.NEXT_PUBLIC_API_KEY_EDMTRAIN;
   const EDMURL = process.env.NEXT_PUBLIC_API_URL_EDMTRAIN_ARTIST;
-  
+
   if (!EDMURL || !KEY) {
     return NextResponse.json(
       { error: "Missing API configuration" },
       { status: 500 }
     );
   }
-  
+
   const URL = `${EDMURL}${id}&client=${KEY}`;
 
   try {
     const apiResponse = await fetch(URL);
     const data = await apiResponse.json();
 
-    return NextResponse.json(data, {
+    // Transform EDM Train legacy format to new SDHM format
+    const transformedData = {
+      ...data,
+      data: transformEDMTrainEventsArray(data.data || []),
+    };
+
+    return NextResponse.json(transformedData, {
       headers: {
         "Cache-Control": "s-maxage=604800",
       },

@@ -1,14 +1,16 @@
-/**
- * Button component that renders either a link or button element with consistent styling
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Button content
- * @param {string} [props.variant="primary"] - Button style variant ("primary" or "secondary")
- * @param {string} [props.href] - If provided, renders as an anchor tag
- * @param {Function} [props.onClick] - Click handler for button element
- * @param {string} [props.className] - Additional CSS classes
- * @param {Object} props.props - Additional props passed to the element
- * @returns {JSX.Element} Styled button or anchor element
- */
+import { ReactNode, MouseEventHandler, AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
+
+type ButtonProps = {
+  children: ReactNode;
+  variant?: "primary" | "secondary";
+  href?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
+} & (
+  | AnchorHTMLAttributes<HTMLAnchorElement>
+  | ButtonHTMLAttributes<HTMLButtonElement>
+);
+
 const Button = ({
   children,
   variant = "primary",
@@ -16,7 +18,7 @@ const Button = ({
   onClick,
   className,
   ...props
-}) => {
+}: ButtonProps) => {
   const baseClasses =
     "inline-block px-6 py-3 text-base font-medium text-center no-underline rounded-full transition-all duration-200 ease-in-out cursor-pointer hover:-translate-y-0.5 hover:shadow-lg";
 
@@ -35,14 +37,14 @@ const Button = ({
 
   if (href) {
     return (
-      <a href={href} className={buttonClass} {...props}>
+      <a href={href} className={buttonClass} {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}>
         {children}
       </a>
     );
   }
 
   return (
-    <button className={buttonClass} onClick={onClick} {...props}>
+    <button className={buttonClass} onClick={onClick} {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}>
       {children}
     </button>
   );

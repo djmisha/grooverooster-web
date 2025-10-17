@@ -4,6 +4,14 @@ import { useContext } from "react";
 import { AppContext } from "../../features/AppContext";
 import Link from "next/link";
 
+/**
+ * CitiesStates component displays a grid of city or state links
+ * @param {Object} props - Component props
+ * @param {Array} props.locations - Array of location objects
+ * @param {boolean} [props.showCitiesOnly=false] - Show only cities
+ * @param {boolean} [props.showStatesOnly=false] - Show only states
+ * @returns {JSX.Element} Grid of location links
+ */
 const CitiesStates = ({
   locations,
   showCitiesOnly = false,

@@ -1,7 +1,17 @@
 import React from "react";
 import { FaCalendarAlt, FaMapMarkerAlt, FaUsers } from "react-icons/fa";
 
+/**
+ * CountBoxes component displays statistics about visible events, venues, and artists
+ * @param {Object} props - Component props
+ * @param {Array} props.events - Array of event objects
+ * @returns {JSX.Element} Statistics boxes showing event counts
+ */
 const CountBoxes = ({ events }) => {
+  /**
+   * Calculates statistics from events data
+   * @returns {Object} Object containing totalEvents, totalVenues, and totalArtists counts
+   */
   // Calculate statistics from events data
   const getStatistics = () => {
     if (!events || events.length === 0) {
@@ -21,9 +31,10 @@ const CountBoxes = ({ events }) => {
         uniqueVenues.add(event.venue.name);
       }
 
-      // Count unique artists
-      if (event.artistList && Array.isArray(event.artistList)) {
-        event.artistList.forEach((artist) => {
+      // Count unique artists - support both old and new field names
+      const artistList = event.artistlist || event.artistList;
+      if (artistList && Array.isArray(artistList)) {
+        artistList.forEach((artist) => {
           if (artist.name) {
             uniqueArtists.add(artist.name);
           }
@@ -61,6 +72,11 @@ const CountBoxes = ({ events }) => {
     },
   ];
 
+  /**
+   * Returns CSS classes based on the color variant
+   * @param {string} color - Color variant ("pink", "blue", or "orange")
+   * @returns {string} CSS class names for the count box
+   */
   const getColorClasses = (color) => {
     const baseClasses =
       "flex items-center gap-3.5 md:gap-4 p-4 md:p-5 sm:px-4 sm:gap-3 bg-white rounded-lg shadow-md border-2 border-transparent transition-all duration-200 min-w-0 flex-1 md:flex-none md:min-w-45 max-sm:flex-1 max-sm:max-w-full hover:-translate-y-px hover:shadow-lg";

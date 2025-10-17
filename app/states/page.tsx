@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "Events By State",
 };
 
+/**
+ * States page component displays events organized by state
+ * @returns {Promise<JSX.Element>} States listing page
+ */
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1.0,

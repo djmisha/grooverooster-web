@@ -41,8 +41,6 @@ const UserWelcome = ({ defaultLocation }: UserWelcomeProps) => {
             <Button
               href={`/events/${defaultLocation.slug}`}
               variant="primary"
-              onClick={null}
-              className={null}
             >
               View events in{" "}
               {cityOrState(defaultLocation.city, defaultLocation.state)}
@@ -54,8 +52,6 @@ const UserWelcome = ({ defaultLocation }: UserWelcomeProps) => {
             <Button
               href="/profile"
               variant="primary"
-              onClick={null}
-              className={null}
             >
               Set your default location
             </Button>

@@ -6,6 +6,10 @@ import Link from "next/link";
 import Modal from "../Modal/VerifyModal";
 import Button from "../Button/Button";
 
+/**
+ * Verify component displays email verification success modal when user confirms email
+ * @returns {JSX.Element|null} Verification modal or null
+ */
 const Verify = () => {
   const [showModal, setShowModal] = useState(false);
   const searchParams = useSearchParams();
@@ -16,6 +20,9 @@ const Verify = () => {
     }
   }, [searchParams]);
 
+  /**
+   * Closes the verification modal and cleans up URL
+   */
   const closeModal = () => {
     setShowModal(false);
     const newUrl = window.location.pathname;

@@ -6,6 +6,14 @@ import { toSlug } from "../../utils/getLocations";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
 
+/**
+ * LocationLink component renders a link to a location's events page
+ * @param {Object} props - Component props
+ * @param {string} [props.city] - City name
+ * @param {string} props.state - State name
+ * @param {Function} props.onClick - Click handler
+ * @returns {JSX.Element} Link to location events
+ */
 const LocationLink = ({ city, state, onClick }) => {
   const href = `/events/${toSlug(city || state)}`;
   const label = city ? `${city}, ${state}` : state;
@@ -17,10 +25,17 @@ const LocationLink = ({ city, state, onClick }) => {
   );
 };
 
+/**
+ * Hamburger component displays a mobile navigation menu with recently viewed locations
+ * @returns {JSX.Element} Hamburger menu trigger and overlay
+ */
 const Hamburger = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { locationCtx } = useContext(AppContext);
 
+  /**
+   * Closes the menu overlay
+   */
   const handleClose = () => {
     setIsOpen(false);
   };

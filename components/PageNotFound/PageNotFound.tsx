@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+/**
+ * PageNotFound component displays a 404 error page with automatic redirect
+ * @returns {JSX.Element} 404 page with countdown redirect
+ */
 const PageNotFound = () => {
   const router = useRouter();
   const [countdown, setCountdown] = useState(3);

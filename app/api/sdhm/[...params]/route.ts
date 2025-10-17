@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
-import { transformEventsArray } from "../../../../utils/eventTransformer";
 import localArtists from "../../../../localArtistsDB.json";
+import setDates from "../../../../utils/setDates";
 
 // Force this route to be dynamic to ensure date filtering uses current date
 export const dynamic = 'force-dynamic';
@@ -105,8 +105,9 @@ const removeDuplicateEvents = (events, city = "") => {
     });
 
     if (duplicateIndex !== -1) {
-      // Prefer ticketmaster data over other sources
-      if (event.eventSource === "ticketmaster") {
+      // Prefer ticketmaster data over other sources (support both old and new field names)
+      const eventSource = event.source || event.eventSource;
+      if (eventSource === "ticketmaster") {
         acc[duplicateIndex] = event;
       }
       // Otherwise keep the first one (which could be ticketmaster or any other source)
@@ -146,15 +147,15 @@ const sortEventsByDate = (events: any[]) => {
  */
 const formatTicketMasterwithImagesArtists = (events) => {
   return events.map((event) => {
-    // Check if artistList is not empty and event name exists
+    // Check if artistlist is not empty and event name exists (using new schema field name)
     if (
-      event.eventSource === "ticketmaster" &&
-      event.artistList.length != 0 &&
+      event.source === "ticketmaster" &&
+      event.artistlist?.length != 0 &&
       event.name
     ) {
       const matchedArtist = localArtists.find((artist) => {
         return (
-          event.artistList[0].name.toLowerCase() == artist.name.toLowerCase()
+          event.artistlist[0].name.toLowerCase() == artist.name.toLowerCase()
         );
       });
 
@@ -162,14 +163,14 @@ const formatTicketMasterwithImagesArtists = (events) => {
       if (matchedArtist) {
         return {
           ...event,
-          artistList: [{ name: matchedArtist.name, id: matchedArtist.id }],
+          artistlist: [{ name: matchedArtist.name, id: matchedArtist.id }],
         };
       }
 
       // puts the event name as the artist if no match found
       return {
         ...event,
-        artistList: [{ name: event.name }],
+        artistlist: [{ name: event.name }],
       };
     }
 
@@ -211,6 +212,19 @@ const filterPastEvents = (events) => {
 };
 
 /**
+ * Add formatted date and visibility flag to events
+ * @param {Array} events - Array of events
+ * @returns {Array} - Array with formattedDate and isVisible fields added
+ */
+const addFormattedFields = (events) => {
+  return events.map((event) => ({
+    ...event,
+    isVisible: true,
+    formattedDate: event.date ? setDates(event.date).dayMonthYear : null,
+  }));
+};
+
+/**
  * Process SDHM events through the complete pipeline
  * @param {Array} rawEvents - Raw events data from SDHM API
  * @param {string} city - City name for venue normalization
@@ -228,17 +242,16 @@ const processSDHMEvents = (rawEvents, city = "") => {
     // Step 2: Remove duplicate events
     const deduped = removeDuplicateEvents(sorted, city);
 
-    // Step 3: Transform the new API data to match the legacy format
-    const transformedEvents = transformEventsArray(deduped);
+    // Step 3: Format with local artists data and add IDs
+    const withArtistsEvents = formatTicketMasterwithImagesArtists(deduped);
 
-    // Step 4: Format with local artists data and add IDs
-    const withArtistsEvents =
-      formatTicketMasterwithImagesArtists(transformedEvents);
-
-    // Step 5: Filter out past events
+    // Step 4: Filter out past events
     const filteredEvents = filterPastEvents(withArtistsEvents);
 
-    return filteredEvents;
+    // Step 5: Add formatted date and visibility flag
+    const finalEvents = addFormattedFields(filteredEvents);
+
+    return finalEvents;
   } catch (error) {
     console.error("Error processing SDHM events:", error);
     return [];

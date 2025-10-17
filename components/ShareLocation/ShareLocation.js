@@ -7,6 +7,13 @@ import {
   UserLocationService,
 } from "../../utils/locationService";
 
+/**
+ * ShareLocation component requests user's location permission and updates context
+ * @param {Object} props - Component props
+ * @param {Function} [props.onLocationDetected] - Callback when location is successfully detected
+ * @param {Function} [props.onLocationError] - Callback when location detection fails
+ * @returns {JSX.Element} Location sharing button
+ */
 const ShareLocation = ({
   onLocationDetected,
   onLocationError,

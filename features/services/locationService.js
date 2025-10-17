@@ -6,6 +6,13 @@ import {
   createLocationObject,
 } from "../../utils/getUserLocation.js";
 
+/**
+ * Gets user's geolocation and updates location context
+ * @param {Array} locations - Array of available locations
+ * @param {Function} setUserLocation - Function to set user location
+ * @param {Function} addLocation - Function to add location to context
+ * @param {Function} setHasCity - Function to set city availability status
+ */
 export const getGeoLocation = async (
   locations,
   setUserLocation,
@@ -34,6 +41,15 @@ export const getGeoLocation = async (
   }
 };
 
+/**
+ * Handles successful geolocation retrieval
+ * @param {number} latitude - User's latitude
+ * @param {number} longitude - User's longitude
+ * @param {Array} locations - Array of available locations
+ * @param {Function} setUserLocation - Function to set user location
+ * @param {Function} addLocation - Function to add location to context
+ * @param {Function} setHasCity - Function to set city availability status
+ */
 const handleGeolocationSuccess = async (
   latitude,
   longitude,
@@ -58,6 +74,13 @@ const handleGeolocationSuccess = async (
   }
 };
 
+/**
+ * Handles geolocation errors by falling back to IP-based location
+ * @param {GeolocationPositionError} error - Geolocation error object
+ * @param {Function} setUserLocation - Function to set user location
+ * @param {Function} addLocation - Function to add location to context
+ * @param {Function} setHasCity - Function to set city availability status
+ */
 const handleGeolocationError = async (
   error,
   setUserLocation,

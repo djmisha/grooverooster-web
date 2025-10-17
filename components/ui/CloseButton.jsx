@@ -1,3 +1,10 @@
+/**
+ * CloseButton component renders a close (×) button with hover effects
+ * @param {Object} props - Component props
+ * @param {Function} props.onClick - Click handler for the button
+ * @param {string} [props.className] - Additional CSS classes
+ * @returns {JSX.Element} Close button element
+ */
 const CloseButton = ({ onClick, className }) => {
   return (
     <button

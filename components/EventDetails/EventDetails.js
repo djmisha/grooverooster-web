@@ -6,8 +6,17 @@ import setDates from "../../utils/setDates";
 import { FaRegCalendar, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa"; // Add icons import
 import Button from "../Button/Button";
 
+/**
+ * EventDetails component displays detailed information about an event in a modal
+ * @param {Object} props - Component props
+ * @param {Object} props.event - Event object containing all event details
+ * @returns {JSX.Element} Event details view with artist, date, venue, and ticket link
+ */
 const EventDetails = ({ event }) => {
-  const { date, artistList, name, venue, link, eventSource, imageUrl } = event;
+  const { date, artistlist, name, venue, link, source, imageUrl } = event;
+  // Support both old and new field names during transition
+  const artistList = artistlist || event.artistList || [];
+  const eventSource = source || event.eventSource;
   const { name: venueName, address } = venue;
   const { dayOfWeek, dayMonth, daySchema } = setDates(date);
 

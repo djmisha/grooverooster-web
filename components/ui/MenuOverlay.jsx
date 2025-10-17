@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import CloseButton from "./CloseButton";
 
+/**
+ * MenuOverlay component displays a slide-in menu overlay with click-outside-to-close functionality
+ * @param {Object} props - Component props
+ * @param {boolean} props.isOpen - Whether the menu is open
+ * @param {Function} props.onClose - Callback to close the menu
+ * @param {React.ReactNode} props.children - Menu content
+ * @returns {JSX.Element} Animated menu overlay
+ */
 const MenuOverlay = ({ isOpen, onClose, children }) => {
   const menuRef = useRef(null);
 

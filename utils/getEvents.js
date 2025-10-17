@@ -1,6 +1,5 @@
 import setDates from "./setDates";
 import localArtists from "../localArtistsDB.json";
-import { transformEventsArray } from "./eventTransformer";
 import { authenticatedFetch } from "./authenticatedFetch";
 
 /**
@@ -224,7 +223,7 @@ const fetchTicketMasterData = async (city) => {
 
 /**
  * Format EDMTrain API response into standardized event format
- * @param {Object} apiData - Raw EDMTrain API response
+ * @param {Object} apiData - Raw EDMTrain API response (now already transformed to new schema)
  * @returns {Array} - Formatted events array
  */
 const formatEDMTrainEvents = (apiData) => {
@@ -234,7 +233,7 @@ const formatEDMTrainEvents = (apiData) => {
 
   return apiData.data.map((event) => ({
     ...event,
-    eventSource: "edmtrain.com",
+    source: event.source || "edmtrain.com",
     isVisible: true,
   }));
 };
@@ -297,7 +296,7 @@ const formatTicketMasterEvents = (apiData) => {
       return {
         id: event.id, // Add the Ticketmaster event ID
         date: event.dates?.start?.localDate,
-        artistList: artistList,
+        artistlist: artistList,
         name: eventName,
         venue: {
           name: venue.name,
@@ -309,7 +308,7 @@ const formatTicketMasterEvents = (apiData) => {
           ? event.url.replace("sandiegohousemusic", "5926009")
           : event.url,
         isVisible: true,
-        eventSource: "Ticketmaster",
+        source: "Ticketmaster",
         imageUrl: imageUrl,
       };
     })
@@ -323,15 +322,18 @@ const formatTicketMasterEvents = (apiData) => {
  */
 export const formatTicketMasterwithImagesArtists = (events) => {
   return events.map((event) => {
-    // Check if artistList is not empty and event name exists
+    // Support both old and new field names, check if artistlist is not empty and event name exists
+    const artistList = event.artistlist || event.artistList || [];
+    const eventSource = event.source || event.eventSource;
+    
     if (
-      event.eventSource === "ticketmaster" &&
-      event.artistList.length != 0 &&
+      eventSource === "ticketmaster" &&
+      artistList.length != 0 &&
       event.name
     ) {
       const matchedArtist = localArtists.find((artist) => {
         return (
-          event.artistList[0].name.toLowerCase() == artist.name.toLowerCase()
+          artistList[0].name.toLowerCase() == artist.name.toLowerCase()
         );
       });
 
@@ -339,14 +341,14 @@ export const formatTicketMasterwithImagesArtists = (events) => {
       if (matchedArtist) {
         return {
           ...event,
-          artistList: [{ name: matchedArtist.name, id: matchedArtist.id }],
+          artistlist: [{ name: matchedArtist.name, id: matchedArtist.id }],
         };
       }
 
       // puts the event name as the artist if no match found
       return {
         ...event,
-        artistList: [{ name: event.name }],
+        artistlist: [{ name: event.name }],
       };
     }
 
@@ -452,8 +454,9 @@ export const removeDuplicateEvents = (events, city = "") => {
     });
 
     if (duplicateIndex !== -1) {
-      // Prefer ticketmaster data over other sources
-      if (event.eventSource === "ticketmaster") {
+      // Prefer ticketmaster data over other sources (support both old and new field names)
+      const eventSource = event.source || event.eventSource;
+      if (eventSource === "ticketmaster") {
         acc[duplicateIndex] = event;
       }
       // Otherwise keep the first one (which could be ticketmaster or any other source)

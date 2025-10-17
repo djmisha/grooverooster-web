@@ -10,20 +10,33 @@ import { useCurrentUrl } from "../../hooks/useCurrentUrl";
 import { useEventModal } from "../../hooks/useEventModal";
 import { FaRegCalendar, FaRegBuilding, FaUsers, FaVideo } from "react-icons/fa";
 
+/**
+ * EventCard component displays a single event with artist, date, venue information and modal functionality
+ * @param {Object} props - Component props
+ * @param {Object} props.event - Event object containing all event details
+ * @param {number|null} props.openEventId - ID of currently open event modal
+ * @param {Function} props.setOpenEventId - Function to set the open event ID
+ * @returns {JSX.Element} Event card component with modal
+ */
 export const EventCard = ({ event, openEventId, setOpenEventId }) => {
   const router = useRouter();
   const currentUrl = useCurrentUrl();
   const {
     date,
-    artistList,
+    artistlist,
     name,
     venue,
     isVisible,
-    eventSource,
-    festivalInd,
-    livestreamInd,
+    source,
+    festivalind,
+    livestreamind,
     imageUrl,
   } = event;
+  // Support both old and new field names during transition
+  const artistList = artistlist || event.artistList || [];
+  const eventSource = source || event.eventSource;
+  const festivalInd = festivalind !== undefined ? festivalind : event.festivalInd;
+  const livestreamInd = livestreamind !== undefined ? livestreamind : event.livestreamInd;
   const { name: venueName } = venue;
   const { dayOfWeek, dayMonth, daySchema } = setDates(date);
 
@@ -34,10 +47,16 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
     setOpenEventId
   );
 
+  /**
+   * Opens the event detail modal
+   */
   const handleModalOpen = () => {
     openModal();
   };
 
+  /**
+   * Closes the event detail modal
+   */
   const handleModalClose = () => {
     closeModal();
   };
@@ -53,6 +72,10 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
         })
       : artistList;
 
+  /**
+   * Renders the artist image with fallback background
+   * @returns {JSX.Element} Artist image wrapper component
+   */
   const ArtistImageWrapper = () => {
     const artistId = artistList[0]?.id;
     return (

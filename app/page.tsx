@@ -22,6 +22,10 @@ export const viewport: Viewport = {
 // Force dynamic rendering since this page uses cookies
 export const dynamic = 'force-dynamic';
 
+/**
+ * Home page component that displays the main landing page
+ * @returns {Promise<JSX.Element>} The home page with user profile and location data
+ */
 export default async function Home() {
   const locations = getLocations();
 

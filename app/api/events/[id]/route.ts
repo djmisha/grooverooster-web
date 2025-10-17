@@ -1,11 +1,19 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
+import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
 
 // Force this route to be dynamic to ensure date filtering uses current date
 export const dynamic = 'force-dynamic';
 
 const CACHE_MAX_AGE = 21600; // 6 hours in seconds
 
+/**
+ * GET handler for retrieving events by location ID
+ * @param {Request} request - HTTP request object
+ * @param {Object} context - Route context with params
+ * @param {Promise<{id: string}>} context.params - Route parameters containing location ID
+ * @returns {Promise<NextResponse>} JSON response with events data
+ */
 export async function GET(
   request: Request,
   context: { params: Promise<{ id: string }> }
@@ -35,8 +43,14 @@ export async function GET(
       throw new Error("Invalid event data received");
     }
 
-    // Always return fresh API data
-    return NextResponse.json(data, {
+    // Transform EDM Train legacy format to new SDHM format
+    const transformedData = {
+      ...data,
+      data: transformEDMTrainEventsArray(data.data),
+    };
+
+    // Return transformed API data
+    return NextResponse.json(transformedData, {
       headers: {
         "Cache-Control": `s-maxage=${CACHE_MAX_AGE}, stale-while-revalidate`,
       },

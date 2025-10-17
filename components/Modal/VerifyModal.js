@@ -1,5 +1,12 @@
 import React from "react";
 
+/**
+ * VerifyModal component displays a centered modal for email verification
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Modal content
+ * @param {Function} props.onClose - Callback to close the modal
+ * @returns {JSX.Element} Centered modal overlay
+ */
 const Modal = ({ children, onClose }) => {
   return (
     <div

@@ -1,6 +1,12 @@
 import { cleanString } from "./utilities";
 import { parse, isWithinInterval, startOfDay, endOfDay } from "date-fns";
 
+/**
+ * Filters events based on a search term, supporting text search, single date, and date range filters
+ * @param {string} searchTerm - The search term or filter string (can be "date:YYYY-MM-DD", "daterange:YYYY-MM-DD:YYYY-MM-DD", or regular text)
+ * @param {Array} events - Array of event objects to filter
+ * @returns {Array|undefined} - Filtered array of events with isVisible property set accordingly
+ */
 export const searchFilter = (searchTerm, events) => {
   let results = [];
   
@@ -56,7 +62,9 @@ export const searchFilter = (searchTerm, events) => {
     const regexString = new RegExp(cleanString(actualSearchTerm), "i"); // used to be 'gi' but was not searching date correctly
 
     events.forEach((article) => {
-      const { id, formattedDate, venue, artistList, name } = article;
+      const { id, formattedDate, venue, artistlist, name } = article;
+      // Support both old and new field names
+      const artistList = artistlist || article.artistList || [];
       const { name: venueName } = venue;
 
       if (regexString.test(cleanString(formattedDate))) {
@@ -84,6 +92,12 @@ export const searchFilter = (searchTerm, events) => {
   if (results.length) return showMatchedEvents(results, events);
 };
 
+/**
+ * Updates the visibility of events based on matched results
+ * @param {Array} results - Array of event IDs that match the search criteria
+ * @param {Array} events - Array of event objects to update
+ * @returns {Array} - Updated array of events with isVisible property set
+ */
 const showMatchedEvents = (results, events) => {
   events.forEach((event) => {
     event.isVisible = false;
@@ -97,6 +111,11 @@ const showMatchedEvents = (results, events) => {
   return events;
 };
 
+/**
+ * Clears search filter by making all events visible
+ * @param {Array} events - Array of event objects to update
+ * @returns {Array} - Updated array of events with all isVisible properties set to true
+ */
 export const clearSearch = (events) => {
   events.forEach((event) => {
     if (!event.isVisible) event.isVisible = true;

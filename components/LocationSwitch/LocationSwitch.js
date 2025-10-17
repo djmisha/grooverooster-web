@@ -7,6 +7,13 @@ import {
   getSavedLocation,
 } from "../../utils/locationService";
 
+/**
+ * LocationSwitch component allows users to search and switch between locations
+ * @param {Object} props - Component props
+ * @param {Function} [props.onLocationChanged] - Callback when location is changed
+ * @param {string} [props.className=""] - Additional CSS classes
+ * @returns {JSX.Element} Location switcher with autocomplete search
+ */
 const LocationSwitch = ({
   onLocationChanged,
   className = "",
