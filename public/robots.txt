@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.grooverooster.com
+
+# Sitemaps
+Sitemap: https://www.grooverooster.com/sitemap.xml
