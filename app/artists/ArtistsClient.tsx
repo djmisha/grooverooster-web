@@ -16,8 +16,6 @@ import {
 } from "../../components/ui/pagination";
 import { getCanonicalUrl } from "../../utils/canonicalUrl";
 
-const title = "Top Touring EDM DJ's & Artists";
-
 const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
   const filteredArtists = filterSurpriseGuest(uniqueArtists);
   const apiEvents = filteredArtists.slice(0, 30);

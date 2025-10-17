@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import supabase from "../../../../features/Supabase";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
+import type { RateLimitResult } from "../../../../types/rateLimit";
 
 const fetchExistingArtists = async () => {
+  if (!supabase) throw new Error("Supabase not configured");
+
   let allArtists: any[] = [];
   let from = 0;
   const limit = 900;
@@ -32,7 +35,7 @@ const fetchExistingArtists = async () => {
 
 export async function GET(request: Request) {
   // Apply security checks
-  const security = secureAppRouterEndpoint(request);
+  const security: RateLimitResult = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

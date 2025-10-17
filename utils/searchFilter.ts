@@ -1,14 +1,18 @@
 import { cleanString } from "./utilities";
 import { parse, isWithinInterval, startOfDay, endOfDay } from "date-fns";
+import { Event, EventId, SearchTerm } from "../types";
 
 /**
  * Filters events based on a search term, supporting text search, single date, and date range filters
- * @param {string} searchTerm - The search term or filter string (can be "date:YYYY-MM-DD", "daterange:YYYY-MM-DD:YYYY-MM-DD", or regular text)
- * @param {Array} events - Array of event objects to filter
- * @returns {Array|undefined} - Filtered array of events with isVisible property set accordingly
+ * @param searchTerm - The search term or filter string (can be "date:YYYY-MM-DD", "daterange:YYYY-MM-DD:YYYY-MM-DD", or regular text)
+ * @param events - Array of event objects to filter
+ * @returns Filtered array of events with isVisible property set accordingly
  */
-export const searchFilter = (searchTerm, events) => {
-  let results = [];
+export const searchFilter = (
+  searchTerm: SearchTerm,
+  events: Event[]
+): Event[] | undefined => {
+  const results: EventId[] = [];
 
   // Extract the actual filter term if it contains a pipe separator (display|filter format)
   let actualSearchTerm = searchTerm;
@@ -67,7 +71,7 @@ export const searchFilter = (searchTerm, events) => {
       const artistList = artistlist || article.artistList || [];
       const { name: venueName } = venue;
 
-      if (regexString.test(cleanString(formattedDate))) {
+      if (formattedDate && regexString.test(cleanString(formattedDate))) {
         results.push(id);
       }
 
@@ -80,9 +84,9 @@ export const searchFilter = (searchTerm, events) => {
       }
 
       artistList.forEach((artist) => {
-        const { name } = artist;
+        const { name: artistName } = artist;
 
-        if (regexString.test(cleanString(name))) {
+        if (regexString.test(cleanString(artistName))) {
           results.push(id);
         }
       });
@@ -90,15 +94,16 @@ export const searchFilter = (searchTerm, events) => {
   }
 
   if (results.length) return showMatchedEvents(results, events);
+  return undefined;
 };
 
 /**
  * Updates the visibility of events based on matched results
- * @param {Array} results - Array of event IDs that match the search criteria
- * @param {Array} events - Array of event objects to update
- * @returns {Array} - Updated array of events with isVisible property set
+ * @param results - Array of event IDs that match the search criteria
+ * @param events - Array of event objects to update
+ * @returns Updated array of events with isVisible property set
  */
-const showMatchedEvents = (results, events) => {
+const showMatchedEvents = (results: EventId[], events: Event[]): Event[] => {
   events.forEach((event) => {
     event.isVisible = false;
     results.forEach((result) => {
@@ -113,10 +118,10 @@ const showMatchedEvents = (results, events) => {
 
 /**
  * Clears search filter by making all events visible
- * @param {Array} events - Array of event objects to update
- * @returns {Array} - Updated array of events with all isVisible properties set to true
+ * @param events - Array of event objects to update
+ * @returns Updated array of events with all isVisible properties set to true
  */
-export const clearSearch = (events) => {
+export const clearSearch = (events: Event[]): Event[] => {
   events.forEach((event) => {
     if (!event.isVisible) event.isVisible = true;
   });

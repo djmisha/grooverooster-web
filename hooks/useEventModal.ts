@@ -1,4 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
+import { EventId } from "../types";
+
+interface UseEventModalReturn {
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+}
 
 /**
  * Custom hook for managing event modal state with URL hash integration
@@ -9,33 +16,23 @@ import { useState, useEffect, useCallback } from "react";
  * @param {function} setOpenEventId - Function to update the parent's open event ID
  * @returns {object} - Object containing modal state and handlers
  */
-export const useEventModal = (eventId, openEventId, setOpenEventId) => {
-  // Parse hash from URL to get event ID
-  const parseEventIdFromHash = useCallback(() => {
-    if (typeof window === "undefined") return null;
-
-    const hash = window.location.hash;
-    const match = hash.match(/^#event-(.+)$/);
-    if (match) {
-      const eventIdStr = match[1];
-      const eventId = parseInt(eventIdStr);
-      return !isNaN(eventId) ? eventId : null;
-    }
-    return null;
-  }, []);
-
+export const useEventModal = (
+  eventId: EventId,
+  openEventId: EventId | null,
+  setOpenEventId: (id: EventId | null) => void
+): UseEventModalReturn => {
   // Update URL hash with event ID
-  const updateUrlHash = useCallback((eventId) => {
+  const updateUrlHash = useCallback((id: EventId | null) => {
     if (typeof window === "undefined") return;
 
     try {
-      const currentUrl = new URL(window.location);
-      if (eventId) {
-        currentUrl.hash = `event-${eventId}`;
+      const currentUrl = new URL(window.location.href);
+      if (id) {
+        currentUrl.hash = `event-${id}`;
       } else {
         currentUrl.hash = "";
       }
-      window.history.pushState(null, "", currentUrl);
+      window.history.pushState(null, "", currentUrl.toString());
     } catch (error) {
       console.warn("Could not update URL hash:", error);
     }
@@ -63,14 +60,19 @@ export const useEventModal = (eventId, openEventId, setOpenEventId) => {
   };
 };
 
+interface UseEventModalManagerReturn {
+  openEventId: EventId | null;
+  setOpenEventId: (id: EventId | null) => void;
+}
+
 /**
  * Hook for managing multiple event modals (for parent components)
  * Handles the shared state across multiple EventCard components
  *
- * @returns {object} - Object containing shared modal state and handlers
+ * @returns Object containing shared modal state and handlers
  */
-export const useEventModalManager = () => {
-  const [openEventId, setOpenEventId] = useState(null);
+export const useEventModalManager = (): UseEventModalManagerReturn => {
+  const [openEventId, setOpenEventId] = useState<EventId | null>(null);
 
   // Parse hash from URL on mount
   useEffect(() => {
@@ -80,9 +82,9 @@ export const useEventModalManager = () => {
     const match = hash.match(/^#event-(.+)$/);
     if (match) {
       const eventIdStr = match[1];
-      const eventId = parseInt(eventIdStr);
-      if (!isNaN(eventId)) {
-        setOpenEventId(eventId); // Store as number
+      const parsedEventId = parseInt(eventIdStr);
+      if (!isNaN(parsedEventId)) {
+        setOpenEventId(parsedEventId); // Store as number
       }
     }
   }, []);
@@ -94,8 +96,8 @@ export const useEventModalManager = () => {
       const match = hash.match(/^#event-(.+)$/);
       if (match) {
         const eventIdStr = match[1];
-        const eventId = parseInt(eventIdStr);
-        setOpenEventId(!isNaN(eventId) ? eventId : null); // Store as number
+        const parsedEventId = parseInt(eventIdStr);
+        setOpenEventId(!isNaN(parsedEventId) ? parsedEventId : null); // Store as number
       } else {
         setOpenEventId(null);
       }

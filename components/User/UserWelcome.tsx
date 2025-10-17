@@ -1,8 +1,6 @@
-import { useContext } from "react";
-import Link from "next/link";
 import { cityOrState } from "../../utils/utilities";
 import Button from "../Button/Button";
-import { AppContext } from "../../features/AppContext";
+import { useAppContext } from "../../features/AppContext";
 
 interface Location {
   id: number;
@@ -16,7 +14,7 @@ interface UserWelcomeProps {
 }
 
 const UserWelcome = ({ defaultLocation }: UserWelcomeProps) => {
-  const { profile } = useContext(AppContext);
+  const { profile } = useAppContext();
 
   if (!profile) return null;
 
@@ -35,12 +33,18 @@ const UserWelcome = ({ defaultLocation }: UserWelcomeProps) => {
             <p>
               Your default location is set to{" "}
               <span className="font-semibold text-gray-900">
-                {cityOrState(defaultLocation.city, defaultLocation.state)}
+                {cityOrState(
+                  defaultLocation.city ?? undefined,
+                  defaultLocation.state
+                )}
               </span>
             </p>
             <Button href={`/events/${defaultLocation.slug}`} variant="primary">
               View events in{" "}
-              {cityOrState(defaultLocation.city, defaultLocation.state)}
+              {cityOrState(
+                defaultLocation.city ?? undefined,
+                defaultLocation.state
+              )}
             </Button>
           </div>
         ) : (

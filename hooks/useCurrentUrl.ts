@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 
 /**
  * Custom hook that returns the current full URL of the page
- * @returns {string} Current URL including protocol, host, pathname and search params
+ * @returns Current URL including protocol, host, pathname and search params
  */
-export const useCurrentUrl = () => {
+export const useCurrentUrl = (): string => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [currentUrl, setCurrentUrl] = useState("");

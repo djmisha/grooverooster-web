@@ -1,4 +1,3 @@
-import type { User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import { createClient } from "../../utils/supabase/server";
 import { Metadata } from "next";

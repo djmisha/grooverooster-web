@@ -5,12 +5,27 @@ import {
   getLocationSlug,
   hasValidLocationUrl,
 } from "../utils/locationService";
+import { Location } from "../types";
+
+interface UseLocationReturn {
+  currentLocation: Location | null;
+  allLocations: Location[];
+  setLocation: (location: Location) => void;
+  clearLocation: () => void;
+  addLocationToContext: (location: Location) => void;
+  hasLocation: boolean;
+  locationId: string | number | null;
+  locationName: string | null;
+  locationEventsUrl: string | null;
+  locationSlug: string | null;
+  hasValidUrl: boolean;
+}
 
 /**
  * Custom hook for accessing location functionality from AppContext
- * @returns {Object} Location context and methods
+ * @returns Location context and methods
  */
-export const useLocation = () => {
+export const useLocation = (): UseLocationReturn => {
   const context = useContext(AppContext);
 
   if (!context) {

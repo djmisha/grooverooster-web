@@ -12,8 +12,8 @@ export default function ArtistEventsClient({ events }: { events: any[] }) {
         <EventCard
           event={event}
           key={event.id}
-          openEventId={openEventId}
-          setOpenEventId={setOpenEventId}
+          openEventId={openEventId as number | null}
+          setOpenEventId={setOpenEventId as (id: number | null) => void}
         />
       ))}
     </div>

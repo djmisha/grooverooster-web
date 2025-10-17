@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useContext, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import type { User } from "@supabase/supabase-js";
-import { useRouter } from "next/navigation";
-import { AppContext } from "../../features/AppContext";
+import { useAppContext } from "../../features/AppContext";
 import locations from "../../utils/locations.json";
 
 interface Profile {
@@ -39,10 +38,8 @@ const sanitizeInput = (input: string): string => {
 };
 
 export default function EditProfile({ user }: ProfileFormProps) {
-  const router = useRouter();
   // Replace single loading state with two separate loading states
   const [isLoadingProfile, setIsLoadingProfile] = useState(false);
-  const [isLoadingLogout, setIsLoadingLogout] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
@@ -65,7 +62,7 @@ export default function EditProfile({ user }: ProfileFormProps) {
   });
   const [formValid, setFormValid] = useState(true);
 
-  const { supabase } = useContext(AppContext);
+  const { supabase } = useAppContext();
 
   // Memoize the validation function to prevent unnecessary recalculations
   const validateForm = useCallback((profileData: Partial<Profile>) => {
@@ -194,24 +191,6 @@ export default function EditProfile({ user }: ProfileFormProps) {
       setIsLoadingProfile(false);
     }
   }, [profile, validateForm, user.id, supabase]);
-
-  const handleLogout = useCallback(async () => {
-    try {
-      setIsLoadingLogout(true);
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error("Error logging out:", error);
-        setMessage({ type: "error", text: "Failed to log out" });
-      } else {
-        router.push("/");
-      }
-    } catch (error) {
-      console.error("Unexpected error during logout:", error);
-      setMessage({ type: "error", text: "An unexpected error occurred" });
-    } finally {
-      setIsLoadingLogout(false);
-    }
-  }, [supabase, router]);
 
   // Helper function to get grouped locations for the dropdown
   const groupedLocations = useMemo(() => {

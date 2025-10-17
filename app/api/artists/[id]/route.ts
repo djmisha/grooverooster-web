@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
 
 export async function GET(
-  request: Request,
+  _request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;

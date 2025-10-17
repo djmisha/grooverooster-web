@@ -17,12 +17,14 @@ import Locator from "../components/Locator/Locator";
  * @returns {JSX.Element} Home page client components
  */
 export default function HomeClient({ profile }: { profile: any }) {
-  const { setProfile } = useContext(AppContext);
+  const context = useContext(AppContext);
 
   // Update AppContext with profile data when component mounts
   useEffect(() => {
-    if (profile) setProfile(profile);
-  }, [profile, setProfile]);
+    if (profile && context) {
+      context.setProfile(profile);
+    }
+  }, [profile, context]);
 
   return (
     <>

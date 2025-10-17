@@ -4,13 +4,14 @@
  */
 
 import secureApiEndpoint from "./apiSecurity";
+import type { RateLimitResult } from "../types/rateLimit";
 
 /**
  * Secure an App Router API endpoint
  * @param request - Next.js App Router Request object
  * @returns Security check result
  */
-export function secureAppRouterEndpoint(request: Request) {
+export function secureAppRouterEndpoint(request: Request): RateLimitResult {
   // Adapt App Router Request to Pages Router format for security check
   const url = new URL(request.url);
   const adaptedReq = {
@@ -24,5 +25,6 @@ export function secureAppRouterEndpoint(request: Request) {
   };
 
   // Apply security checks
-  return secureApiEndpoint(adaptedReq as any, null as any);
+  const result = secureApiEndpoint(adaptedReq as any, null as any);
+  return result as RateLimitResult;
 }

@@ -15,7 +15,6 @@ interface LocationCardProps {
 const LocationCard: React.FC<LocationCardProps> = ({
   id,
   city,
-  state,
   stateCode,
   slug,
   isDefault = false,

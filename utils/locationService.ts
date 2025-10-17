@@ -1,12 +1,19 @@
 import locations from "./locations.json";
+import { Location } from "../types";
 
 const LOCATION_COOKIE_NAME = "userLocation";
 
+interface Coordinates {
+  latitude: number;
+  longitude: number;
+  accuracy?: number;
+}
+
 /**
  * Delete a cookie by name
- * @param {string} name - Cookie name
+ * @param name - Cookie name
  */
-const deleteCookie = (name) => {
+const deleteCookie = (name: string): void => {
   try {
     document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`;
   } catch (error) {
@@ -16,11 +23,11 @@ const deleteCookie = (name) => {
 
 /**
  * Set a cookie with specified name, value, and options
- * @param {string} name - Cookie name
- * @param {string} value - Cookie value (will be JSON stringified if object)
- * @param {number} days - Expiration in days (default: 30)
+ * @param name - Cookie name
+ * @param value - Cookie value (will be JSON stringified if object)
+ * @param days - Expiration in days (default: 30)
  */
-const setCookie = (name, value, days = 30) => {
+const setCookie = (name: string, value: any, days: number = 30): void => {
   try {
     if (value === null || value === undefined) {
       deleteCookie(name);
@@ -42,10 +49,10 @@ const setCookie = (name, value, days = 30) => {
 
 /**
  * Get a cookie value by name
- * @param {string} name - Cookie name
- * @returns {string|null} Cookie value or null if not found
+ * @param name - Cookie name
+ * @returns Cookie value or null if not found
  */
-const getCookie = (name) => {
+const getCookie = (name: string): any => {
   try {
     const nameEQ = name + "=";
     const ca = document.cookie.split(";");
@@ -71,13 +78,18 @@ const getCookie = (name) => {
 
 /**
  * Calculate distance between two coordinates using Haversine formula
- * @param {number} lat1 - Latitude of first point
- * @param {number} lon1 - Longitude of first point
- * @param {number} lat2 - Latitude of second point
- * @param {number} lon2 - Longitude of second point
- * @returns {number} Distance in kilometers
+ * @param lat1 - Latitude of first point
+ * @param lon1 - Longitude of first point
+ * @param lat2 - Latitude of second point
+ * @param lon2 - Longitude of second point
+ * @returns Distance in kilometers
  */
-const calculateDistance = (lat1, lon1, lat2, lon2) => {
+const calculateDistance = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number => {
   const R = 6371; // Radius of the Earth in kilometers
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -93,16 +105,19 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 
 /**
  * Find the closest location from coordinates
- * @param {number} latitude - User's latitude
- * @param {number} longitude - User's longitude
- * @returns {Object|null} Closest location object or null if none found
+ * @param latitude - User's latitude
+ * @param longitude - User's longitude
+ * @returns Closest location object or null if none found
  */
-export const findClosestLocation = (latitude, longitude) => {
+export const findClosestLocation = (
+  latitude: number,
+  longitude: number
+): any | null => {
   if (!latitude || !longitude || !locations?.length) {
     return null;
   }
 
-  let closestLocation = null;
+  let closestLocation: any = null;
   let shortestDistance = Infinity;
 
   // First pass: Look for exact city matches within reasonable distance
@@ -147,19 +162,16 @@ export const findClosestLocation = (latitude, longitude) => {
 
 /**
  * Create standardized location object
- * @param {Object} locationData - Raw location data
- * @returns {Object} Standardized location object
+ * @param locationData - Raw location data
+ * @returns Standardized location object
  */
-export const createLocationObject = (locationData) => {
+export const createLocationObject = (locationData: any): Location | null => {
   if (!locationData) return null;
 
   return {
     id: locationData.id,
     city: locationData.city,
     state: locationData.state,
-    stateCode: locationData.stateCode,
-    country: locationData.country,
-    countryCode: locationData.countryCode,
     latitude: locationData.latitude,
     longitude: locationData.longitude,
   };
@@ -167,9 +179,9 @@ export const createLocationObject = (locationData) => {
 
 /**
  * Get user's current position using browser geolocation
- * @returns {Promise<Object>} Promise resolving to coordinates object
+ * @returns Promise resolving to coordinates object
  */
-export const getCurrentPosition = () => {
+export const getCurrentPosition = (): Promise<Coordinates> => {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
       reject(new Error("Geolocation is not supported by this browser"));
@@ -214,9 +226,9 @@ export const getCurrentPosition = () => {
 
 /**
  * Detect user location and find closest match
- * @returns {Promise<Object|null>} Promise resolving to location object or null
+ * @returns Promise resolving to location object or null
  */
-export const detectUserLocation = async () => {
+export const detectUserLocation = async (): Promise<Location | null> => {
   try {
     const coordinates = await getCurrentPosition();
     const closestLocation = findClosestLocation(
@@ -230,16 +242,18 @@ export const detectUserLocation = async () => {
 
     return null;
   } catch (error) {
-    console.warn("Location detection failed:", error.message);
+    if (error instanceof Error) {
+      console.warn("Location detection failed:", error.message);
+    }
     throw error;
   }
 };
 
 /**
  * Save location to cookie
- * @param {Object} location - Location object to save
+ * @param location - Location object to save
  */
-export const saveLocationToCookie = (location) => {
+export const saveLocationToCookie = (location: Location | null): void => {
   if (!location) return;
 
   try {
@@ -251,9 +265,9 @@ export const saveLocationToCookie = (location) => {
 
 /**
  * Get saved location from cookie
- * @returns {Object|null} Saved location object or null
+ * @returns Saved location object or null
  */
-export const getSavedLocation = () => {
+export const getSavedLocation = (): Location | null => {
   try {
     return getCookie(LOCATION_COOKIE_NAME);
   } catch (error) {
@@ -264,21 +278,25 @@ export const getSavedLocation = () => {
 
 /**
  * Update user location and save to cookie
- * @param {Object} location - New location object
+ * @param location - New location object
  */
-export const updateUserLocation = (location) => {
+export const updateUserLocation = (
+  location: Location
+): Location | undefined => {
   if (!location) return;
 
   saveLocationToCookie(location);
-  return createLocationObject(location);
+  return createLocationObject(location) || undefined;
 };
 
 /**
  * Get location by ID from locations.json
- * @param {number} locationId - Location ID
- * @returns {Object|null} Location object or null if not found
+ * @param locationId - Location ID
+ * @returns Location object or null if not found
  */
-export const getLocationById = (locationId) => {
+export const getLocationById = (
+  locationId: string | number
+): Location | null => {
   if (!locationId || !locations?.length) return null;
 
   const location = locations.find((loc) => loc.id === locationId);
@@ -287,10 +305,10 @@ export const getLocationById = (locationId) => {
 
 /**
  * Search locations by city or state name
- * @param {string} searchTerm - Search term
- * @returns {Array} Array of matching locations
+ * @param searchTerm - Search term
+ * @returns Array of matching locations
  */
-export const searchLocations = (searchTerm) => {
+export const searchLocations = (searchTerm: string): Location[] => {
   if (!searchTerm || !locations?.length) return [];
 
   const term = searchTerm.toLowerCase().trim();
@@ -302,7 +320,7 @@ export const searchLocations = (searchTerm) => {
       return cityMatch || stateMatch;
     })
     .map(createLocationObject)
-    .filter(Boolean);
+    .filter((loc): loc is Location => loc !== null);
 };
 
 /**
@@ -310,15 +328,17 @@ export const searchLocations = (searchTerm) => {
  */
 
 // Convert string to URL-friendly slug
-export const toSlug = (string) => {
+export const toSlug = (string: string): string => {
   return string.split(" ").join("-").toLowerCase();
 };
 
 // Create internal events URL path for a location
-export const getLocationEventsUrl = (location) => {
+export const getLocationEventsUrl = (
+  location: Location | null
+): string | null => {
   if (!location) return null;
 
-  let slug;
+  let slug: string;
 
   // Prioritize city if available, otherwise use state
   if (location.city) {
@@ -333,7 +353,7 @@ export const getLocationEventsUrl = (location) => {
 };
 
 // Get location slug for URL generation
-export const getLocationSlug = (location) => {
+export const getLocationSlug = (location: Location | null): string | null => {
   if (!location) return null;
 
   // Prioritize city if available, otherwise use state
@@ -347,13 +367,17 @@ export const getLocationSlug = (location) => {
 };
 
 // Validate if a location has a valid URL path
-export const hasValidLocationUrl = (location) => {
+export const hasValidLocationUrl = (location: Location | null): boolean => {
   return !!(location && (location.city || location.state));
 };
 
 // Maintain compatibility with existing getUserLocation.js functions
-export const getLocationId = (locations, city, state) => {
-  let id;
+export const getLocationId = (
+  locations: any[],
+  city: string,
+  state: string
+): string | number | undefined => {
+  let id: string | number | undefined;
 
   locations.forEach(function (location) {
     if (city === location.city) {
@@ -368,7 +392,7 @@ export const getLocationId = (locations, city, state) => {
 };
 
 // Enhanced version of UserLocationService using IP-based detection
-export const UserLocationService = async () => {
+export const UserLocationService = async (): Promise<Location | null> => {
   try {
     const url = "https://api.ipify.org?format=json";
     const response = await fetch(url);

@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { AppContext } from "../../features/AppContext";
+import { useAppContext } from "../../features/AppContext";
 
 export default function Login() {
   const router = useRouter();
-  const { supabase } = useContext(AppContext);
+  const { supabase } = useAppContext();
 
   // Login form state
   const [email, setEmail] = useState("");

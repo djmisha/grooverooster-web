@@ -1,16 +1,20 @@
-import { useState, useContext } from "react";
-import { AppContext } from "../../features/AppContext";
+import { useState } from "react";
+import { useAppContext } from "../../features/AppContext";
 import Button from "../Button/Button";
 
-export default function ChangePassword({ user }) {
-  const { supabase } = useContext(AppContext);
+interface ChangePasswordProps {
+  user: any;
+}
+
+export default function ChangePassword({ user: _user }: ChangePasswordProps) {
+  const { supabase } = useAppContext();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -32,7 +36,7 @@ export default function ChangePassword({ user }) {
       setSuccess(true);
       setNewPassword("");
       setConfirmPassword("");
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message || "Failed to update password");
       console.error("Password update error:", error);
     } finally {

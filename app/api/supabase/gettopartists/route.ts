@@ -1,25 +1,29 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../../features/Supabase";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
+import type { RateLimitResult } from "../../../../types/rateLimit";
 
 const getData = async () => {
+  if (!supabaseAdmin) throw new Error("Supabase admin not configured");
+
   try {
     const { data, error } = await supabaseAdmin.from("topartists").select("*");
 
     if (error) {
       console.error("Error fetching data: ", error);
-      return;
+      throw error;
     }
 
     return data;
   } catch (error) {
     console.error("Unexpected error occurred: ", error);
+    throw error;
   }
 };
 
 export async function GET(request: Request) {
   // Apply security checks
-  const security = secureAppRouterEndpoint(request);
+  const security: RateLimitResult = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

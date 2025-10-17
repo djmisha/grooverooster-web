@@ -1,13 +1,34 @@
+import React from "react";
+
+type ButtonVariant = "primary" | "secondary";
+
+interface BaseButtonProps {
+  children: React.ReactNode;
+  variant?: ButtonVariant;
+  className?: string;
+}
+
+interface ButtonAsButton extends BaseButtonProps {
+  href?: never;
+  onClick?: () => void;
+}
+
+interface ButtonAsAnchor extends BaseButtonProps {
+  href: string;
+  onClick?: never;
+}
+
+type ButtonProps = ButtonAsButton | ButtonAsAnchor;
+
 /**
  * Button component that renders either a link or button element with consistent styling
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Button content
- * @param {string} [props.variant="primary"] - Button style variant ("primary" or "secondary")
- * @param {string} [props.href] - If provided, renders as an anchor tag
- * @param {Function} [props.onClick] - Click handler for button element
- * @param {string} [props.className] - Additional CSS classes
- * @param {Object} props.props - Additional props passed to the element
- * @returns {JSX.Element} Styled button or anchor element
+ * @param props - Component props
+ * @param props.children - Button content
+ * @param props.variant - Button style variant ("primary" or "secondary")
+ * @param props.href - If provided, renders as an anchor tag
+ * @param props.onClick - Click handler for button element
+ * @param props.className - Additional CSS classes
+ * @returns Styled button or anchor element
  */
 const Button = ({
   children,
@@ -16,11 +37,11 @@ const Button = ({
   onClick,
   className,
   ...props
-}) => {
+}: ButtonProps) => {
   const baseClasses =
     "inline-block px-6 py-3 text-base font-medium text-center no-underline rounded-full transition-all duration-200 ease-in-out cursor-pointer hover:-translate-y-0.5 hover:shadow-lg";
 
-  const variantClasses = {
+  const variantClasses: Record<ButtonVariant, string> = {
     primary: "bg-pink text-white border-none hover:bg-pink/90",
     secondary: "bg-transparent text-blue border-2 border-blue hover:bg-blue/10",
   };

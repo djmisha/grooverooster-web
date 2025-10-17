@@ -1,13 +1,18 @@
 import Image from "next/image";
 
+interface SpinnerProps {
+  isLoading: boolean;
+  text?: string;
+}
+
 /**
  * Spinner component displays a loading indicator with optional text
- * @param {Object} props - Component props
- * @param {boolean} props.isLoading - Whether to show the loading spinner
- * @param {string} [props.text="loading"] - Loading text to display
- * @returns {JSX.Element} Loading spinner with text
+ * @param props - Component props
+ * @param props.isLoading - Whether to show the loading spinner
+ * @param props.text - Loading text to display
+ * @returns Loading spinner with text
  */
-const Spinner = ({ isLoading, text = "loading" }) => (
+const Spinner = ({ isLoading, text = "loading" }: SpinnerProps) => (
   <div className="spinner">
     <div>
       {isLoading && (
