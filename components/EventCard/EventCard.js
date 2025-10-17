@@ -35,8 +35,10 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
   // Support both old and new field names during transition
   const artistList = artistlist || event.artistList || [];
   const eventSource = source || event.eventSource;
-  const festivalInd = festivalind !== undefined ? festivalind : event.festivalInd;
-  const livestreamInd = livestreamind !== undefined ? livestreamind : event.livestreamInd;
+  const festivalInd =
+    festivalind !== undefined ? festivalind : event.festivalInd;
+  const livestreamInd =
+    livestreamind !== undefined ? livestreamind : event.livestreamInd;
   const { name: venueName } = venue;
   const { dayOfWeek, dayMonth, daySchema } = setDates(date);
 
