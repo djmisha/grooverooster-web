@@ -2,13 +2,23 @@ import React from "react";
 
 type ButtonVariant = "primary" | "secondary";
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement> {
+interface BaseButtonProps {
   children: React.ReactNode;
   variant?: ButtonVariant;
-  href?: string;
-  onClick?: () => void;
   className?: string;
 }
+
+interface ButtonAsButton extends BaseButtonProps {
+  href?: never;
+  onClick?: () => void;
+}
+
+interface ButtonAsAnchor extends BaseButtonProps {
+  href: string;
+  onClick?: never;
+}
+
+type ButtonProps = ButtonAsButton | ButtonAsAnchor;
 
 /**
  * Button component that renders either a link or button element with consistent styling
@@ -46,14 +56,14 @@ const Button = ({
 
   if (href) {
     return (
-      <a href={href} className={buttonClass} {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
+      <a href={href} className={buttonClass} {...props}>
         {children}
       </a>
     );
   }
 
   return (
-    <button className={buttonClass} onClick={onClick} {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
+    <button className={buttonClass} onClick={onClick} {...props}>
       {children}
     </button>
   );

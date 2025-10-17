@@ -10,8 +10,15 @@ interface LocationData {
   region_code: string;
 }
 
+interface LocationEntry {
+  id: string | number;
+  city?: string;
+  state: string;
+  stateCode?: string;
+}
+
 /**
- * Services to retreive the location based on user IP
+ * Services to retrieve the location based on user IP
  * IP -> Location -> Match to Location ID -> return location object
  */
 export const UserLocationService = async (): Promise<Location | undefined> => {
@@ -26,7 +33,7 @@ export const UserLocationService = async (): Promise<Location | undefined> => {
     const locationData: LocationData = await locationResponse.json();
     const { city, region_code: state } = locationData;
 
-    const id = getLocationId(locations, city, state);
+    const id = getLocationId(locations as LocationEntry[], city, state);
     const locationObject = createLocationObject(city, state, id);
 
     if (id) return locationObject;
@@ -36,7 +43,7 @@ export const UserLocationService = async (): Promise<Location | undefined> => {
   }
 };
 
-export const getLocationId = (locations: any[], city: string, state: string): string | number | undefined => {
+export const getLocationId = (locations: LocationEntry[], city: string, state: string): string | number | undefined => {
   let id: string | number | undefined;
 
   locations.forEach(function (location) {
@@ -51,11 +58,13 @@ export const getLocationId = (locations: any[], city: string, state: string): st
   return id;
 };
 
-export const createLocationObject = (city: string, state: string, id: string | number | undefined): Location => {
+export const createLocationObject = (city: string, state: string, id: string | number | undefined): Location | undefined => {
+  if (!id) return undefined;
+  
   const stateCode = state;
   let stateName = state;
 
-  locations.find((location) => {
+  (locations as LocationEntry[]).find((location) => {
     if (location.id === id) {
       stateName = location.state;
       return true;
@@ -66,14 +75,14 @@ export const createLocationObject = (city: string, state: string, id: string | n
   return {
     city,
     state: stateName,
-    id: id || "",
+    id,
   };
 };
 
 // check if city matches a city in the locations.json
 export const matchesCity = (city: string): boolean => {
   let hasCity = false;
-  locations.forEach((location) => {
+  (locations as LocationEntry[]).forEach((location) => {
     if (location.city === city) hasCity = true;
   });
 

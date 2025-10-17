@@ -1,7 +1,20 @@
 import locations from "./locations.json";
 import { Location } from "../types";
 
+interface LocationEntry {
+  id: string | number;
+  city?: string;
+  state: string;
+  stateCode?: string;
+  latitude?: number;
+  longitude?: number;
+}
+
 interface LocationWithSlug extends Location {
+  slug: string;
+}
+
+interface LocationDataResult extends LocationEntry {
   slug: string;
 }
 
@@ -36,10 +49,10 @@ export const toSlug = (string: string): string => {
  * @returns Combined array with cities first (alphabetically), then states (alphabetically)
  */
 // add city and state to the locations array
-const addCityAndState = (locations: any[]): any[] => {
-  const cities: any[] = [];
-  const states: any[] = [];
-  const cityAndState: any[] = [];
+const addCityAndState = (locations: LocationEntry[]): LocationEntry[] => {
+  const cities: LocationEntry[] = [];
+  const states: LocationEntry[] = [];
+  const cityAndState: LocationEntry[] = [];
   // add city
   locations.map((location) => {
     if (location.city) cities.push(location);
@@ -51,6 +64,7 @@ const addCityAndState = (locations: any[]): any[] => {
 
   // sort the arrays alphabetically
   cities.sort((a, b) => {
+    if (!a.city || !b.city) return 0;
     if (a.city < b.city) return -1;
     if (a.city > b.city) return 1;
     return 0;
@@ -73,7 +87,7 @@ const addCityAndState = (locations: any[]): any[] => {
   return cityAndState;
 };
 
-export const allLocations = addCityAndState(locations);
+export const allLocations = addCityAndState(locations as LocationEntry[]);
 
 /**
  * Gets all locations with slugs for homepage display
@@ -85,7 +99,7 @@ export const getLocations = (): LocationWithSlug[] => {
     const { id, city, state } = location;
     let slug: string;
     if (location.city) slug = toSlug(location.city);
-    if (!location.city) slug = toSlug(location.state);
+    else slug = toSlug(location.state);
     return {
       id,
       city,
@@ -101,9 +115,9 @@ export const getLocations = (): LocationWithSlug[] => {
  * @returns Location data object with slug and matching location properties
  */
 // Matches Slug with Location and returns data about location
-export const getLocationData = (slug: string): any => {
-  let cityData = null;
-  let stateData = null;
+export const getLocationData = (slug: string): LocationDataResult | null => {
+  let cityData: LocationEntry | null = null;
+  let stateData: LocationEntry | null = null;
 
   // First pass: collect all matches
   allLocations.forEach((location) => {
@@ -117,6 +131,8 @@ export const getLocationData = (slug: string): any => {
 
   // Prioritize city matches over state matches
   const data = cityData || stateData;
+
+  if (!data) return null;
 
   return {
     slug,
@@ -208,8 +224,8 @@ export const getCitiesInState = (stateSlug: string): CityInfo[] => {
     .filter((location) => location.city && location.state === stateEntry.state)
     .map((location) => ({
       id: location.id,
-      name: location.city,
-      slug: toSlug(location.city),
+      name: location.city!,
+      slug: toSlug(location.city!),
       state: location.state,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
