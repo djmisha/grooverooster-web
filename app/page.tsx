@@ -13,14 +13,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1.0,
   maximumScale: 1.0,
   userScalable: false,
 };
 
 // Force dynamic rendering since this page uses cookies
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 /**
  * Home page component that displays the main landing page
@@ -56,7 +56,8 @@ export default async function Home() {
         const locationId = parseInt(profile.default_location_id, 10);
 
         // Find the location in the locations array
-        defaultLocation = locations.find((loc: any) => loc.id === locationId) || null;
+        defaultLocation =
+          locations.find((loc: any) => loc.id === locationId) || null;
       }
     }
   } catch (error) {
@@ -65,7 +66,7 @@ export default async function Home() {
     console.error("Error initializing Supabase:", error);
   }
 
-  const canonicalUrl = getCanonicalUrl('/');
+  const canonicalUrl = getCanonicalUrl("/");
 
   return (
     <Layout home canonicalUrl={canonicalUrl}>

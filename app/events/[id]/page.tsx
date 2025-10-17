@@ -17,9 +17,11 @@ interface LocationPageProps {
   searchParams: Promise<{ page?: string; eventId?: string }>;
 }
 
-export async function generateMetadata({ params }: LocationPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: LocationPageProps): Promise<Metadata> {
   const { id: slug } = await params;
-  
+
   if (isStateLandingPage(slug)) {
     const stateInfo = getStateInfo(slug);
     if (stateInfo) {
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
       return { title, description };
     }
   }
-  
+
   const locationData = getLocationData(slug);
   if (locationData.id) {
     const { city, state } = locationData;
@@ -36,11 +38,14 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
     const description = makePageDescription(city, state);
     return { title, description };
   }
-  
+
   return { title: "Location Not Found" };
 }
 
-export default async function Location({ params, searchParams }: LocationPageProps) {
+export default async function Location({
+  params,
+  searchParams,
+}: LocationPageProps) {
   const { id: slug } = await params;
   const { page, eventId } = await searchParams;
   const initialPage = parseInt(page || "1") || 1;
@@ -102,7 +107,8 @@ export default async function Location({ params, searchParams }: LocationPagePro
 
     return (
       <Layout home={false} canonicalUrl={canonicalUrl}>
-        <EventsModule isHome={false}
+        <EventsModule
+          isHome={false}
           key={stateInfo.id}
           locationData={{
             id: stateInfo.id,
@@ -141,7 +147,8 @@ export default async function Location({ params, searchParams }: LocationPagePro
 
   return (
     <Layout home={false} canonicalUrl={canonicalUrl}>
-      <EventsModule isHome={false}
+      <EventsModule
+        isHome={false}
         key={locationData.id}
         locationData={locationData}
         events={events}

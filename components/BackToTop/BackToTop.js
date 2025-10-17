@@ -8,7 +8,7 @@ import React, { useState, useEffect } from "react";
  */
 const BackToTop = () => {
   const [visible, setVisible] = useState(false);
-  
+
   /**
    * Scrolls the page to the top
    */

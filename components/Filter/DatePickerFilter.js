@@ -31,25 +31,29 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
     if (!dateRange?.from) {
       return;
     }
-    
+
     // Check if it's a single date or a range
     if (dateRange.to && dateRange.from.getTime() !== dateRange.to.getTime()) {
       // Date range selected
       const fromDate = startOfDay(dateRange.from);
       const toDate = endOfDay(dateRange.to);
-      
+
       const fromStr = format(fromDate, "MMM d");
       const toStr = format(toDate, "MMM d");
-      
+
       // Set search term with formatted display
-      setSearchTerm(`Date range: ${fromStr} through ${toStr}|daterange:${format(fromDate, "yyyy-MM-dd")}:${format(toDate, "yyyy-MM-dd")}`);
+      setSearchTerm(
+        `Date range: ${fromStr} through ${toStr}|daterange:${format(fromDate, "yyyy-MM-dd")}:${format(toDate, "yyyy-MM-dd")}`
+      );
     } else {
       // Single date selected
       const targetDate = startOfDay(dateRange.from);
       const dateStr = format(targetDate, "MMM d");
-      
+
       // Set search term with formatted display
-      setSearchTerm(`Date: ${dateStr}|date:${format(targetDate, "yyyy-MM-dd")}`);
+      setSearchTerm(
+        `Date: ${dateStr}|date:${format(targetDate, "yyyy-MM-dd")}`
+      );
     }
 
     onClose();
@@ -72,9 +76,7 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
 
   return (
     <div className="p-4 pt-6 max-h-[80vh] overflow-y-auto">
-      <h2 className="m-0 mb-4 text-xl font-normal text-blue">
-        Filter by Date
-      </h2>
+      <h2 className="m-0 mb-4 text-xl font-normal text-blue">Filter by Date</h2>
 
       {/* Calendar - works for both single date and range */}
       <div className="flex justify-center mb-4">

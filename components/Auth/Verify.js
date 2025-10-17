@@ -15,7 +15,7 @@ const Verify = () => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get('code')) {
+    if (searchParams.get("code")) {
       setShowModal(true);
     }
   }, [searchParams]);
@@ -35,7 +35,8 @@ const Verify = () => {
         <div className="verification-success">
           <h2>Email Verified</h2>
           <p>
-            Thank you for confirming your email. You may now login to our site.{" "}
+            Thank you for confirming your email. You may now login to our
+            site.{" "}
           </p>
           <div className="verification-actions">
             <Link href="/login">

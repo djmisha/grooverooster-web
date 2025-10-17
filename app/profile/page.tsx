@@ -14,7 +14,7 @@ export const metadata: Metadata = {
  * @returns {Promise<JSX.Element>} Profile edit page or redirect to login
  */
 // Force dynamic rendering since this page uses cookies
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function ProfilePage() {
   try {
