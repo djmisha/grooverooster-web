@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 import localArtists from "../../../../localArtistsDB.json";
+import setDates from "../../../../utils/setDates";
 
 // Force this route to be dynamic to ensure date filtering uses current date
 export const dynamic = 'force-dynamic';
@@ -211,6 +212,19 @@ const filterPastEvents = (events) => {
 };
 
 /**
+ * Add formatted date and visibility flag to events
+ * @param {Array} events - Array of events
+ * @returns {Array} - Array with formattedDate and isVisible fields added
+ */
+const addFormattedFields = (events) => {
+  return events.map((event) => ({
+    ...event,
+    isVisible: true,
+    formattedDate: event.date ? setDates(event.date).dayMonthYear : null,
+  }));
+};
+
+/**
  * Process SDHM events through the complete pipeline
  * @param {Array} rawEvents - Raw events data from SDHM API
  * @param {string} city - City name for venue normalization
@@ -234,7 +248,10 @@ const processSDHMEvents = (rawEvents, city = "") => {
     // Step 4: Filter out past events
     const filteredEvents = filterPastEvents(withArtistsEvents);
 
-    return filteredEvents;
+    // Step 5: Add formatted date and visibility flag
+    const finalEvents = addFormattedFields(filteredEvents);
+
+    return finalEvents;
   } catch (error) {
     console.error("Error processing SDHM events:", error);
     return [];

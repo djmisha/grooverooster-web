@@ -1,3 +1,5 @@
+import setDates from "./setDates";
+
 /**
  * Transform event data from the EDM Train (legacy) API format to the new SDHM format
  * This is the REVERSE of the old eventTransformer - it converts OLD format to NEW format
@@ -35,6 +37,8 @@ export function transformEDMTrainEventData(legacyEvent) {
       b2bInd: artist.b2bInd,
     })) || [],
     source: legacyEvent.eventSource,
+    isVisible: true,
+    formattedDate: legacyEvent.date ? setDates(legacyEvent.date).dayMonthYear : null,
   };
 }
 
