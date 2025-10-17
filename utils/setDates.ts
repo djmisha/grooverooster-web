@@ -8,7 +8,9 @@ dayjs.extend(relativeTime);
  * @param date - The date to format (ISO string or Date object)
  * @returns Object containing formatted date strings in different formats
  */
-const setDates = (date: string | Date): FormattedDate & { dayMonthYear: string; fromNow: string } => {
+const setDates = (
+  date: string | Date
+): FormattedDate & { dayMonthYear: string; fromNow: string } => {
   const dayOfWeek = dayjs(date).format("dddd");
   const dayMonth = dayjs(date).format("MMM D");
   const daySchema = dayjs(date).format();

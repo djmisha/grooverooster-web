@@ -18,7 +18,11 @@ export const config = {
  */
 export async function GET(request: Request) {
   // Apply security checks
-  const security = secureAppRouterEndpoint(request);
+  const security = secureAppRouterEndpoint(request) as {
+    allowed: boolean;
+    error?: string;
+    isPreflight?: boolean;
+  };
 
   // Check if request is allowed
   if (!security.allowed) {

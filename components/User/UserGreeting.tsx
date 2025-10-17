@@ -1,19 +1,9 @@
-import { useContext } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { AppContext } from "../../features/AppContext";
-
-interface Profile {
-  id: string;
-  username: string;
-  full_name: string;
-  avatar_url: string;
-  website: string;
-  updated_at: string;
-}
+import Link from "next/link";
+import { useAppContext } from "../../features/AppContext";
 
 const UserGreeting = () => {
-  const { profile } = useContext(AppContext);
+  const { profile } = useAppContext();
   const DEFAULT_ICON = "/images/icon-user.svg";
 
   const renderContent = () => {

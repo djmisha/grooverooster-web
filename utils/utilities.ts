@@ -55,23 +55,35 @@ export const makeArtists = (data: Event[]): string[] => {
   return allArtists;
 };
 
-export const cityOrState = (city: string | undefined, state: string): string => {
+export const cityOrState = (
+  city: string | undefined,
+  state: string
+): string => {
   const string = city ? `${city}, ${state}` : `${state}`;
   return string;
 };
 
-export const makePageTitle = (city: string | undefined, state: string): string => {
+export const makePageTitle = (
+  city: string | undefined,
+  state: string
+): string => {
   return `Dance Music Events in ${cityOrState(
     city,
     state
   )} - Nightclub DJ & Concerts`;
 };
 
-export const makePageHeadline = (city: string | undefined, state: string): string => {
+export const makePageHeadline = (
+  city: string | undefined,
+  state: string
+): string => {
   return `Music Events in ${cityOrState(city, state)}`;
 };
 
-export const makePageDescription = (city: string | undefined, state: string): string => {
+export const makePageDescription = (
+  city: string | undefined,
+  state: string
+): string => {
   const title = `Find electronic dance music events in  ${cityOrState(
     city,
     state
@@ -195,7 +207,9 @@ export const makeDatesWithCounts = (data: Event[]): FilterItemWithCount[] => {
     });
 };
 
-export const makePromotersWithCounts = (data: Event[]): FilterItemWithCount[] => {
+export const makePromotersWithCounts = (
+  data: Event[]
+): FilterItemWithCount[] => {
   const eventNameCounts: Record<string, number> = {};
   data.forEach((item) => {
     if (item.name) {

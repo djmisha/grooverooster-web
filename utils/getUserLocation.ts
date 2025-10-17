@@ -43,7 +43,11 @@ export const UserLocationService = async (): Promise<Location | undefined> => {
   }
 };
 
-export const getLocationId = (locations: LocationEntry[], city: string, state: string): string | number | undefined => {
+export const getLocationId = (
+  locations: LocationEntry[],
+  city: string,
+  state: string
+): string | number | undefined => {
   let id: string | number | undefined;
 
   locations.forEach(function (location) {
@@ -58,10 +62,13 @@ export const getLocationId = (locations: LocationEntry[], city: string, state: s
   return id;
 };
 
-export const createLocationObject = (city: string, state: string, id: string | number | undefined): Location | undefined => {
+export const createLocationObject = (
+  city: string,
+  state: string,
+  id: string | number | undefined
+): Location | undefined => {
   if (!id) return undefined;
-  
-  const stateCode = state;
+
   let stateName = state;
 
   (locations as LocationEntry[]).find((location) => {

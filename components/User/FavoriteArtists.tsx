@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { AppContext } from "../../features/AppContext";
+import { useState, useEffect } from "react";
+import { useAppContext } from "../../features/AppContext";
 import artistsData from "../../localArtistsDB.json";
 import FavoriteArtistCard from "./FavoriteArtistCard";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
@@ -22,7 +22,7 @@ const FavoriteArtists = ({ userId }: FavoriteArtistsProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [draggedItem, setDraggedItem] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const { supabase } = useContext(AppContext);
+  const { supabase } = useAppContext();
 
   // Detect if we're on mobile
   useEffect(() => {

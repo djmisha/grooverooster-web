@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../../utils/appRouterSecurity";
 import { authenticatedFetch } from "../../../../../utils/authenticatedFetch";
+import type { RateLimitResult } from "../../../../../types/rateLimit";
 
 export async function GET(
   request: Request,
   context: { params: Promise<{ params: string[] }> }
 ) {
   // Apply security checks
-  const security = secureAppRouterEndpoint(request);
+  const security: RateLimitResult = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

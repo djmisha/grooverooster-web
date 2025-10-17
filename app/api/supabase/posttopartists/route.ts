@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import supabase from "../../../../features/Supabase";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
+import type { RateLimitResult } from "../../../../types/rateLimit";
 
 const setData = async (artists: any[]) => {
+  if (!supabase) throw new Error("Supabase not configured");
+
   try {
     // Delete all rows
     const { error: deleteError } = await supabase
@@ -16,7 +19,7 @@ const setData = async (artists: any[]) => {
     }
 
     // Insert new rows
-    const { data, error: insertError } = await supabase
+    const { error: insertError } = await supabase
       .from("topartists")
       .insert(artists);
 
@@ -32,7 +35,7 @@ const setData = async (artists: any[]) => {
 
 export async function POST(request: Request) {
   // Apply security checks
-  const security = secureAppRouterEndpoint(request);
+  const security: RateLimitResult = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

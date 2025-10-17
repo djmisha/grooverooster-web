@@ -21,20 +21,6 @@ export const useEventModal = (
   openEventId: EventId | null,
   setOpenEventId: (id: EventId | null) => void
 ): UseEventModalReturn => {
-  // Parse hash from URL to get event ID
-  const parseEventIdFromHash = useCallback((): number | null => {
-    if (typeof window === "undefined") return null;
-
-    const hash = window.location.hash;
-    const match = hash.match(/^#event-(.+)$/);
-    if (match) {
-      const eventIdStr = match[1];
-      const parsedEventId = parseInt(eventIdStr);
-      return !isNaN(parsedEventId) ? parsedEventId : null;
-    }
-    return null;
-  }, []);
-
   // Update URL hash with event ID
   const updateUrlHash = useCallback((id: EventId | null) => {
     if (typeof window === "undefined") return;

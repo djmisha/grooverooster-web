@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 import localArtists from "../../../../localArtistsDB.json";
 import setDates from "../../../../utils/setDates";
+import type { RateLimitResult } from "../../../../types/rateLimit";
 
 // Force this route to be dynamic to ensure date filtering uses current date
 export const dynamic = "force-dynamic";
@@ -14,14 +15,14 @@ export const dynamic = "force-dynamic";
  * @returns {number} - Similarity score between 0 and 1
  */
 const calculateSimilarity = (
-  str1: any,
-  str2: any,
+  str1: string,
+  str2: string,
   city: string = ""
 ): number => {
   if (!str1 || !str2) return 0;
 
   // Normalize strings: lowercase, remove extra spaces, common words
-  const normalize = (str) => {
+  const normalize = (str: string): string => {
     const cityPattern = city ? `|${city.toLowerCase()}` : "";
     const regex = new RegExp(
       `\\b(nightclub|club|theater|theatre|venue${cityPattern})\\b`,
@@ -81,29 +82,47 @@ const calculateSimilarity = (
   return maxLength === 0 ? 1 : (maxLength - matrix[len1][len2]) / maxLength;
 };
 
+interface SDHMEvent {
+  id?: string | number;
+  date: string;
+  name?: string;
+  venue?: { name?: string };
+  artistlist?: Array<{ name: string; id?: string | number }>;
+  source?: string;
+  eventSource?: string;
+  formattedDate?: string | null;
+  isVisible?: boolean;
+}
+
 /**
  * Remove duplicate events based on date and venue similarity
  * @param {Array} events - Array of events
  * @param {string} city - City name for venue normalization
  * @returns {Array} - Array with duplicates removed
  */
-const removeDuplicateEvents = (events, city = "") => {
-  return events.reduce((acc, event) => {
-    const duplicateIndex = acc.findIndex((e) => {
+const removeDuplicateEvents = (events: SDHMEvent[], city = ""): SDHMEvent[] => {
+  return events.reduce((acc: SDHMEvent[], event: SDHMEvent) => {
+    const duplicateIndex = acc.findIndex((e: SDHMEvent) => {
       // Must be the same date
       if (e.date !== event.date) return false;
 
       // Check for exact venue match first
-      if ((e.venue?.name).toLowerCase() === (event.venue?.name).toLowerCase())
+      if (
+        e.venue?.name &&
+        event.venue?.name &&
+        e.venue.name.toLowerCase() === event.venue.name.toLowerCase()
+      )
         return true;
 
       // Check for similar venue names (threshold: 0.8 similarity)
-      const similarity = calculateSimilarity(
-        e.venue?.name,
-        event.venue?.name,
-        city
-      );
-      if (similarity >= 0.8) return true;
+      if (e.venue?.name && event.venue?.name) {
+        const similarity = calculateSimilarity(
+          e.venue.name,
+          event.venue.name,
+          city
+        );
+        if (similarity >= 0.8) return true;
+      }
 
       return false;
     });
@@ -128,8 +147,8 @@ const removeDuplicateEvents = (events, city = "") => {
  * @param {Array} events - Array of events
  * @returns {Array} - Array sorted by date
  */
-const sortEventsByDate = (events: any[]) => {
-  return events.sort((a: any, b: any) => {
+const sortEventsByDate = (events: SDHMEvent[]): SDHMEvent[] => {
+  return events.sort((a: SDHMEvent, b: SDHMEvent) => {
     // Handle cases where date might be null or undefined
     if (!a.date && !b.date) return 0;
     if (!a.date) return 1; // Put events without dates at the end
@@ -149,17 +168,20 @@ const sortEventsByDate = (events: any[]) => {
  * @param {Array} events - Array of events
  * @returns {Array} - Formatted events array
  */
-const formatTicketMasterwithImagesArtists = (events) => {
-  return events.map((event) => {
+const formatTicketMasterwithImagesArtists = (
+  events: SDHMEvent[]
+): SDHMEvent[] => {
+  return events.map((event: SDHMEvent) => {
     // Check if artistlist is not empty and event name exists (using new schema field name)
     if (
       event.source === "ticketmaster" &&
-      event.artistlist?.length != 0 &&
+      event.artistlist &&
+      event.artistlist.length > 0 &&
       event.name
     ) {
       const matchedArtist = localArtists.find((artist) => {
         return (
-          event.artistlist[0].name.toLowerCase() == artist.name.toLowerCase()
+          event.artistlist![0].name.toLowerCase() == artist.name.toLowerCase()
         );
       });
 
@@ -187,7 +209,7 @@ const formatTicketMasterwithImagesArtists = (events) => {
  * @param {Date|string} date - Date object or date string
  * @returns {string} - Date in YYYY-MM-DD format
  */
-const toDateString = (date) => {
+const toDateString = (date: Date | string): string => {
   if (typeof date === "string") {
     return date.split("T")[0]; // Extract date part from ISO string
   }
@@ -206,7 +228,7 @@ const toDateString = (date) => {
  * @param {Array} events - Array of events
  * @returns {Array} - Array with past events removed
  */
-const filterPastEvents = (events) => {
+const filterPastEvents = (events: SDHMEvent[]): SDHMEvent[] => {
   const todayString = toDateString(new Date());
 
   return events.filter((event) => {
@@ -220,12 +242,14 @@ const filterPastEvents = (events) => {
  * @param {Array} events - Array of events
  * @returns {Array} - Array with formattedDate and isVisible fields added
  */
-const addFormattedFields = (events) => {
-  return events.map((event) => ({
-    ...event,
-    isVisible: true,
-    formattedDate: event.date ? setDates(event.date).dayMonthYear : null,
-  }));
+const addFormattedFields = (events: SDHMEvent[]): SDHMEvent[] => {
+  return events.map(
+    (event: SDHMEvent): SDHMEvent => ({
+      ...event,
+      isVisible: true,
+      formattedDate: event.date ? setDates(event.date).dayMonthYear : null,
+    })
+  );
 };
 
 /**
@@ -234,7 +258,7 @@ const addFormattedFields = (events) => {
  * @param {string} city - City name for venue normalization
  * @returns {Array} - Processed and filtered events array
  */
-const processSDHMEvents = (rawEvents, city = "") => {
+const processSDHMEvents = (rawEvents: SDHMEvent[], city = ""): SDHMEvent[] => {
   if (!Array.isArray(rawEvents) || rawEvents.length === 0) {
     return [];
   }
@@ -267,7 +291,7 @@ export async function GET(
   context: { params: Promise<{ params: string[] }> }
 ) {
   // Apply security checks
-  const security = secureAppRouterEndpoint(request);
+  const security: RateLimitResult = secureAppRouterEndpoint(request);
 
   // Check if request is allowed
   if (!security.allowed) {

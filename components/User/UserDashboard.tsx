@@ -1,10 +1,8 @@
 "use client";
 
-import { useContext, useEffect, useState, useCallback, useMemo } from "react";
-import type { User } from "@supabase/supabase-js";
-import Link from "next/link";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { FaMapMarkerAlt, FaMusic, FaCog } from "react-icons/fa";
-import { AppContext } from "../../features/AppContext";
+import { useAppContext } from "../../features/AppContext";
 import FavoriteArtists from "./FavoriteArtists";
 import ArtistSearch from "./ArtistSearch";
 import OtherLocations from "./OtherLocations";
@@ -14,17 +12,8 @@ import LocationCard from "./LocationCard";
 import locationsData from "../../utils/locations.json";
 
 interface UserDashboardProps {
-  user: User;
   profile?: any;
   defaultLocation?: any;
-}
-
-interface Location {
-  id: number;
-  city: string | null;
-  state: string;
-  stateCode: string;
-  slug?: string;
 }
 
 interface FormattedLocation {
@@ -39,7 +28,7 @@ export default function UserDashboard({
   profile: serverProfile,
   defaultLocation,
 }: UserDashboardProps) {
-  const { profile: contextProfile, supabase } = useContext(AppContext);
+  const { profile: contextProfile, supabase } = useAppContext();
   const [formattedLocation, setFormattedLocation] =
     useState<FormattedLocation | null>(null);
   const [refreshFavorites, setRefreshFavorites] = useState(0);

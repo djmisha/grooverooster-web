@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { AppContext } from "../../features/AppContext";
+import { useAppContext } from "../../features/AppContext";
 
 export default function Signup() {
-  const router = useRouter();
-  const { supabase } = useContext(AppContext);
+  const { supabase } = useAppContext();
 
   // Sign up form state
   const [signupEmail, setSignupEmail] = useState("");
@@ -28,7 +26,6 @@ export default function Signup() {
       const { error } = await supabase.auth.signUp({
         email: signupEmail,
         password: signupPassword,
-        username: signupEmail,
         options: {
           captchaToken,
           emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email`,

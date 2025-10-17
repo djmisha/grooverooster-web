@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { AppContext } from "../../features/AppContext";
+import { useAppContext } from "../../features/AppContext";
 
 export default function PasswordReset() {
-  const { supabase } = useContext(AppContext);
+  const { supabase } = useAppContext();
 
   const [resetEmail, setResetEmail] = useState("");
   const [isResetting, setIsResetting] = useState(false);

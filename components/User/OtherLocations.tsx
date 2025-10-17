@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import locationsData from "../../utils/locations.json";
-import { AppContext } from "../../features/AppContext";
+import { useAppContext } from "../../features/AppContext";
 
 interface OtherLocationsProps {
   currentLocationId?: number;
@@ -9,20 +9,13 @@ interface OtherLocationsProps {
   onLocationAdded?: () => Promise<void> | void;
 }
 
-interface Location {
-  id: number;
-  city: string | null;
-  state: string;
-  stateCode: string;
-}
-
 const OtherLocations: React.FC<OtherLocationsProps> = ({
   currentLocationId,
   userId,
   savedLocationIds: propSavedLocationIds,
   onLocationAdded,
 }) => {
-  const { supabase } = useContext(AppContext);
+  const { supabase } = useAppContext();
   const [savedLocationIds, setSavedLocationIds] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAllLocations, setShowAllLocations] = useState(false);
@@ -110,31 +103,6 @@ const OtherLocations: React.FC<OtherLocationsProps> = ({
       }
     } catch (error) {
       console.error("Error saving location:", error);
-    }
-  };
-
-  // Remove a location from saved locations
-  const removeLocation = async (locationId: number) => {
-    if (!userId) return;
-
-    try {
-      const newSavedLocations = savedLocationIds.filter(
-        (id) => id !== locationId
-      );
-
-      const { error } = await supabase
-        .from("profiles")
-        .update({ other_locations: newSavedLocations })
-        .eq("id", userId);
-
-      if (error) {
-        throw error;
-      }
-
-      // Update local state
-      setSavedLocationIds(newSavedLocations);
-    } catch (error) {
-      console.error("Error removing location:", error);
     }
   };
 

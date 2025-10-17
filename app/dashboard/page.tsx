@@ -1,4 +1,3 @@
-import type { User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import UserDashboard from "../../components/User/UserDashboard";
 import { createClient } from "../../utils/supabase/server";
@@ -54,11 +53,7 @@ export default async function DashboardPage() {
     }
 
     return (
-      <UserDashboard
-        user={user}
-        profile={profile}
-        defaultLocation={defaultLocation}
-      />
+      <UserDashboard profile={profile} defaultLocation={defaultLocation} />
     );
   } catch (error) {
     // If Supabase is not configured or there's an error, redirect to login

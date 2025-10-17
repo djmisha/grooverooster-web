@@ -14,7 +14,13 @@ interface LocationWithSlug extends Location {
   slug: string;
 }
 
-interface LocationDataResult extends LocationEntry {
+interface LocationDataResult {
+  id: string | number;
+  city?: string;
+  state: string;
+  stateCode?: string;
+  latitude?: number;
+  longitude?: number;
   slug: string;
 }
 
@@ -116,28 +122,41 @@ export const getLocations = (): LocationWithSlug[] => {
  */
 // Matches Slug with Location and returns data about location
 export const getLocationData = (slug: string): LocationDataResult | null => {
-  let cityData: LocationEntry | null = null;
-  let stateData: LocationEntry | null = null;
+  // Find city match first
+  const cityMatch = allLocations.find(
+    (location) => location.city && toSlug(location.city) === slug
+  );
 
-  // First pass: collect all matches
-  allLocations.forEach((location) => {
-    if (location.city && toSlug(location.city) === slug) {
-      cityData = location;
-    }
-    if (!location.city && toSlug(location.state) === slug) {
-      stateData = location;
-    }
-  });
+  if (cityMatch) {
+    return {
+      id: cityMatch.id,
+      city: cityMatch.city,
+      state: cityMatch.state,
+      stateCode: cityMatch.stateCode,
+      latitude: cityMatch.latitude,
+      longitude: cityMatch.longitude,
+      slug,
+    };
+  }
 
-  // Prioritize city matches over state matches
-  const data = cityData || stateData;
+  // Find state match
+  const stateMatch = allLocations.find(
+    (location) => !location.city && toSlug(location.state) === slug
+  );
 
-  if (!data) return null;
+  if (stateMatch) {
+    return {
+      id: stateMatch.id,
+      city: stateMatch.city,
+      state: stateMatch.state,
+      stateCode: stateMatch.stateCode,
+      latitude: stateMatch.latitude,
+      longitude: stateMatch.longitude,
+      slug,
+    };
+  }
 
-  return {
-    slug,
-    ...data,
-  };
+  return null;
 };
 
 /**
@@ -146,7 +165,9 @@ export const getLocationData = (slug: string): LocationDataResult | null => {
  * @returns URL path in format "/events/slug" or null if invalid
  */
 // Create internal events URL path for a location
-export const getLocationEventsUrl = (location: Location | null): string | null => {
+export const getLocationEventsUrl = (
+  location: Location | null
+): string | null => {
   if (!location) return null;
 
   let slug: string;

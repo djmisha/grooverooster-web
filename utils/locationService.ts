@@ -84,7 +84,12 @@ const getCookie = (name: string): any => {
  * @param lon2 - Longitude of second point
  * @returns Distance in kilometers
  */
-const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+const calculateDistance = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number => {
   const R = 6371; // Radius of the Earth in kilometers
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
   const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -104,7 +109,10 @@ const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: numbe
  * @param longitude - User's longitude
  * @returns Closest location object or null if none found
  */
-export const findClosestLocation = (latitude: number, longitude: number): any | null => {
+export const findClosestLocation = (
+  latitude: number,
+  longitude: number
+): any | null => {
   if (!latitude || !longitude || !locations?.length) {
     return null;
   }
@@ -272,7 +280,9 @@ export const getSavedLocation = (): Location | null => {
  * Update user location and save to cookie
  * @param location - New location object
  */
-export const updateUserLocation = (location: Location): Location | undefined => {
+export const updateUserLocation = (
+  location: Location
+): Location | undefined => {
   if (!location) return;
 
   saveLocationToCookie(location);
@@ -284,7 +294,9 @@ export const updateUserLocation = (location: Location): Location | undefined => 
  * @param locationId - Location ID
  * @returns Location object or null if not found
  */
-export const getLocationById = (locationId: string | number): Location | null => {
+export const getLocationById = (
+  locationId: string | number
+): Location | null => {
   if (!locationId || !locations?.length) return null;
 
   const location = locations.find((loc) => loc.id === locationId);
@@ -321,7 +333,9 @@ export const toSlug = (string: string): string => {
 };
 
 // Create internal events URL path for a location
-export const getLocationEventsUrl = (location: Location | null): string | null => {
+export const getLocationEventsUrl = (
+  location: Location | null
+): string | null => {
   if (!location) return null;
 
   let slug: string;
@@ -358,7 +372,11 @@ export const hasValidLocationUrl = (location: Location | null): boolean => {
 };
 
 // Maintain compatibility with existing getUserLocation.js functions
-export const getLocationId = (locations: any[], city: string, state: string): string | number | undefined => {
+export const getLocationId = (
+  locations: any[],
+  city: string,
+  state: string
+): string | number | undefined => {
   let id: string | number | undefined;
 
   locations.forEach(function (location) {

@@ -20,7 +20,11 @@ export const deleteCookie = (name: string): void => {
  * @param value - Cookie value (will be JSON stringified if object)
  * @param days - Expiration in days (default: 30)
  */
-export const setCookie = (name: string, value: any, days: number = 30): void => {
+export const setCookie = (
+  name: string,
+  value: any,
+  days: number = 30
+): void => {
   try {
     if (value === null || value === undefined) {
       deleteCookie(name);

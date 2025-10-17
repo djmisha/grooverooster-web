@@ -94,6 +94,7 @@ export const searchFilter = (
   }
 
   if (results.length) return showMatchedEvents(results, events);
+  return undefined;
 };
 
 /**

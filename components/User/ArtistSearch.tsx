@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { AppContext } from "../../features/AppContext";
+import { useState, useEffect } from "react";
+import { useAppContext } from "../../features/AppContext";
 import artistsData from "../../localArtistsDB.json";
 
 interface Artist {
@@ -23,7 +23,7 @@ const ArtistSearch = ({ userId, onArtistAdded }: ArtistSearchProps) => {
     text: string;
   } | null>(null);
 
-  const { supabase } = useContext(AppContext);
+  const { supabase } = useAppContext();
 
   // Fetch current favorite artist ids
   useEffect(() => {

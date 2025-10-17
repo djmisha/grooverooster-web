@@ -76,18 +76,8 @@ export interface FilterItemWithCount {
   originalDate?: string;
 }
 
-// Context Types
-export interface AppContextValue {
-  locationCtx: Location[];
-  currentUserLocation: Location | null;
-  addLocation: (location: Location) => void;
-  setUserLocation: (location: Location) => void;
-  clearUserLocation: () => void;
-  supabase: any;
-  profile: Profile | null;
-  setProfile: (profile: Profile | null) => void;
-  isLoggedIn: boolean;
-}
+// Context Types - defined in features/AppContext.tsx to avoid circular dependency
+export type { AppContextValue } from "../features/AppContext";
 
 // Profile Types
 export interface Profile {
@@ -96,6 +86,8 @@ export interface Profile {
   email?: string;
   avatar_url?: string;
   full_name?: string;
+  city?: string | null;
+  state?: string | null;
   updated_at?: string;
   created_at?: string;
 }
@@ -129,8 +121,8 @@ export interface ArtistsResponse {
 // Component Prop Types
 export interface EventCardProps {
   event: Event;
-  openEventId: string | number | null;
-  setOpenEventId: (id: string | number | null) => void;
+  openEventId: EventId | null;
+  setOpenEventId: (id: EventId | null) => void;
 }
 
 export interface FilterProps {

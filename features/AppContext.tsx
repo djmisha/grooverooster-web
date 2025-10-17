@@ -6,13 +6,27 @@ import React, {
   useMemo,
   useEffect,
   useRef,
+  useContext,
 } from "react";
 import { createClient } from "../utils/supabase/component";
 import {
   getSavedLocation,
   saveLocationToCookie,
 } from "../utils/locationService";
-import { AppContextValue, Location, Profile } from "../types";
+import { Location, Profile } from "../types";
+import type { SupabaseClientType } from "../types/database";
+
+export interface AppContextValue {
+  locationCtx: Location[];
+  currentUserLocation: Location | null;
+  addLocation: (location: Location) => void;
+  setUserLocation: (location: Location) => void;
+  clearUserLocation: () => void;
+  supabase: SupabaseClientType;
+  profile: Profile | null;
+  setProfile: (profile: Profile | null) => void;
+  isLoggedIn: boolean;
+}
 
 /**
  * Application context for managing global state including location and user profile
@@ -31,7 +45,8 @@ interface AppProviderProps {
  */
 export const AppProvider = ({ children }: AppProviderProps) => {
   const [locationCtx, setLocationCtx] = useState<Location[]>([]);
-  const [currentUserLocation, setCurrentUserLocation] = useState<Location | null>(null);
+  const [currentUserLocation, setCurrentUserLocation] =
+    useState<Location | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const supabase = createClient();
   const isProfileInitialized = useRef(false);
@@ -136,4 +151,15 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+};
+
+/**
+ * Custom hook to use AppContext with type safety
+ */
+export const useAppContext = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within AppProvider");
+  }
+  return context;
 };

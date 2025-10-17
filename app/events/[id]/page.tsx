@@ -25,17 +25,17 @@ export async function generateMetadata({
   if (isStateLandingPage(slug)) {
     const stateInfo = getStateInfo(slug);
     if (stateInfo) {
-      const title = makePageTitle(null, stateInfo.name);
-      const description = makePageDescription(null, stateInfo.name);
+      const title = makePageTitle(undefined, stateInfo.name);
+      const description = makePageDescription(undefined, stateInfo.name);
       return { title, description };
     }
   }
 
   const locationData = getLocationData(slug);
-  if (locationData.id) {
+  if (locationData?.id) {
     const { city, state } = locationData;
-    const title = makePageTitle(city, state);
-    const description = makePageDescription(city, state);
+    const title = makePageTitle(city ?? undefined, state);
+    const description = makePageDescription(city ?? undefined, state);
     return { title, description };
   }
 
@@ -73,7 +73,7 @@ export default async function Location({
             cities={stateInfo.cities}
             locationData={{
               id: stateInfo.id,
-              city: null,
+              city: undefined,
               state: stateInfo.name,
               slug: stateInfo.slug,
             }}
@@ -85,19 +85,14 @@ export default async function Location({
     // If state has no cities, fetch events directly via EDM TRAIN API
     let events: any[] = [];
     try {
-      if (!stateInfo.city) {
-        const apiUrl = `http://${host}/api/events/${stateInfo.id}`;
-        const response = await fetch(apiUrl, { cache: "no-store" });
+      const apiUrl = `http://${host}/api/events/${stateInfo.id}`;
+      const response = await fetch(apiUrl, { cache: "no-store" });
 
-        if (response.ok) {
-          const data = await response.json();
-          events = data.data || [];
-        } else {
-          console.error(`API response error: ${response.status}`);
-          events = [];
-        }
+      if (response.ok) {
+        const data = await response.json();
+        events = data.data || [];
       } else {
-        console.warn("Skipping state API call - city present in location data");
+        console.error(`API response error: ${response.status}`);
         events = [];
       }
     } catch (error) {
@@ -112,7 +107,7 @@ export default async function Location({
           key={stateInfo.id}
           locationData={{
             id: stateInfo.id,
-            city: null,
+            city: undefined,
             state: stateInfo.name,
             slug: stateInfo.slug,
           }}
@@ -127,7 +122,7 @@ export default async function Location({
   // Default behavior for city/regular location pages
   const locationData = getLocationData(slug);
 
-  if (!locationData.id) {
+  if (!locationData?.id) {
     const { notFound } = await import("next/navigation");
     notFound();
     return null; // TypeScript doesn't know notFound() never returns
@@ -136,13 +131,16 @@ export default async function Location({
   // Call the SDHM API and process events
   let events: any[] = [];
   try {
-    events = await getSDHMEvents(locationData.id, locationData.city);
+    const locationId =
+      typeof locationData.id === "string"
+        ? parseInt(locationData.id)
+        : locationData.id;
+    events = await getSDHMEvents(locationId, locationData.city || "");
   } catch (error) {
     console.error("Error fetching events from SDHM API:", error);
     events = [];
   }
 
-  const { city, state } = locationData;
   const canonicalUrl = getCanonicalUrl(`/events/${locationData.slug}`);
 
   return (
