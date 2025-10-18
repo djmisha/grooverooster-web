@@ -2,6 +2,57 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+### Prerequisites
+
+- Node.js 20.0.0 or later (managed via Volta)
+- Yarn 1.22.19 or npm
+
+### Environment Variables
+
+This application requires several environment variables to function properly. Copy the `.env.example` file to `.env.local` and fill in the required values:
+
+```bash
+cp .env.example .env.local
+```
+
+**Required Environment Variables:**
+
+- **Supabase Configuration:**
+  - `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+  - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Your Supabase anonymous key
+  - `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key (server-side only)
+
+- **HCaptcha Configuration:**
+  - `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` - Your HCaptcha site key (get from https://dashboard.hcaptcha.com/)
+  - `HCAPTCHA_SECRET_KEY` - Your HCaptcha secret key
+
+- **API Keys:**
+  - `NEXT_PUBLIC_API_KEY_EDMTRAIN` - EDM Train API key for music events
+  - `NEXT_PUBLIC_API_KEY_LASTFM` - Last.fm API key for artist information
+  - `API_KEY_TICKETMASTER` - Ticketmaster API key for event discovery
+  - `API_KEY_SDHM` - SDHM API key
+  - `API_URL_SDHM` - SDHM API URL
+
+- **Authentication:**
+  - `API_ALLOWED_TOKENS` - Comma-separated list of allowed bearer tokens
+
+- **Application Configuration:**
+  - `NEXT_PUBLIC_BASE_URL` - Your application's base URL (e.g., https://www.grooverooster.com)
+
+See `.env.example` for a complete list with descriptions.
+
+### Installation
+
+Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### Running the Development Server
+
 First, run the development server:
 
 ```bash
@@ -12,11 +63,37 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Security
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+This application implements comprehensive security measures including:
+
+- **Content Security Policy (CSP)** - Prevents XSS attacks
+- **Security Headers** - X-Frame-Options, X-Content-Type-Options, etc.
+- **Route Protection** - Authentication middleware for protected routes
+- **Secure Cookies** - HttpOnly, Secure, SameSite flags
+- **Bearer Token Authentication** - Strict token validation
+- **Row Level Security** - Database-level access control (see `SUPABASE_RLS_POLICIES.md`)
+
+For more details, see the comprehensive security scan report in `SECURITY_SCAN_REPORT.md`.
+
+## Project Structure
+
+- `/app` - Next.js App Router pages and layouts
+- `/components` - Reusable React components
+- `/utils` - Utility functions and helpers
+- `/lib` - Library code and configurations
+- `/types` - TypeScript type definitions
+- `/features` - Feature-specific code (e.g., Supabase client)
+- `/public` - Static assets
+- `/styles` - Global styles and CSS
+
+## API Routes
+
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `app/api/hello/route.ts`.
+
+The `app/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction).
 
 ## Learn More
 
