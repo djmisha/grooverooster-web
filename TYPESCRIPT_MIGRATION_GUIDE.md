@@ -7,12 +7,15 @@ This guide documents the TypeScript migration progress and provides patterns for
 ### ✅ Completed (15 files)
 
 #### Configuration
+
 - `tsconfig.json` - Enhanced with strict mode and comprehensive compiler options
 
 #### Type Definitions
+
 - `types/index.ts` - Centralized type definitions for the entire application
 
 #### Utilities (9 files)
+
 - `utils/utilities.ts` - Array, string, and data transformation utilities
 - `utils/searchFilter.ts` - Event search and filtering
 - `utils/setDates.ts` - Date formatting utilities
@@ -23,20 +26,24 @@ This guide documents the TypeScript migration progress and provides patterns for
 - `utils/getUserLocation.ts` - IP-based location detection
 
 #### Features (1 file)
+
 - `features/AppContext.tsx` - Application context provider
 
 #### Hooks (3 files)
+
 - `hooks/useLocation.ts` - Location context hook
 - `hooks/useEventModal.ts` - Modal state management
 - `hooks/useCurrentUrl.ts` - Current URL tracking
 
 #### Components (2 files)
+
 - `components/Spinner/Spinner.tsx` - Loading spinner
 - `components/Button/Button2.tsx` - Button component with variants
 
 ### 🔄 Remaining (~60 files)
 
 #### Utilities (~10 files)
+
 - `utils/authenticatedFetch.js`
 - `utils/getEvents.js`
 - `utils/apiSecurity.js`
@@ -46,6 +53,7 @@ This guide documents the TypeScript migration progress and provides patterns for
 - And others...
 
 #### Components (~48 files)
+
 - Event-related: `EventCard.js`, `EventDetails.js`, `EventsModule.js`
 - Navigation: `NavigataionBar.js`, `Sidebar.js`, `LocationSelect.js`
 - Artists: `Artists.js`, `ArtistBio.js`, `ArtistImage.js`
@@ -54,6 +62,7 @@ This guide documents the TypeScript migration progress and provides patterns for
 - And many more...
 
 #### Features (~2 files)
+
 - `features/Supabase.js`
 - `features/services/*.js`
 
@@ -62,6 +71,7 @@ This guide documents the TypeScript migration progress and provides patterns for
 ### 1. Basic Component Conversion
 
 **Before (JS):**
+
 ```javascript
 const MyComponent = ({ title, count, onAction }) => {
   return (
@@ -76,6 +86,7 @@ export default MyComponent;
 ```
 
 **After (TS/TSX):**
+
 ```typescript
 import React from "react";
 
@@ -100,24 +111,27 @@ export default MyComponent;
 ### 2. Utility Function Conversion
 
 **Before (JS):**
+
 ```javascript
 export const processEvents = (events) => {
-  return events.filter(event => event.isVisible);
+  return events.filter((event) => event.isVisible);
 };
 ```
 
 **After (TS):**
+
 ```typescript
 import { Event } from "../types";
 
 export const processEvents = (events: Event[]): Event[] => {
-  return events.filter(event => event.isVisible);
+  return events.filter((event) => event.isVisible);
 };
 ```
 
 ### 3. API Function Conversion
 
 **Before (JS):**
+
 ```javascript
 export const fetchEvents = async (locationId) => {
   const response = await fetch(`/api/events/${locationId}`);
@@ -127,10 +141,13 @@ export const fetchEvents = async (locationId) => {
 ```
 
 **After (TS):**
+
 ```typescript
 import { Event, ApiResponse } from "../types";
 
-export const fetchEvents = async (locationId: string | number): Promise<Event[]> => {
+export const fetchEvents = async (
+  locationId: string | number
+): Promise<Event[]> => {
   const response = await fetch(`/api/events/${locationId}`);
   const data: ApiResponse<Event[]> = await response.json();
   return data.data || [];
@@ -140,19 +157,21 @@ export const fetchEvents = async (locationId: string | number): Promise<Event[]>
 ### 4. Hook Conversion
 
 **Before (JS):**
+
 ```javascript
 export const useCustomHook = (initialValue) => {
   const [value, setValue] = useState(initialValue);
-  
+
   const updateValue = (newValue) => {
     setValue(newValue);
   };
-  
+
   return { value, updateValue };
 };
 ```
 
 **After (TS):**
+
 ```typescript
 import { useState } from "react";
 
@@ -161,13 +180,13 @@ interface UseCustomHookReturn<T> {
   updateValue: (newValue: T) => void;
 }
 
-export const useCustomHook = <T,>(initialValue: T): UseCustomHookReturn<T> => {
+export const useCustomHook = <T>(initialValue: T): UseCustomHookReturn<T> => {
   const [value, setValue] = useState<T>(initialValue);
-  
+
   const updateValue = (newValue: T): void => {
     setValue(newValue);
   };
-  
+
   return { value, updateValue };
 };
 ```
@@ -178,16 +197,16 @@ Use these from `types/index.ts`:
 
 ```typescript
 // Core data types
-Event, Artist, Venue, Location, Profile
+(Event, Artist, Venue, Location, Profile);
 
 // API types
-ApiResponse<T>, EventsResponse, ArtistsResponse
+(ApiResponse<T>, EventsResponse, ArtistsResponse);
 
 // Component props
-EventCardProps, FilterProps, ModalProps
+(EventCardProps, FilterProps, ModalProps);
 
 // Utility types
-SearchTerm, EventId, Optional<T>, Nullable<T>
+(SearchTerm, EventId, Optional<T>, Nullable<T>);
 ```
 
 ## Best Practices
