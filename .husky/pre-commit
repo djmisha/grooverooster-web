@@ -4,6 +4,16 @@ echo ""
 echo "🚀 Starting pre-commit checks..."
 echo ""
 
+# Run Prettier format check
+echo "💅 Checking code formatting..."
+if ! yarn format; then
+  echo ""
+  echo "❌ Code formatting check failed. Run 'yarn format' to fix formatting issues."
+  exit 1
+fi
+echo "✅ Code formatting passed!"
+echo ""
+
 # Run ESLint
 echo "🔍 Running ESLint..."
 if ! yarn lint; then
@@ -12,16 +22,6 @@ if ! yarn lint; then
   exit 1
 fi
 echo "✅ ESLint passed!"
-echo ""
-
-# Run Prettier format check
-echo "💅 Checking code formatting..."
-if ! yarn format:check; then
-  echo ""
-  echo "❌ Code formatting check failed. Run 'yarn format' to fix formatting issues."
-  exit 1
-fi
-echo "✅ Code formatting passed!"
 echo ""
 
 # Run TypeScript compiler
