@@ -18,6 +18,29 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+## Pre-commit Hooks
+
+This project uses [Husky](https://typicode.github.io/husky/) to run pre-commit hooks that ensure code quality before commits are made.
+
+### What runs on pre-commit:
+
+1. **ESLint** - Checks for code quality and style issues
+2. **Prettier** - Verifies code formatting
+3. **TypeScript Compiler** - Type checks the codebase
+
+All three checks must pass for a commit to succeed. If any check fails, the commit will be blocked and you'll need to fix the issues before committing.
+
+### Manual checks:
+
+You can run these checks manually at any time:
+
+```bash
+yarn lint          # Run ESLint
+yarn format        # Format code with Prettier
+yarn format:check  # Check formatting without modifying files
+yarn tsc --noEmit  # Run TypeScript type checking
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
