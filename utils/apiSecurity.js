@@ -59,17 +59,9 @@ function validateBearerToken(token) {
   // Get allowed tokens from environment variables
   const allowedTokens = getAllowedTokens();
 
-  // Check if token is in the allowed list
-  if (allowedTokens.includes(cleanToken)) {
-    return true;
-  }
-
-  // Fallback: Basic token validation for JWT and API key patterns
-  // This allows tokens that match expected formats even if not in the explicit list
-  const tokenPattern = /^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/; // JWT pattern
-  const apiKeyPattern = /^[A-Za-z0-9]{32,}$/; // Simple API key pattern
-
-  return tokenPattern.test(cleanToken) || apiKeyPattern.test(cleanToken);
+  // Strict token validation - only allow explicitly whitelisted tokens
+  // This prevents bypassing authentication with pattern-matching tokens
+  return allowedTokens.includes(cleanToken);
 }
 
 /**

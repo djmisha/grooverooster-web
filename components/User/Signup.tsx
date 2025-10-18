@@ -95,7 +95,7 @@ export default function Signup() {
           </div>
 
           <HCaptcha
-            sitekey="74e2165e-2f0a-4314-9838-a5720a2e1fac"
+            sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || ""}
             onVerify={(token) => setCaptchaToken(token)}
           />
 
