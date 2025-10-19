@@ -1,6 +1,6 @@
 import locations from "./locations.json";
 import { Location } from "../types";
-import { setCookie as setSecureCookie, getCookie, deleteCookie } from "./cookieUtils";
+import { setCookie as setSecureCookie, getCookie } from "./cookieUtils";
 
 const LOCATION_COOKIE_NAME = "userLocation";
 

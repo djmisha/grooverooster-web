@@ -9,7 +9,7 @@
 interface CookieOptions {
   days?: number;
   secure?: boolean;
-  sameSite?: 'Strict' | 'Lax' | 'None';
+  sameSite?: "Strict" | "Lax" | "None";
   path?: string;
 }
 
@@ -48,8 +48,8 @@ export const setCookie = (
     const {
       days = 30,
       secure = true, // Default to Secure in production
-      sameSite = 'Strict', // Default to Strict for maximum security
-      path = '/'
+      sameSite = "Strict", // Default to Strict for maximum security
+      path = "/",
     } = options;
 
     const expires = new Date();
@@ -57,22 +57,26 @@ export const setCookie = (
 
     const cookieValue =
       typeof value === "object" ? JSON.stringify(value) : value;
-    
+
     // Build cookie string with security flags
     const cookieParts = [
       `${name}=${encodeURIComponent(cookieValue)}`,
       `expires=${expires.toUTCString()}`,
       `path=${path}`,
-      `SameSite=${sameSite}`
+      `SameSite=${sameSite}`,
     ];
 
     // Add Secure flag if enabled (should be true in production)
     // Note: Secure flag requires HTTPS
-    if (secure && typeof window !== 'undefined' && window.location.protocol === 'https:') {
-      cookieParts.push('Secure');
+    if (
+      secure &&
+      typeof window !== "undefined" &&
+      window.location.protocol === "https:"
+    ) {
+      cookieParts.push("Secure");
     }
 
-    document.cookie = cookieParts.join(';');
+    document.cookie = cookieParts.join(";");
   } catch (error) {
     console.error("Error setting cookie:", error);
   }
@@ -114,7 +118,7 @@ export const getCookie = (name: string): any => {
 export const areCookiesEnabled = (): boolean => {
   try {
     // Use minimal options for the test cookie
-    setCookie("test", "test", { days: 1, secure: false, sameSite: 'Lax' });
+    setCookie("test", "test", { days: 1, secure: false, sameSite: "Lax" });
     const result = getCookie("test") === "test";
     deleteCookie("test");
     return result;
