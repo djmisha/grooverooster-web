@@ -13,6 +13,7 @@ Row Level Security (RLS) is a PostgreSQL feature that allows you to control whic
 ## Prerequisites
 
 Before implementing these policies, ensure:
+
 1. You have access to the Supabase dashboard (https://app.supabase.com)
 2. You have the necessary permissions to modify database policies
 3. You have backed up your database
@@ -20,6 +21,7 @@ Before implementing these policies, ensure:
 ## How to Implement
 
 ### Via Supabase Dashboard:
+
 1. Navigate to your Supabase project
 2. Go to "Database" → "Policies"
 3. Select the table you want to protect
@@ -27,6 +29,7 @@ Before implementing these policies, ensure:
 5. Add policies using the "New Policy" button
 
 ### Via SQL Editor:
+
 1. Navigate to "SQL Editor" in Supabase dashboard
 2. Copy and paste the SQL commands below
 3. Execute the queries
@@ -180,22 +183,28 @@ CREATE POLICY "Users can delete own events"
 After implementing RLS policies, test them thoroughly:
 
 ### 1. Test Unauthenticated Access
+
 ```sql
 -- This should fail if RLS is properly configured
 SELECT * FROM profiles WHERE id != auth.uid();
 ```
 
 ### 2. Test Authenticated Access
+
 Log in as a user and verify:
+
 - They can read their own data
 - They cannot read other users' data
 - They can only modify their own records
 
 ### 3. Test Service Role Access
+
 The service role should bypass RLS and have full access to all data.
 
 ### 4. Automated Testing
+
 Create integration tests that:
+
 1. Attempt unauthorized access (should fail)
 2. Attempt authorized access (should succeed)
 3. Verify data isolation between users
@@ -205,20 +214,24 @@ Create integration tests that:
 ## Common Pitfalls
 
 ### 1. Forgetting to Enable RLS
+
 ```sql
 -- Always check if RLS is enabled
-SELECT tablename, rowsecurity 
-FROM pg_tables 
+SELECT tablename, rowsecurity
+FROM pg_tables
 WHERE schemaname = 'public';
 ```
 
 ### 2. Service Role Bypassing RLS
+
 The service role bypasses RLS by default. Use it carefully and only in backend code.
 
 ### 3. Missing Policies
+
 If RLS is enabled but no policies exist, all queries will be denied by default.
 
 ### 4. Policy Conflicts
+
 Multiple policies are combined with OR logic. Ensure policies don't conflict.
 
 ---
@@ -226,19 +239,23 @@ Multiple policies are combined with OR logic. Ensure policies don't conflict.
 ## Monitoring and Auditing
 
 ### Check Current Policies
+
 ```sql
 -- View all policies for a table
 SELECT * FROM pg_policies WHERE tablename = 'artists';
 ```
 
 ### Monitor Policy Performance
+
 ```sql
 -- Check if policies are impacting query performance
 EXPLAIN ANALYZE SELECT * FROM artists WHERE user_id = auth.uid();
 ```
 
 ### Audit Logging
+
 Consider implementing audit logging for sensitive operations:
+
 ```sql
 -- Create an audit log table
 CREATE TABLE audit_log (
@@ -257,24 +274,30 @@ CREATE TABLE audit_log (
 ## Maintenance
 
 ### Regular Reviews
+
 - Review RLS policies quarterly
 - Audit access patterns and adjust policies accordingly
 - Test policies after any schema changes
 
 ### Policy Updates
+
 When updating policies:
+
 1. Test in development environment first
 2. Document the changes
 3. Deploy during low-traffic periods
 4. Monitor for errors after deployment
 
 ### Policy Removal
+
 To remove a policy:
+
 ```sql
 DROP POLICY IF EXISTS "policy_name" ON table_name;
 ```
 
 To disable RLS (not recommended in production):
+
 ```sql
 ALTER TABLE table_name DISABLE ROW LEVEL SECURITY;
 ```
@@ -292,6 +315,7 @@ ALTER TABLE table_name DISABLE ROW LEVEL SECURITY;
 ## Support
 
 If you encounter issues implementing these policies:
+
 1. Check Supabase logs in the dashboard
 2. Review the PostgreSQL error messages
 3. Test policies in isolation

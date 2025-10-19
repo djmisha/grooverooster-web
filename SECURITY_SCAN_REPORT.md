@@ -43,6 +43,7 @@ This comprehensive security scan identifies vulnerabilities, security misconfigu
 **Severity:** HIGH  
 **Status:** IDENTIFIED  
 **CVE References:**
+
 - GHSA-g5qg-72qw-gw5v (Cache Key Confusion - CVSS 6.2)
 - GHSA-xv57-4mr9-wg8v (Content Injection - CVSS 4.3)
 - GHSA-4342-x723-ch2f (SSRF via Middleware - CVSS 6.5)
@@ -52,16 +53,19 @@ This comprehensive security scan identifies vulnerabilities, security misconfigu
 
 **Description:**  
 The application uses Next.js 15.2.4 which contains three moderate-severity vulnerabilities:
+
 1. Cache key confusion in Image Optimization API that could expose cached content
 2. Content injection vulnerability in image optimization
 3. SSRF vulnerability in middleware redirect handling
 
 **Impact:**
+
 - Unauthorized access to cached image data
 - Potential injection of malicious content
 - Server-side request forgery attacks
 
 **Recommendation:**
+
 ```bash
 npm update next@latest
 # or
@@ -77,10 +81,12 @@ npm install next@15.5.6
 **Latest Stable:** eslint@8.57.0, eslint-config-next@15.x
 
 **Impact:**
+
 - Missing latest security linting rules
 - Inconsistent code quality checks
 
 **Recommendation:**
+
 ```bash
 npm update eslint eslint-config-next
 ```
@@ -104,12 +110,14 @@ Implement automated npm audit and Dependabot in GitHub Actions
 
 **Severity:** HIGH  
 **Status:** IDENTIFIED  
-**Location:** 
+**Location:**
+
 - `/components/User/Login.tsx:105`
 - `/components/User/Signup.tsx:98`
 
 **Finding:**
 HCaptcha site key is hardcoded in client-side components:
+
 ```typescript
 <HCaptcha
   sitekey="74e2165e-2f0a-4314-9838-a5720a2e1fac"
@@ -118,12 +126,14 @@ HCaptcha site key is hardcoded in client-side components:
 ```
 
 **Impact:**
+
 - Site key exposure in source code and version control
 - Potential for key abuse if leaked
 - Difficulty in key rotation
 
 **Recommendation:**
 Move site key to environment variables:
+
 ```typescript
 <HCaptcha
   sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
@@ -141,11 +151,13 @@ Move site key to environment variables:
 No client-side validation for password strength or complexity
 
 **Impact:**
+
 - Users can create weak passwords
 - Increased vulnerability to brute force attacks
 
 **Recommendation:**
 Implement password strength validation:
+
 - Minimum 8 characters
 - Mix of uppercase, lowercase, numbers, and special characters
 - Check against common passwords list
@@ -160,11 +172,13 @@ Implement password strength validation:
 No MFA implementation for user accounts
 
 **Impact:**
+
 - Accounts vulnerable to credential theft
 - No additional layer of security beyond password
 
 **Recommendation:**
 Implement MFA using Supabase's built-in MFA support:
+
 - TOTP (Time-based One-Time Password)
 - SMS-based verification
 - Recovery codes
@@ -178,11 +192,13 @@ Implement MFA using Supabase's built-in MFA support:
 While API security exists (`apiSecurity.js`), there's no specific rate limiting for authentication attempts
 
 **Impact:**
+
 - Vulnerable to brute force password attacks
 - Potential account enumeration attacks
 
 **Recommendation:**
 Implement exponential backoff and account lockout:
+
 - Limit login attempts to 5 per 15 minutes per IP
 - Implement CAPTCHA after 3 failed attempts
 - Temporary account lockout after 5 failed attempts
@@ -196,11 +212,13 @@ Implement exponential backoff and account lockout:
 No explicit session timeout or idle timeout configuration in Supabase client setup
 
 **Impact:**
+
 - Sessions may persist longer than necessary
 - Increased risk of session hijacking
 
 **Recommendation:**
 Configure session timeout in Supabase client:
+
 ```typescript
 createClient(url, key, {
   auth: {
@@ -208,8 +226,8 @@ createClient(url, key, {
     persistSession: true,
     detectSessionInUrl: true,
     maxSessionDuration: 3600, // 1 hour
-  }
-})
+  },
+});
 ```
 
 ### 2.6 Missing Authorization Checks on Protected Routes
@@ -221,16 +239,18 @@ createClient(url, key, {
 No Next.js middleware for route protection visible in repository
 
 **Impact:**
+
 - Potential unauthorized access to protected pages
 - No centralized authentication guard
 
 **Recommendation:**
 Create `middleware.ts` for route protection:
+
 ```typescript
 export async function middleware(request: NextRequest) {
   const supabase = createServerClient(...)
   const { data: { session } } = await supabase.auth.getSession()
-  
+
   if (!session && request.nextUrl.pathname.startsWith('/dashboard')) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
@@ -253,6 +273,7 @@ export const config = {
 
 **Finding:**
 CORS is configured with wildcard origin:
+
 ```json
 {
   "key": "Access-Control-Allow-Origin",
@@ -261,18 +282,21 @@ CORS is configured with wildcard origin:
 ```
 
 **Impact:**
+
 - Any domain can make requests to your API
 - Vulnerable to CSRF attacks
 - No origin validation
 
 **Recommendation:**
 Restrict CORS to specific domains:
+
 ```json
 {
   "key": "Access-Control-Allow-Origin",
   "value": "https://www.grooverooster.com"
 }
 ```
+
 Or implement dynamic origin validation for multiple domains.
 
 ### 3.2 Weak Bearer Token Validation
@@ -283,6 +307,7 @@ Or implement dynamic origin validation for multiple domains.
 
 **Finding:**
 Bearer token validation uses pattern matching as fallback:
+
 ```javascript
 const tokenPattern = /^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/;
 const apiKeyPattern = /^[A-Za-z0-9]{32,}$/;
@@ -291,12 +316,14 @@ return tokenPattern.test(cleanToken) || apiKeyPattern.test(cleanToken);
 ```
 
 **Impact:**
+
 - Any token matching these patterns will be accepted
 - Bypasses explicit token whitelist
 - Potential unauthorized API access
 
 **Recommendation:**
 Remove pattern-based fallback and rely solely on explicit token validation:
+
 ```javascript
 function validateBearerToken(token) {
   if (!token) return false;
@@ -315,12 +342,14 @@ function validateBearerToken(token) {
 No actual rate limiting logic in `apiSecurity.js` despite naming suggesting rate limiting
 
 **Impact:**
+
 - Vulnerable to API abuse
 - No protection against DDoS attacks
 - Potential cost overruns from excessive API calls
 
 **Recommendation:**
 Implement rate limiting using Vercel Edge Config or Redis:
+
 ```typescript
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
@@ -339,17 +368,20 @@ const ratelimit = new Ratelimit({
 
 **Finding:**
 API endpoint returns API key directly:
+
 ```typescript
 const apiKey = process.env.NEXT_PUBLIC_API_KEY_EDMTRAIN;
 return NextResponse.json({ apiKey });
 ```
 
 **Impact:**
+
 - API keys exposed to mobile apps can be extracted
 - Keys can be used from unauthorized domains
 - Difficult to revoke compromised keys
 
 **Recommendation:**
+
 - Implement server-side proxy for third-party API calls
 - Use short-lived tokens instead of exposing API keys
 - Implement key rotation mechanism
@@ -363,20 +395,22 @@ return NextResponse.json({ apiKey });
 No explicit request body size limits on API routes
 
 **Impact:**
+
 - Vulnerable to large payload attacks
 - Potential memory exhaustion
 - DDoS vector
 
 **Recommendation:**
 Configure body size limits in `next.config.js`:
+
 ```javascript
 module.exports = {
   api: {
     bodyParser: {
-      sizeLimit: '1mb',
+      sizeLimit: "1mb",
     },
   },
-}
+};
 ```
 
 ### 3.6 Insufficient Input Validation on Dynamic Routes
@@ -389,6 +423,7 @@ module.exports = {
 Good validation exists for SDHM route but inconsistent across other routes
 
 **Impact:**
+
 - Potential injection attacks
 - Unexpected application behavior
 
@@ -407,6 +442,7 @@ Implement consistent validation across all dynamic routes using Zod schemas
 
 **Finding:**
 Cookies set without security flags:
+
 ```typescript
 document.cookie = `${name}=${encodeURIComponent(
   cookieValue
@@ -414,14 +450,17 @@ document.cookie = `${name}=${encodeURIComponent(
 ```
 
 **Impact:**
+
 - Cookies vulnerable to XSS attacks
 - No HTTPS enforcement
 - Potential CSRF vulnerabilities
 
 **Recommendation:**
 Add security attributes:
+
 ```typescript
-document.cookie = `${name}=${encodeURIComponent(cookieValue)};` +
+document.cookie =
+  `${name}=${encodeURIComponent(cookieValue)};` +
   `expires=${expires.toUTCString()};` +
   `path=/;` +
   `Secure;` +
@@ -438,12 +477,14 @@ document.cookie = `${name}=${encodeURIComponent(cookieValue)};` +
 No Content Security Policy headers configured
 
 **Impact:**
+
 - Vulnerable to XSS attacks
 - No protection against inline script injection
 - Potential data exfiltration
 
 **Recommendation:**
 Implement CSP in `next.config.js`:
+
 ```javascript
 async headers() {
   return [
@@ -475,6 +516,7 @@ async headers() {
 
 **Finding:**
 Missing critical security headers:
+
 - X-Frame-Options
 - X-Content-Type-Options
 - Referrer-Policy
@@ -482,12 +524,14 @@ Missing critical security headers:
 - X-XSS-Protection
 
 **Impact:**
+
 - Clickjacking attacks possible
 - MIME-type sniffing vulnerabilities
 - Unnecessary browser features enabled
 
 **Recommendation:**
 Add security headers:
+
 ```javascript
 {
   key: 'X-Frame-Options',
@@ -514,16 +558,19 @@ Add security headers:
 
 **Finding:**
 Multiple `NEXT_PUBLIC_` prefixed variables expose configuration:
+
 - NEXT_PUBLIC_API_KEY_EDMTRAIN
 - NEXT_PUBLIC_API_KEY_LASTFM
 - NEXT_PUBLIC_SUPABASE_URL
 - NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 **Impact:**
+
 - API keys visible in client-side JavaScript
 - Potential for unauthorized API usage
 
 **Recommendation:**
+
 - Review which keys truly need client access
 - Move sensitive operations to API routes
 - Implement server-side proxies for third-party APIs
@@ -537,10 +584,12 @@ Multiple `NEXT_PUBLIC_` prefixed variables expose configuration:
 No explicit encryption configuration for Supabase data storage
 
 **Impact:**
+
 - Data may not be encrypted at database level
 - Compliance risk for user data
 
 **Recommendation:**
+
 - Verify Supabase encryption settings
 - Enable transparent data encryption if available
 - Implement application-level encryption for sensitive fields
@@ -555,10 +604,12 @@ No explicit encryption configuration for Supabase data storage
 Privacy policy exists but no versioning or effective date tracking
 
 **Impact:**
+
 - Cannot prove user consent to specific policy version
 - Compliance risk (GDPR, CCPA)
 
 **Recommendation:**
+
 - Add version number and effective date to privacy policy
 - Store user acceptance with version reference
 - Implement changelog for policy updates
@@ -576,12 +627,14 @@ Privacy policy exists but no versioning or effective date tracking
 No `.env.example` or documentation of required environment variables
 
 **Impact:**
+
 - Difficult onboarding for new developers
 - Risk of missing critical configuration
 - Security misconfigurations
 
 **Recommendation:**
 Create `.env.example`:
+
 ```bash
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=
@@ -621,11 +674,13 @@ NEXT_PUBLIC_BASE_URL=https://www.grooverooster.com
 No `security.txt` file for responsible disclosure
 
 **Impact:**
+
 - Security researchers don't know how to report vulnerabilities
 - Missed opportunity for early vulnerability detection
 
 **Recommendation:**
 Create `public/.well-known/security.txt`:
+
 ```
 Contact: security@grooverooster.com
 Preferred-Languages: en
@@ -643,11 +698,13 @@ Acknowledgments: https://www.grooverooster.com/security-acknowledgments
 No automated security scanning in GitHub Actions workflow
 
 **Impact:**
+
 - Vulnerabilities may reach production
 - No automated security testing
 
 **Recommendation:**
 Add security checks to `.github/workflows/security.yml`:
+
 - npm audit
 - CodeQL analysis
 - Dependency vulnerability scanning
@@ -663,11 +720,13 @@ Add security checks to `.github/workflows/security.yml`:
 Secrets managed through Vercel environment variables only
 
 **Impact:**
+
 - No secret rotation mechanism
 - Limited audit logging
 - Difficult to manage across environments
 
 **Recommendation:**
+
 - Implement secret rotation policy
 - Use Vercel's secret management features
 - Consider HashiCorp Vault for sensitive credentials
@@ -681,12 +740,14 @@ Secrets managed through Vercel environment variables only
 No visibility into security events or anomalous behavior
 
 **Impact:**
+
 - Cannot detect attacks in progress
 - No incident response capability
 - Delayed breach detection
 
 **Recommendation:**
 Implement:
+
 - Vercel Analytics for traffic monitoring
 - Sentry or similar for error tracking
 - Custom alerting for failed authentication attempts
@@ -702,18 +763,21 @@ Implement:
 **Status:** PARTIALLY IMPLEMENTED
 
 **Finding:**
+
 - Good validation in `/app/api/sdhm/[...params]/route.ts`
 - Missing or inconsistent in other routes
 - No centralized validation framework
 
 **Impact:**
+
 - Potential injection vulnerabilities
 - Data integrity issues
 
 **Recommendation:**
 Implement Zod schemas for all API endpoints:
+
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 const eventSchema = z.object({
   id: z.string().uuid(),
@@ -731,13 +795,15 @@ const eventSchema = z.object({
 Using `html-entities` package but no comprehensive HTML sanitization
 
 **Impact:**
+
 - Potential XSS vulnerabilities
 - Malicious content rendering
 
 **Recommendation:**
 Implement DOMPurify or similar sanitization library:
+
 ```typescript
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify from "isomorphic-dompurify";
 
 const clean = DOMPurify.sanitize(dirty);
 ```
@@ -754,6 +820,7 @@ Using Supabase client with parameterized queries - SQL injection risk is low
 Minimal, but should remain vigilant
 
 **Recommendation:**
+
 - Continue using Supabase client methods
 - Avoid raw SQL queries
 - Enable Supabase RLS (Row Level Security)
@@ -771,11 +838,13 @@ Minimal, but should remain vigilant
 No explicit session regeneration after login
 
 **Impact:**
+
 - Session fixation attacks possible
 - Compromised sessions may persist
 
 **Recommendation:**
 Verify Supabase handles session regeneration automatically or implement:
+
 ```typescript
 await supabase.auth.refreshSession();
 ```
@@ -789,11 +858,13 @@ await supabase.auth.refreshSession();
 Users can have unlimited active sessions
 
 **Impact:**
+
 - Increased attack surface
 - Potential account sharing
 
 **Recommendation:**
 Implement session tracking and limits:
+
 - Maximum 3-5 concurrent sessions per user
 - Force logout of oldest sessions
 - Display active sessions to users
@@ -810,6 +881,7 @@ Implement session tracking and limits:
 
 **Finding:**
 Error messages expose internal details:
+
 ```typescript
 return NextResponse.json(
   { message: "Error fetching artists", error: error.message },
@@ -818,13 +890,15 @@ return NextResponse.json(
 ```
 
 **Impact:**
+
 - Information disclosure to attackers
 - Helps attackers understand system architecture
 
 **Recommendation:**
 Use generic error messages for clients, log details server-side:
+
 ```typescript
-console.error('Detailed error:', error);
+console.error("Detailed error:", error);
 return NextResponse.json(
   { message: "An error occurred processing your request" },
   { status: 500 }
@@ -840,11 +914,13 @@ return NextResponse.json(
 25+ console statements in API routes
 
 **Impact:**
+
 - Performance overhead
 - Potential information leakage in logs
 - Log noise
 
 **Recommendation:**
+
 - Use proper logging framework (Winston, Pino)
 - Remove console.logs before production
 - Implement log levels (debug, info, warn, error)
@@ -858,26 +934,28 @@ return NextResponse.json(
 No centralized logging of API requests and responses
 
 **Impact:**
+
 - Cannot audit API usage
 - Difficult incident investigation
 - No compliance trail
 
 **Recommendation:**
 Implement middleware for request logging:
+
 ```typescript
 export async function middleware(request: NextRequest) {
   const start = Date.now();
   const response = await NextResponse.next();
   const duration = Date.now() - start;
-  
+
   log.info({
     method: request.method,
     url: request.url,
     status: response.status,
     duration,
-    userAgent: request.headers.get('user-agent'),
+    userAgent: request.headers.get("user-agent"),
   });
-  
+
   return response;
 }
 ```
@@ -893,18 +971,21 @@ export async function middleware(request: NextRequest) {
 
 **Finding:**
 No validation of responses from external APIs:
+
 - EDM Train API
 - Last.fm API
 - Ticketmaster API
 - SDHM API
 
 **Impact:**
+
 - Malicious data from compromised APIs
 - Application crashes from unexpected data
 - Data integrity issues
 
 **Recommendation:**
 Validate all external API responses:
+
 ```typescript
 const responseSchema = z.object({
   data: z.array(eventSchema),
@@ -923,18 +1004,20 @@ const validated = responseSchema.parse(apiResponse);
 Fetch calls to external APIs have no timeout
 
 **Impact:**
+
 - Hanging requests
 - Resource exhaustion
 - Poor user experience
 
 **Recommendation:**
 Add timeout to all external API calls:
+
 ```typescript
 const controller = new AbortController();
 const timeoutId = setTimeout(() => controller.abort(), 5000);
 
 const response = await fetch(url, {
-  signal: controller.signal
+  signal: controller.signal,
 });
 clearTimeout(timeoutId);
 ```
@@ -948,11 +1031,13 @@ clearTimeout(timeoutId);
 No visible RLS policies in codebase
 
 **Impact:**
+
 - Users may access other users' data
 - No database-level authorization
 
 **Recommendation:**
 Verify and implement RLS policies in Supabase:
+
 ```sql
 -- Enable RLS
 ALTER TABLE artists ENABLE ROW LEVEL SECURITY;
@@ -973,6 +1058,7 @@ CREATE POLICY "Users can view own data"
 **Status:** PARTIALLY COMPLIANT
 
 **Findings:**
+
 - ✅ Privacy policy exists
 - ❌ No data deletion mechanism
 - ❌ No data export functionality
@@ -980,12 +1066,14 @@ CREATE POLICY "Users can view own data"
 - ❌ No audit logging of data access
 
 **Impact:**
+
 - GDPR violation risk
 - Potential fines
 - User trust issues
 
 **Recommendation:**
 Implement:
+
 1. User data export API endpoint
 2. Account deletion functionality
 3. Cookie consent management (OneTrust, Cookiebot)
@@ -1001,10 +1089,12 @@ Implement:
 Need to verify CAPTCHA alternatives for accessibility
 
 **Impact:**
+
 - Users with disabilities may be unable to register/login
 - ADA compliance risk
 
 **Recommendation:**
+
 - Ensure HCaptcha accessibility mode is enabled
 - Provide alternative authentication methods
 - Audio CAPTCHA support
@@ -1018,10 +1108,12 @@ Need to verify CAPTCHA alternatives for accessibility
 No evidence of security testing or penetration testing
 
 **Impact:**
+
 - Unknown vulnerabilities may exist
 - No security validation
 
 **Recommendation:**
+
 - Conduct annual penetration testing
 - Implement bug bounty program
 - Regular security audits
@@ -1035,12 +1127,14 @@ No evidence of security testing or penetration testing
 No documented incident response procedures
 
 **Impact:**
+
 - Chaotic response to security incidents
 - Increased damage from breaches
 - Compliance violations
 
 **Recommendation:**
 Create incident response plan including:
+
 1. Detection and analysis procedures
 2. Containment strategies
 3. Eradication steps
@@ -1057,6 +1151,7 @@ Create incident response plan including:
 **Priority: URGENT**
 
 #### Week 1
+
 1. **✅ COMPLETED - Update Next.js** (2 hours)
    - ✅ Update to Next.js 15.5.6 or later
    - ✅ Test application thoroughly
@@ -1082,6 +1177,7 @@ Create incident response plan including:
    - ⏳ Deploy
 
 #### Week 2
+
 5. **✅ COMPLETED - Fix Bearer Token Validation** (3 hours)
    - ✅ Remove pattern-based fallback
    - ✅ Implement strict token validation
@@ -1117,6 +1213,7 @@ Create incident response plan including:
 **Priority: HIGH**
 
 #### Week 3
+
 9. **Implement Rate Limiting** (6 hours)
    - Set up Upstash Redis
    - Implement rate limiting middleware
@@ -1143,6 +1240,7 @@ Create incident response plan including:
     - ✅ Commit to repository
 
 #### Week 4
+
 13. **Implement Input Validation with Zod** (8 hours)
     - Define schemas for all API endpoints
     - Implement validation middleware
@@ -1177,6 +1275,7 @@ Create incident response plan including:
 **Priority: MEDIUM**
 
 #### Week 5
+
 17. **Set Up CI/CD Security Checks** (6 hours)
     - Create GitHub Actions workflow
     - Add npm audit
@@ -1199,6 +1298,7 @@ Create incident response plan including:
     - Deploy
 
 #### Week 6
+
 20. **Create Security Documentation** (4 hours)
     - Create `security.txt`
     - Document security policies
@@ -1253,18 +1353,21 @@ Create incident response plan including:
 ## Summary of Resources Needed
 
 ### Developer Time
+
 - **Phase 1 (Critical):** 26 hours
 - **Phase 2 (High):** 32 hours
 - **Phase 3 (Medium):** 44 hours
 - **Total Initial Implementation:** 102 hours (~2.5 weeks full-time)
 
 ### External Services
+
 1. **Upstash Redis** - Rate limiting (~$10/month)
 2. **Sentry** - Error tracking (Free tier available)
 3. **SecurityHeaders.com** - Free header testing
 4. **OWASP ZAP** - Free penetration testing tool
 
 ### Estimated Costs
+
 - **Development Time:** $10,000 - $15,000 (at $100-150/hour)
 - **External Services:** $120 - $500/year
 - **Penetration Testing:** $2,000 - $5,000/year
@@ -1277,12 +1380,14 @@ Create incident response plan including:
 The GrooveRooster web application has a solid foundation with Supabase authentication and some security measures in place. However, there are critical vulnerabilities and missing security features that need immediate attention.
 
 **Immediate Actions Required:**
+
 1. Update Next.js to patch known vulnerabilities
 2. Fix CORS configuration to prevent unauthorized access
 3. Implement Content Security Policy and security headers
 4. Strengthen API authentication and authorization
 
 **Priority Focus Areas:**
+
 1. Authentication & Authorization hardening
 2. API security improvements
 3. Data protection enhancements
@@ -1291,6 +1396,7 @@ The GrooveRooster web application has a solid foundation with Supabase authentic
 By following this implementation plan, the application can achieve a strong security posture within 6-8 weeks. The phased approach ensures critical issues are addressed first while maintaining development velocity on other features.
 
 **Next Steps:**
+
 1. Review and prioritize findings
 2. Allocate development resources
 3. Begin Phase 1 implementation
@@ -1329,9 +1435,10 @@ By following this implementation plan, the application can achieve a strong secu
 ## Appendix C: Contact Information
 
 For questions about this security assessment, please contact:
+
 - **Security Email:** security@grooverooster.com (to be created)
 - **GitHub Issues:** https://github.com/djmisha/grooverooster-web/issues
 
 ---
 
-*This report is confidential and should be treated as sensitive information. Distribution should be limited to authorized personnel only.*
+_This report is confidential and should be treated as sensitive information. Distribution should be limited to authorized personnel only._

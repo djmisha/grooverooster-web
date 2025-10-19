@@ -12,15 +12,15 @@ const nextConfig = {
   reactStrictMode: true,
   // Note: exportPathMap is not supported with App Router
   // If you need to exclude routes from static export, use route.js with { dynamic: 'force-static' }
-  
+
   async headers() {
     return [
       {
         // Apply security headers to all routes
-        source: '/:path*',
+        source: "/:path*",
         headers: [
           {
-            key: 'Content-Security-Policy',
+            key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://hcaptcha.com https://*.hcaptcha.com",
@@ -32,32 +32,32 @@ const nextConfig = {
               "frame-ancestors 'self'",
               "base-uri 'self'",
               "form-action 'self'",
-            ].join('; ')
+            ].join("; "),
           },
           {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
           },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
+            key: "X-Content-Type-Options",
+            value: "nosniff",
           },
           {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
           },
           {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(self)'
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(self)",
           },
           {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          }
-        ]
-      }
-    ]
-  }
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
