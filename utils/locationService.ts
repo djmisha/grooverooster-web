@@ -1,5 +1,6 @@
 import locations from "./locations.json";
 import { Location } from "../types";
+import { setCookie as setSecureCookie, getCookie } from "./cookieUtils";
 
 const LOCATION_COOKIE_NAME = "userLocation";
 
@@ -8,73 +9,6 @@ interface Coordinates {
   longitude: number;
   accuracy?: number;
 }
-
-/**
- * Delete a cookie by name
- * @param name - Cookie name
- */
-const deleteCookie = (name: string): void => {
-  try {
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`;
-  } catch (error) {
-    console.error("Error deleting cookie:", error);
-  }
-};
-
-/**
- * Set a cookie with specified name, value, and options
- * @param name - Cookie name
- * @param value - Cookie value (will be JSON stringified if object)
- * @param days - Expiration in days (default: 30)
- */
-const setCookie = (name: string, value: any, days: number = 30): void => {
-  try {
-    if (value === null || value === undefined) {
-      deleteCookie(name);
-      return;
-    }
-
-    const expires = new Date();
-    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-
-    const cookieValue =
-      typeof value === "object" ? JSON.stringify(value) : value;
-    document.cookie = `${name}=${encodeURIComponent(
-      cookieValue
-    )};expires=${expires.toUTCString()};path=/`;
-  } catch (error) {
-    console.error("Error setting cookie:", error);
-  }
-};
-
-/**
- * Get a cookie value by name
- * @param name - Cookie name
- * @returns Cookie value or null if not found
- */
-const getCookie = (name: string): any => {
-  try {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(";");
-
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === " ") c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) {
-        const value = decodeURIComponent(c.substring(nameEQ.length, c.length));
-        try {
-          return JSON.parse(value);
-        } catch {
-          return value;
-        }
-      }
-    }
-    return null;
-  } catch (error) {
-    console.error("Error getting cookie:", error);
-    return null;
-  }
-};
 
 /**
  * Calculate distance between two coordinates using Haversine formula
@@ -257,7 +191,8 @@ export const saveLocationToCookie = (location: Location | null): void => {
   if (!location) return;
 
   try {
-    setCookie(LOCATION_COOKIE_NAME, location, 365); // Save for 1 year
+    // Use secure cookie settings for location data
+    setSecureCookie(LOCATION_COOKIE_NAME, location, { days: 365 }); // Save for 1 year
   } catch (error) {
     console.error("Failed to save location to cookie:", error);
   }
