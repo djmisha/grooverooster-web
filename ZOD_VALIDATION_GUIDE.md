@@ -26,16 +26,16 @@ The following common schemas are available for reuse:
 
 ```typescript
 // Validates numeric IDs (e.g., "123")
-numericIdSchema
+numericIdSchema;
 
 // Validates city names (letters, spaces, hyphens only)
-cityNameSchema
+cityNameSchema;
 
 // Validates artist names (1-255 characters)
-artistNameSchema
+artistNameSchema;
 
 // Validates UUIDs
-uuidSchema
+uuidSchema;
 ```
 
 ### Helper Functions
@@ -55,11 +55,18 @@ Two helper functions are provided for consistent error handling:
 ### Validating Route Parameters
 
 ```typescript
-import { eventsIdParamsSchema, validateData, formatValidationError } from "@/lib/validation/schemas";
+import {
+  eventsIdParamsSchema,
+  validateData,
+  formatValidationError,
+} from "@/lib/validation/schemas";
 
-export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ id: string }> }
+) {
   const { id } = await context.params;
-  
+
   // Validate params
   const validation = validateData(eventsIdParamsSchema, { id });
   if (!validation.success) {
@@ -71,7 +78,7 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
       { status: 400 }
     );
   }
-  
+
   // Continue with validated data
   // validation.data.id is guaranteed to be a numeric string
 }
@@ -80,11 +87,15 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
 ### Validating Request Bodies
 
 ```typescript
-import { saveTagsBodySchema, validateData, formatValidationError } from "@/lib/validation/schemas";
+import {
+  saveTagsBodySchema,
+  validateData,
+  formatValidationError,
+} from "@/lib/validation/schemas";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  
+
   // Validate request body
   const validation = validateData(saveTagsBodySchema, body);
   if (!validation.success) {
@@ -96,7 +107,7 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-  
+
   // Continue with validated data
   const { tags } = validation.data;
 }
@@ -104,23 +115,24 @@ export async function POST(request: Request) {
 
 ## API Endpoints with Validation
 
-| Endpoint | Schema | Validates |
-|----------|--------|-----------|
-| `/api/sdhm/[...params]` | `sdhmParamsSchema` | Numeric ID, city name |
-| `/api/events/[id]` | `eventsIdParamsSchema` | Numeric ID |
-| `/api/artists/[id]` | `artistsIdParamsSchema` | Numeric ID |
-| `/api/frontend/events/[...params]` | `frontendEventsParamsSchema` | Numeric location ID, city name |
-| `/api/lastfm/artistgetinfo/[artist]` | `lastfmArtistParamsSchema` | Artist name |
-| `/api/ticketmaster/events/[id]` | `ticketmasterEventsParamsSchema` | City name |
-| `/api/saveTags` | `saveTagsBodySchema` | Tags array |
-| `/api/supabase/postartists` | `postArtistsBodySchema` | Artists array |
-| `/api/supabase/posttopartists` | `postTopArtistsBodySchema` | Top artists array |
+| Endpoint                             | Schema                           | Validates                      |
+| ------------------------------------ | -------------------------------- | ------------------------------ |
+| `/api/sdhm/[...params]`              | `sdhmParamsSchema`               | Numeric ID, city name          |
+| `/api/events/[id]`                   | `eventsIdParamsSchema`           | Numeric ID                     |
+| `/api/artists/[id]`                  | `artistsIdParamsSchema`          | Numeric ID                     |
+| `/api/frontend/events/[...params]`   | `frontendEventsParamsSchema`     | Numeric location ID, city name |
+| `/api/lastfm/artistgetinfo/[artist]` | `lastfmArtistParamsSchema`       | Artist name                    |
+| `/api/ticketmaster/events/[id]`      | `ticketmasterEventsParamsSchema` | City name                      |
+| `/api/saveTags`                      | `saveTagsBodySchema`             | Tags array                     |
+| `/api/supabase/postartists`          | `postArtistsBodySchema`          | Artists array                  |
+| `/api/supabase/posttopartists`       | `postTopArtistsBodySchema`       | Top artists array              |
 
 ## Adding New Validations
 
 To add validation to a new endpoint:
 
 1. **Define schema** in `/lib/validation/schemas.ts`:
+
    ```typescript
    export const myNewEndpointSchema = z.object({
      field: z.string().min(1).max(100),
@@ -128,8 +140,13 @@ To add validation to a new endpoint:
    ```
 
 2. **Import in route handler**:
+
    ```typescript
-   import { myNewEndpointSchema, validateData, formatValidationError } from "@/lib/validation/schemas";
+   import {
+     myNewEndpointSchema,
+     validateData,
+     formatValidationError,
+   } from "@/lib/validation/schemas";
    ```
 
 3. **Validate data**:
@@ -157,6 +174,7 @@ To add validation to a new endpoint:
 ## Testing
 
 All validation changes have been tested with:
+
 - TypeScript compilation ✅
 - ESLint checks ✅
 - Next.js build ✅
