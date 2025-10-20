@@ -34,17 +34,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
+          cache: "yarn"
 
       # TODO: Fix peer dependency conflict between date-fns@4.1.0 and react-day-picker@8.10.1
       # react-day-picker@8.10.1 requires date-fns@^2.28.0 || ^3.0.0, but we're using date-fns@4.1.0
       # Options: 1) Downgrade date-fns to v3.x, 2) Upgrade react-day-picker to a version that supports date-fns v4
-      # For now, using --legacy-peer-deps to bypass the conflict
+      # For now, using frozen lockfile installation
       - name: Install JavaScript dependencies
-        run: npm ci --legacy-peer-deps
+        run: yarn install --frozen-lockfile
 
       - name: Build Next.js project
-        run: npm run build
+        run: yarn build
         env:
           # Add any required environment variables for the build
           NODE_ENV: production
