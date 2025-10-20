@@ -1,4 +1,4 @@
-import Signup from "../User/Signup";
+import Signup from "@/components/User/Signup";
 
 /**
  * SignupCTA component displays a call-to-action section encouraging user signup

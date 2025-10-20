@@ -1,4 +1,4 @@
-import { Event, Artist, FilterItemWithCount } from "../types";
+import { Event, Artist, FilterItemWithCount } from "@/types";
 
 /* Remove Duplicates Helper */
 

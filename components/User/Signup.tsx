@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { useAppContext } from "../../features/AppContext";
+import { useAppContext } from "@/features/AppContext";
 
 export default function Signup() {
   const { supabase } = useAppContext();

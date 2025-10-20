@@ -1,7 +1,7 @@
 "use client";
 
-import EventCard from "../../../components/EventCard/EventCard";
-import { useEventModalManager } from "../../../hooks/useEventModal";
+import EventCard from "@/components/EventCard/EventCard";
+import { useEventModalManager } from "@/hooks/useEventModal";
 
 export default function ArtistEventsClient({ events }: { events: any[] }) {
   const { openEventId, setOpenEventId } = useEventModalManager();

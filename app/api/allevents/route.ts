@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { secureAppRouterEndpoint } from "../../../utils/appRouterSecurity";
-import { transformEDMTrainEventsArray } from "../../../utils/edmTrainTransformer";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import { transformEDMTrainEventsArray } from "@/utils/edmTrainTransformer";
 
 // Force this route to be dynamic
 export const dynamic = "force-dynamic";

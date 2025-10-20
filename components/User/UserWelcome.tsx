@@ -1,6 +1,6 @@
-import { cityOrState } from "../../utils/utilities";
-import Button from "../Button/Button";
-import { useAppContext } from "../../features/AppContext";
+import { cityOrState } from "@/utils/utilities";
+import Button from "@/components/Button/Button";
+import { useAppContext } from "@/features/AppContext";
 
 interface Location {
   id: number;

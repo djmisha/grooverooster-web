@@ -8,13 +8,13 @@ import React, {
   useRef,
   useContext,
 } from "react";
-import { createClient } from "../utils/supabase/component";
+import { createClient } from "@/utils/supabase/component";
 import {
   getSavedLocation,
   saveLocationToCookie,
-} from "../utils/locationService";
-import { Location, Profile } from "../types";
-import type { SupabaseClientType } from "../types/database";
+} from "@/utils/locationService";
+import { Location, Profile } from "@/types";
+import type { SupabaseClientType } from "@/types/database";
 
 export interface AppContextValue {
   locationCtx: Location[];

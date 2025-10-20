@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Layout from "../../components/layout";
-import { getCanonicalUrl } from "../../utils/canonicalUrl";
+import Layout from "@/components/layout";
+import { getCanonicalUrl } from "@/utils/canonicalUrl";
 import { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {

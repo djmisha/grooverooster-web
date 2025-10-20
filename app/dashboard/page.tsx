@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import UserDashboard from "../../components/User/UserDashboard";
-import { createClient } from "../../utils/supabase/server";
-import { getLocations } from "../../utils/getLocations";
+import UserDashboard from "@/components/User/UserDashboard";
+import { createClient } from "@/utils/supabase/server";
+import { getLocations } from "@/utils/getLocations";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

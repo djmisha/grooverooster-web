@@ -1,5 +1,5 @@
-import { getArtistsCounts } from "../../utils/getArtists";
-import ArtistsClient from "./ArtistsClient";
+import { getArtistsCounts } from "@/utils/getArtists";
+import ArtistsClient from "@/app/artists/ArtistsClient";
 import { Metadata, Viewport } from "next";
 
 const title = "Top Touring EDM DJ's & Artists";

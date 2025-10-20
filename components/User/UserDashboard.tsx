@@ -2,14 +2,14 @@
 
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { FaMapMarkerAlt, FaMusic, FaCog } from "react-icons/fa";
-import { useAppContext } from "../../features/AppContext";
-import FavoriteArtists from "./FavoriteArtists";
-import ArtistSearch from "./ArtistSearch";
-import OtherLocations from "./OtherLocations";
-import Greeting from "./Greeting";
-import EditProfile from "./EditProfile";
-import LocationCard from "./LocationCard";
-import locationsData from "../../utils/locations.json";
+import { useAppContext } from "@/features/AppContext";
+import FavoriteArtists from "@/components/User/FavoriteArtists";
+import ArtistSearch from "@/components/User/ArtistSearch";
+import OtherLocations from "@/components/User/OtherLocations";
+import Greeting from "@/components/User/Greeting";
+import EditProfile from "@/components/User/EditProfile";
+import LocationCard from "@/components/User/LocationCard";
+import locationsData from "@/utils/locations.json";
 
 interface UserDashboardProps {
   profile?: any;

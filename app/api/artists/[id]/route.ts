@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
+import { transformEDMTrainEventsArray } from "@/utils/edmTrainTransformer";
 
 export async function GET(
   _request: Request,

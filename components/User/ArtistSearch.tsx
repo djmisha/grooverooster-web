@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAppContext } from "../../features/AppContext";
-import artistsData from "../../localArtistsDB.json";
+import { useAppContext } from "@/features/AppContext";
+import artistsData from "@/localArtistsDB.json";
 
 interface Artist {
   name: string;
