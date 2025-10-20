@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
 import type { RateLimitResult } from "../../../../types/rateLimit";
+import {
+  eventsIdParamsSchema,
+  validateData,
+  formatValidationError,
+} from "../../../../lib/validation/schemas";
 
 // Force this route to be dynamic to ensure date filtering uses current date
 export const dynamic = "force-dynamic";
@@ -31,6 +36,19 @@ export async function GET(
   }
 
   const { id } = await context.params;
+
+  // Validate params using Zod schema
+  const validation = validateData(eventsIdParamsSchema, { id });
+  if (!validation.success) {
+    return NextResponse.json(
+      {
+        error: "Invalid parameters",
+        details: formatValidationError(validation.error),
+      },
+      { status: 400 }
+    );
+  }
+
   const KEY = process.env.NEXT_PUBLIC_API_KEY_EDMTRAIN;
   const EDMURL = process.env.NEXT_PUBLIC_API_URL_EDMTRAIN;
   const URL = EDMURL + id + "&client=" + KEY;

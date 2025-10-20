@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
 import type { RateLimitResult } from "../../../../types/rateLimit";
+import {
+  postArtistsBodySchema,
+  validateData,
+  formatValidationError,
+} from "../../../../lib/validation/schemas";
 
 export async function POST(request: Request) {
   // Apply security checks
@@ -14,5 +19,27 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ message: "Hello" });
+  try {
+    const body = await request.json();
+
+    // Validate request body using Zod schema
+    const validation = validateData(postArtistsBodySchema, body);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid request body",
+          details: formatValidationError(validation.error),
+        },
+        { status: 400 }
+      );
+    }
+
+    // Body is validated, return success
+    return NextResponse.json({ message: "Hello" });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: "Failed to process request" },
+      { status: 500 }
+    );
+  }
 }

@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../features/Supabase";
 import { secureAppRouterEndpoint } from "../../../utils/appRouterSecurity";
 import type { RateLimitResult } from "../../../types/rateLimit";
+import {
+  saveTagsBodySchema,
+  validateData,
+  formatValidationError,
+} from "../../../lib/validation/schemas";
 
 export async function POST(request: Request) {
   // Check if Supabase is configured
@@ -24,11 +29,20 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { tags } = body;
 
-  if (!tags || !Array.isArray(tags)) {
-    return NextResponse.json({ error: "Invalid tags data" }, { status: 400 });
+  // Validate request body using Zod schema
+  const validation = validateData(saveTagsBodySchema, body);
+  if (!validation.success) {
+    return NextResponse.json(
+      {
+        error: "Invalid tags data",
+        details: formatValidationError(validation.error),
+      },
+      { status: 400 }
+    );
   }
+
+  const { tags } = validation.data;
 
   const normalizedTags = tags.map((tag: any) => ({
     ...tag,

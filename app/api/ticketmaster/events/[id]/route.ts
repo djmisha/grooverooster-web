@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../../utils/appRouterSecurity";
 import type { RateLimitResult } from "../../../../../types/rateLimit";
+import {
+  ticketmasterEventsParamsSchema,
+  validateData,
+  formatValidationError,
+} from "../../../../../lib/validation/schemas";
 
 export async function GET(
   request: Request,
@@ -18,6 +23,19 @@ export async function GET(
   }
 
   const { id } = await context.params;
+
+  // Validate params using Zod schema
+  const validation = validateData(ticketmasterEventsParamsSchema, { id });
+  if (!validation.success) {
+    return NextResponse.json(
+      {
+        error: "Invalid parameters",
+        details: formatValidationError(validation.error),
+      },
+      { status: 400 }
+    );
+  }
+
   const KEY = process.env.API_KEY_TICKETMASTER;
   const genreId = "KnvZfZ7vAvF"; // Dance / Electronic genreId
 

@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { secureAppRouterEndpoint } from "../../../../../utils/appRouterSecurity";
 import type { RateLimitResult } from "../../../../../types/rateLimit";
+import {
+  lastfmArtistParamsSchema,
+  validateData,
+  formatValidationError,
+} from "../../../../../lib/validation/schemas";
 
 export async function GET(
   request: Request,
@@ -18,6 +23,19 @@ export async function GET(
   }
 
   const { artist } = await context.params;
+
+  // Validate params using Zod schema
+  const validation = validateData(lastfmArtistParamsSchema, { artist });
+  if (!validation.success) {
+    return NextResponse.json(
+      {
+        error: "Invalid parameters",
+        details: formatValidationError(validation.error),
+      },
+      { status: 400 }
+    );
+  }
+
   const KEY = process.env.NEXT_PUBLIC_API_KEY_LASTFM;
   const URL = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${artist}&api_key=${KEY}&format=json`;
 
