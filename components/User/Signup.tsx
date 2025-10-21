@@ -3,6 +3,8 @@
 import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
+import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
+import { isPasswordValid } from "@/utils/passwordValidation";
 
 export default function Signup() {
   const { supabase } = useAppContext();
@@ -17,6 +19,14 @@ export default function Signup() {
 
   async function signUp() {
     if (isSigningUp || !captchaToken) return;
+
+    // Validate password complexity before attempting signup
+    if (!isPasswordValid(signupPassword)) {
+      setSignupErrorMessage(
+        "Password does not meet complexity requirements. Please check the requirements below."
+      );
+      return;
+    }
 
     setIsSigningUp(true);
     setSignupErrorMessage("");
@@ -73,6 +83,8 @@ export default function Signup() {
               className="w-full px-4 py-3 border border-gray-300 rounded-md text-base transition-colors duration-150 focus:border-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
               placeholder="your@email.com"
               disabled={isSigningUp}
+              aria-required="true"
+              autoComplete="email"
             />
           </div>
 
@@ -91,7 +103,13 @@ export default function Signup() {
               className="w-full px-4 py-3 border border-gray-300 rounded-md text-base transition-colors duration-150 focus:border-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
               placeholder="••••••••"
               disabled={isSigningUp}
+              aria-describedby="password-requirements"
+              aria-required="true"
+              autoComplete="new-password"
             />
+            <div id="password-requirements">
+              <PasswordStrengthIndicator password={signupPassword} />
+            </div>
           </div>
 
           <HCaptcha
