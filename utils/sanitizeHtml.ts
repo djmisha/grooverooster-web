@@ -6,9 +6,24 @@ export const sanitizeHtml = (dirty: string): string => {
   if (!dirty) return "";
 
   const allowedTags = [
-    "p", "br", "b", "i", "em", "strong", "u", "span",
-    "h1", "h2", "h3", "h4", "h5", "h6",
-    "ul", "ol", "li", "blockquote"
+    "p",
+    "br",
+    "b",
+    "i",
+    "em",
+    "strong",
+    "u",
+    "span",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
   ];
 
   let clean = dirty

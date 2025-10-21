@@ -1,6 +1,25 @@
 const sanitizeHtml = (dirty) => {
   if (!dirty) return "";
-  const allowedTags = ["p", "br", "b", "i", "em", "strong", "u", "span", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "blockquote"];
+  const allowedTags = [
+    "p",
+    "br",
+    "b",
+    "i",
+    "em",
+    "strong",
+    "u",
+    "span",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+  ];
   let clean = dirty
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
     .replace(/\s*on\w+\s*=\s*["'][^"']*["']/gi, "")
@@ -8,7 +27,9 @@ const sanitizeHtml = (dirty) => {
     .replace(/javascript:/gi, "")
     .replace(/data:text\/html/gi, "");
   const tagPattern = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-  return clean.replace(tagPattern, (match, tag) => allowedTags.includes(tag.toLowerCase()) ? match : "");
+  return clean.replace(tagPattern, (match, tag) =>
+    allowedTags.includes(tag.toLowerCase()) ? match : ""
+  );
 };
 
 const saveTags = async (tags) => {
