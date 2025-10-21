@@ -789,7 +789,7 @@ const eventSchema = z.object({
 ### 6.2 Missing HTML Sanitization
 
 **Severity:** MEDIUM  
-**Status:** NEEDS VERIFICATION
+**Status:** ✅ RESOLVED
 
 **Finding:**
 Using `html-entities` package but no comprehensive HTML sanitization
@@ -799,14 +799,50 @@ Using `html-entities` package but no comprehensive HTML sanitization
 - Potential XSS vulnerabilities
 - Malicious content rendering
 
-**Recommendation:**
-Implement DOMPurify or similar sanitization library:
+**Resolution:**
+Implemented DOMPurify sanitization library (isomorphic-dompurify v2.30.0):
+
+- Created centralized `sanitizeHtml` utility function in `/utils/sanitizeHtml.ts`
+- Configured DOMPurify with whitelist of safe HTML tags and attributes
+- Integrated sanitization into `ArtistBio.helpers.js` for bio content from Last.fm API
+- Verified that EventStructuredData.js JSON-LD rendering is safe (uses JSON.stringify)
+- All HTML content from untrusted sources now sanitized before rendering
+
+**Implementation:**
 
 ```typescript
 import DOMPurify from "isomorphic-dompurify";
 
-const clean = DOMPurify.sanitize(dirty);
+const clean = DOMPurify.sanitize(dirty, {
+  ALLOWED_TAGS: [
+    "p",
+    "br",
+    "b",
+    "i",
+    "em",
+    "strong",
+    "u",
+    "span",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+  ],
+  ALLOWED_ATTR: ["class"],
+  KEEP_CONTENT: true,
+});
 ```
+
+**Files Modified:**
+
+- `/utils/sanitizeHtml.ts` - New sanitization utility
+- `/components/Artists/ArtistBio.helpers.js` - Now sanitizes bio content
 
 ### 6.3 SQL Injection Protection
 
