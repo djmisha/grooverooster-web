@@ -9,7 +9,7 @@ interface PasswordStrengthIndicatorProps {
 export default function PasswordStrengthIndicator({
   password,
 }: PasswordStrengthIndicatorProps) {
-  const { score, label, color, requirements } = validatePassword(password);
+  const { score, label, requirements } = validatePassword(password);
 
   // Don't show anything if no password entered
   if (!password) {
@@ -18,23 +18,6 @@ export default function PasswordStrengthIndicator({
 
   // Calculate the width of the strength bar
   const strengthWidth = `${(score / 4) * 100}%`;
-
-  // Determine bar color based on score
-  let barColor = "";
-  switch (score) {
-    case 1:
-      barColor = "bg-red-500";
-      break;
-    case 2:
-      barColor = "bg-orange-500";
-      break;
-    case 3:
-      barColor = "bg-yellow-500";
-      break;
-    case 4:
-      barColor = "bg-green-500";
-      break;
-  }
 
   return (
     <div className="mt-2 space-y-3">
@@ -50,12 +33,40 @@ export default function PasswordStrengthIndicator({
             Password Strength:
           </span>
           {label && (
-            <span
-              className={`text-xs font-semibold px-2 py-1 rounded border ${color}`}
-              aria-label={`Password strength: ${label}`}
-            >
-              {label}
-            </span>
+            <>
+              {score === 1 && (
+                <span
+                  className="text-xs font-semibold px-2 py-1 rounded border text-red-600 bg-red-50 border-red-200"
+                  aria-label={`Password strength: ${label}`}
+                >
+                  {label}
+                </span>
+              )}
+              {score === 2 && (
+                <span
+                  className="text-xs font-semibold px-2 py-1 rounded border text-orange-600 bg-orange-50 border-orange-200"
+                  aria-label={`Password strength: ${label}`}
+                >
+                  {label}
+                </span>
+              )}
+              {score === 3 && (
+                <span
+                  className="text-xs font-semibold px-2 py-1 rounded border text-yellow-600 bg-yellow-50 border-yellow-200"
+                  aria-label={`Password strength: ${label}`}
+                >
+                  {label}
+                </span>
+              )}
+              {score === 4 && (
+                <span
+                  className="text-xs font-semibold px-2 py-1 rounded border text-green-600 bg-green-50 border-green-200"
+                  aria-label={`Password strength: ${label}`}
+                >
+                  {label}
+                </span>
+              )}
+            </>
           )}
         </div>
         <div
@@ -66,10 +77,30 @@ export default function PasswordStrengthIndicator({
           aria-valuemax={4}
           aria-label={`Password strength level ${score} out of 4`}
         >
-          <div
-            className={`h-full transition-all duration-300 ${barColor}`}
-            style={{ width: strengthWidth }}
-          />
+          {score === 1 && (
+            <div
+              className="h-full transition-all duration-300 bg-red-500"
+              style={{ width: strengthWidth }}
+            />
+          )}
+          {score === 2 && (
+            <div
+              className="h-full transition-all duration-300 bg-orange-500"
+              style={{ width: strengthWidth }}
+            />
+          )}
+          {score === 3 && (
+            <div
+              className="h-full transition-all duration-300 bg-yellow-500"
+              style={{ width: strengthWidth }}
+            />
+          )}
+          {score === 4 && (
+            <div
+              className="h-full transition-all duration-300 bg-green-500"
+              style={{ width: strengthWidth }}
+            />
+          )}
         </div>
       </div>
 
