@@ -31,7 +31,6 @@ export interface PasswordRequirement {
 export interface PasswordStrength {
   score: number; // 0-4 (weak to very strong)
   label: string;
-  color: string;
   requirements: {
     id: string;
     label: string;
@@ -94,49 +93,41 @@ export function validatePassword(password: string): PasswordStrength {
   } else if (isCommonPassword) {
     score = 1; // Common passwords are always weak
   } else if (metCount === totalRequirements) {
-    score = 4; // Very strong - all requirements met
-  } else if (metCount >= totalRequirements - 1) {
-    score = 3; // Strong - missing only one requirement
-  } else if (metCount >= totalRequirements - 2) {
-    score = 2; // Moderate - missing two requirements
+    score = 4; // Strong - all requirements met
+  } else if (metCount >= 4) {
+    score = 3; // Good - 4 out of 5 requirements
+  } else if (metCount >= 3) {
+    score = 2; // Fair - 3 out of 5 requirements
   } else {
-    score = 1; // Weak - missing more than two requirements
+    score = 1; // Weak - less than 3 requirements
   }
 
-  // Determine label and color based on score
+  // Determine label based on score
   let label: string;
-  let color: string;
 
   switch (score) {
     case 0:
       label = "";
-      color = "";
       break;
     case 1:
       label = "Weak";
-      color = "text-red-600 bg-red-50 border-red-200";
       break;
     case 2:
       label = "Fair";
-      color = "text-orange-600 bg-orange-50 border-orange-200";
       break;
     case 3:
       label = "Good";
-      color = "text-yellow-600 bg-yellow-50 border-yellow-200";
       break;
     case 4:
       label = "Strong";
-      color = "text-green-600 bg-green-50 border-green-200";
       break;
     default:
       label = "";
-      color = "";
   }
 
   return {
     score,
     label,
-    color,
     requirements,
   };
 }

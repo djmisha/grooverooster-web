@@ -10,14 +10,25 @@ export default function PasswordStrengthIndicator({
   password,
 }: PasswordStrengthIndicatorProps) {
   const { score, label, requirements } = validatePassword(password);
-
-  // Don't show anything if no password entered
-  if (!password) {
-    return null;
-  }
-
-  // Calculate the width of the strength bar
   const strengthWidth = `${(score / 4) * 100}%`;
+
+  let pillClasses = "text-red-600 bg-red-50 border-red-200";
+  let barClasses = "bg-gray-300";
+  let displayLabel = label || "Weak";
+
+  if (score === 1) {
+    pillClasses = "text-red-600 bg-red-50 border-red-200";
+    barClasses = "bg-red-500";
+  } else if (score === 2) {
+    pillClasses = "text-orange-600 bg-orange-50 border-orange-200";
+    barClasses = "bg-orange-500";
+  } else if (score === 3) {
+    pillClasses = "text-yellow-600 bg-yellow-50 border-yellow-200";
+    barClasses = "bg-yellow-500";
+  } else if (score === 4) {
+    pillClasses = "text-green-600 bg-green-50 border-green-200";
+    barClasses = "bg-green-500";
+  }
 
   return (
     <div className="mt-2 space-y-3">
@@ -32,42 +43,12 @@ export default function PasswordStrengthIndicator({
           <span className="text-xs font-medium text-gray-700">
             Password Strength:
           </span>
-          {label && (
-            <>
-              {score === 1 && (
-                <span
-                  className="text-xs font-semibold px-2 py-1 rounded border text-red-600 bg-red-50 border-red-200"
-                  aria-label={`Password strength: ${label}`}
-                >
-                  {label}
-                </span>
-              )}
-              {score === 2 && (
-                <span
-                  className="text-xs font-semibold px-2 py-1 rounded border text-orange-600 bg-orange-50 border-orange-200"
-                  aria-label={`Password strength: ${label}`}
-                >
-                  {label}
-                </span>
-              )}
-              {score === 3 && (
-                <span
-                  className="text-xs font-semibold px-2 py-1 rounded border text-yellow-600 bg-yellow-50 border-yellow-200"
-                  aria-label={`Password strength: ${label}`}
-                >
-                  {label}
-                </span>
-              )}
-              {score === 4 && (
-                <span
-                  className="text-xs font-semibold px-2 py-1 rounded border text-green-600 bg-green-50 border-green-200"
-                  aria-label={`Password strength: ${label}`}
-                >
-                  {label}
-                </span>
-              )}
-            </>
-          )}
+          <span
+            className={`text-xs font-semibold px-2 py-1 rounded border ${pillClasses}`}
+            aria-label={`Password strength: ${displayLabel}`}
+          >
+            {displayLabel}
+          </span>
         </div>
         <div
           className="h-2 w-full bg-gray-200 rounded-full overflow-hidden"
@@ -77,30 +58,10 @@ export default function PasswordStrengthIndicator({
           aria-valuemax={4}
           aria-label={`Password strength level ${score} out of 4`}
         >
-          {score === 1 && (
-            <div
-              className="h-full transition-all duration-300 bg-red-500"
-              style={{ width: strengthWidth }}
-            />
-          )}
-          {score === 2 && (
-            <div
-              className="h-full transition-all duration-300 bg-orange-500"
-              style={{ width: strengthWidth }}
-            />
-          )}
-          {score === 3 && (
-            <div
-              className="h-full transition-all duration-300 bg-yellow-500"
-              style={{ width: strengthWidth }}
-            />
-          )}
-          {score === 4 && (
-            <div
-              className="h-full transition-all duration-300 bg-green-500"
-              style={{ width: strengthWidth }}
-            />
-          )}
+          <div
+            className={`h-full transition-all duration-300 ${barClasses}`}
+            style={{ width: strengthWidth }}
+          />
         </div>
       </div>
 
