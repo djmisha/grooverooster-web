@@ -27,31 +27,33 @@ const sanitizeHtml = (dirty) => {
     .replace(/javascript:/gi, "")
     .replace(/data:text\/html/gi, "");
   const tagPattern = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-  return clean.replace(tagPattern, (match, tag) =>
+  clean = clean.replace(tagPattern, (match, tag) =>
     allowedTags.includes(tag.toLowerCase()) ? match : ""
   );
+  return clean.replace(/\n/g, "<br />");
 };
 
-const saveTags = async (tags) => {
-  // Save tags to the database or API
-  // removing for now to save function requests
-  // most tags are already saved in the database
-  try {
-    const response = await fetch("/api/saveTags", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tags }),
-    });
+// TODO - remove this and API endpoint
+// const saveTags = async (tags) => {
+//   // Save tags to the database or API
+//   // removing for now to save function requests
+//   // most tags are already saved in the database
+//   try {
+//     const response = await fetch("/api/saveTags", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ tags }),
+//     });
 
-    if (!response.ok) {
-      throw new Error("Failed to save tags");
-    }
-  } catch (error) {
-    console.error("Error saving tags:", error);
-  }
-};
+//     if (!response.ok) {
+//       throw new Error("Failed to save tags");
+//     }
+//   } catch (error) {
+//     console.error("Error saving tags:", error);
+//   }
+// };
 
 const ArtistBio = ({ name, lastFMdata }) => {
   if (!lastFMdata || lastFMdata.error) return null;
@@ -67,7 +69,7 @@ const ArtistBio = ({ name, lastFMdata }) => {
       {bioContent && (
         <>
           <h2>About {name}</h2>
-          <p
+          <div
             className="artist-bio-text"
             dangerouslySetInnerHTML={{
               __html: sanitizeHtml(bioContent),
