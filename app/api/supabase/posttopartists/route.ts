@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  postTopArtistsBodySchema,
+  validateData,
+  formatValidationError,
+} from "@/lib/validation/schemas";
 import supabase from "@/features/Supabase";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
 import type { RateLimitResult } from "@/types/rateLimit";
@@ -48,11 +53,19 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    if (!body) {
-      return NextResponse.json({ message: "Missing body" }, { status: 400 });
+    // Validate request body using Zod schema
+    const validation = validateData(postTopArtistsBodySchema, body);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid request body",
+          details: formatValidationError(validation.error),
+        },
+        { status: 400 }
+      );
     }
 
-    await setData(body);
+    await setData(validation.data);
     return NextResponse.json({ message: "Success" });
   } catch (error: any) {
     console.error("Error in handler: ", error);

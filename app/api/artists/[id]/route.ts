@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  artistsIdParamsSchema,
+  validateData,
+  formatValidationError,
+} from "@/lib/validation/schemas";
 import { transformEDMTrainEventsArray } from "@/utils/edmTrainTransformer";
 
 export async function GET(
@@ -6,6 +11,19 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
+
+  // Validate params using Zod schema
+  const validation = validateData(artistsIdParamsSchema, { id });
+  if (!validation.success) {
+    return NextResponse.json(
+      {
+        error: "Invalid parameters",
+        details: formatValidationError(validation.error),
+      },
+      { status: 400 }
+    );
+  }
+
   const KEY = process.env.NEXT_PUBLIC_API_KEY_EDMTRAIN;
   const EDMURL = process.env.NEXT_PUBLIC_API_URL_EDMTRAIN_ARTIST;
 

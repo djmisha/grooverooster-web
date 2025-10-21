@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  sdhmParamsSchema,
+  validateData,
+  formatValidationError,
+} from "@/lib/validation/schemas";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
 import localArtists from "@/localArtistsDB.json";
 import setDates from "@/utils/setDates";
@@ -303,6 +308,20 @@ export async function GET(
 
   try {
     const { params } = await context.params;
+
+    // Validate params using Zod schema
+    const validation = validateData(sdhmParamsSchema, { params });
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid parameters",
+          details: formatValidationError(validation.error),
+        },
+        { status: 400 }
+      );
+    }
+
+    const [id, city] = validation.data.params;
     const apiKey = process.env.API_KEY_SDHM;
     const apiUrl = process.env.API_URL_SDHM;
 
@@ -315,38 +334,6 @@ export async function GET(
           message: "API key not configured",
         },
         { status: 500 }
-      );
-    }
-
-    // Validate params array
-    if (!params || params.length < 2) {
-      return NextResponse.json(
-        {
-          error: "Invalid route. Expected format: /api/sdhm/[id]/[city]",
-        },
-        { status: 400 }
-      );
-    }
-
-    const [id, city] = params;
-
-    // Validate required parameters
-    if (!id || !city) {
-      return NextResponse.json(
-        {
-          error: "Missing required parameters. Both id and city are required.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // Validate ID is numeric
-    if (isNaN(parseInt(id))) {
-      return NextResponse.json(
-        {
-          error: "Invalid id parameter. Must be a number.",
-        },
-        { status: 400 }
       );
     }
 

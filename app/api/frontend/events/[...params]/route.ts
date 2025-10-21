@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  frontendEventsParamsSchema,
+  validateData,
+  formatValidationError,
+} from "@/lib/validation/schemas";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
 import { authenticatedFetch } from "@/utils/authenticatedFetch";
 import type { RateLimitResult } from "@/types/rateLimit";
@@ -21,26 +26,19 @@ export async function GET(
   try {
     const { params } = await context.params;
 
-    // Validate parameters
-    if (!params || params.length !== 2) {
+    // Validate params using Zod schema
+    const validation = validateData(frontendEventsParamsSchema, { params });
+    if (!validation.success) {
       return NextResponse.json(
         {
-          error:
-            "Invalid parameters. Expected format: /api/frontend/events/[locationId]/[city]",
+          error: "Invalid parameters",
+          details: formatValidationError(validation.error),
         },
         { status: 400 }
       );
     }
 
-    const [locationId, city] = params;
-
-    // Validate locationId is numeric
-    if (isNaN(Number(locationId))) {
-      return NextResponse.json(
-        { error: "Location ID must be numeric" },
-        { status: 400 }
-      );
-    }
+    const [locationId, city] = validation.data.params;
 
     // Make authenticated request to the secured SDHM endpoint
     const sdhmUrl = `/api/sdhm/${locationId}/${encodeURIComponent(city)}`;
