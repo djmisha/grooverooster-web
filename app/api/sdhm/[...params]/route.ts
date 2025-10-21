@@ -3,7 +3,7 @@ import {
   sdhmParamsSchema,
   validateData,
   formatValidationError,
-} from "../../../../lib/validation/schemas";
+} from "@/lib/validation/schemas";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
 import localArtists from "@/localArtistsDB.json";
 import setDates from "@/utils/setDates";

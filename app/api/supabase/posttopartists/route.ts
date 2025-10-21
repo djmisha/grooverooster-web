@@ -3,7 +3,7 @@ import {
   postTopArtistsBodySchema,
   validateData,
   formatValidationError,
-} from "../../../../lib/validation/schemas";
+} from "@/lib/validation/schemas";
 import supabase from "@/features/Supabase";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
 import type { RateLimitResult } from "@/types/rateLimit";

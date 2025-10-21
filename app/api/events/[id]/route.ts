@@ -3,7 +3,7 @@ import {
   eventsIdParamsSchema,
   validateData,
   formatValidationError,
-} from "../../../../lib/validation/schemas";
+} from "@/lib/validation/schemas";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
 import { transformEDMTrainEventsArray } from "@/utils/edmTrainTransformer";
 import type { RateLimitResult } from "@/types/rateLimit";

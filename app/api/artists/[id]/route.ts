@@ -3,7 +3,7 @@ import {
   artistsIdParamsSchema,
   validateData,
   formatValidationError,
-} from "../../../../lib/validation/schemas";
+} from "@/lib/validation/schemas";
 import { transformEDMTrainEventsArray } from "@/utils/edmTrainTransformer";
 
 export async function GET(
