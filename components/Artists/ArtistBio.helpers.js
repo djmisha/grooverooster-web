@@ -1,7 +1,9 @@
+import { sanitizeHtml } from "../../utils/sanitizeHtml";
+
 /**
  * Formats artist bio by cleaning HTML and adding line breaks
  * @param {string} bio - Raw bio text with HTML
- * @returns {string} Formatted bio text
+ * @returns {string} Formatted and sanitized bio text
  */
 // @TODO - add line breaks before read more, add paragraph style for CC license
 export const formatBio = (bio) => {
@@ -13,5 +15,6 @@ export const formatBio = (bio) => {
       "User-contributed text is available under the Creative Commons By-SA License; additional terms may apply.",
       ""
     );
-  return clean;
+  // Sanitize HTML to prevent XSS attacks
+  return sanitizeHtml(clean);
 };
