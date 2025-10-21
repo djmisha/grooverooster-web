@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FaTicketAlt, FaMapMarkerAlt, FaTimes } from "react-icons/fa";
-import FavoriteArtistImage from "./FavoriteArtistImage";
-import { ToSlugArtist } from "../../utils/utilities";
+import FavoriteArtistImage from "@/components/User/FavoriteArtistImage";
+import { ToSlugArtist } from "@/utils/utilities";
 
 interface Artist {
   id: string;

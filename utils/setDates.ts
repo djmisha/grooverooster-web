@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { FormattedDate } from "../types";
+import { FormattedDate } from "@/types";
 dayjs.extend(relativeTime);
 
 /**

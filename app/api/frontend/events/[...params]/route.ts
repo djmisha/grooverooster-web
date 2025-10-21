@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { secureAppRouterEndpoint } from "../../../../../utils/appRouterSecurity";
-import { authenticatedFetch } from "../../../../../utils/authenticatedFetch";
-import type { RateLimitResult } from "../../../../../types/rateLimit";
 import {
   frontendEventsParamsSchema,
   validateData,
   formatValidationError,
 } from "../../../../../lib/validation/schemas";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import { authenticatedFetch } from "@/utils/authenticatedFetch";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 export async function GET(
   request: Request,

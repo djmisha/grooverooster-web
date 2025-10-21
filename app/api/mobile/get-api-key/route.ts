@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
-import type { RateLimitResult } from "../../../../types/rateLimit";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 export async function GET(request: Request) {
   // Apply security checks

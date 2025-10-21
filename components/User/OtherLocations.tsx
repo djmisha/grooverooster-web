@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import locationsData from "../../utils/locations.json";
-import { useAppContext } from "../../features/AppContext";
+import locationsData from "@/utils/locations.json";
+import { useAppContext } from "@/features/AppContext";
 
 interface OtherLocationsProps {
   currentLocationId?: number;

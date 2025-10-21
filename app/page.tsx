@@ -1,8 +1,8 @@
 import { Metadata, Viewport } from "next";
-import Layout, { siteTitle } from "../components/layout";
-import { createClient } from "../utils/supabase/server";
-import { getCanonicalUrl } from "../utils/canonicalUrl";
-import HomeClient from "./HomeClient";
+import Layout, { siteTitle } from "@/components/layout";
+import { createClient } from "@/utils/supabase/server";
+import { getCanonicalUrl } from "@/utils/canonicalUrl";
+import HomeClient from "@/app/HomeClient";
 
 export const metadata: Metadata = {
   title: siteTitle,

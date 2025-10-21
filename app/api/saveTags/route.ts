@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "../../../features/Supabase";
-import { secureAppRouterEndpoint } from "../../../utils/appRouterSecurity";
-import type { RateLimitResult } from "../../../types/rateLimit";
 import {
   saveTagsBodySchema,
   validateData,
   formatValidationError,
 } from "../../../lib/validation/schemas";
+import { supabaseAdmin } from "@/features/Supabase";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 export async function POST(request: Request) {
   // Check if Supabase is configured

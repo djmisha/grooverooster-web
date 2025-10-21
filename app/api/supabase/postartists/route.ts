@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
-import type { RateLimitResult } from "../../../../types/rateLimit";
 import {
   postArtistsBodySchema,
   validateData,
   formatValidationError,
 } from "../../../../lib/validation/schemas";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 export async function POST(request: Request) {
   // Apply security checks

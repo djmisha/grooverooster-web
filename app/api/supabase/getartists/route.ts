@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import supabase from "../../../../features/Supabase";
-import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
-import type { RateLimitResult } from "../../../../types/rateLimit";
+import supabase from "@/features/Supabase";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 const fetchExistingArtists = async () => {
   if (!supabase) throw new Error("Supabase not configured");

@@ -1,15 +1,15 @@
 import { Metadata } from "next";
-import Layout from "../../../components/layout";
+import Layout from "@/components/layout";
 import {
   getLocationData,
   isStateLandingPage,
   getStateInfo,
-} from "../../../utils/getLocations";
-import { makePageTitle, makePageDescription } from "../../../utils/utilities";
-import EventsModule from "../../../components/EventsModule/EventsModule";
-import StateLandingPage from "../../../components/StateLandingPage/StateLandingPage";
-import { getSDHMEvents } from "../../../utils/getEvents";
-import { getCanonicalUrl } from "../../../utils/canonicalUrl";
+} from "@/utils/getLocations";
+import { makePageTitle, makePageDescription } from "@/utils/utilities";
+import EventsModule from "@/components/EventsModule/EventsModule";
+import StateLandingPage from "@/components/StateLandingPage/StateLandingPage";
+import { getSDHMEvents } from "@/utils/getEvents";
+import { getCanonicalUrl } from "@/utils/canonicalUrl";
 import { headers } from "next/headers";
 
 interface LocationPageProps {

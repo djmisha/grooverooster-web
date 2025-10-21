@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
-import { transformEDMTrainEventsArray } from "../../../../utils/edmTrainTransformer";
-import type { RateLimitResult } from "../../../../types/rateLimit";
 import {
   eventsIdParamsSchema,
   validateData,
   formatValidationError,
 } from "../../../../lib/validation/schemas";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import { transformEDMTrainEventsArray } from "@/utils/edmTrainTransformer";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 // Force this route to be dynamic to ensure date filtering uses current date
 export const dynamic = "force-dynamic";

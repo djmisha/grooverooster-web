@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Layout from "../../components/layout";
-import { filterSurpriseGuest } from "../../utils/utilities";
-import NavigationBar from "../../components/Navigation/NavigataionBar";
-import TopArtistsCard from "../../components/TopArtistsCard/TopArtistsCard";
+import Layout from "@/components/layout";
+import { filterSurpriseGuest } from "@/utils/utilities";
+import NavigationBar from "@/components/Navigation/NavigataionBar";
+import TopArtistsCard from "@/components/TopArtistsCard/TopArtistsCard";
 import {
   Pagination,
   PaginationContent,
@@ -13,8 +13,8 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis,
-} from "../../components/ui/pagination";
-import { getCanonicalUrl } from "../../utils/canonicalUrl";
+} from "@/components/ui/pagination";
+import { getCanonicalUrl } from "@/utils/canonicalUrl";
 
 const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
   const filteredArtists = filterSurpriseGuest(uniqueArtists);

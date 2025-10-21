@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useAppContext } from "../../features/AppContext";
-import Button from "../Button/Button";
+import { useAppContext } from "@/features/AppContext";
+import Button from "@/components/Button/Button";
 
 interface ChangePasswordProps {
   user: any;

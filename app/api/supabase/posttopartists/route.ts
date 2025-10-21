@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import supabase from "../../../../features/Supabase";
-import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
-import type { RateLimitResult } from "../../../../types/rateLimit";
 import {
   postTopArtistsBodySchema,
   validateData,
   formatValidationError,
 } from "../../../../lib/validation/schemas";
+import supabase from "@/features/Supabase";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 const setData = async (artists: any[]) => {
   if (!supabase) throw new Error("Supabase not configured");

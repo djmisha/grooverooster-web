@@ -1,16 +1,16 @@
 import { Metadata } from "next";
-import Layout from "../../../components/layout";
+import Layout from "@/components/layout";
 import {
   getArtistData,
   getArtistEvents,
   getArtistLastFM,
-} from "../../../utils/getArtists";
-import ArtistImage from "../../../components/Artists/ArtistImage";
-import ArtistBio from "../../../components/Artists/ArtistBio";
-import GoogleAutoAds from "../../../components/3rdParty/googleAds";
-import ClientNavigationBar from "./ClientNavigationBar";
-import { getCanonicalUrl } from "../../../utils/canonicalUrl";
-import ArtistEventsClient from "./ArtistEventsClient";
+} from "@/utils/getArtists";
+import ArtistImage from "@/components/Artists/ArtistImage";
+import ArtistBio from "@/components/Artists/ArtistBio";
+import GoogleAutoAds from "@/components/3rdParty/googleAds";
+import ClientNavigationBar from "@/app/artist/[id]/ClientNavigationBar";
+import { getCanonicalUrl } from "@/utils/canonicalUrl";
+import ArtistEventsClient from "@/app/artist/[id]/ArtistEventsClient";
 
 interface ArtistPageProps {
   params: Promise<{ id: string }>;

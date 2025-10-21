@@ -3,7 +3,7 @@
  * Creates both regular and admin Supabase client instances
  */
 import { createClient } from "@supabase/supabase-js";
-import type { Database, SupabaseClientType } from "../types/database";
+import type { Database, SupabaseClientType } from "@/types/database";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;

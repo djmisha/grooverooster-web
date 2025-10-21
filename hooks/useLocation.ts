@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { AppContext } from "../features/AppContext";
+import { AppContext } from "@/features/AppContext";
 import {
   getLocationEventsUrl,
   getLocationSlug,
   hasValidLocationUrl,
-} from "../utils/locationService";
-import { Location } from "../types";
+} from "@/utils/locationService";
+import { Location } from "@/types";
 
 interface UseLocationReturn {
   currentLocation: Location | null;

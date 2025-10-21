@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
-import { getLocations } from "../utils/getLocations";
-import { allArtists } from "../utils/getArtists";
+import { getLocations } from "@/utils/getLocations";
+import { allArtists } from "@/utils/getArtists";
 
 /**
  * Generates the sitemap for the website with all locations and artists

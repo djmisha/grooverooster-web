@@ -1,5 +1,5 @@
-import locations from "./locations.json";
-import { Location } from "../types";
+import locations from "@/utils/locations.json";
+import { Location } from "@/types";
 
 interface LocationEntry {
   id: string | number;

@@ -1,4 +1,4 @@
-import Login from "../../components/User/Login";
+import Login from "@/components/User/Login";
 import Link from "next/link";
 import { Metadata } from "next";
 

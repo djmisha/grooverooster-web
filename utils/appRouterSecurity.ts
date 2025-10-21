@@ -3,8 +3,8 @@
  * Adapts Next.js App Router Request objects to work with the Pages Router security middleware
  */
 
-import secureApiEndpoint from "./apiSecurity";
-import type { RateLimitResult } from "../types/rateLimit";
+import secureApiEndpoint from "@/utils/apiSecurity";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 /**
  * Secure an App Router API endpoint
