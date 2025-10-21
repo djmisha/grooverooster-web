@@ -1,10 +1,16 @@
-import { formatBio } from "./ArtistBio.helpers";
+const sanitizeHtml = (dirty) => {
+  if (!dirty) return "";
+  const allowedTags = ["p", "br", "b", "i", "em", "strong", "u", "span", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "blockquote"];
+  let clean = dirty
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/\s*on\w+\s*=\s*["'][^"']*["']/gi, "")
+    .replace(/\s*on\w+\s*=\s*[^\s>]*/gi, "")
+    .replace(/javascript:/gi, "")
+    .replace(/data:text\/html/gi, "");
+  const tagPattern = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+  return clean.replace(tagPattern, (match, tag) => allowedTags.includes(tag.toLowerCase()) ? match : "");
+};
 
-/**
- * Saves tags to the database via API
- * @param {Array} tags - Array of tag objects to save
- * @returns {Promise<void>}
- */
 const saveTags = async (tags) => {
   // Save tags to the database or API
   // removing for now to save function requests
@@ -43,7 +49,7 @@ const ArtistBio = ({ name, lastFMdata }) => {
           <p
             className="artist-bio-text"
             dangerouslySetInnerHTML={{
-              __html: formatBio(bioContent),
+              __html: sanitizeHtml(bioContent),
             }}
           />
         </>
