@@ -809,17 +809,38 @@ Implemented DOMPurify sanitization library (isomorphic-dompurify v2.30.0):
 - All HTML content from untrusted sources now sanitized before rendering
 
 **Implementation:**
+
 ```typescript
 import DOMPurify from "isomorphic-dompurify";
 
 const clean = DOMPurify.sanitize(dirty, {
-  ALLOWED_TAGS: ["p", "br", "b", "i", "em", "strong", "u", "span", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "blockquote"],
+  ALLOWED_TAGS: [
+    "p",
+    "br",
+    "b",
+    "i",
+    "em",
+    "strong",
+    "u",
+    "span",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+  ],
   ALLOWED_ATTR: ["class"],
   KEEP_CONTENT: true,
 });
 ```
 
 **Files Modified:**
+
 - `/utils/sanitizeHtml.ts` - New sanitization utility
 - `/components/Artists/ArtistBio.helpers.js` - Now sanitizes bio content
 
