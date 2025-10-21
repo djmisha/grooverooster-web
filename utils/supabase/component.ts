@@ -1,5 +1,5 @@
 import { createBrowserClient } from "@supabase/ssr";
-import type { Database, SupabaseClientType } from "../../types/database";
+import type { Database, SupabaseClientType } from "@/types/database";
 
 /**
  * Creates a Supabase browser client for use in React components

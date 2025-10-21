@@ -77,7 +77,7 @@ export interface FilterItemWithCount {
 }
 
 // Context Types - defined in features/AppContext.tsx to avoid circular dependency
-export type { AppContextValue } from "../features/AppContext";
+export type { AppContextValue } from "@/features/AppContext";
 
 // Profile Types
 export interface Profile {

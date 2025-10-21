@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { supabaseAdmin } from "../../../../features/Supabase";
-import { secureAppRouterEndpoint } from "../../../../utils/appRouterSecurity";
-import type { RateLimitResult } from "../../../../types/rateLimit";
+import { supabaseAdmin } from "@/features/Supabase";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 const getData = async () => {
   if (!supabaseAdmin) throw new Error("Supabase admin not configured");

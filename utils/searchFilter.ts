@@ -1,6 +1,6 @@
-import { cleanString } from "./utilities";
+import { cleanString } from "@/utils/utilities";
 import { parse, isWithinInterval, startOfDay, endOfDay } from "date-fns";
-import { Event, EventId, SearchTerm } from "../types";
+import { Event, EventId, SearchTerm } from "@/types";
 
 /**
  * Filters events based on a search term, supporting text search, single date, and date range filters

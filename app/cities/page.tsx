@@ -1,9 +1,9 @@
 import { Metadata, Viewport } from "next";
-import Layout from "../../components/layout";
-import CitiesStates from "../../components/Homepage/CitiesStates";
-import { getLocations } from "../../utils/getLocations";
-import ClientNavigationBar from "./ClientNavigationBar";
-import { getCanonicalUrl } from "../../utils/canonicalUrl";
+import Layout from "@/components/layout";
+import CitiesStates from "@/components/Homepage/CitiesStates";
+import { getLocations } from "@/utils/getLocations";
+import ClientNavigationBar from "@/app/cities/ClientNavigationBar";
+import { getCanonicalUrl } from "@/utils/canonicalUrl";
 
 export const metadata: Metadata = {
   title: "Events By City",

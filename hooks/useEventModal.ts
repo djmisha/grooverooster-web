@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { EventId } from "../types";
+import { EventId } from "@/types";
 
 interface UseEventModalReturn {
   isModalOpen: boolean;

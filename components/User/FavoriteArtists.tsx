@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useAppContext } from "../../features/AppContext";
-import artistsData from "../../localArtistsDB.json";
-import FavoriteArtistCard from "./FavoriteArtistCard";
+import { useAppContext } from "@/features/AppContext";
+import artistsData from "@/localArtistsDB.json";
+import FavoriteArtistCard from "@/components/User/FavoriteArtistCard";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 interface Artist {

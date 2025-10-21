@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import ClientNavigationBar from "./ClientNavigationBar";
-import EditProfile from "../../components/User/EditProfile";
-import { createClient } from "../../utils/supabase/server";
+import ClientNavigationBar from "@/app/profile/ClientNavigationBar";
+import EditProfile from "@/components/User/EditProfile";
+import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

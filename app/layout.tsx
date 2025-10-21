@@ -1,6 +1,6 @@
-import { AppProvider } from "../features/AppContext";
+import { AppProvider } from "@/features/AppContext";
 import { Poppins } from "next/font/google";
-import ToastProvider from "../components/ui/ToastProvider.sonner";
+import ToastProvider from "@/components/ui/ToastProvider.sonner";
 import "../styles/tailwind.css";
 import "../styles/global.scss";
 import type { Metadata } from "next";

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { secureAppRouterEndpoint } from "../../../../../utils/appRouterSecurity";
-import { authenticatedFetch } from "../../../../../utils/authenticatedFetch";
-import type { RateLimitResult } from "../../../../../types/rateLimit";
+import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
+import { authenticatedFetch } from "@/utils/authenticatedFetch";
+import type { RateLimitResult } from "@/types/rateLimit";
 
 export async function GET(
   request: Request,
