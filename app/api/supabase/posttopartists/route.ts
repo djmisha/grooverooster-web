@@ -68,7 +68,10 @@ export async function POST(request: Request) {
     await setData(validation.data);
     return NextResponse.json({ message: "Success" });
   } catch (error: any) {
-    console.error("Error in handler: ", error);
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    console.error("Error posting top artists:", error);
+    return NextResponse.json(
+      { error: "An error occurred processing your request" },
+      { status: 500 }
+    );
   }
 }

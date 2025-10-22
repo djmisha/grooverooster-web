@@ -52,8 +52,10 @@ export async function GET(
       },
     });
   } catch (error: any) {
-    console.error(`Failed to parse URL from ${URL}`);
-    console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error fetching artist events:", error);
+    return NextResponse.json(
+      { error: "An error occurred processing your request" },
+      { status: 500 }
+    );
   }
 }

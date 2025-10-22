@@ -75,7 +75,10 @@ export async function GET(
       },
     });
   } catch (error: any) {
-    console.error("Error details:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error fetching events:", error);
+    return NextResponse.json(
+      { error: "An error occurred processing your request" },
+      { status: 500 }
+    );
   }
 }

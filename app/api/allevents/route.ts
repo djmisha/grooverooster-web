@@ -52,7 +52,10 @@ export async function GET(request: Request) {
       },
     });
   } catch (error: any) {
-    console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error fetching all events:", error);
+    return NextResponse.json(
+      { error: "An error occurred processing your request" },
+      { status: 500 }
+    );
   }
 }

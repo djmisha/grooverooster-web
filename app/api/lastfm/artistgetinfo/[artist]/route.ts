@@ -49,7 +49,10 @@ export async function GET(
       },
     });
   } catch (error: any) {
-    console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error fetching Last.fm artist info:", error);
+    return NextResponse.json(
+      { error: "An error occurred processing your request" },
+      { status: 500 }
+    );
   }
 }

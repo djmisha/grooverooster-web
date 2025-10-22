@@ -61,7 +61,6 @@ export async function GET(
 
     // Check if the API returned an error or no events
     if (data.fault || !data._embedded || !data._embedded.events) {
-      console.log(`No events found for city: ${id}`);
       return NextResponse.json({ _embedded: { events: [] } });
     }
 
