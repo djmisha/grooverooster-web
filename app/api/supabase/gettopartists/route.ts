@@ -44,7 +44,10 @@ export async function GET(request: Request) {
       }
     );
   } catch (error: any) {
-    console.error("Error in handler: ", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Error fetching top artists:", error);
+    return NextResponse.json(
+      { error: "An error occurred processing your request" },
+      { status: 500 }
+    );
   }
 }

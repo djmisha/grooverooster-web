@@ -47,12 +47,9 @@ export async function GET(
     // Return the data
     return NextResponse.json(data);
   } catch (error: any) {
-    console.error("Frontend events proxy error:", error);
+    console.error("Error in frontend events proxy:", error);
     return NextResponse.json(
-      {
-        error: "Failed to fetch events data",
-        message: error.message,
-      },
+      { error: "An error occurred processing your request" },
       { status: 500 }
     );
   }

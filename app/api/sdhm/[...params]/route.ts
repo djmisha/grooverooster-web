@@ -394,12 +394,9 @@ export async function GET(
       }
     );
   } catch (error: any) {
-    console.error("API Error:", error);
+    console.error("Error processing SDHM request:", error);
     return NextResponse.json(
-      {
-        error: "Internal server error",
-        message: error.message,
-      },
+      { error: "An error occurred processing your request" },
       { status: 500 }
     );
   }

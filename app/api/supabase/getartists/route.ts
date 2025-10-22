@@ -55,9 +55,9 @@ export async function GET(request: Request) {
       artists,
     });
   } catch (error: any) {
-    console.error("Error in handler:", error);
+    console.error("Error fetching artists:", error);
     return NextResponse.json(
-      { message: "Error fetching artists", error: error.message },
+      { error: "An error occurred processing your request" },
       { status: 500 }
     );
   }
