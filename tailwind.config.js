@@ -17,16 +17,13 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        // Your SCSS variables as Tailwind colors
-        white: "#fff",
+        // Custom brand colors (extends Tailwind's default palette)
         black: "#04092c",
         "light-grey": "#f6f6fb",
         "border-grey": "#d3d3dc",
         blue: "#1c94a5",
         pink: "#ce3197",
         "light-pink": "#fbe5f3",
-        orange: "#f97316",
-        green: "#10b981",
         // ShadCN colors
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

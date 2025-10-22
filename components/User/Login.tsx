@@ -80,6 +80,8 @@ export default function Login() {
               className="w-full px-4 py-3 border border-gray-300 rounded-md text-base transition-colors duration-150 focus:border-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
               placeholder="your@email.com"
               disabled={isLoggingIn}
+              aria-required="true"
+              autoComplete="email"
             />
           </div>
 
@@ -98,6 +100,8 @@ export default function Login() {
               className="w-full px-4 py-3 border border-gray-300 rounded-md text-base transition-colors duration-150 focus:border-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
               placeholder="••••••••"
               disabled={isLoggingIn}
+              aria-required="true"
+              autoComplete="current-password"
             />
           </div>
 
