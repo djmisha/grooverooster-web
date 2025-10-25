@@ -110,5 +110,3 @@ export const getCookie = (name: string): any => {
     return null;
   }
 };
-
-

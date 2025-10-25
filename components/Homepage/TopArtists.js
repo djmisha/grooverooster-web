@@ -27,10 +27,6 @@ const TopArtists = () => {
         );
         return;
       }
-      console.log(
-        "Fetching artists from:",
-        `${baseUrl}/api/supabase/gettopartists`
-      );
 
       const res = await fetch(`${baseUrl}/api/supabase/gettopartists`);
       if (res.ok) {

@@ -18,7 +18,6 @@ const LocationSelectModal = ({ image, text = "Location" }) => {
 
   const handleLocationChanged = (location) => {
     // Location is automatically handled by LocationManager and useLocation hook
-    console.log("Location changed in navigation:", location);
   };
 
   // Create LocationManager component for the modal
