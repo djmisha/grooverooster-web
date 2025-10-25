@@ -110,19 +110,3 @@ export const getCookie = (name: string): any => {
     return null;
   }
 };
-
-/**
- * Check if cookies are enabled in the browser
- * @returns True if cookies are enabled
- */
-export const areCookiesEnabled = (): boolean => {
-  try {
-    // Use minimal options for the test cookie
-    setCookie("test", "test", { days: 1, secure: false, sameSite: "Lax" });
-    const result = getCookie("test") === "test";
-    deleteCookie("test");
-    return result;
-  } catch (error) {
-    return false;
-  }
-};

@@ -76,8 +76,6 @@ export default function UserDashboard({
             stateCode: location.stateCode,
             slug: `events/${cityName.toLowerCase().replace(/\s+/g, "-")}`,
           });
-        } else {
-          console.log("Location not found for ID:", locationId);
         }
       };
 
@@ -245,17 +243,6 @@ export default function UserDashboard({
   const savedLocationIds = useMemo(() => {
     return userLocations.map((loc) => loc.id);
   }, [userLocations]);
-
-  // Debug log - only runs when profile actually changes (not on every render)
-  useEffect(() => {
-    if (profile?.id) {
-      console.log(
-        "UserDashboard profile changed:",
-        profile.id,
-        profile.username
-      );
-    }
-  }, [profile?.id, profile?.username]);
 
   return (
     <div className="max-w-7xl mx-auto my-8 px-2 pb-20">

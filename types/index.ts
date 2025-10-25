@@ -63,13 +63,6 @@ export interface Location {
 }
 
 // Filter Types
-export interface FilterOptions {
-  venues?: string[];
-  dates?: string[];
-  artists?: string[];
-  promoters?: string[];
-}
-
 export interface FilterItemWithCount {
   name: string;
   count: number;
@@ -99,7 +92,7 @@ export interface FormattedDate {
   daySchema: string;
 }
 
-// API Response Types
+// API Response Types - Note: Not currently used but reserved for future API standardization
 export interface ApiResponse<T> {
   data?: T;
   error?: string | null;
@@ -118,28 +111,6 @@ export interface ArtistsResponse {
   total?: number;
 }
 
-// Component Prop Types
-export interface EventCardProps {
-  event: Event;
-  openEventId: EventId | null;
-  setOpenEventId: (id: EventId | null) => void;
-}
-
-export interface FilterProps {
-  events: Event[];
-  filterType?: string;
-  onFilterChange?: (filteredEvents: Event[]) => void;
-}
-
-export interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-  title?: string;
-}
-
 // Utility Types
 export type SearchTerm = string;
 export type EventId = string | number;
-export type Optional<T> = T | undefined;
-export type Nullable<T> = T | null;
