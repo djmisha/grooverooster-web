@@ -29,7 +29,7 @@ export default function Layout({ children, home, canonicalUrl }) {
         <meta name="theme-color" content="#317EFB" />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       </Head>
-      <main>{children}</main>
+      <main id="main-content">{children}</main>
       {/* {process.env.NODE_ENV != "development" && (
         <div>
           <Script id="PostHog">
