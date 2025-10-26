@@ -21,6 +21,7 @@ Use this checklist to verify all accessibility features are working correctly:
 ### Screen Reader Testing
 
 #### Using NVDA (Windows)
+
 1. Download NVDA from https://www.nvaccess.org/download/
 2. Start NVDA (Ctrl+Alt+N)
 3. Navigate to localhost:3000
@@ -33,6 +34,7 @@ Use this checklist to verify all accessibility features are working correctly:
    - Event cards have descriptive labels
 
 #### Using VoiceOver (Mac)
+
 1. Enable VoiceOver (Cmd+F5)
 2. Navigate to localhost:3000
 3. Use VO+Right Arrow to navigate
@@ -54,6 +56,7 @@ Use this checklist to verify all accessibility features are working correctly:
 **Purpose:** Allow keyboard users to bypass navigation
 
 **Test Steps:**
+
 1. Load the home page
 2. Press Tab key once
 3. **Expected:** A "Skip to main content" link appears at the top-left
@@ -61,6 +64,7 @@ Use this checklist to verify all accessibility features are working correctly:
 5. **Expected:** Focus jumps to main content, bypassing navigation
 
 **Pass Criteria:**
+
 - Link is visible when focused
 - Link is hidden when not focused
 - Pressing Enter moves focus to #main-content
@@ -73,6 +77,7 @@ Use this checklist to verify all accessibility features are working correctly:
 **Purpose:** Ensure modals are accessible via keyboard and screen reader
 
 **Test Steps:**
+
 1. Navigate to an events page
 2. Tab to an event card
 3. Press Enter to open modal
@@ -84,6 +89,7 @@ Use this checklist to verify all accessibility features are working correctly:
 9. With screen reader on, verify dialog role is announced
 
 **Pass Criteria:**
+
 - Close button receives focus when modal opens
 - Tab key cycles through modal elements only
 - Shift+Tab cycles backwards through modal
@@ -98,6 +104,7 @@ Use this checklist to verify all accessibility features are working correctly:
 **Purpose:** Ensure navigation menu is keyboard accessible
 
 **Test Steps:**
+
 1. Tab to hamburger menu icon
 2. Press Enter to open menu
 3. **Expected:** Menu slides in, close button receives focus
@@ -109,6 +116,7 @@ Use this checklist to verify all accessibility features are working correctly:
 9. **Expected:** Navigation occurs, menu closes
 
 **Pass Criteria:**
+
 - Menu opens with keyboard
 - Close button is focused when menu opens
 - All menu items are keyboard accessible
@@ -122,6 +130,7 @@ Use this checklist to verify all accessibility features are working correctly:
 **Purpose:** Event cards are interactive via keyboard
 
 **Test Steps:**
+
 1. Navigate to events page
 2. Tab through event cards
 3. **Expected:** Each card receives visible focus
@@ -131,6 +140,7 @@ Use this checklist to verify all accessibility features are working correctly:
 7. **Expected:** Event details modal opens
 
 **Pass Criteria:**
+
 - Cards receive focus with Tab
 - Enter key opens modal
 - Space key opens modal
@@ -144,6 +154,7 @@ Use this checklist to verify all accessibility features are working correctly:
 **Purpose:** Forms are accessible and provide clear feedback
 
 **Test Steps:**
+
 1. Navigate to login or signup page
 2. Tab through form fields
 3. **Expected:** Each label is clearly associated
@@ -154,6 +165,7 @@ Use this checklist to verify all accessibility features are working correctly:
 8. Check that required fields are marked with aria-required
 
 **Pass Criteria:**
+
 - All inputs have associated labels
 - Labels are announced by screen reader
 - Error messages are visible and announced
@@ -198,19 +210,23 @@ Use this checklist to verify all accessibility features are working correctly:
 ## Testing Specific Components
 
 ### SkipLink Component
+
 ```bash
 Location: components/SkipLink/SkipLink.tsx
 Target: #main-content in components/layout.js
 ```
+
 - Appears on first Tab
 - Hidden by default (sr-only class)
 - Visible on focus
 - Links to main content area
 
 ### Modal Component
+
 ```bash
 Location: components/Modal/Modal.js
 ```
+
 - Focus trap works
 - Escape key handler works
 - Auto-focus on close button
@@ -220,9 +236,11 @@ Location: components/Modal/Modal.js
   - aria-labelledby="modal-title"
 
 ### MenuOverlay Component
+
 ```bash
 Location: components/ui/MenuOverlay.jsx
 ```
+
 - Focus management works
 - Escape key handler works
 - ARIA attributes present:
@@ -232,10 +250,13 @@ Location: components/ui/MenuOverlay.jsx
 - Uses semantic <nav> element
 
 ### LiveRegion Component
+
 ```bash
 Location: components/Accessibility/LiveRegion.tsx
 ```
+
 Not actively used yet, but available for:
+
 - Form validation messages
 - Success/error notifications
 - Dynamic content announcements
@@ -245,18 +266,23 @@ Not actively used yet, but available for:
 ## Common Issues and Solutions
 
 ### Issue: Focus not visible
+
 **Solution:** Ensure focus styles are defined and not removed with `outline: none`
 
 ### Issue: Modal doesn't trap focus
+
 **Solution:** Check that modal ref is correctly set and focus trap logic is working
 
 ### Issue: Screen reader not announcing changes
+
 **Solution:** Use LiveRegion component with appropriate aria-live value
 
 ### Issue: Skip link not working
+
 **Solution:** Verify #main-content id exists on main element
 
 ### Issue: Keyboard navigation broken
+
 **Solution:** Check for event.preventDefault() calls that might be blocking default behavior
 
 ---
@@ -264,11 +290,13 @@ Not actively used yet, but available for:
 ## Browser Compatibility
 
 Test in the following browsers:
+
 - Chrome/Edge (latest)
 - Firefox (latest)
 - Safari (latest)
 
 Test with these screen readers:
+
 - NVDA (Windows) with Chrome/Firefox
 - JAWS (Windows) with Chrome/IE
 - VoiceOver (Mac) with Safari
