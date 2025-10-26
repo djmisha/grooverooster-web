@@ -3,39 +3,64 @@ import artistDB from "./../localArtistsDB.json";
 import { removeDuplicates, ToSlugArtist } from "./utilities";
 import { parseData } from "./getEvents";
 import { authenticatedFetch } from "./authenticatedFetch";
+import { Event, Artist } from "@/types";
+
+interface ArtistWithSlug extends Artist {
+  slug: string;
+}
+
+interface ArtistCount {
+  id: number | string;
+  name: string;
+  count: number;
+  locations: number;
+}
+
+interface ArtistEventVenue {
+  location?: string;
+  [key: string]: any;
+}
+
+interface ArtistEvent {
+  artistList?: Artist[];
+  venue: ArtistEventVenue;
+  [key: string]: any;
+}
 
 /**
  * on Dev we return a sample array vs Prod we make a fetch call
  * @returns function based on env
  */
-export const getArtists = () => {
+export const getArtists = (): ArtistCount[] | undefined => {
   if (process.env.NODE_ENV === "development") {
-    return getArtistsSample(sampleEvents);
+    return getArtistsSample(sampleEvents as any[]);
   } else {
     // return getArtistsProd();
+    return undefined;
   }
 };
 
-const getArtistsSample = (sampleEvents) => {
+const getArtistsSample = (sampleEvents: any[]) => {
   return getArtistsCounts(sampleEvents);
 };
 
-const getArtistsProd = async () => {
-  const PATH = "https://www.grooverooster.com/api/allevents/";
-  await fetch(PATH, { mode: "cors" })
-    .then(function (response) {
-      response.json.then((res) => {
-        getArtistsCounts(res.data);
-      });
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-};
+// Commented out as not currently used
+// const getArtistsProd = async () => {
+//   const PATH = "https://www.grooverooster.com/api/allevents/";
+//   await fetch(PATH, { mode: "cors" })
+//     .then(function (response) {
+//       response.json.then((res) => {
+//         getArtistsCounts(res.data);
+//       });
+//     })
+//     .catch(function (error) {
+//       console.error(error);
+//     });
+// };
 
 // Removes Duplicate items from an array
-const dedupeObjArray = (array) => {
-  const unique = array.reduce((accumulator, current) => {
+const dedupeObjArray = (array: Artist[]): Artist[] => {
+  const unique = array.reduce((accumulator: Artist[], current) => {
     if (!accumulator.find((item) => item.id === current.id)) {
       accumulator.push(current);
     }
@@ -51,28 +76,29 @@ const dedupeObjArray = (array) => {
  * @returns Array
  */
 
-export const getUniqueArtists = (array) => {
-  const allArtists = [];
+export const getUniqueArtists = (array: Artist[]): ArtistWithSlug[] => {
+  const allArtists: ArtistWithSlug[] = [];
 
   array.map((artist) => {
     const { id, name } = artist;
     const slug = ToSlugArtist(name);
 
     allArtists.push({
-      id,
+      ...artist,
+      id: id!,
       name,
       slug,
     });
   });
 
   // TODO:  probably dont need this anymore, array is already unique but double check
-  const cleanArtists = dedupeObjArray(allArtists);
+  const cleanArtists = dedupeObjArray(allArtists) as ArtistWithSlug[];
 
   return cleanArtists;
 };
 
 // all the unique artists from static data
-export const allArtists = getUniqueArtists(artistDB);
+export const allArtists = getUniqueArtists(artistDB as Artist[]);
 
 /**
  * This algo counts the number of times an artists appears in the data
@@ -83,38 +109,44 @@ export const allArtists = getUniqueArtists(artistDB);
  * @returns Array
  */
 
-export const getArtistsCounts = (array) => {
-  const allArtists = []; // with duplicates
-  const finalArtists = []; // duplicates removed
-  const artistCount = {}; // keeps count for each artists show
-  const locationCount = {}; // keeps count for each city of artists
+export const getArtistsCounts = (array: ArtistEvent[]): ArtistCount[] => {
+  const allArtists: Artist[] = []; // with duplicates
+  const finalArtists: ArtistCount[] = []; // duplicates removed
+  const artistCount: Record<string, number> = {}; // keeps count for each artists show
+  const locationCount: Record<string, string[]> = {}; // keeps count for each city of artists
 
   // loop through array
   for (const event of array) {
     const { artistList, venue } = event;
     const { location } = venue;
     // loop through artists
-    for (const artist of artistList) {
-      const { id, name } = artist;
-      // add artist to array
-      allArtists.push({ id, name });
+    if (artistList) {
+      for (const artist of artistList) {
+        const { id, name } = artist;
+        // add artist to array
+        allArtists.push({ id, name });
 
-      // add counts to artistCount
-      if (!artistCount[id]) {
-        // if don't have in object start the count at 1
-        artistCount[id] = 1;
-      } else {
-        // otherwise increment the counter
-        artistCount[id]++;
-      }
+        const artistIdStr = String(id);
 
-      // add city counts to locationCount
-      if (!locationCount[id]) {
-        // if don't have in object, make array and add location
-        locationCount[id] = [location];
-      } else {
-        // otherwise push location to array
-        locationCount[id] = [...locationCount[id], location];
+        // add counts to artistCount
+        if (!artistCount[artistIdStr]) {
+          // if don't have in object start the count at 1
+          artistCount[artistIdStr] = 1;
+        } else {
+          // otherwise increment the counter
+          artistCount[artistIdStr]++;
+        }
+
+        // add city counts to locationCount
+        if (!locationCount[artistIdStr]) {
+          // if don't have in object, make array and add location
+          locationCount[artistIdStr] = location ? [location] : [];
+        } else {
+          // otherwise push location to array
+          if (location) {
+            locationCount[artistIdStr] = [...locationCount[artistIdStr], location];
+          }
+        }
       }
     }
   }
@@ -127,9 +159,9 @@ export const getArtistsCounts = (array) => {
     if (artistCount.hasOwnProperty(artistId)) {
       const count = artistCount[artistId];
       const locations = removeDuplicates(locationCount[artistId]).length;
-      const artist = cleanArtists.find((a) => a.id === parseInt(artistId));
+      const artist = cleanArtists.find((a) => String(a.id) === artistId);
 
-      if (artist) {
+      if (artist && artist.id !== undefined) {
         finalArtists.push({
           id: artist.id,
           name: artist.name,
@@ -150,11 +182,18 @@ export const getArtistsCounts = (array) => {
  *
  * functions to create unique artists pages
  */
-const uniqueArtists = getUniqueArtists(sampleEvents);
+// Commented out as not currently used
+// const uniqueArtists = getUniqueArtists(sampleEvents as any[]);
+
+interface ArtistParams {
+  params: {
+    id: string;
+  };
+}
 
 // gets slug for each artists
-export const getAritstIds = async () => {
-  return artistDB.map((artist) => {
+export const getAritstIds = async (): Promise<ArtistParams[]> => {
+  return (artistDB as Artist[]).map((artist) => {
     const { name } = artist;
     const id = ToSlugArtist(name);
 
@@ -167,9 +206,9 @@ export const getAritstIds = async () => {
 };
 
 // get data for each artist
-export const getArtistData = async (slug) => {
-  let data;
-  artistDB.map((artist) => {
+export const getArtistData = async (slug: string): Promise<any> => {
+  let data: any;
+  (artistDB as Artist[]).map((artist) => {
     const { name } = artist;
     if (slug === ToSlugArtist(name)) data = artist;
   });
@@ -181,8 +220,8 @@ export const getArtistData = async (slug) => {
 };
 
 // Determine URL to use based on env
-const setURL = (id) => {
-  let url;
+const setURL = (id: string | number): string => {
+  let url: string;
 
   if (process.env.NODE_ENV === "development") {
     url = `http://localhost:3000/api/artists/${id}`;
@@ -194,7 +233,9 @@ const setURL = (id) => {
 };
 
 // get events for each artist
-export const getArtistEvents = async (id, setEvents) => {
+export const getArtistEvents = async (
+  id: string | number
+): Promise<Event[]> => {
   try {
     // Check if we're running on the server-side
     const isServerSide = typeof window === "undefined";
@@ -202,7 +243,7 @@ export const getArtistEvents = async (id, setEvents) => {
     if (isServerSide) {
       // Server-side: Use authenticated fetch
       const apiUrl = `/api/artists/${id}`;
-      const json = await authenticatedFetch(apiUrl);
+      const json = await authenticatedFetch<{ data: any[] }>(apiUrl);
       const data = parseData(json.data);
       return data;
     } else {
@@ -224,7 +265,7 @@ export const getArtistEvents = async (id, setEvents) => {
 };
 
 // get LastFM data for artist
-export const getArtistLastFM = async (name) => {
+export const getArtistLastFM = async (name: string): Promise<any | null> => {
   try {
     // Check if we're running on the server-side
     const isServerSide = typeof window === "undefined";

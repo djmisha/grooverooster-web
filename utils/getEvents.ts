@@ -1,18 +1,77 @@
 import setDates from "./setDates";
 import localArtists from "../localArtistsDB.json";
 import { authenticatedFetch } from "./authenticatedFetch";
+import { Event, Artist } from "@/types";
+
+interface SDHMEventData {
+  data?: Event[];
+  [key: string]: any;
+}
+
+interface TicketMasterImage {
+  url: string;
+  ratio?: string;
+  [key: string]: any;
+}
+
+interface TicketMasterAttraction {
+  name: string;
+  [key: string]: any;
+}
+
+interface TicketMasterVenue {
+  name: string;
+  address?: { line1?: string };
+  city?: { name?: string };
+  state?: { stateCode?: string };
+  postalCode?: string;
+  country?: { countryCode?: string };
+  [key: string]: any;
+}
+
+interface TicketMasterEvent {
+  id: string;
+  name: string;
+  dates?: {
+    start?: {
+      localDate?: string;
+    };
+  };
+  images?: TicketMasterImage[];
+  _embedded?: {
+    venues?: TicketMasterVenue[];
+    attractions?: TicketMasterAttraction[];
+  };
+  url?: string;
+  promoter?: {
+    name?: string;
+  };
+  [key: string]: any;
+}
+
+interface TicketMasterResponse {
+  _embedded?: {
+    events?: TicketMasterEvent[];
+  };
+  [key: string]: any;
+}
+
+interface EDMTrainAPIResponse {
+  data?: any[];
+  [key: string]: any;
+}
 
 /**
  * Simple wrapper for SDHM events data (processing now done on API side)
- * @param {Array} processedEvents - Already processed events data from API
- * @param {string} city - City name (kept for compatibility)
- * @returns {Array} - Events array
  *
  * NOTE: As of the latest update, all event processing (sorting, deduplication,
  * transformation, artist matching, and filtering) is now done on the API side
  * in /api/sdhm/[...params].js for better caching and performance.
  */
-export const processSDHMEvents = (processedEvents, city = "") => {
+export const processSDHMEvents = (
+  processedEvents: Event[],
+  _city: string = ""
+): Event[] => {
   if (!Array.isArray(processedEvents) || processedEvents.length === 0) {
     return [];
   }
@@ -24,11 +83,11 @@ export const processSDHMEvents = (processedEvents, city = "") => {
 
 /**
  * Fetch and process events from SDHM API for a specific location
- * @param {number} locationId - Location ID
- * @param {string} city - City name
- * @returns {Promise<Array>} - Processed events array
  */
-export const getSDHMEvents = async (locationId, city) => {
+export const getSDHMEvents = async (
+  locationId: number,
+  city: string
+): Promise<Event[]> => {
   try {
     // Check if we're running on the server-side (Node.js environment)
     const isServerSide = typeof window === "undefined";
@@ -36,7 +95,7 @@ export const getSDHMEvents = async (locationId, city) => {
     if (isServerSide) {
       // Server-side: Use authenticated fetch with internal token
       const apiUrl = `/api/sdhm/${locationId}/${city}`;
-      const data = await authenticatedFetch(apiUrl);
+      const data = await authenticatedFetch<SDHMEventData>(apiUrl);
 
       // Events are already processed on the API side
       const processedEvents = data.data || [];
@@ -59,7 +118,7 @@ export const getSDHMEvents = async (locationId, city) => {
         return [];
       }
 
-      const data = await response.json();
+      const data: SDHMEventData = await response.json();
 
       // Events are already processed on the API side
       const processedEvents = data.data || [];
@@ -75,11 +134,11 @@ export const getSDHMEvents = async (locationId, city) => {
 
 /**
  * Frontend-safe version of getSDHMEvents that uses the proxy endpoint
- * @param {number} locationId - Location ID
- * @param {string} city - City name
- * @returns {Promise<Array>} - Processed events array
  */
-export const getSDHMEventsClient = async (locationId, city) => {
+export const getSDHMEventsClient = async (
+  locationId: number,
+  city: string
+): Promise<Event[]> => {
   try {
     const protocol =
       typeof window !== "undefined" ? window.location.protocol : "http:";
@@ -95,7 +154,7 @@ export const getSDHMEventsClient = async (locationId, city) => {
       return [];
     }
 
-    const data = await response.json();
+    const data: SDHMEventData = await response.json();
 
     // Events are already processed on the API side
     const processedEvents = data.data || [];
@@ -111,11 +170,8 @@ export const getSDHMEventsClient = async (locationId, city) => {
 // !TODO - THIS CAN ALL BE REMOVED SOON
 /**
  * Retrieves data from multiple event APIs
- * @param {number} id - City or State ID
- * @param {string} city - City name
- * @returns {Promise<Array>} - Events data
  */
-const getEvents = async (id, city) => {
+const getEvents = async (id: number, city: string): Promise<Event[]> => {
   try {
     // Define data sources
     const dataSources = [
@@ -153,10 +209,8 @@ const getEvents = async (id, city) => {
 
 /**
  * Fetch and format EDMTrain API data
- * @param {number} id - City or State ID
- * @returns {Promise<Array>} - Formatted events array
  */
-const fetchEDMTrainData = async (id) => {
+const fetchEDMTrainData = async (id: number): Promise<Event[]> => {
   try {
     // Check if we're running on the server-side
     const isServerSide = typeof window === "undefined";
@@ -164,7 +218,7 @@ const fetchEDMTrainData = async (id) => {
     if (isServerSide) {
       // Server-side: Use authenticated fetch
       const apiUrl = `/api/events/${id}`;
-      const data = await authenticatedFetch(apiUrl);
+      const data = await authenticatedFetch<EDMTrainAPIResponse>(apiUrl);
       return formatEDMTrainEvents(data);
     } else {
       // Client-side: Use regular fetch with base URL
@@ -176,7 +230,7 @@ const fetchEDMTrainData = async (id) => {
         return [];
       }
 
-      const data = await response.json();
+      const data: EDMTrainAPIResponse = await response.json();
       return formatEDMTrainEvents(data);
     }
   } catch (error) {
@@ -187,10 +241,8 @@ const fetchEDMTrainData = async (id) => {
 
 /**
  * Fetch and format TicketMaster API data
- * @param {string} city - City name
- * @returns {Promise<Array>} - Formatted events array
  */
-const fetchTicketMasterData = async (city) => {
+const fetchTicketMasterData = async (city: string): Promise<Event[]> => {
   try {
     // Check if we're running on the server-side
     const isServerSide = typeof window === "undefined";
@@ -198,7 +250,7 @@ const fetchTicketMasterData = async (city) => {
     if (isServerSide) {
       // Server-side: Use authenticated fetch
       const apiUrl = `/api/ticketmaster/events/${encodeURIComponent(city)}`;
-      const data = await authenticatedFetch(apiUrl);
+      const data = await authenticatedFetch<TicketMasterResponse>(apiUrl);
       return formatTicketMasterEvents(data);
     } else {
       // Client-side: Use regular fetch with base URL
@@ -212,7 +264,7 @@ const fetchTicketMasterData = async (city) => {
         return [];
       }
 
-      const data = await response.json();
+      const data: TicketMasterResponse = await response.json();
       return formatTicketMasterEvents(data);
     }
   } catch (error) {
@@ -223,15 +275,13 @@ const fetchTicketMasterData = async (city) => {
 
 /**
  * Format EDMTrain API response into standardized event format
- * @param {Object} apiData - Raw EDMTrain API response (now already transformed to new schema)
- * @returns {Array} - Formatted events array
  */
-const formatEDMTrainEvents = (apiData) => {
+const formatEDMTrainEvents = (apiData: EDMTrainAPIResponse): Event[] => {
   if (!apiData?.data || !Array.isArray(apiData.data)) {
     return [];
   }
 
-  return apiData.data.map((event) => ({
+  return apiData.data.map((event: any) => ({
     ...event,
     source: event.source || "edmtrain.com",
     isVisible: true,
@@ -240,10 +290,8 @@ const formatEDMTrainEvents = (apiData) => {
 
 /**
  * Format TicketMaster API response into standardized event format
- * @param {Object} apiData - Raw TicketMaster API response
- * @returns {Array} - Formatted events array
  */
-const formatTicketMasterEvents = (apiData) => {
+const formatTicketMasterEvents = (apiData: TicketMasterResponse): any[] => {
   if (!apiData?._embedded?.events || !Array.isArray(apiData._embedded.events)) {
     return [];
   }
@@ -251,7 +299,7 @@ const formatTicketMasterEvents = (apiData) => {
   return apiData._embedded.events
     .map((event) => {
       // Try to get the best image with multiple fallback options
-      let imageUrl = null;
+      let imageUrl: string | null = null;
 
       if (event.images && event.images.length > 0) {
         // Priority order: 4_3 ratio, then 3_2, then 16_9, then any available
@@ -277,7 +325,7 @@ const formatTicketMasterEvents = (apiData) => {
       if (!venue) return null;
 
       // Handle artistList - if no attractions but has event name, use event name as artist
-      let artistList = [];
+      let artistList: Artist[] = [];
       let eventName = event.name;
 
       if (
@@ -317,10 +365,8 @@ const formatTicketMasterEvents = (apiData) => {
 
 /**
  * Format TicketMaster API response into standardized event format
- * @param {Object} apiData - Raw TicketMaster API response
- * @returns {Array} - Formatted events array
  */
-export const formatTicketMasterwithImagesArtists = (events) => {
+export const formatTicketMasterwithImagesArtists = (events: Event[]): Event[] => {
   return events.map((event) => {
     // Support both old and new field names, check if artistlist is not empty and event name exists
     const artistList = event.artistlist || event.artistList || [];
@@ -331,7 +377,7 @@ export const formatTicketMasterwithImagesArtists = (events) => {
       artistList.length != 0 &&
       event.name
     ) {
-      const matchedArtist = localArtists.find((artist) => {
+      const matchedArtist = (localArtists as any[]).find((artist) => {
         return artistList[0].name.toLowerCase() == artist.name.toLowerCase();
       });
 
@@ -356,15 +402,16 @@ export const formatTicketMasterwithImagesArtists = (events) => {
 
 /**
  * Calculate similarity between two strings using Levenshtein distance
- * @param {string} str1 - First string
- * @param {string} str2 - Second string
- * @returns {number} - Similarity score between 0 and 1
  */
-const calculateSimilarity = (str1, str2, city = "") => {
+const calculateSimilarity = (
+  str1: string,
+  str2: string,
+  city: string = ""
+): number => {
   if (!str1 || !str2) return 0;
 
   // Normalize strings: lowercase, remove extra spaces, common words
-  const normalize = (str) => {
+  const normalize = (str: string): string => {
     const cityPattern = city ? `|${city.toLowerCase()}` : "";
     const regex = new RegExp(
       `\\b(nightclub|club|theater|theatre|venue${cityPattern})\\b`,
@@ -392,7 +439,7 @@ const calculateSimilarity = (str1, str2, city = "") => {
   }
 
   // Calculate Levenshtein distance
-  const matrix = [];
+  const matrix: number[][] = [];
   const len1 = normalizedStr1.length;
   const len2 = normalizedStr2.length;
 
@@ -426,13 +473,10 @@ const calculateSimilarity = (str1, str2, city = "") => {
 
 /**
  * Remove duplicate events based on date and venue similarity
- * @param {Array} events - Array of events
- * @param {string} city - City name for venue normalization
- * @returns {Array} - Array with duplicates removed
  */
-export const removeDuplicateEvents = (events, city = "") => {
-  return events.reduce((acc, event) => {
-    const duplicateIndex = acc.findIndex((e) => {
+export const removeDuplicateEvents = (events: any[], city: string = ""): any[] => {
+  return events.reduce((acc: any[], event: any) => {
+    const duplicateIndex = acc.findIndex((e: any) => {
       // Must be the same date
       if (e.date !== event.date) return false;
 
@@ -468,10 +512,8 @@ export const removeDuplicateEvents = (events, city = "") => {
 
 /**
  * Sort events by date (earliest first)
- * @param {Array} events - Array of events
- * @returns {Array} - Array sorted by date
  */
-export const sortEventsByDate = (events) => {
+export const sortEventsByDate = (events: Event[]): Event[] => {
   return events.sort((a, b) => {
     // Handle cases where date might be null or undefined
     if (!a.date && !b.date) return 0;
@@ -483,16 +525,14 @@ export const sortEventsByDate = (events) => {
     const dateB = new Date(b.date);
 
     // Sort in ascending order (earliest first)
-    return dateA - dateB;
+    return dateA.getTime() - dateB.getTime();
   });
 };
 
 /**
  * Convert a date to YYYY-MM-DD string format, handling timezone issues
- * @param {Date|string} date - Date object or date string
- * @returns {string} - Date in YYYY-MM-DD format
  */
-const toDateString = (date) => {
+const toDateString = (date: Date | string): string => {
   if (typeof date === "string") {
     return date.split("T")[0]; // Extract date part from ISO string
   }
@@ -508,10 +548,8 @@ const toDateString = (date) => {
 
 /**
  * Filter out events that are past today's date
- * @param {Array} events - Array of events
- * @returns {Array} - Array with past events removed
  */
-export const filterPastEvents = (events) => {
+export const filterPastEvents = (events: Event[]): Event[] => {
   const todayString = toDateString(new Date());
 
   return events.filter((event) => {
@@ -522,10 +560,8 @@ export const filterPastEvents = (events) => {
 
 /**
  * Parse and format events data for display
- * @param {Array} data - Array of events
- * @returns {Array} - Formatted events array
  */
-export const parseData = (data) => {
+export const parseData = (data: any[]): Event[] => {
   if (!Array.isArray(data)) return [];
 
   return data.map((item) => {

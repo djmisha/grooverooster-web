@@ -5,21 +5,21 @@
 
 /**
  * Make an authenticated API call from server-side code
- * @param {string} endpoint - The API endpoint (e.g., '/api/events/123')
- * @param {object} options - Fetch options (method, body, etc.)
- * @returns {Promise} - The response data
  */
-export async function authenticatedFetch(endpoint, options = {}) {
+export async function authenticatedFetch<T = any>(
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<T> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const url = endpoint.startsWith("http") ? endpoint : `${baseUrl}${endpoint}`;
 
-  const defaultHeaders = {
+  const defaultHeaders: HeadersInit = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${process.env.INTERNAL_API_TOKEN}`,
     "User-Agent": "NextJS-Internal-Client",
   };
 
-  const mergedOptions = {
+  const mergedOptions: RequestInit = {
     ...options,
     headers: {
       ...defaultHeaders,
@@ -44,21 +44,19 @@ export async function authenticatedFetch(endpoint, options = {}) {
 
 /**
  * Make an authenticated GET request
- * @param {string} endpoint - The API endpoint
- * @returns {Promise} - The response data
  */
-export async function authenticatedGet(endpoint) {
-  return authenticatedFetch(endpoint, { method: "GET" });
+export async function authenticatedGet<T = any>(endpoint: string): Promise<T> {
+  return authenticatedFetch<T>(endpoint, { method: "GET" });
 }
 
 /**
  * Make an authenticated POST request
- * @param {string} endpoint - The API endpoint
- * @param {object} data - The data to send
- * @returns {Promise} - The response data
  */
-export async function authenticatedPost(endpoint, data) {
-  return authenticatedFetch(endpoint, {
+export async function authenticatedPost<T = any>(
+  endpoint: string,
+  data: any
+): Promise<T> {
+  return authenticatedFetch<T>(endpoint, {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -66,12 +64,12 @@ export async function authenticatedPost(endpoint, data) {
 
 /**
  * Make an authenticated PUT request
- * @param {string} endpoint - The API endpoint
- * @param {object} data - The data to send
- * @returns {Promise} - The response data
  */
-export async function authenticatedPut(endpoint, data) {
-  return authenticatedFetch(endpoint, {
+export async function authenticatedPut<T = any>(
+  endpoint: string,
+  data: any
+): Promise<T> {
+  return authenticatedFetch<T>(endpoint, {
     method: "PUT",
     body: JSON.stringify(data),
   });

@@ -8,6 +8,8 @@
  * Usage: Import and call secureApiEndpoint at the beginning of your API handler
  */
 
+import { NextApiRequest, NextApiResponse } from "next";
+
 // Endpoints that remain open for frontend calls (no token required)
 const FRONTEND_OPEN_ENDPOINTS = [
   "/api/supabase/gettopartists",
@@ -17,12 +19,16 @@ const FRONTEND_OPEN_ENDPOINTS = [
   // "/api/sdhm",
 ];
 
+interface SecurityResult {
+  allowed: boolean;
+  error?: string;
+  isPreflight?: boolean;
+}
+
 /**
  * Check if endpoint should remain open for frontend calls
- * @param {string} path - Request path
- * @returns {boolean} - True if endpoint should be open
  */
-function isFrontendOpenEndpoint(path) {
+function isFrontendOpenEndpoint(path: string): boolean {
   // Remove query parameters for matching
   const cleanPath = path.split("?")[0];
 
@@ -34,9 +40,8 @@ function isFrontendOpenEndpoint(path) {
 
 /**
  * Get allowed tokens from environment variables
- * @returns {Array} - Array of allowed tokens
  */
-function getAllowedTokens() {
+function getAllowedTokens(): string[] {
   const tokensEnv = process.env.API_ALLOWED_TOKENS;
   if (!tokensEnv) {
     console.warn("API_ALLOWED_TOKENS environment variable not set");
@@ -47,10 +52,8 @@ function getAllowedTokens() {
 
 /**
  * Validates bearer token format and authenticity
- * @param {string} token - The bearer token to validate
- * @returns {boolean} - True if token is valid
  */
-function validateBearerToken(token) {
+function validateBearerToken(token: string): boolean {
   if (!token) return false;
 
   // Remove 'Bearer ' prefix if present
@@ -66,11 +69,11 @@ function validateBearerToken(token) {
 
 /**
  * Main security function to be called at the beginning of each API endpoint
- * @param {object} req - Next.js request object
- * @param {object} res - Next.js response object
- * @returns {object} - { allowed: boolean, error?: string }
  */
-function secureApiEndpoint(req, res) {
+function secureApiEndpoint(
+  req: NextApiRequest,
+  res: NextApiResponse
+): SecurityResult {
   const authHeader = req.headers.authorization;
   const requestPath = req.url || "";
 
@@ -113,11 +116,11 @@ function secureApiEndpoint(req, res) {
 
 /**
  * Higher-order function that wraps API handlers with security
- * @param {function} handler - The original API handler function
- * @returns {function} - The wrapped handler with security
  */
-export function withApiSecurity(handler) {
-  return async (req, res) => {
+export function withApiSecurity(
+  handler: (req: NextApiRequest, res: NextApiResponse) => Promise<any>
+) {
+  return async (req: NextApiRequest, res: NextApiResponse) => {
     const security = secureApiEndpoint(req, res);
 
     // Handle preflight requests
