@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { formatDataforSearch } from "./HomeSearchAutocomplete.helpers";
 import { toSlug } from "../../utils/getLocations";
@@ -10,7 +10,6 @@ function HomeSearchAutocomplete() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchString, setSearchString] = useState("");
   const [perfectMatch, setPerfectMatch] = useState(null);
-  const searchRef = useRef(null);
 
   useEffect(() => {
     // Load data with a slight delay to ensure proper rendering
@@ -94,7 +93,7 @@ function HomeSearchAutocomplete() {
   return (
     <div className="w-full max-w-full">
       <div className="relative flex items-center gap-2">
-        <div className="flex-1 min-w-0" ref={searchRef}>
+        <div className="flex-1 min-w-0">
           <ReactSearchAutocomplete
             items={items}
             onSelect={handleOnSelect}
@@ -111,7 +110,7 @@ function HomeSearchAutocomplete() {
           disabled={!perfectMatch}
           className={`flex-shrink-0 h-11 w-11 flex items-center justify-center rounded-lg transition-all ${
             perfectMatch
-              ? "bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
+              ? "bg-blue-500 hover:bg-blue-600 text-white"
               : "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 cursor-not-allowed"
           }`}
           title={perfectMatch ? "Press Enter to select" : "Type to search"}
