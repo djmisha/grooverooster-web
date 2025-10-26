@@ -1,21 +1,22 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, ReactNode } from "react";
 import CloseButton from "./CloseButton";
+
+interface MenuOverlayProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}
 
 /**
  * MenuOverlay component displays a slide-in menu overlay with click-outside-to-close functionality
- * @param {Object} props - Component props
- * @param {boolean} props.isOpen - Whether the menu is open
- * @param {Function} props.onClose - Callback to close the menu
- * @param {React.ReactNode} props.children - Menu content
- * @returns {JSX.Element} Animated menu overlay
  */
-const MenuOverlay = ({ isOpen, onClose, children }) => {
-  const menuRef = useRef(null);
-  const closeButtonRef = useRef(null);
+const MenuOverlay = ({ isOpen, onClose, children }: MenuOverlayProps) => {
+  const menuRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         onClose();
       }
     };
@@ -36,7 +37,7 @@ const MenuOverlay = ({ isOpen, onClose, children }) => {
 
   // Handle keyboard events
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
         onClose();
       }

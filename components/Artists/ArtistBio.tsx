@@ -1,4 +1,4 @@
-const sanitizeHtml = (dirty) => {
+const sanitizeHtml = (dirty: string): string => {
   if (!dirty) return "";
   const allowedTags = [
     "p",
@@ -33,7 +33,28 @@ const sanitizeHtml = (dirty) => {
   return clean.replace(/\n/g, "<br />");
 };
 
-const ArtistBio = ({ name, lastFMdata }) => {
+interface Tag {
+  name: string;
+}
+
+interface LastFMData {
+  artist?: {
+    bio?: {
+      content?: string;
+    };
+    tags?: {
+      tag?: Tag[];
+    };
+  };
+  error?: any;
+}
+
+interface ArtistBioProps {
+  name: string;
+  lastFMdata?: LastFMData;
+}
+
+const ArtistBio = ({ name, lastFMdata }: ArtistBioProps) => {
   if (!lastFMdata || lastFMdata.error) return null;
 
   const bioContent = lastFMdata?.artist?.bio?.content;

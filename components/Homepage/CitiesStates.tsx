@@ -3,36 +3,42 @@
 import { useContext } from "react";
 import { AppContext } from "../../features/AppContext";
 import Link from "next/link";
+import { Location } from "@/types";
+
+interface CitiesStatesProps {
+  locations: Location[];
+  showCitiesOnly?: boolean;
+  showStatesOnly?: boolean;
+}
 
 /**
  * CitiesStates component displays a grid of city or state links
- * @param {Object} props - Component props
- * @param {Array} props.locations - Array of location objects
- * @param {boolean} [props.showCitiesOnly=false] - Show only cities
- * @param {boolean} [props.showStatesOnly=false] - Show only states
- * @returns {JSX.Element} Grid of location links
  */
 const CitiesStates = ({
   locations,
   showCitiesOnly = false,
   showStatesOnly = false,
-}) => {
+}: CitiesStatesProps) => {
   const cities = locations.filter((location) => location.city);
   const states = locations.filter(
     (location) => location.state && !location.city
   );
-  const { addLocation } = useContext(AppContext);
+  const context = useContext(AppContext);
 
-  const handleClick = (location) => addLocation(location);
+  const handleClick = (location: Location) => {
+    if (context) {
+      context.addLocation(location);
+    }
+  };
 
-  const renderList = (locations, property) => {
+  const renderList = (locations: Location[], property: keyof Location) => {
     return locations.map((location) => (
       <li key={location.id}>
         <Link
           href={`/events/${location.slug}`}
           onClick={() => handleClick(location)}
         >
-          {location[property]}
+          {String(location[property])}
         </Link>
       </li>
     ));

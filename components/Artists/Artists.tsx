@@ -1,13 +1,19 @@
-import React from "react";
+import React, { ReactNode } from "react";
+
+interface Artist {
+  name: string | ReactNode;
+  [key: string]: any;
+}
+
+interface ArtistsProps {
+  data: Artist[];
+}
 
 /**
  * Artists component renders a list of artist names with alternating colors
- * @param {Object} props - Component props
- * @param {Array} props.data - Array of artist objects with name property
- * @returns {Array<JSX.Element>} Array of artist name elements with alternating pink and orange colors
  */
-const Artists = ({ data }) => {
-  let artists = [];
+const Artists = ({ data }: ArtistsProps) => {
+  let artists: React.ReactElement[] = [];
   data.map((artist, index) => {
     // Alternating colors: first (0) = pink, second (1) = orange, third (2) = pink, etc.
     const isPink = index % 2 === 0;

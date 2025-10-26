@@ -2,7 +2,6 @@ import { Toaster } from "sonner";
 
 /**
  * ToastProvider component configures and renders the Sonner toast notification system
- * @returns {JSX.Element} Configured Toaster component for app-wide toast notifications
  */
 const ToastProvider = () => {
   return (

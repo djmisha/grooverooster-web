@@ -5,14 +5,14 @@ import { shuffleArray, filterSurpriseGuest } from "../../utils/utilities";
 import TopArtistsCard from "../TopArtistsCard/TopArtistsCard";
 import Button from "../Button/Button";
 import ButtonWrapper from "../Button/ButtonWrapper";
+import { Artist } from "@/types";
 
 /**
  * TopArtists component displays a randomized grid of top performing artists
- * @returns {JSX.Element} Top artists section with load more functionality
  */
 const TopArtists = () => {
-  const [randomArtists, setRandomArtists] = useState([]);
-  const [artists, setArtists] = useState([]);
+  const [randomArtists, setRandomArtists] = useState<Artist[]>([]);
+  const [artists, setArtists] = useState<Artist[]>([]);
   const fetchedRef = useRef(false);
 
   useEffect(() => {
@@ -41,7 +41,10 @@ const TopArtists = () => {
   }, []);
 
   useEffect(() => {
-    setRandomArtists(shuffleArray(filterSurpriseGuest(artists)));
+    const result = shuffleArray(filterSurpriseGuest(artists));
+    if (result) {
+      setRandomArtists(result);
+    }
   }, [artists]);
 
   return (

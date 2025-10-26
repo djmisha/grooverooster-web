@@ -3,13 +3,12 @@ import { AppContext } from "../../features/AppContext";
 
 /**
  * WelcomeMessage component displays a welcome message when user hasn't set a location
- * @returns {JSX.Element|null} Welcome message or null if user has location set
  */
 export default function WelcomeMessage() {
-  const { currentUserLocation } = useContext(AppContext);
+  const context = useContext(AppContext);
 
   // Hide the message if user has a location set
-  if (currentUserLocation) {
+  if (context?.currentUserLocation) {
     return null;
   }
 

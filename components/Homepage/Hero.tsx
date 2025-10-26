@@ -5,7 +5,6 @@ import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
 
 /**
  * Hero component displays the main hero section with search and location finder
- * @returns {JSX.Element} Hero section with background gradient and search functionality
  */
 const Hero = () => {
   return (

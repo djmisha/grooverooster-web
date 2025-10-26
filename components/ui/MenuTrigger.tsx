@@ -1,16 +1,17 @@
 import Image from "next/image";
 
+interface MenuTriggerProps {
+  onClick: () => void;
+  text: string;
+  icon: string;
+  iconAlt?: string;
+  iconWidth?: number;
+  iconHeight?: number;
+  className?: string;
+}
+
 /**
  * MenuTrigger component renders a button with icon and text for opening menus
- * @param {Object} props - Component props
- * @param {Function} props.onClick - Click handler
- * @param {string} props.text - Button text label
- * @param {string} props.icon - Icon image path
- * @param {string} [props.iconAlt="Menu"] - Alt text for icon
- * @param {number} [props.iconWidth=22] - Icon width in pixels
- * @param {number} [props.iconHeight=22] - Icon height in pixels
- * @param {string} [props.className=""] - Additional CSS classes
- * @returns {JSX.Element} Menu trigger button
  */
 const MenuTrigger = ({
   onClick,
@@ -20,7 +21,7 @@ const MenuTrigger = ({
   iconWidth = 22,
   iconHeight = 22,
   className = "",
-}) => {
+}: MenuTriggerProps) => {
   return (
     <button
       className={`cursor-pointer flex flex-col items-center justify-center gap-2 p-2 bg-transparent border-none transition-all duration-200 ease-in-out text-black visited:text-black ${className}`}
