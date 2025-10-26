@@ -1,17 +1,20 @@
 import { useEffect, useCallback, useRef } from "react";
 import { clearSearch } from "../../utils/searchFilter";
 import { toast } from "sonner";
+import { Event } from "@/types";
+
+interface FilterProps {
+  events: Event[];
+  setEvents: (events: Event[]) => void;
+  searchTerm: string;
+  filterVisible: boolean;
+  setFilterVisible: (visible: boolean) => void;
+  onClearFilter?: () => void;
+}
 
 /**
  * Filter component that displays persistent toast notifications for search results
  * instead of the traditional inline filter display.
- *
- * @param {Array} events - Array of events to filter
- * @param {Function} setEvents - Function to update events state
- * @param {string} searchTerm - Current search term being filtered
- * @param {boolean} filterVisible - Whether filter is currently active
- * @param {Function} setFilterVisible - Function to toggle filter visibility
- * @param {Function} onClearFilter - Optional custom clear handler for pagination
  */
 const Filter = ({
   events,
@@ -20,8 +23,8 @@ const Filter = ({
   filterVisible,
   setFilterVisible,
   onClearFilter,
-}) => {
-  const toastIdRef = useRef(null);
+}: FilterProps) => {
+  const toastIdRef = useRef<string | number | null>(null);
 
   /**
    * Handles clearing the filter, updating events, and dismissing toast
@@ -115,6 +118,7 @@ const Filter = ({
         toastIdRef.current = null;
       }
     }
+    return undefined;
   }, [filterVisible, searchTerm, events, handleClearFilter]);
 
   // Clean up toast on component unmount

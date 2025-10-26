@@ -1,22 +1,12 @@
 import {
   makeVenues,
   makeArtists,
-  makeDates,
   makePromoters,
   makeVenuesWithCounts,
-  makeDatesWithCounts,
   makePromotersWithCounts,
 } from "../../utils/utilities";
-import NavItem from "../Navigation/NavItem";
 import BackToTop from "../BackToTop/BackToTop";
 import {
-  /**
-   * EventsFilter component provides filtering UI for events by venue, artist, date, and promoter
-   * @param {Object} props - Component props
-   * @param {Array} props.events - Array of events to generate filter options from
-   * @param {Function} props.setSearchTerm - Function to set the active search/filter term
-   * @returns {JSX.Element} Filter navigation items and back-to-top button
-   */
   FaCalendarAlt,
   FaMapMarkerAlt,
   FaUsers,
@@ -27,21 +17,28 @@ import { useState } from "react";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuList from "../Navigation/MenuList";
 import DatePickerFilter from "./DatePickerFilter";
+import { Event } from "@/types";
 
-const EventsFilter = ({ events, setSearchTerm }) => {
+interface EventsFilterProps {
+  events: Event[];
+  setSearchTerm: (term: string) => void;
+}
+
+/**
+ * EventsFilter component provides filtering UI for events by venue, artist, date, and promoter
+ */
+const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
   const [isDateMenuOpen, setIsDateMenuOpen] = useState(false);
   const [isVenueMenuOpen, setIsVenueMenuOpen] = useState(false);
   const [isArtistMenuOpen, setIsArtistMenuOpen] = useState(false);
   const [isPromoterMenuOpen, setIsPromoterMenuOpen] = useState(false);
 
   const venues = makeVenues(events ?? []);
-  const dates = makeDates(events ?? []);
   const artists = makeArtists(events ?? []);
   const promoters = makePromoters(events ?? []);
 
   // Get items with counts for display
   const venuesWithCounts = makeVenuesWithCounts(events ?? []);
-  const datesWithCounts = makeDatesWithCounts(events ?? []);
   const promotersWithCounts = makePromotersWithCounts(events ?? []);
 
   // Calculate statistics from events data
@@ -222,7 +219,7 @@ const EventsFilter = ({ events, setSearchTerm }) => {
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
                 <MenuList
-                  navItems={promoters.map((p) => p.name || p)}
+                  navItems={promoters}
                   navItemsWithCounts={promotersWithCounts}
                   text="promoter"
                   title="Promoters"

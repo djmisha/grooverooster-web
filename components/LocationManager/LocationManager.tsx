@@ -5,10 +5,19 @@ import Button from "../Button/Button";
 import LocationSwitch from "../LocationSwitch/LocationSwitch";
 import {
   getSavedLocation,
-  updateUserLocation,
   getLocationEventsUrl,
   hasValidLocationUrl,
 } from "../../utils/locationService";
+import { Location } from "@/types";
+
+interface LocationManagerProps {
+  onLocationChanged?: (location: Location) => void;
+  showCurrentLocation?: boolean;
+  showShareButton?: boolean;
+  showLocationSwitch?: boolean;
+  className?: string;
+  title?: string;
+}
 
 const LocationManager = ({
   onLocationChanged,
@@ -17,11 +26,17 @@ const LocationManager = ({
   showLocationSwitch = true,
   className = "",
   title = "Location Settings",
-}) => {
-  const [currentLocation, setCurrentLocation] = useState(null);
+}: LocationManagerProps) => {
+  const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { addLocation } = useContext(AppContext);
+  const context = useContext(AppContext);
+
+  if (!context) {
+    throw new Error("LocationManager must be used within AppProvider");
+  }
+
+  const { addLocation } = context;
 
   // Load saved location on mount
   useEffect(() => {
@@ -36,7 +51,7 @@ const LocationManager = ({
     }
   }, [addLocation, onLocationChanged]);
 
-  const handleLocationDetected = (location) => {
+  const handleLocationDetected = (location: Location) => {
     setCurrentLocation(location);
     setHasError(false);
     setErrorMessage("");
@@ -46,12 +61,12 @@ const LocationManager = ({
     }
   };
 
-  const handleLocationError = (error) => {
+  const handleLocationError = (error: { message: string }) => {
     setHasError(true);
     setErrorMessage(error.message);
   };
 
-  const handleLocationChanged = (location) => {
+  const handleLocationChanged = (location: Location) => {
     setCurrentLocation(location);
     setHasError(false);
     setErrorMessage("");
@@ -63,16 +78,16 @@ const LocationManager = ({
 
   const handleClearLocation = () => {
     setCurrentLocation(null);
-    updateUserLocation(null);
+    // updateUserLocation doesn't handle null, so we skip it
     setHasError(false);
     setErrorMessage("");
 
     if (onLocationChanged) {
-      onLocationChanged(null);
+      onLocationChanged(null as any); // Type assertion needed for callback
     }
   };
 
-  const formatLocationDisplay = (location) => {
+  const formatLocationDisplay = (location: Location | null) => {
     if (!location) return "";
 
     if (location.city && location.state) {
@@ -105,10 +120,7 @@ const LocationManager = ({
               </span>
               {hasValidLocationUrl(currentLocation) && (
                 <Button
-                  as="a"
-                  href={getLocationEventsUrl(currentLocation)}
-                  size="sm"
-                  color="blue"
+                  href={getLocationEventsUrl(currentLocation) || undefined}
                   className="ml-2"
                 >
                   View Events

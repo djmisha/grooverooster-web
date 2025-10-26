@@ -1,15 +1,31 @@
 import { allArtists } from "../../utils/getArtists";
 import locations from "../../utils/locations.json";
+import { Location } from "@/types";
 
-export const formatDataforSearch = () => {
-  const cleanData = [];
+interface SearchItem {
+  id: string | number;
+  name: string;
+  type: string;
+}
 
-  mutateData(locations, allArtists, cleanData);
+interface ArtistLike {
+  id: string | number | undefined;
+  name: string;
+}
+
+export const formatDataforSearch = (): SearchItem[] => {
+  const cleanData: SearchItem[] = [];
+
+  mutateData(locations as Location[], allArtists as ArtistLike[], cleanData);
 
   return cleanData;
 };
 
-const mutateData = (locations, allArtists, cleanData) => {
+const mutateData = (
+  locations: Location[],
+  allArtists: ArtistLike[],
+  cleanData: SearchItem[]
+) => {
   locations &&
     locations.map((item) => {
       const { id, city, state } = item;
@@ -20,11 +36,15 @@ const mutateData = (locations, allArtists, cleanData) => {
   allArtists &&
     allArtists.map((item) => {
       const { id, name } = item;
-      cleanData.push(createObject(id, name, "Artist"));
+      if (id) cleanData.push(createObject(id, name, "Artist"));
     });
 };
 
-const createObject = (id, name, type) => {
+const createObject = (
+  id: string | number,
+  name: string,
+  type: string
+): SearchItem => {
   return {
     id,
     name,

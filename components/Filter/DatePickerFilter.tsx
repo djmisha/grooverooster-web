@@ -1,9 +1,21 @@
 import { useState, useMemo } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { format, parse, startOfDay, endOfDay } from "date-fns";
+import { Event } from "@/types";
+import { DateRange } from "react-day-picker";
 
-const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
-  const [dateRange, setDateRange] = useState(undefined);
+interface DatePickerFilterProps {
+  events: Event[];
+  setSearchTerm: (term: string) => void;
+  onClose: () => void;
+}
+
+const DatePickerFilter = ({
+  events,
+  setSearchTerm,
+  onClose,
+}: DatePickerFilterProps) => {
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   // Get dates that have events for visual feedback
   const eventDates = useMemo(() => {
@@ -22,7 +34,7 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
   }, [events]);
 
   // Handle date range selection (works for both single date and range)
-  const handleRangeSelect = (range) => {
+  const handleRangeSelect = (range: DateRange | undefined) => {
     setDateRange(range);
   };
 
@@ -67,7 +79,7 @@ const DatePickerFilter = ({ events, setSearchTerm, onClose }) => {
 
   // Custom day renderer to add dots for dates with events
   const modifiers = {
-    hasEvent: (date) => eventDates.has(startOfDay(date).getTime()),
+    hasEvent: (date: Date) => eventDates.has(startOfDay(date).getTime()),
   };
 
   const modifiersClassNames = {

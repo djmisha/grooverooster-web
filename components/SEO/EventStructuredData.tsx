@@ -1,14 +1,19 @@
 import { useMemo } from "react";
 import setDates from "../../utils/setDates";
+import { Event } from "@/types";
+
+interface EventStructuredDataProps {
+  event: Event;
+  currentUrl: string;
+}
 
 /**
  * EventStructuredData component renders JSON-LD structured data for event SEO
- * @param {Object} props - Component props
- * @param {Object} props.event - Event object with details
- * @param {string} props.currentUrl - Current page URL
- * @returns {JSX.Element|null} Script tag with JSON-LD structured data or null
  */
-const EventStructuredData = ({ event, currentUrl }) => {
+const EventStructuredData = ({
+  event,
+  currentUrl,
+}: EventStructuredDataProps) => {
   const structuredData = useMemo(() => {
     if (!event) return null;
 
@@ -23,9 +28,9 @@ const EventStructuredData = ({ event, currentUrl }) => {
     } = event;
     // Support both old and new field names during transition
     const artistList = artistlist || event.artistList || [];
-    const startTime = starttime || event.startTime;
+    const startTime = starttime;
 
-    const { dayOfWeek, dayMonth, daySchema } = setDates(date);
+    const { dayOfWeek, dayMonth, daySchema: _daySchema } = setDates(date);
 
     // Generate event name
     const generateEventName = () => {
@@ -163,8 +168,8 @@ const EventStructuredData = ({ event, currentUrl }) => {
     };
 
     // Generate location object
-    const generateLocation = () => {
-      const location = {
+    const generateLocation = (): any => {
+      const location: any = {
         "@type": "Place",
         name: venue?.name || "TBA",
       };
@@ -195,7 +200,7 @@ const EventStructuredData = ({ event, currentUrl }) => {
       return location;
     };
 
-    const schema = {
+    const schema: any = {
       "@context": "https://schema.org",
       "@type": "Event",
       name: generateEventName(),

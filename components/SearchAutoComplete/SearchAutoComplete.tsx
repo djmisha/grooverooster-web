@@ -1,16 +1,30 @@
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { formatDataforSearch } from "./SearchAutoComplete.helpers";
 import { clearSearch } from "../../utils/searchFilter";
+import { Event } from "@/types";
+
+interface SearchItem {
+  id: string;
+  name: string;
+  type: string;
+}
+
+interface SearchAutoCompleteProps {
+  setSearchTerm: (term: string) => void;
+  events: Event[];
+  setEvents: (events: Event[]) => void;
+  setFilterVisible: (visible: boolean) => void;
+}
 
 function SearchAutoComplete({
   setSearchTerm,
   events,
   setEvents,
   setFilterVisible,
-}) {
+}: SearchAutoCompleteProps) {
   const items = formatDataforSearch(events);
 
-  const handleOnSelect = (item) => {
+  const handleOnSelect = (item: SearchItem) => {
     setSearchTerm(item.name);
   };
 
@@ -21,7 +35,7 @@ function SearchAutoComplete({
     setFilterVisible(false);
   };
 
-  const formatResult = (item) => {
+  const formatResult = (item: SearchItem) => {
     return (
       <>
         <span style={{ display: "block", textAlign: "left" }}>

@@ -2,31 +2,47 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { AppContext } from "../../features/AppContext";
 import {
   updateUserLocation,
-  getLocationById,
   searchLocations,
   getSavedLocation,
 } from "../../utils/locationService";
+import { Location } from "@/types";
+
+interface LocationSwitchProps {
+  onLocationChanged?: (location: Location) => void;
+  className?: string;
+  placeholder?: string;
+}
+
+interface DropdownPosition {
+  top?: number;
+  left?: number;
+  width?: number;
+}
 
 /**
  * LocationSwitch component allows users to search and switch between locations
- * @param {Object} props - Component props
- * @param {Function} [props.onLocationChanged] - Callback when location is changed
- * @param {string} [props.className=""] - Additional CSS classes
- * @returns {JSX.Element} Location switcher with autocomplete search
  */
 const LocationSwitch = ({
   onLocationChanged,
   className = "",
   placeholder = "Search for a city or state...",
-}) => {
-  const [currentLocation, setCurrentLocation] = useState(null);
+}: LocationSwitchProps) => {
+  const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState<Location[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState({});
-  const searchInputRef = useRef(null);
-  const { addLocation } = useContext(AppContext);
+  const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>(
+    {}
+  );
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const context = useContext(AppContext);
+
+  if (!context) {
+    throw new Error("LocationSwitch must be used within AppProvider");
+  }
+
+  const { addLocation } = context;
 
   // Load saved location on mount
   useEffect(() => {
@@ -53,6 +69,7 @@ const LocationSwitch = ({
         window.removeEventListener("resize", handleWindowEvents);
       };
     }
+    return undefined;
   }, [showDropdown]);
 
   // Handle search input changes
@@ -87,7 +104,7 @@ const LocationSwitch = ({
     }
   };
 
-  const handleLocationSelect = (location) => {
+  const handleLocationSelect = (location: Location | null) => {
     if (!location) return;
 
     // Update the location
@@ -109,7 +126,7 @@ const LocationSwitch = ({
     }
   };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
@@ -127,7 +144,7 @@ const LocationSwitch = ({
     }, 200);
   };
 
-  const formatLocationDisplay = (location) => {
+  const formatLocationDisplay = (location: Location | null): string => {
     if (!location) return "";
 
     if (location.city && location.state) {
@@ -138,7 +155,7 @@ const LocationSwitch = ({
     return location.city || "";
   };
 
-  const handleKeyDown = (e, location) => {
+  const handleKeyDown = (e: React.KeyboardEvent, location: Location | null) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleLocationSelect(location);
@@ -202,11 +219,6 @@ const LocationSwitch = ({
                   <div className="text-base font-medium text-gray-900 dark:text-gray-100">
                     {formatLocationDisplay(location)}
                   </div>
-                  {location.country && (
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
-                      {location.country}
-                    </div>
-                  )}
                 </div>
               </div>
             ))}

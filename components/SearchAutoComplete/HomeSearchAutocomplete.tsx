@@ -5,11 +5,17 @@ import { toSlug } from "../../utils/getLocations";
 import { ToSlugArtist } from "../../utils/utilities";
 import { CornerDownLeft } from "lucide-react";
 
+interface SearchItem {
+  id: string | number;
+  name: string;
+  type: string;
+}
+
 function HomeSearchAutocomplete() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<SearchItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchString, setSearchString] = useState("");
-  const [perfectMatch, setPerfectMatch] = useState(null);
+  const [perfectMatch, setPerfectMatch] = useState<SearchItem | null>(null);
 
   useEffect(() => {
     // Load data with a slight delay to ensure proper rendering
@@ -36,7 +42,7 @@ function HomeSearchAutocomplete() {
     }
   }, [searchString, items]);
 
-  const navigateToItem = (item) => {
+  const navigateToItem = (item: SearchItem) => {
     const { name, type } = item;
     if (type === "Artist") {
       const url = `artist/${ToSlugArtist(name)}`;
@@ -48,11 +54,11 @@ function HomeSearchAutocomplete() {
     }
   };
 
-  const handleOnSelect = (item) => {
+  const handleOnSelect = (item: SearchItem) => {
     navigateToItem(item);
   };
 
-  const handleOnSearch = (string) => {
+  const handleOnSearch = (string: string) => {
     setSearchString(string);
   };
 
@@ -62,7 +68,7 @@ function HomeSearchAutocomplete() {
     }
   };
 
-  const formatResult = (item) => {
+  const formatResult = (item: SearchItem) => {
     const isPerfectMatch =
       searchString && item.name.toLowerCase() === searchString.toLowerCase();
 

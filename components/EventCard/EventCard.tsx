@@ -117,7 +117,7 @@ export const EventCard = ({
     <>
       <EventStructuredData
         event={event}
-        currentUrl={typeof window !== "undefined" ? window.location.href : null}
+        currentUrl={typeof window !== "undefined" ? window.location.href : ""}
       />
       <div
         className={`relative transition-all duration-100 ease-out text-left py-5 px-4 mx-3 mb-6 md:m-0 md:p-5 bg-white top-0 flex overflow-hidden border border-gray-200 cursor-pointer shadow-md transform-none rounded-lg h-auto ${
