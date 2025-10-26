@@ -4,12 +4,7 @@ import { formatDataforSearch } from "./HomeSearchAutocomplete.helpers";
 import { toSlug } from "../../utils/getLocations";
 import { ToSlugArtist } from "../../utils/utilities";
 import { CornerDownLeft } from "lucide-react";
-
-interface SearchItem {
-  id: string | number;
-  name: string;
-  type: string;
-}
+import { SearchItem } from "@/types";
 
 function HomeSearchAutocomplete() {
   const [items, setItems] = useState<SearchItem[]>([]);

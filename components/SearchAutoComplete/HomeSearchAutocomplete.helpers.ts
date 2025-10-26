@@ -1,12 +1,6 @@
 import { allArtists } from "../../utils/getArtists";
 import locations from "../../utils/locations.json";
-import { Location } from "@/types";
-
-interface SearchItem {
-  id: string | number;
-  name: string;
-  type: string;
-}
+import { Location, SearchItem } from "@/types";
 
 interface ArtistLike {
   id: string | number | undefined;

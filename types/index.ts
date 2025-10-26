@@ -123,6 +123,13 @@ export interface ArtistsResponse {
   total?: number;
 }
 
+// Search Types
+export interface SearchItem {
+  id: string | number;
+  name: string;
+  type: string;
+}
+
 // Utility Types
 export type SearchTerm = string;
 export type EventId = string | number;

@@ -1,10 +1,4 @@
-import { Event, Artist, Venue } from "@/types";
-
-interface SearchItem {
-  id: string | number;
-  name: string;
-  type: string;
-}
+import { Event, Artist, Venue, SearchItem } from "@/types";
 
 export const formatDataforSearch = (data: Event[]): SearchItem[] => {
   const cleanData: SearchItem[] = [];

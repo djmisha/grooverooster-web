@@ -1,13 +1,7 @@
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { formatDataforSearch } from "./SearchAutoComplete.helpers";
 import { clearSearch } from "../../utils/searchFilter";
-import { Event } from "@/types";
-
-interface SearchItem {
-  id: string;
-  name: string;
-  type: string;
-}
+import { Event, SearchItem } from "@/types";
 
 interface SearchAutoCompleteProps {
   setSearchTerm: (term: string) => void;
