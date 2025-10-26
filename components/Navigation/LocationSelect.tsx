@@ -4,11 +4,23 @@ import { toSlug } from "../../utils/getLocations";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
 
-const LocationSelect = ({ image, text, title, navItems }) => {
+interface LocationSelectProps {
+  image: string;
+  text: string;
+  title: string;
+  navItems: string[];
+}
+
+const LocationSelect = ({
+  image,
+  text,
+  title,
+  navItems,
+}: LocationSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const homeSlug = (slug) => {
+  const homeSlug = (slug: string) => {
     return `/events/${slug}`;
   };
 

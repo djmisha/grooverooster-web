@@ -3,8 +3,17 @@ import LocationManager from "../LocationManager/LocationManager";
 import Modal from "../Modal/Modal";
 import MenuTrigger from "../ui/MenuTrigger";
 import { useLocation } from "../../hooks/useLocation";
+import { Location } from "@/types";
 
-const LocationSelectModal = ({ image, text = "Location" }) => {
+interface LocationSelectModalProps {
+  image: string;
+  text?: string;
+}
+
+const LocationSelectModal = ({
+  image,
+  text = "Location",
+}: LocationSelectModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentLocation, hasLocation } = useLocation();
 
@@ -16,7 +25,7 @@ const LocationSelectModal = ({ image, text = "Location" }) => {
     setIsModalOpen(false);
   };
 
-  const handleLocationChanged = (location) => {
+  const handleLocationChanged = (_location: Location) => {
     // Location is automatically handled by LocationManager and useLocation hook
   };
 

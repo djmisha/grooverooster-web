@@ -67,6 +67,7 @@ export interface Location {
   id: string | number;
   city?: string;
   state: string;
+  stateCode?: string;
   latitude?: number;
   longitude?: number;
   slug?: string;

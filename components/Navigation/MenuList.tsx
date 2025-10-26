@@ -1,3 +1,21 @@
+import { MouseEvent } from "react";
+
+interface FilterItem {
+  name: string;
+  count?: number | null;
+  originalDate?: string;
+}
+
+interface MenuListProps {
+  navItems?: string[];
+  navItemsWithCounts?: FilterItem[];
+  text: string;
+  title: string;
+  isOpen: boolean;
+  setSearchTerm?: (term: string) => void;
+  onClose: (e: MouseEvent) => void;
+}
+
 export const MenuList = ({
   navItems,
   navItemsWithCounts,
@@ -6,10 +24,11 @@ export const MenuList = ({
   isOpen,
   setSearchTerm,
   onClose,
-}) => {
+}: MenuListProps) => {
   // Use items with counts if available, otherwise fallback to regular items
-  const itemsToRender =
-    navItemsWithCounts || navItems.map((item) => ({ name: item, count: null }));
+  const itemsToRender: FilterItem[] =
+    navItemsWithCounts ||
+    (navItems?.map((item) => ({ name: item, count: null })) ?? []);
 
   return (
     <div
@@ -21,14 +40,20 @@ export const MenuList = ({
     >
       <h2>{title}</h2>
       {itemsToRender.map((item, index) => {
-        const itemName = item.name || item;
-        const itemCount = item.count;
+        const itemName = typeof item === "string" ? item : item.name;
+        const itemCount =
+          typeof item === "object" && item.count !== undefined
+            ? item.count
+            : null;
         // For dates, use originalDate for filtering, display name for UI
-        const searchValue = item.originalDate || itemName;
+        const searchValue =
+          typeof item === "object" && item.originalDate
+            ? item.originalDate
+            : itemName;
 
         return (
           <div
-            key={index + itemName}
+            key={`${index}-${itemName}`}
             onClick={(e) => {
               if (setSearchTerm) setSearchTerm(searchValue);
               onClose(e);

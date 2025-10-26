@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+
+interface ModalProps {
+  component: React.ComponentType;
+  onClose: () => void;
+}
 
 /**
  * Modal component that displays content in an overlay with scroll lock
- * @param {Object} props - Component props
- * @param {React.ElementType} props.component - Component to render inside the modal
- * @param {Function} props.onClose - Callback function when modal is closed
- * @returns {JSX.Element} Modal overlay with content
  */
-const Modal = ({ component: Component, onClose }) => {
-  const modalRef = useRef(null);
-  const closeButtonRef = useRef(null);
+const Modal = ({ component: Component, onClose }: ModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   // Disable body scroll when modal is open
   useEffect(() => {
@@ -44,7 +44,7 @@ const Modal = ({ component: Component, onClose }) => {
 
   // Handle keyboard events for accessibility
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       // Close modal on Escape key
       if (e.key === "Escape") {
         onClose();
@@ -55,8 +55,10 @@ const Modal = ({ component: Component, onClose }) => {
         const focusableElements = modalRef.current.querySelectorAll(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
+        const firstElement = focusableElements[0] as HTMLElement;
+        const lastElement = focusableElements[
+          focusableElements.length - 1
+        ] as HTMLElement;
 
         if (e.shiftKey && document.activeElement === firstElement) {
           e.preventDefault();
@@ -99,11 +101,6 @@ const Modal = ({ component: Component, onClose }) => {
       </div>
     </div>
   );
-};
-
-Modal.propTypes = {
-  component: PropTypes.elementType.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

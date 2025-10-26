@@ -8,7 +8,6 @@ import Button from "../Button/Button";
 
 /**
  * Verify component displays email verification success modal when user confirms email
- * @returns {JSX.Element|null} Verification modal or null
  */
 const Verify = () => {
   const [showModal, setShowModal] = useState(false);
