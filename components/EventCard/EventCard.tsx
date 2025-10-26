@@ -1,26 +1,28 @@
 import React from "react";
-import { useRouter } from "next/navigation";
 import Artists from "../Artists/Artists";
 import ArtistImage from "../Artists/ArtistImage";
 import setDates from "../../utils/setDates";
 import Modal from "../Modal/Modal";
 import EventDetails from "../EventDetails/EventDetails";
 import EventStructuredData from "../SEO/EventStructuredData";
-import { useCurrentUrl } from "../../hooks/useCurrentUrl";
 import { useEventModal } from "../../hooks/useEventModal";
 import { FaRegCalendar, FaRegBuilding, FaUsers, FaVideo } from "react-icons/fa";
+import { Event } from "@/types";
+
+interface EventCardProps {
+  event: Event;
+  openEventId: string | number | null;
+  setOpenEventId: (id: string | number | null) => void;
+}
 
 /**
  * EventCard component displays a single event with artist, date, venue information and modal functionality
- * @param {Object} props - Component props
- * @param {Object} props.event - Event object containing all event details
- * @param {string|number|null} props.openEventId - ID of currently open event modal
- * @param {Function} props.setOpenEventId - Function to set the open event ID
- * @returns {JSX.Element} Event card component with modal
  */
-export const EventCard = ({ event, openEventId, setOpenEventId }) => {
-  const router = useRouter();
-  const currentUrl = useCurrentUrl();
+export const EventCard = ({
+  event,
+  openEventId,
+  setOpenEventId,
+}: EventCardProps) => {
   const {
     date,
     artistlist,
@@ -65,9 +67,8 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
 
   /**
    * Handles keyboard interaction for opening the modal
-   * @param {KeyboardEvent} e - Keyboard event
    */
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleModalOpen();
@@ -76,13 +77,16 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
 
   const truncatedArtistList =
     artistList.length > 2
-      ? artistList.slice(0, 2).concat({
-          name: (
-            <span className="text-gray-500 text-sm font-normal inline">
-              ... {artistList.length - 2} more artists
-            </span>
-          ),
-        })
+      ? ([
+          ...artistList.slice(0, 2),
+          {
+            name: (
+              <span className="text-gray-500 text-sm font-normal inline">
+                ... {artistList.length - 2} more artists
+              </span>
+            ),
+          },
+        ] as any[])
       : artistList;
 
   /**
@@ -91,6 +95,11 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
    */
   const ArtistImageWrapper = () => {
     const artistId = artistList[0]?.id;
+    const numericArtistId = artistId
+      ? typeof artistId === "string"
+        ? Number(artistId)
+        : artistId
+      : undefined;
     return (
       <div
         className="bg-white w-28 h-28 bg-no-repeat bg-cover rounded-md mr-5"
@@ -99,7 +108,7 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
             "url('https://www.grooverooster.com/images/housemusic192.png')",
         }}
       >
-        <ArtistImage id={artistId} imageUrl={imageUrl} />
+        <ArtistImage id={numericArtistId} imageUrl={imageUrl} />
       </div>
     );
   };
@@ -116,7 +125,7 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
         } ${
           eventSource === "ticketmaster" ? "border-2 border-pink-500" : ""
         } md:hover:-translate-y-0.5 md:hover:scale-[1.005] md:hover:shadow-lg`}
-        itemScope=""
+        itemScope
         itemType="http://schema.org/Event"
         onClick={handleModalOpen}
         onKeyDown={handleKeyDown}
@@ -176,7 +185,7 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
           <div
             className="flex items-center gap-2 text-sm leading-4 text-black m-0 p-0 font-medium"
             itemProp="location"
-            itemScope=""
+            itemScope
             itemType="http://schema.org/Place"
           >
             <FaRegBuilding className="text-current" />

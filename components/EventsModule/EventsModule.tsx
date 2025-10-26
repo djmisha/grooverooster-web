@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import EventCard from "../../components/EventCard/EventCard";
 import NavigationBar from "../../components/Navigation/NavigataionBar";
 import { searchFilter } from "../../utils/searchFilter";
@@ -10,26 +10,27 @@ import Filter from "../../components/Filter/Filter";
 import EventsFiltered from "../../components/Filter/EventsFilter";
 import EventsPagination from "../../components/EventsPagination/EventsPagination";
 import { useEventModalManager } from "../../hooks/useEventModal";
+import { Event, Location } from "@/types";
+
+interface EventsModuleProps {
+  locationData: Location;
+  isHome: boolean;
+  events: Event[];
+  initialPage?: number;
+  eventId?: string;
+}
 
 /**
  * EventsModule component displays events list with filtering, search, and pagination
- * @param {Object} props - Component props
- * @param {Object} props.locationData - Location information
- * @param {boolean} props.isHome - Whether this is the home page
- * @param {Array} props.events - Array of all events to display
- * @param {number} [props.initialPage=1] - Initial page number for pagination
- * @param {string} [props.eventId] - Optional event ID to highlight
- * @returns {JSX.Element} Events module with navigation, filters, and pagination
  */
 const EventsModule = ({
   locationData,
-  isHome,
+  isHome: _isHome,
   events: initialEvents,
   initialPage = 1,
-  eventId,
-}) => {
+  eventId: _eventId,
+}: EventsModuleProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { openEventId, setOpenEventId } = useEventModalManager(); // Use the hook
   let [filterVisible, setFilterVisible] = useState(false);
   const [events, setEvents] = useState(initialEvents);
@@ -39,9 +40,9 @@ const EventsModule = ({
   const eventsPerPage = 21;
   const { city, state, id } = locationData;
   const title = makePageHeadline(city, state);
-  const [searchTerm, setSearchTerm] = useState();
-  const dataFetchedRef = useRef();
-  const searchTermRef = useRef("");
+  const [searchTerm, setSearchTerm] = useState<string | undefined>();
+  const dataFetchedRef = useRef<string | number | undefined>(undefined);
+  const searchTermRef = useRef<string>("");
 
   useEffect(() => {
     if (dataFetchedRef.current === id) return;
@@ -64,7 +65,7 @@ const EventsModule = ({
         searchTermRef.current = searchTerm;
         setFilterVisible(true);
         setSearchTerm("");
-        window.location = "#top";
+        window.location.href = "#top";
       }
     }
   }, [searchTerm, allEvents, currentPage, filterVisible]);
@@ -90,7 +91,7 @@ const EventsModule = ({
     return allEvents.length;
   };
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
 
     // Update URL to include page number using slug instead of id
@@ -123,22 +124,14 @@ const EventsModule = ({
     <>
       {events && (
         <NavigationBar
-          events={allEvents} // Always pass all events to navigation
           setSearchTerm={setSearchTerm}
-          locationData={locationData}
-          setEvents={setEvents}
-          setFilterVisible={setFilterVisible}
-          isHome={isHome}
+          locationData={[locationData]}
         />
       )}
       <div className="flex flex-col md:p-5 md:flex-row-reverse" id="top">
         <section className="md:w-full md:pb-20 [&_h1]:border-none [&_h1]:text-center [&_h1]:pb-2.5 [&_h1]:leading-tight">
           <h1 id="top">{title}</h1>
-          <EventsFiltered
-            events={events}
-            setSearchTerm={setSearchTerm}
-            locationData={locationData}
-          />
+          <EventsFiltered events={events} setSearchTerm={setSearchTerm} />
           <Filter
             events={events}
             setEvents={setEvents}

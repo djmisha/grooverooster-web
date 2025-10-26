@@ -1,24 +1,32 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Artists from "../Artists/Artists";
 import ArtistImage from "../Artists/ArtistImage";
 import setDates from "../../utils/setDates";
-import { FaRegCalendar, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa"; // Add icons import
+import { FaRegCalendar, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa";
 import Button from "../Button/Button";
+import { Event } from "@/types";
+
+interface EventDetailsProps {
+  event: Event;
+}
 
 /**
  * EventDetails component displays detailed information about an event in a modal
- * @param {Object} props - Component props
- * @param {Object} props.event - Event object containing all event details
- * @returns {JSX.Element} Event details view with artist, date, venue, and ticket link
  */
-const EventDetails = ({ event }) => {
-  const { date, artistlist, name, venue, link, source, imageUrl } = event;
+const EventDetails = ({ event }: EventDetailsProps) => {
+  const {
+    date,
+    artistlist,
+    name,
+    venue,
+    link,
+    source: _source,
+    imageUrl,
+  } = event;
   // Support both old and new field names during transition
   const artistList = artistlist || event.artistList || [];
-  const eventSource = source || event.eventSource;
   const { name: venueName, address } = venue;
-  const { dayOfWeek, dayMonth, daySchema } = setDates(date);
+  const { dayOfWeek, dayMonth, daySchema: _daySchema } = setDates(date);
 
   return (
     <div className="flex flex-col items-center text-center px-2 py-2 md:px-2 md:py-2">
@@ -32,7 +40,16 @@ const EventDetails = ({ event }) => {
             "url('https://www.grooverooster.com/images/housemusic192.png')",
         }}
       >
-        <ArtistImage id={artistList[0]?.id} imageUrl={imageUrl} />
+        <ArtistImage
+          id={
+            artistList[0]?.id
+              ? typeof artistList[0].id === "string"
+                ? Number(artistList[0].id)
+                : artistList[0].id
+              : undefined
+          }
+          imageUrl={imageUrl}
+        />
       </div>
       <div className="w-full">
         <div className="flex items-center justify-center gap-2 text-blue text-base font-medium pb-4 border-b border-gray-200">
@@ -75,10 +92,6 @@ const EventDetails = ({ event }) => {
       </div>
     </div>
   );
-};
-
-EventDetails.propTypes = {
-  event: PropTypes.object.isRequired,
 };
 
 export default EventDetails;
