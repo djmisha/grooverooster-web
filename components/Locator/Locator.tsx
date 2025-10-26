@@ -7,25 +7,32 @@ import { ToSlugArtist } from "../../utils/utilities";
 import EventCard from "../EventCard/EventCard";
 import Button from "../Button/Button";
 import { useEventModalManager } from "../../hooks/useEventModal";
+import { Event } from "@/types";
 
 /**
  * Locator component displays nearby events based on user's current location
- * @returns {JSX.Element} Location-based events list with load more functionality
  */
 const Locator = () => {
-  const { currentUserLocation } = useContext(AppContext);
+  const context = useContext(AppContext);
   const { openEventId, setOpenEventId } = useEventModalManager();
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEvents = async () => {
-      if (currentUserLocation?.id && currentUserLocation?.city) {
+      if (
+        context?.currentUserLocation?.id &&
+        context?.currentUserLocation?.city
+      ) {
         setLoading(true);
         try {
+          const locationId =
+            typeof context.currentUserLocation.id === "string"
+              ? Number(context.currentUserLocation.id)
+              : context.currentUserLocation.id;
           const eventsData = await getSDHMEventsClient(
-            currentUserLocation.id,
-            currentUserLocation.city
+            locationId,
+            context.currentUserLocation.city
           );
           setEvents(eventsData);
         } catch (error) {
@@ -38,10 +45,13 @@ const Locator = () => {
     };
 
     fetchEvents();
-  }, [currentUserLocation]);
+  }, [context?.currentUserLocation]);
 
-  if (!currentUserLocation?.id || loading) return null;
-  const cityState = [currentUserLocation.city, currentUserLocation.state]
+  if (!context?.currentUserLocation?.id || loading) return null;
+  const cityState = [
+    context.currentUserLocation.city,
+    context.currentUserLocation.state,
+  ]
     .filter(Boolean)
     .join(", ");
 
@@ -63,10 +73,10 @@ const Locator = () => {
       <div className="mt-6 flex justify-center">
         <Button
           href={`/events/${ToSlugArtist(
-            currentUserLocation.city || currentUserLocation.state
+            context.currentUserLocation.city ||
+              context.currentUserLocation.state
           )}`}
-          color="primary"
-          size="lg"
+          variant="primary"
         >
           {`View all events in ${cityState}`}
         </Button>

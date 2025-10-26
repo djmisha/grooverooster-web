@@ -6,15 +6,16 @@ import { toSlug } from "../../utils/getLocations";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
 
+interface LocationLinkProps {
+  city?: string;
+  state: string;
+  onClick: () => void;
+}
+
 /**
  * LocationLink component renders a link to a location's events page
- * @param {Object} props - Component props
- * @param {string} [props.city] - City name
- * @param {string} props.state - State name
- * @param {Function} props.onClick - Click handler
- * @returns {JSX.Element} Link to location events
  */
-const LocationLink = ({ city, state, onClick }) => {
+const LocationLink = ({ city, state, onClick }: LocationLinkProps) => {
   const href = `/events/${toSlug(city || state)}`;
   const label = city ? `${city}, ${state}` : state;
 
@@ -27,11 +28,10 @@ const LocationLink = ({ city, state, onClick }) => {
 
 /**
  * Hamburger component displays a mobile navigation menu with recently viewed locations
- * @returns {JSX.Element} Hamburger menu trigger and overlay
  */
 const Hamburger = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { locationCtx } = useContext(AppContext);
+  const context = useContext(AppContext);
 
   /**
    * Closes the menu overlay
@@ -60,13 +60,13 @@ const Hamburger = () => {
         </Link>
       </div>
 
-      {locationCtx?.length > 0 && (
+      {context && context.locationCtx?.length > 0 && (
         <div className="p-4 border-t border-gray-200">
           <span className="font-semibold text-gray-700 mb-2 block">
             Recently Viewed
           </span>
           <ul className="space-y-2">
-            {locationCtx?.map((location) => (
+            {context.locationCtx?.map((location) => (
               <li key={`${location.city}-${location.state}`}>
                 <LocationLink
                   city={location.city}

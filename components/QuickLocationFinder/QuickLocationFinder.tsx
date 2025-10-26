@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Button from "../Button/Button";
+import { Location } from "@/types";
 import {
   getSavedLocation,
   getLocationEventsUrl,
   detectUserLocation,
 } from "../../utils/locationService";
 
+interface QuickLocationFinderProps {
+  className?: string;
+}
+
 /**
  * QuickLocationFinder component detects user location and provides quick access to local events
- * @param {Object} props - Component props
- * @param {string} [props.className=""] - Additional CSS classes
- * @returns {JSX.Element} Location finder button or null if location already detected
  */
-const QuickLocationFinder = ({ className = "" }) => {
-  const [currentLocation, setCurrentLocation] = useState(null);
+const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
+  const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [hasLocationCookie, setHasLocationCookie] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -29,17 +31,7 @@ const QuickLocationFinder = ({ className = "" }) => {
     setIsLoading(false);
   }, []);
 
-  const handleLocationDetected = (location) => {
-    setCurrentLocation(location);
-    setHasLocationCookie(true);
-  };
-
-  const handleLocationError = (error) => {
-    console.error("Location detection error:", error);
-    // Keep showing the share button on error
-  };
-
-  const formatLocationDisplay = (location) => {
+  const formatLocationDisplay = (location: Location | null): string => {
     if (!location) return "";
 
     if (location.city && location.state) {
@@ -65,7 +57,10 @@ const QuickLocationFinder = ({ className = "" }) => {
 
   const handleButtonClick = async () => {
     if (hasLocationCookie && currentLocation) {
-      window.location.href = getEventsUrl();
+      const url = getEventsUrl();
+      if (url) {
+        window.location.href = url;
+      }
     } else {
       try {
         const location = await detectUserLocation();
@@ -92,7 +87,7 @@ const QuickLocationFinder = ({ className = "" }) => {
 
   return (
     <div className={`max-w-lg mx-auto my-8 px-4 ${className}`}>
-      <Button onClick={handleButtonClick} color="blue" size="lg">
+      <Button onClick={handleButtonClick} variant="primary">
         {buttonText}
       </Button>
     </div>

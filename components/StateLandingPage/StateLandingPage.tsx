@@ -3,20 +3,31 @@
 import Link from "next/link";
 import { makePageHeadline } from "../../utils/utilities";
 import NavigationBar from "../Navigation/NavigataionBar";
+import { Location } from "@/types";
 
-const StateLandingPage = ({ stateName, cities, locationData }) => {
-  const title = makePageHeadline(null, stateName);
+interface City {
+  id: string | number;
+  name: string;
+  state: string;
+  slug: string;
+}
+
+interface StateLandingPageProps {
+  stateName: string;
+  cities: City[];
+  locationData: Location[];
+}
+
+const StateLandingPage = ({
+  stateName,
+  cities,
+  locationData,
+}: StateLandingPageProps) => {
+  const title = makePageHeadline(undefined, stateName);
 
   return (
     <>
-      <NavigationBar
-        events={[]} // Empty array since this is a state landing page
-        setSearchTerm={() => {}} // No-op function
-        locationData={locationData}
-        setEvents={() => {}} // No-op function
-        setFilterVisible={() => {}} // No-op function
-        isHome={false}
-      />
+      <NavigationBar setSearchTerm={() => {}} locationData={locationData} />
       <div className="flex flex-col md:p-5 md:flex-row-reverse" id="top">
         <section className="md:w-full md:pb-20 [&_h1]:border-none [&_h1]:text-center [&_h1]:pb-2.5 [&_h1]:leading-tight">
           <h1 id="top">{title}</h1>

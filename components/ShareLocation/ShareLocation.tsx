@@ -1,18 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, ReactNode } from "react";
 import { AppContext } from "../../features/AppContext";
 import Button from "../Button/Button";
+import { Location } from "@/types";
 import {
   detectUserLocation,
   saveLocationToCookie,
   UserLocationService,
 } from "../../utils/locationService";
 
+interface ShareLocationProps {
+  onLocationDetected?: (location: Location) => void;
+  onLocationError?: (error: Error) => void;
+  className?: string;
+  disabled?: boolean;
+  children?: ReactNode;
+}
+
 /**
  * ShareLocation component requests user's location permission and updates context
- * @param {Object} props - Component props
- * @param {Function} [props.onLocationDetected] - Callback when location is successfully detected
- * @param {Function} [props.onLocationError] - Callback when location detection fails
- * @returns {JSX.Element} Location sharing button
  */
 const ShareLocation = ({
   onLocationDetected,
@@ -20,13 +25,13 @@ const ShareLocation = ({
   className = "",
   disabled = false,
   children,
-}) => {
+}: ShareLocationProps) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const { addLocation } = useContext(AppContext);
+  const [error, setError] = useState<string | null>(null);
+  const context = useContext(AppContext);
 
   const handleShareLocation = async () => {
-    if (disabled || isLoading) return;
+    if (disabled || isLoading || !context) return;
 
     setIsLoading(true);
     setError(null);
@@ -40,7 +45,7 @@ const ShareLocation = ({
         saveLocationToCookie(location);
 
         // Add to context
-        addLocation(location);
+        context.addLocation(location);
 
         // Notify parent component
         if (onLocationDetected) {
@@ -52,7 +57,7 @@ const ShareLocation = ({
     } catch (geolocationError) {
       console.warn(
         "Geolocation failed, trying IP-based detection:",
-        geolocationError.message
+        (geolocationError as Error).message
       );
 
       try {
@@ -64,7 +69,7 @@ const ShareLocation = ({
           saveLocationToCookie(fallbackLocation);
 
           // Add to context
-          addLocation(fallbackLocation);
+          context.addLocation(fallbackLocation);
 
           // Notify parent component
           if (onLocationDetected) {
@@ -93,8 +98,7 @@ const ShareLocation = ({
         type="button"
         onClick={handleShareLocation}
         disabled={disabled || isLoading}
-        size="lg"
-        color={isLoading ? "gray" : "blue"}
+        variant={isLoading ? "secondary" : "primary"}
         className="w-full flex items-center justify-center"
         aria-label={isLoading ? "Detecting location..." : "Share my location"}
       >
