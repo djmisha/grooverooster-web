@@ -13,6 +13,7 @@ The application has been enhanced with multiple accessibility features to ensure
 **Location:** `components/SkipLink/SkipLink.tsx` + `app/layout.tsx`
 
 **What it does:**
+
 - Provides a "Skip to main content" link that appears when focused
 - Allows keyboard users to bypass navigation and jump directly to main content
 - Visually hidden until focused with keyboard
@@ -20,11 +21,12 @@ The application has been enhanced with multiple accessibility features to ensure
 **WCAG Criteria:** 2.4.1 Bypass Blocks (Level A)
 
 **Usage:**
+
 ```tsx
 import SkipLink from "@/components/SkipLink/SkipLink";
 
 // In root layout
-<SkipLink />
+<SkipLink />;
 ```
 
 The skip link targets `#main-content` which is applied to the `<main>` element in `components/layout.js`.
@@ -36,6 +38,7 @@ The skip link targets `#main-content` which is applied to the `<main>` element i
 **Location:** `components/Modal/Modal.js`
 
 **Improvements:**
+
 - **Focus Management:** Automatically focuses the close button when modal opens
 - **Focus Trap:** Prevents tab navigation from leaving the modal
 - **Keyboard Support:** Escape key closes the modal
@@ -45,12 +48,14 @@ The skip link targets `#main-content` which is applied to the `<main>` element i
   - `aria-labelledby="modal-title"`
 - **Close Button:** Has `aria-label="Close modal"` for screen readers
 
-**WCAG Criteria:** 
+**WCAG Criteria:**
+
 - 2.1.2 No Keyboard Trap (Level A)
 - 2.4.3 Focus Order (Level A)
 - 4.1.2 Name, Role, Value (Level A)
 
 **Usage:**
+
 ```jsx
 <Modal
   component={() => <EventDetails event={event} />}
@@ -67,6 +72,7 @@ Make sure modal content includes an h2 element with `id="modal-title"` for prope
 **Location:** `components/ui/MenuOverlay.jsx`
 
 **Improvements:**
+
 - **Focus Management:** Automatically focuses close button when menu opens
 - **Keyboard Support:** Escape key closes the menu
 - **ARIA Attributes:**
@@ -75,11 +81,13 @@ Make sure modal content includes an h2 element with `id="modal-title"` for prope
   - `aria-label="Navigation menu"`
 - **Semantic HTML:** Uses `<nav>` element with `aria-label="Main navigation"`
 
-**WCAG Criteria:** 
+**WCAG Criteria:**
+
 - 2.1.1 Keyboard (Level A)
 - 4.1.2 Name, Role, Value (Level A)
 
 **Usage:**
+
 ```jsx
 <MenuOverlay isOpen={isOpen} onClose={handleClose}>
   {menuContent}
@@ -93,17 +101,19 @@ Make sure modal content includes an h2 element with `id="modal-title"` for prope
 **Location:** `components/ui/CloseButton.jsx`
 
 **Improvements:**
+
 - Supports ref forwarding for focus management
 - Has `aria-label="Close"` for screen readers
 - Can receive focus for keyboard navigation
 
 **Usage:**
+
 ```jsx
 import CloseButton from "./CloseButton";
 
 const closeButtonRef = useRef(null);
 
-<CloseButton ref={closeButtonRef} onClick={onClose} />
+<CloseButton ref={closeButtonRef} onClick={onClose} />;
 ```
 
 ---
@@ -113,16 +123,19 @@ const closeButtonRef = useRef(null);
 **Location:** `components/EventCard/EventCard.js`
 
 **Improvements:**
+
 - **Keyboard Support:** Enter and Space keys open the event modal
 - **Focusable:** Added `tabIndex={0}` and `role="button"`
 - **Descriptive Label:** `aria-label` includes artist names, venue, and date
 - Provides full keyboard access to event details
 
-**WCAG Criteria:** 
+**WCAG Criteria:**
+
 - 2.1.1 Keyboard (Level A)
 - 4.1.2 Name, Role, Value (Level A)
 
 **Example aria-label:**
+
 ```
 "View details for Artist Name at Venue Name on Date"
 ```
@@ -134,11 +147,13 @@ const closeButtonRef = useRef(null);
 **Location:** `components/EventDetails/EventDetails.js`
 
 **Improvements:**
+
 - Added `<h2 id="modal-title">` for proper modal labeling
 - Heading is screen-reader-only (uses `.sr-only` class)
 - Describes event details for assistive technology users
 
-**WCAG Criteria:** 
+**WCAG Criteria:**
+
 - 2.4.6 Headings and Labels (Level AA)
 - 4.1.2 Name, Role, Value (Level A)
 
@@ -149,14 +164,17 @@ const closeButtonRef = useRef(null);
 **Location:** `components/Accessibility/LiveRegion.tsx`
 
 **What it does:**
+
 - Announces dynamic content changes to screen readers
 - Supports both "polite" and "assertive" priority levels
 - Used for form errors, success messages, and status updates
 
-**WCAG Criteria:** 
+**WCAG Criteria:**
+
 - 4.1.3 Status Messages (Level AA)
 
 **Usage:**
+
 ```tsx
 import LiveRegion from "@/components/Accessibility/LiveRegion";
 
@@ -164,10 +182,10 @@ import LiveRegion from "@/components/Accessibility/LiveRegion";
 <LiveRegion message={successMessage} />
 
 // For urgent announcements
-<LiveRegion 
-  message={errorMessage} 
-  ariaLive="assertive" 
-  role="alert" 
+<LiveRegion
+  message={errorMessage}
+  ariaLive="assertive"
+  role="alert"
 />
 ```
 
@@ -178,6 +196,7 @@ import LiveRegion from "@/components/Accessibility/LiveRegion";
 The following accessibility features were already present in the codebase:
 
 ### Form Accessibility ✅
+
 - All form inputs have associated `<label>` elements with `htmlFor` attributes
 - Inputs have `aria-required="true"` for required fields
 - Password fields use `aria-describedby` to connect with validation requirements
@@ -186,17 +205,20 @@ The following accessibility features were already present in the codebase:
 **Files:** `components/User/Login.tsx`, `components/User/Signup.tsx`
 
 ### Image Accessibility ✅
+
 - All `<Image>` components have descriptive `alt` attributes
 - Icons used with text labels for context
 
 **Checked:** `components/Footer/Footer.js`, various other components
 
 ### Color Contrast ✅
+
 - Text colors meet WCAG AA contrast requirements
 - Main text uses `text-gray-700`, `text-gray-900` (high contrast)
 - Interactive elements have clear hover states
 
 ### Semantic HTML ✅
+
 - Proper use of heading hierarchy (h1, h2, h3, etc.)
 - `lang="en"` attribute on `<html>` element
 - Semantic elements like `<nav>`, `<main>`, `<footer>`
@@ -233,6 +255,7 @@ Consider adding these tools to your CI/CD pipeline:
 - **Pa11y** (command-line tool)
 
 Example Pa11y command:
+
 ```bash
 npx pa11y http://localhost:3000
 ```
@@ -268,22 +291,26 @@ Areas for potential future improvement:
 ## WCAG 2.2 Level AA Compliance Summary
 
 ### Perceivable
+
 - ✅ Text alternatives for images
 - ✅ Color contrast meets requirements
 - ✅ Text can be resized
 
 ### Operable
+
 - ✅ All functionality available via keyboard
 - ✅ Skip navigation implemented
 - ✅ Focus visible on interactive elements
 - ✅ Headings and labels are descriptive
 
 ### Understandable
+
 - ✅ Language of page identified
 - ✅ Predictable navigation
 - ✅ Input assistance (labels, validation)
 
 ### Robust
+
 - ✅ Valid HTML/JSX
 - ✅ ARIA attributes used correctly
 - ✅ Status messages announced to screen readers
