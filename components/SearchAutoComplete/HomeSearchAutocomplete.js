@@ -99,7 +99,7 @@ function HomeSearchAutocomplete() {
             onSelect={handleOnSelect}
             onSearch={handleOnSearch}
             formatResult={formatResult}
-            placeholder="Search for Artist, City or State"
+            placeholder="Search for Artist or City"
             styling={{
               zIndex: 999,
             }}
