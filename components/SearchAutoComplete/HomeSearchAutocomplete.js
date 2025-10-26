@@ -69,7 +69,7 @@ function HomeSearchAutocomplete() {
     return (
       <span
         style={{ display: "block", textAlign: "left" }}
-        className={`block text-left ${isPerfectMatch ? "bg-blue-100 dark:bg-blue-900/30 font-semibold" : ""}`}
+        className={`block text-left ${isPerfectMatch ? "bg-green-100 dark:bg-green-900/30 font-semibold" : ""}`}
       >
         <b>{item.type}:</b> {item.name}
       </span>
@@ -110,7 +110,7 @@ function HomeSearchAutocomplete() {
           disabled={!perfectMatch}
           className={`flex-shrink-0 h-11 w-11 flex items-center justify-center rounded-lg transition-all ${
             perfectMatch
-              ? "bg-blue-500 hover:bg-blue-600 text-white"
+              ? "bg-green hover:bg-green/90 text-white"
               : "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-500 cursor-not-allowed"
           }`}
           title={perfectMatch ? "Press Enter to select" : "Type to search"}

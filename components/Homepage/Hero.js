@@ -24,7 +24,7 @@ const Hero = () => {
             Find EDM shows, raves, and festivals near you
           </p>
         </div>
-        <div className="w-full max-w-2xl mx-auto bg-[#23232a] p-4 rounded-xl shadow-xl">
+        <div className="w-full md:max-w-2xl mx-auto bg-[#23232a] p-4 rounded-xl shadow-xl">
           <HomeSearchAutocomplete />
         </div>
         <div className="mt-8">
