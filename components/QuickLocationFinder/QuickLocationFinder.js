@@ -56,7 +56,11 @@ const QuickLocationFinder = ({ className = "" }) => {
   };
 
   if (isLoading) {
-    return null;
+    return (
+      <div className={`max-w-lg mx-auto my-8 px-4 ${className}`}>
+        <div className="w-full h-12 bg-pink/20 animate-pulse rounded-full" />
+      </div>
+    );
   }
 
   const handleButtonClick = async () => {

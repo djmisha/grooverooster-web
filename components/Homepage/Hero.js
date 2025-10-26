@@ -10,7 +10,7 @@ import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
 const Hero = () => {
   return (
     <div className="relative h-dvh flex items-center justify-center bg-gradient-to-br from-[#18181c] to-[#0a0a0c]">
-      <div className="relative z-10 max-w-6xl mx-auto text-center text-white">
+      <div className="relative z-10 mx-5 md:mx-auto md:max-w-2xl text-center text-white">
         <div className="mb-8">
           <span className="inline-block uppercase text-xs md:text-sm font-medium tracking-wider border-2 border-pink text-pink py-2 px-3 md:py-2 md:px-4 rounded-full mb-2 md:mb-4 shadow-pink/20 shadow bg-transparent">
             Your Next Event Awaits
@@ -24,7 +24,7 @@ const Hero = () => {
             Find EDM shows, raves, and festivals near you
           </p>
         </div>
-        <div className="max-w-2xl mx-auto bg-[#23232a] p-4 rounded-xl shadow-xl">
+        <div className="w-full md:max-w-2xl mx-auto bg-[#23232a] p-4 rounded-xl shadow-xl">
           <HomeSearchAutocomplete />
         </div>
         <div className="mt-8">
