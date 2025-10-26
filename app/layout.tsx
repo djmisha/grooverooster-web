@@ -1,6 +1,7 @@
 import { AppProvider } from "@/features/AppContext";
 import { Poppins } from "next/font/google";
 import ToastProvider from "@/components/ui/ToastProvider.sonner";
+import SkipLink from "@/components/SkipLink/SkipLink";
 import "../styles/tailwind.css";
 import "../styles/global.scss";
 import type { Metadata } from "next";
@@ -34,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
+        <SkipLink />
         <AppProvider>
           {children}
           <ToastProvider />

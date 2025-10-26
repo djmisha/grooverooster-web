@@ -11,6 +11,7 @@ import CloseButton from "./CloseButton";
  */
 const MenuOverlay = ({ isOpen, onClose, children }) => {
   const menuRef = useRef(null);
+  const closeButtonRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,11 +22,28 @@ const MenuOverlay = ({ isOpen, onClose, children }) => {
 
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+
+      // Focus close button when menu opens
+      if (closeButtonRef.current) {
+        closeButtonRef.current.focus();
+      }
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, [isOpen, onClose]);
+
+  // Handle keyboard events
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
   return (
@@ -36,16 +54,20 @@ const MenuOverlay = ({ isOpen, onClose, children }) => {
           : "opacity-0 pointer-events-none"
       }`}
       aria-hidden={!isOpen}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
     >
-      <div
+      <nav
         ref={menuRef}
         className={`fixed top-0 left-0 h-full w-full max-w-[400px] bg-white shadow-[2px_0_8px_rgba(0,0,0,0.15)] z-[1001] transition-transform duration-300 ease-in-out max-[400px]:max-w-none ${
           isOpen ? "transform translate-x-0" : "transform -translate-x-full"
         }`}
+        aria-label="Main navigation"
       >
-        <CloseButton onClick={onClose} />
+        <CloseButton ref={closeButtonRef} onClick={onClose} />
         <div className="p-2 pt-16">{children}</div>
-      </div>
+      </nav>
     </div>
   );
 };

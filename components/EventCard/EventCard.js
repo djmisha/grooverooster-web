@@ -63,6 +63,17 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
     closeModal();
   };
 
+  /**
+   * Handles keyboard interaction for opening the modal
+   * @param {KeyboardEvent} e - Keyboard event
+   */
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleModalOpen();
+    }
+  };
+
   const truncatedArtistList =
     artistList.length > 2
       ? artistList.slice(0, 2).concat({
@@ -108,6 +119,10 @@ export const EventCard = ({ event, openEventId, setOpenEventId }) => {
         itemScope=""
         itemType="http://schema.org/Event"
         onClick={handleModalOpen}
+        onKeyDown={handleKeyDown}
+        role="button"
+        tabIndex={0}
+        aria-label={`View details for ${artistList.map((a) => a.name).join(", ")} at ${venueName} on ${dayMonth}`}
       >
         <ArtistImageWrapper />
         <div className="w-[calc(100%-140px)] flex flex-col justify-between gap-2.5 h-auto">
