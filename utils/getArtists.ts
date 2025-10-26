@@ -144,7 +144,10 @@ export const getArtistsCounts = (array: ArtistEvent[]): ArtistCount[] => {
         } else {
           // otherwise push location to array
           if (location) {
-            locationCount[artistIdStr] = [...locationCount[artistIdStr], location];
+            locationCount[artistIdStr] = [
+              ...locationCount[artistIdStr],
+              location,
+            ];
           }
         }
       }

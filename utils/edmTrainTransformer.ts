@@ -89,5 +89,7 @@ export function transformEDMTrainEventsArray(
 ): Event[] {
   if (!Array.isArray(legacyEvents)) return [];
 
-  return legacyEvents.map(transformEDMTrainEventData).filter(Boolean) as Event[];
+  return legacyEvents
+    .map(transformEDMTrainEventData)
+    .filter(Boolean) as Event[];
 }

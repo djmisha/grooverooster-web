@@ -3,7 +3,6 @@ import Image from "next/image";
 
 /**
  * Footer component displays site navigation, data partners, and copyright information
- * @returns {JSX.Element} Footer section with navigation links and branding
  */
 const Footer = () => {
   return (

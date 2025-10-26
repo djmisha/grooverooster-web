@@ -366,7 +366,9 @@ const formatTicketMasterEvents = (apiData: TicketMasterResponse): any[] => {
 /**
  * Format TicketMaster API response into standardized event format
  */
-export const formatTicketMasterwithImagesArtists = (events: Event[]): Event[] => {
+export const formatTicketMasterwithImagesArtists = (
+  events: Event[]
+): Event[] => {
   return events.map((event) => {
     // Support both old and new field names, check if artistlist is not empty and event name exists
     const artistList = event.artistlist || event.artistList || [];
@@ -474,7 +476,10 @@ const calculateSimilarity = (
 /**
  * Remove duplicate events based on date and venue similarity
  */
-export const removeDuplicateEvents = (events: any[], city: string = ""): any[] => {
+export const removeDuplicateEvents = (
+  events: any[],
+  city: string = ""
+): any[] => {
   return events.reduce((acc: any[], event: any) => {
     const duplicateIndex = acc.findIndex((e: any) => {
       // Must be the same date

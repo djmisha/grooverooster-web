@@ -1,17 +1,22 @@
 import Head from "next/head";
-import Script from "next/script";
+import { ReactNode } from "react";
 
 export const siteTitle = "House Music & EDM Events Across North America";
 
+interface LayoutProps {
+  children: ReactNode;
+  home?: boolean;
+  canonicalUrl?: string;
+}
+
 /**
  * Layout component that provides page structure with SEO meta tags
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Page content
- * @param {boolean} props.home - Whether this is the home page
- * @param {string} props.canonicalUrl - Canonical URL for SEO
- * @returns {JSX.Element} Page layout with head tags and main content
  */
-export default function Layout({ children, home, canonicalUrl }) {
+export default function Layout({
+  children,
+  home: _home,
+  canonicalUrl,
+}: LayoutProps) {
   return (
     <div>
       <Head>

@@ -1,6 +1,5 @@
 /**
  * GoogleAutoAds component loads Google AdSense auto ads script
- * @returns {JSX.Element} Google AdSense script tag
  */
 const GoogleAutoAds = () => {
   return (

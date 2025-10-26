@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 
 /**
  * BackToTop component displays a scroll-to-top button when user scrolls down
- * @returns {JSX.Element} Fixed position back-to-top button
  */
 const BackToTop = () => {
   const [visible, setVisible] = useState(false);

@@ -1,13 +1,14 @@
-import React from "react";
+import React, { ReactNode } from "react";
+
+interface VerifyModalProps {
+  children: ReactNode;
+  onClose: () => void;
+}
 
 /**
  * VerifyModal component displays a centered modal for email verification
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Modal content
- * @param {Function} props.onClose - Callback to close the modal
- * @returns {JSX.Element} Centered modal overlay
  */
-const Modal = ({ children, onClose }) => {
+const Modal = ({ children, onClose }: VerifyModalProps) => {
   return (
     <div
       className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 flex justify-center items-center z-[99999]"

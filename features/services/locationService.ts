@@ -1,28 +1,23 @@
-import { urlBigData } from "../../utils/utilities.js";
+import { urlBigData } from "../../utils/utilities";
 import {
   UserLocationService,
   matchesCity,
   getLocationId,
   createLocationObject,
-} from "../../utils/getUserLocation.js";
+} from "../../utils/getUserLocation";
+import { Location } from "@/types";
 
 /**
  * Gets user's geolocation and updates location context
- * @param {Array} locations - Array of available locations
- * @param {Function} setUserLocation - Function to set user location
- * @param {Function} addLocation - Function to add location to context
- * @param {Function} setHasCity - Function to set city availability status
  */
 export const getGeoLocation = async (
-  locations,
-  setUserLocation,
-  addLocation,
-  setHasCity
+  locations: Location[],
+  setUserLocation: (location: Location) => void,
+  addLocation: (location: Location) => void,
+  setHasCity: (hasCity: boolean) => void
 ) => {
-  let location;
-
   if (navigator.geolocation) {
-    location = navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
       async (position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
@@ -43,20 +38,14 @@ export const getGeoLocation = async (
 
 /**
  * Handles successful geolocation retrieval
- * @param {number} latitude - User's latitude
- * @param {number} longitude - User's longitude
- * @param {Array} locations - Array of available locations
- * @param {Function} setUserLocation - Function to set user location
- * @param {Function} addLocation - Function to add location to context
- * @param {Function} setHasCity - Function to set city availability status
  */
 const handleGeolocationSuccess = async (
-  latitude,
-  longitude,
-  locations,
-  setUserLocation,
-  addLocation,
-  setHasCity
+  latitude: number,
+  longitude: number,
+  locations: Location[],
+  setUserLocation: (location: Location) => void,
+  addLocation: (location: Location) => void,
+  setHasCity: (hasCity: boolean) => void
 ) => {
   const url = urlBigData(latitude, longitude);
   const locationResponse = await fetch(url);
@@ -68,7 +57,7 @@ const handleGeolocationSuccess = async (
   const id = getLocationId(locations, city, state);
   const locationObject = createLocationObject(city, state, id);
 
-  if (id) {
+  if (id && locationObject) {
     setUserLocation(locationObject);
     addLocation(locationObject);
   }
@@ -76,21 +65,19 @@ const handleGeolocationSuccess = async (
 
 /**
  * Handles geolocation errors by falling back to IP-based location
- * @param {GeolocationPositionError} error - Geolocation error object
- * @param {Function} setUserLocation - Function to set user location
- * @param {Function} addLocation - Function to add location to context
- * @param {Function} setHasCity - Function to set city availability status
  */
 const handleGeolocationError = async (
-  error,
-  setUserLocation,
-  addLocation,
-  setHasCity
+  error: GeolocationPositionError,
+  setUserLocation: (location: Location) => void,
+  addLocation: (location: Location) => void,
+  setHasCity: (hasCity: boolean) => void
 ) => {
   if (error.PERMISSION_DENIED) {
     const location = await UserLocationService();
-    setHasCity(matchesCity(location.city));
-    setUserLocation(location);
-    addLocation(location);
+    if (location && location.city) {
+      setHasCity(matchesCity(location.city));
+      setUserLocation(location);
+      addLocation(location);
+    }
   }
 };
