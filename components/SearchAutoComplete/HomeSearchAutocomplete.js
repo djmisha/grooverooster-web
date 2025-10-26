@@ -82,7 +82,7 @@ function HomeSearchAutocomplete() {
       <div className="w-full max-w-full">
         <div className="relative flex items-center gap-2">
           <div className="flex-1 min-w-0">
-            <div className="h-11 w-full bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+            <div className="h-11 w-full bg-gray-200 dark:bg-gray-700 rounded-3xl animate-pulse" />
           </div>
           <div className="flex-shrink-0 h-11 w-11 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
         </div>
