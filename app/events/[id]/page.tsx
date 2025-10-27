@@ -71,12 +71,14 @@ export default async function Location({
           <StateLandingPage
             stateName={stateInfo.name}
             cities={stateInfo.cities}
-            locationData={{
-              id: stateInfo.id,
-              city: undefined,
-              state: stateInfo.name,
-              slug: stateInfo.slug,
-            }}
+            locationData={[
+              {
+                id: stateInfo.id,
+                city: undefined,
+                state: stateInfo.name,
+                slug: stateInfo.slug,
+              },
+            ]}
           />
         </Layout>
       );

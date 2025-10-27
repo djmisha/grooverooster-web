@@ -11,6 +11,8 @@ export interface Artist {
   bio?: string;
   mbid?: string;
   url?: string;
+  link?: string;
+  b2bInd?: boolean;
 }
 
 // Venue Types
@@ -24,6 +26,8 @@ export interface Venue {
   latitude?: number;
   longitude?: number;
   url?: string;
+  location?: string;
+  country?: string;
 }
 
 // Event Types
@@ -49,6 +53,13 @@ export interface Event {
   livestreamInd?: boolean;
   livestreamUrl?: string;
   slug?: string;
+  link?: string;
+  ages?: string;
+  electronicgenreind?: boolean;
+  othergenreind?: boolean;
+  starttime?: string;
+  endtime?: string;
+  createddate?: string;
 }
 
 // Location Types
@@ -56,6 +67,7 @@ export interface Location {
   id: string | number;
   city?: string;
   state: string;
+  stateCode?: string;
   latitude?: number;
   longitude?: number;
   slug?: string;
@@ -109,6 +121,13 @@ export interface EventsResponse {
 export interface ArtistsResponse {
   artists: Artist[];
   total?: number;
+}
+
+// Search Types
+export interface SearchItem {
+  id: string | number;
+  name: string;
+  type: string;
 }
 
 // Utility Types

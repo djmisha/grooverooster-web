@@ -66,7 +66,7 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
   return (
     <Layout home={false} canonicalUrl={canonicalUrl}>
       <>
-        <NavigationBar setSearchTerm={() => {}} locationData={{}} />
+        <NavigationBar setSearchTerm={() => {}} locationData={[]} />
         <div className="text-center my-6">
           <h1>Top Touring Artists</h1>
           <p className="text-gray-600 mt-2">
