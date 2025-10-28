@@ -5,6 +5,7 @@ import { AppContext } from "../../features/AppContext";
 import { toSlug } from "../../utils/getLocations";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
+import { Home, Music, Building2, Map, LogIn } from "lucide-react";
 
 interface LocationLinkProps {
   city?: string;
@@ -42,21 +43,46 @@ const Hamburger = () => {
 
   const menuContent = (
     <>
-      <div className="flex flex-col gap-4 p-4">
-        <Link href="/" onClick={handleClose}>
-          Home
+      <div className="flex flex-col border-t border-gray-300">
+        <Link
+          href="/"
+          onClick={handleClose}
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+        >
+          <Home size={24} />
+          <span>Home</span>
         </Link>
-        <Link href="/artists" onClick={handleClose}>
-          Top Artists
+        <Link
+          href="/artists"
+          onClick={handleClose}
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+        >
+          <Music size={24} />
+          <span>Top Artists</span>
         </Link>
-        <Link href="/cities" onClick={handleClose}>
-          Events by City
+        <Link
+          href="/cities"
+          onClick={handleClose}
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+        >
+          <Building2 size={24} />
+          <span>Events by City</span>
         </Link>
-        <Link href="/states" onClick={handleClose}>
-          Events by State
+        <Link
+          href="/states"
+          onClick={handleClose}
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+        >
+          <Map size={24} />
+          <span>Events by State</span>
         </Link>
-        <Link href="/login" onClick={handleClose}>
-          Login / Sign Up
+        <Link
+          href="/login"
+          onClick={handleClose}
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+        >
+          <LogIn size={24} />
+          <span>Login / Sign Up</span>
         </Link>
       </div>
 
@@ -79,14 +105,16 @@ const Hamburger = () => {
         </div>
       )}
 
-      <div className="p-8 border-t border-gray-200 flex justify-center">
+      <div className="flex-grow"></div>
+      <div className="p-8 border-t border-gray-200 flex flex-col items-center pb-10">
         <Image
-          width={150}
-          height={150}
+          width={120}
+          height={120}
           src="/images/logo.png"
-          alt="Groove Rooster"
-          className="max-w-full h-auto"
+          alt="GrooveRooster Logo"
+          className="max-w-full h-auto mb-2"
         />
+        <p className="text-lg font-semibold text-gray-800">GrooveRooster</p>
       </div>
     </>
   );

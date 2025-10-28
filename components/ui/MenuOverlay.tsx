@@ -49,7 +49,7 @@ const MenuOverlay = ({ isOpen, onClose, children }: MenuOverlayProps) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full bg-black/50 z-[1000] transition-opacity duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 w-full h-full bg-black/50 z-[1000] transition-opacity duration-200 ease-in-out ${
         isOpen
           ? "opacity-100 pointer-events-auto"
           : "opacity-0 pointer-events-none"
@@ -61,13 +61,13 @@ const MenuOverlay = ({ isOpen, onClose, children }: MenuOverlayProps) => {
     >
       <nav
         ref={menuRef}
-        className={`fixed top-0 left-0 h-full w-full max-w-[400px] bg-white shadow-[2px_0_8px_rgba(0,0,0,0.15)] z-[1001] transition-transform duration-300 ease-in-out max-[400px]:max-w-none ${
+        className={`fixed top-0 left-0 h-full w-full max-w-[400px] bg-white shadow-[2px_0_8px_rgba(0,0,0,0.15)] z-[1001] transition-transform duration-200 ease-in-out max-[400px]:max-w-none flex flex-col ${
           isOpen ? "transform translate-x-0" : "transform -translate-x-full"
         }`}
         aria-label="Main navigation"
       >
         <CloseButton ref={closeButtonRef} onClick={onClose} />
-        <div className="p-2 pt-16">{children}</div>
+        <div className="flex-grow overflow-y-auto pt-16">{children}</div>
       </nav>
     </div>
   );
