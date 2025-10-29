@@ -74,7 +74,7 @@ function SortableArtistCard({
                 <Music className="h-6 w-6 text-primary" />
               </div>
               <div className="min-w-0">
-                <CardTitle className="text-base truncate">
+                <CardTitle className="text-base truncate pt-0">
                   {artist.name}
                 </CardTitle>
                 <div className="flex items-center gap-1 mt-1">
@@ -284,7 +284,9 @@ export default function DashboardArtists({
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Music className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="font-semibold text-lg mb-2">No artists added yet</h3>
+            <h3 className="font-semibold text-lg mb-2 pt-0">
+              No artists added yet
+            </h3>
             <p className="text-muted-foreground text-center mb-4">
               Add artists to track their shows and never miss a performance
             </p>
@@ -311,7 +313,7 @@ export default function DashboardArtists({
               items={favoriteIds}
               strategy={verticalListSortingStrategy}
             >
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="space-y-3">
                 {favoriteArtists.map((artist) => (
                   <SortableArtistCard
                     key={artist.arrayIndex}

@@ -16,7 +16,7 @@ export function DashboardHamburger({ children }: DashboardHamburgerProps) {
         <Button
           variant="outline"
           size="icon"
-          className="lg:hidden fixed top-6 left-4 z-40"
+          className="lg:hidden fixed top-6 left-4 z-[70]"
         >
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle navigation menu</span>
