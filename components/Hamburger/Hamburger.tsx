@@ -5,7 +5,14 @@ import { AppContext } from "../../features/AppContext";
 import { toSlug } from "../../utils/getLocations";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
-import { Home, Music, Building2, Map, LogIn } from "lucide-react";
+import {
+  Home,
+  Music,
+  Building2,
+  Map,
+  LogIn,
+  LayoutDashboard,
+} from "lucide-react";
 
 interface LocationLinkProps {
   city?: string;
@@ -76,14 +83,25 @@ const Hamburger = () => {
           <Map size={24} />
           <span>Events by State</span>
         </Link>
-        <Link
-          href="/login"
-          onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
-        >
-          <LogIn size={24} />
-          <span>Login / Sign Up</span>
-        </Link>
+        {context && context.isLoggedIn ? (
+          <Link
+            href="/dashboard"
+            onClick={handleClose}
+            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+          >
+            <LayoutDashboard size={24} />
+            <span>Dashboard</span>
+          </Link>
+        ) : (
+          <Link
+            href="/login"
+            onClick={handleClose}
+            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+          >
+            <LogIn size={24} />
+            <span>Login / Sign Up</span>
+          </Link>
+        )}
       </div>
 
       {context && context.locationCtx?.length > 0 && (
