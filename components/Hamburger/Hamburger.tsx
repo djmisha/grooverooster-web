@@ -83,7 +83,7 @@ const Hamburger = () => {
           <Map size={24} />
           <span>Events by State</span>
         </Link>
-        {context && context.profile ? (
+        {context && context.isLoggedIn ? (
           <Link
             href="/dashboard"
             onClick={handleClose}
