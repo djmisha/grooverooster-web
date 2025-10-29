@@ -53,7 +53,7 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
   const SidebarContent = () => (
     <div className="flex h-full flex-col">
       {/* Logo/Header */}
-      <div className="flex h-16 items-center border-b px-6">
+      <div className="flex h-16 items-center border-b border-gray-200 px-6">
         <Link
           href="/dashboard"
           className="flex items-center gap-2 font-semibold"
@@ -97,7 +97,7 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
       </ScrollArea>
 
       {/* Footer */}
-      <div className="border-t p-4">
+      <div className="border-t border-gray-200 p-4">
         <Button
           variant="outline"
           className="w-full justify-start gap-3"
@@ -113,7 +113,12 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className={cn("hidden w-64 border-r bg-card lg:block", className)}>
+      <aside
+        className={cn(
+          "hidden w-64 border-r border-gray-200 bg-white lg:block",
+          className
+        )}
+      >
         <SidebarContent />
       </aside>
 
