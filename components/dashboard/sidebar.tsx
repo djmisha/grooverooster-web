@@ -6,15 +6,8 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  LayoutDashboard,
-  MapPin,
-  Music,
-  User,
-  Menu,
-  LogOut,
-} from "lucide-react";
+import { DashboardHamburger } from "./dashboard-hamburger";
+import { LayoutDashboard, MapPin, Music, User, LogOut } from "lucide-react";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   onLogout?: () => void;
@@ -91,7 +84,7 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
                 <Icon className="h-5 w-5" />
                 <div className="flex flex-col">
                   <span>{item.title}</span>
-                  {item.description && !isActive && (
+                  {item.description && (
                     <span className="text-xs opacity-70">
                       {item.description}
                     </span>
@@ -125,21 +118,9 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
       </aside>
 
       {/* Mobile Sidebar */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="lg:hidden fixed top-4 left-4 z-40"
-          >
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-64 p-0">
-          <SidebarContent />
-        </SheetContent>
-      </Sheet>
+      <DashboardHamburger>
+        <SidebarContent />
+      </DashboardHamburger>
     </>
   );
 }

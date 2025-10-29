@@ -11,9 +11,26 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Music, Search, Star, Plus, X } from "lucide-react";
+import { Music, Search, Star, Plus, X, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import artistsData from "@/localArtistsDB.json";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface Artist {
   id: string;
@@ -26,6 +43,63 @@ interface DashboardArtistsProps {
   initialFavoriteIds: number[];
 }
 
+function SortableArtistCard({
+  artist,
+  onRemove,
+}: {
+  artist: Artist;
+  onRemove: (arrayIndex: number) => void;
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: artist.arrayIndex! });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes}>
+      <Card className="group">
+        <CardHeader className="pb-2">
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
+              <div
+                {...listeners}
+                className="cursor-grab active:cursor-grabbing touch-none"
+              >
+                <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+              </div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
+                <Music className="h-6 w-6 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <CardTitle className="text-base truncate">
+                  {artist.name}
+                </CardTitle>
+                <div className="flex items-center gap-1 mt-1">
+                  <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
+                  <span className="text-xs text-muted-foreground">
+                    Favorite
+                  </span>
+                </div>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onRemove(artist.arrayIndex!)}
+              className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        </CardHeader>
+      </Card>
+    </div>
+  );
+}
+
 export default function DashboardArtists({
   userId,
   initialFavoriteIds,
@@ -35,7 +109,14 @@ export default function DashboardArtists({
   const [searchTerm, setSearchTerm] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
-  // Get favorite artists
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  // Get favorite artists - maintain order from favoriteIds
   const favoriteArtists = useMemo(() => {
     return favoriteIds
       .map((index) => {
@@ -69,12 +150,32 @@ export default function DashboardArtists({
       }));
   }, [searchTerm, favoriteIds]);
 
-  // Sorted favorite artists
-  const sortedFavorites = useMemo(() => {
-    const sorted = [...favoriteArtists];
-    sorted.sort((a, b) => a.name.localeCompare(b.name));
-    return sorted;
-  }, [favoriteArtists]);
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = favoriteIds.indexOf(Number(active.id));
+      const newIndex = favoriteIds.indexOf(Number(over.id));
+
+      const newOrder = arrayMove(favoriteIds, oldIndex, newIndex);
+      setFavoriteIds(newOrder);
+
+      // Save to database
+      if (userId) {
+        try {
+          await supabase
+            .from("profiles")
+            .update({ favorite_artists: newOrder })
+            .eq("id", userId);
+          toast.success("Artist order saved");
+        } catch (error) {
+          console.error("Error saving order:", error);
+          toast.error("Failed to save order");
+          setFavoriteIds(favoriteIds); // Revert on error
+        }
+      }
+    }
+  };
 
   const handleAddFavorite = async (artistIndex: number) => {
     if (!userId) return;
@@ -179,7 +280,7 @@ export default function DashboardArtists({
       )}
 
       {/* Artists List */}
-      {sortedFavorites.length === 0 ? (
+      {favoriteArtists.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Music className="h-12 w-12 text-muted-foreground mb-4" />
@@ -195,48 +296,32 @@ export default function DashboardArtists({
         </Card>
       ) : (
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
-              {sortedFavorites.length}{" "}
-              {sortedFavorites.length === 1 ? "artist" : "artists"} in your
-              favorites
-            </p>
-          </div>
+          <p className="text-sm text-muted-foreground">
+            {favoriteArtists.length}{" "}
+            {favoriteArtists.length === 1 ? "artist" : "artists"} in your
+            favorites. Drag to reorder.
+          </p>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {sortedFavorites.map((artist) => (
-              <Card key={artist.arrayIndex} className="group">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
-                        <Music className="h-6 w-6 text-primary" />
-                      </div>
-                      <div className="min-w-0">
-                        <CardTitle className="text-base truncate">
-                          {artist.name}
-                        </CardTitle>
-                        <div className="flex items-center gap-1 mt-1">
-                          <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                          <span className="text-xs text-muted-foreground">
-                            Favorite
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveFavorite(artist.arrayIndex!)}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={favoriteIds}
+              strategy={verticalListSortingStrategy}
+            >
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {favoriteArtists.map((artist) => (
+                  <SortableArtistCard
+                    key={artist.arrayIndex}
+                    artist={artist}
+                    onRemove={handleRemoveFavorite}
+                  />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
         </div>
       )}
     </div>

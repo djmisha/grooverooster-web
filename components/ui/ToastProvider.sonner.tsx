@@ -6,11 +6,12 @@ import { Toaster } from "sonner";
 const ToastProvider = () => {
   return (
     <Toaster
-      position="bottom-center"
+      position="bottom-right"
       toastOptions={{
-        duration: Infinity,
-        className: "!bg-transparent !shadow-none !border-none !p-0 !m-0",
+        duration: 5000,
+        closeButton: true,
       }}
+      richColors
     />
   );
 };

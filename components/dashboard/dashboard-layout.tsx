@@ -25,7 +25,9 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="flex h-screen overflow-hidden">
       <DashboardSidebar onLogout={handleLogout} />
       <main className="flex-1 overflow-y-auto bg-background">
-        <div className="container mx-auto p-4 lg:p-8">{children}</div>
+        <div className="container mx-auto p-4 pt-20 lg:p-8 lg:pt-8">
+          {children}
+        </div>
       </main>
     </div>
   );

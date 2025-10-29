@@ -31,6 +31,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import Link from "next/link";
+import { toSlug } from "@/utils/getLocations";
 
 interface Location {
   id: number;
@@ -66,7 +68,7 @@ function SortableLocationCard({
   return (
     <div ref={setNodeRef} style={style} {...attributes}>
       <Card className="group">
-        <CardContent className="flex items-center gap-4 p-4">
+        <CardContent className="flex items-center gap-4 p-3">
           <div
             {...listeners}
             className="cursor-grab active:cursor-grabbing touch-none"
@@ -74,24 +76,29 @@ function SortableLocationCard({
             <GripVertical className="h-5 w-5 text-muted-foreground" />
           </div>
 
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-            <MapPin className="h-6 w-6 text-primary" />
-          </div>
-
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <h3 className="font-semibold">
-                {location.city || location.state}
-              </h3>
-              {location.isDefault && (
-                <Badge variant="secondary" className="text-xs">
-                  <Star className="h-3 w-3 mr-1" />
-                  Default
-                </Badge>
-              )}
+          <Link
+            href={`/events/${toSlug(location.city || location.state)}`}
+            className="flex items-center gap-3 flex-1 hover:opacity-80 transition-opacity"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
+              <MapPin className="h-6 w-6 text-primary" />
             </div>
-            <p className="text-sm text-muted-foreground">{location.state}</p>
-          </div>
+
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold">
+                  {location.city || location.state}
+                </h3>
+                {location.isDefault && (
+                  <Badge variant="secondary" className="text-xs">
+                    <Star className="h-3 w-3 mr-1" />
+                    Default
+                  </Badge>
+                )}
+              </div>
+              <p className="text-sm text-muted-foreground">{location.state}</p>
+            </div>
+          </Link>
 
           <div className="flex gap-2">
             {!location.isDefault && (
