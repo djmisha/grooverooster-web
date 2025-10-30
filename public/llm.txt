@@ -1,0 +1,30 @@
+# Music Event Hub North America
+
+> This website is the definitive hub for discovering and planning music event experiences across major cities in North America. Its primary focus is on live music events, DJ sets, club nights, festivals, raves, and concerts, covering all music genres with a strong emphasis on dance music and the wider electronic scene.
+
+## Core Site Functionality
+
+### 1. City Event Listings
+
+* Scope: Events in major North American cities.
+* Purpose: Allows users to view all upcoming music events for a selected city.
+* Filtering: Event listings can be precisely filtered by:
+  * Date
+  * Genre (e.g., House, Techno, Hip-Hop, Rock, Jazz)
+  * Promoter (The organizer hosting the event)
+
+### 2. Artist Database
+
+* Purpose: A comprehensive directory for music artists.
+* Content: Each artist page includes:
+  * Artist Biography
+  * Upcoming Events (Linked to relevant city listings)
+  * Tags (Descriptive keywords for genre, style, or influence)
+* Search: Users can search for artists by name.
+
+### 3. User Dashboard (Behind Login)
+
+* Access: Requires user login.
+* Features: Provides personalized functionality for power users:
+  * Favorite Artists: Save and track specific artists for quick updates.
+  * Saved Cities: Store multiple preferred cities, enabling easy access to view events across all selected locations simultaneously.
