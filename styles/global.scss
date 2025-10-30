@@ -68,17 +68,3 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-
-/* Toast notification styling - pink close button to match events page */
-[data-sonner-toast] [data-close-button] {
-  background-color: #ce3197 !important;
-  color: white !important;
-  border: none !important;
-  width: 2rem !important;
-  height: 2rem !important;
-  border-radius: 9999px !important;
-}
-
-[data-sonner-toast] [data-close-button]:hover {
-  opacity: 0.8 !important;
-}
