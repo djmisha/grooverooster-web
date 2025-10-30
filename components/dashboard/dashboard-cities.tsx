@@ -201,10 +201,10 @@ export default function DashboardCities({
         })
         .eq("id", userId);
 
-      toast.success("City order saved");
+      toast.success("✅ City order saved");
     } catch (error) {
       console.error("Error saving location order:", error);
-      toast.error("Failed to save city order");
+      toast.error("❌ Failed to save city order");
     }
   };
 
@@ -235,10 +235,10 @@ export default function DashboardCities({
 
       setSearchTerm("");
       setShowSearch(false);
-      toast.success(`Added ${location.city || location.state}`);
+      toast.success(`📍 Added ${location.city || location.state}`);
     } catch (error) {
       console.error("Error adding location:", error);
-      toast.error("Failed to add city");
+      toast.error("❌ Failed to add city");
     }
   };
 
@@ -278,10 +278,10 @@ export default function DashboardCities({
       }
 
       setLocations(newLocations);
-      toast.success("City removed");
+      toast.success("🗑️ City removed");
     } catch (error) {
       console.error("Error removing location:", error);
-      toast.error("Failed to remove city");
+      toast.error("❌ Failed to remove city");
     }
   };
 
@@ -308,10 +308,10 @@ export default function DashboardCities({
         })
         .eq("id", userId);
 
-      toast.success("Default city updated");
+      toast.success("⭐ Default city updated");
     } catch (error) {
       console.error("Error setting default:", error);
-      toast.error("Failed to set default city");
+      toast.error("❌ Failed to set default city");
     }
   };
 

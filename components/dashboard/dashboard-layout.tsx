@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { DashboardSidebar } from "./sidebar";
 import { useAppContext } from "@/features/AppContext";
-import DashboardToastProvider from "@/components/ui/DashboardToastProvider";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -30,7 +29,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           {children}
         </div>
       </main>
-      <DashboardToastProvider />
     </div>
   );
 }
