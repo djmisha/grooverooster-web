@@ -48,7 +48,7 @@ const LocationSelectModal = ({
         ? `${currentLocation.city}, ${
             currentLocation.stateCode || currentLocation.state
           }`
-        : currentLocation.state || text
+        : currentLocation.stateCode || currentLocation.state || text
       : text;
 
   return (

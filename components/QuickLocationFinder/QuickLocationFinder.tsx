@@ -34,10 +34,10 @@ const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
   const formatLocationDisplay = (location: Location | null): string => {
     if (!location) return "";
 
-    if (location.city && location.state) {
-      return `${location.city}, ${location.state}`;
-    } else if (location.state) {
-      return location.state;
+    if (location.city && (location.stateCode || location.state)) {
+      return `${location.city}, ${location.stateCode || location.state}`;
+    } else if (location.stateCode || location.state) {
+      return location.stateCode || location.state;
     }
     return location.city || "";
   };
