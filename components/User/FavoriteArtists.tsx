@@ -230,7 +230,7 @@ const FavoriteArtists = ({ userId }: FavoriteArtistsProps) => {
   if (!favoriteArtists.length) {
     return (
       <div className="my-8 p-6 bg-gray-50 rounded-lg text-center text-gray-500">
-        <h3 className="mb-4 text-2xl font-semibold text-gray-900">
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block mb-4 text-2xl font-semibold text-gray-900">
           Your Favorite Artists
         </h3>
         <p>You have not added any favorite artists yet.</p>
@@ -241,7 +241,9 @@ const FavoriteArtists = ({ userId }: FavoriteArtistsProps) => {
   return (
     <div className="bg-gray-50 rounded-lg">
       <div className="flex justify-between items-center mb-4">
-        <h2>Your Favorite Artists</h2>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Your Favorite Artists
+        </h2>
         <button
           className="py-1.5 px-3 bg-gray-100 border border-gray-300 rounded text-sm font-medium text-gray-700 cursor-pointer transition-all duration-200 hover:bg-gray-200"
           onClick={() => setIsEditing(!isEditing)}

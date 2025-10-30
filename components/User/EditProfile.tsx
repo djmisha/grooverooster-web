@@ -211,7 +211,9 @@ export default function EditProfile({ user }: ProfileFormProps) {
   return (
     <div className="flex justify-center items-center bg-gray-50">
       <div className="w-full max-w-sm bg-white rounded-[10px]">
-        <h2>Profile Settings</h2>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Profile Settings
+        </h2>
         {message && (
           <div
             className={`p-3 mb-4 rounded-md text-sm text-center ${

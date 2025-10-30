@@ -35,7 +35,7 @@ const LocationCard: React.FC<LocationCardProps> = ({
       }`}
     >
       <div className="flex flex-col gap-1">
-        <h3 className="m-0 text-lg font-semibold text-gray-800 md:text-base max-[480px]:text-[0.95rem]">
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block m-0 text-lg font-semibold text-gray-800 md:text-base max-[480px]:text-[0.95rem]">
           {city}, {stateCode}
         </h3>
         {isDefault && (

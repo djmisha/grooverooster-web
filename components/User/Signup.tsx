@@ -63,7 +63,7 @@ export default function Signup() {
   return (
     <div className="flex justify-center items-center">
       <div className="mb-16 w-full max-w-sm bg-white rounded-lg shadow-lg p-4 md:p-8">
-        <h1 className="text-2xl font-semibold text-center mb-6 text-gray-900">
+        <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-2xl font-semibold text-center mb-6 text-gray-900">
           Create an Account
         </h1>
 

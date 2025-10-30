@@ -257,7 +257,9 @@ export default function UserDashboard({
 
             {/* Your Locations section */}
             <div className="mb-8">
-              <h2 className="mb-4 text-gray-800 text-2xl">Your Locations</h2>
+              <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl mb-4 text-gray-800 text-2xl">
+                Your Locations
+              </h2>
               {loading ? (
                 <p>Loading your locations...</p>
               ) : userLocations.length > 0 ? (

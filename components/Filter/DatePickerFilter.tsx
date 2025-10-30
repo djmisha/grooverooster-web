@@ -88,7 +88,9 @@ const DatePickerFilter = ({
 
   return (
     <div className="p-4 pt-6 max-h-[80vh] overflow-y-auto">
-      <h2 className="m-0 mb-4 text-xl font-normal text-blue">Filter by Date</h2>
+      <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-normal text-blue">
+        Filter by Date
+      </h2>
 
       {/* Calendar - works for both single date and range */}
       <div className="flex justify-center mb-4">

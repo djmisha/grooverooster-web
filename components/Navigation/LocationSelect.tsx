@@ -48,7 +48,7 @@ const LocationSelect = ({
             id={`${text}-list`}
             className="flex flex-col gap-0 overflow-y-auto flex-1 max-h-[calc(100vh-8rem)]"
           >
-            <h2 className="m-0 mb-4 text-xl font-semibold text-black font-[Nunito] flex-shrink-0">
+            <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black font-[Nunito] flex-shrink-0">
               {title}
             </h2>
             <div className="relative w-full mb-4 flex-shrink-0">

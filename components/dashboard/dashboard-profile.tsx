@@ -205,7 +205,9 @@ export default function DashboardProfile({ user }: DashboardProfileProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Profile Settings</h1>
+        <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-3xl font-bold tracking-tight">
+          Profile Settings
+        </h1>
         <p className="text-muted-foreground mt-2">
           Manage your account information and preferences
         </p>

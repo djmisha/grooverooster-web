@@ -145,7 +145,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsVenueMenuOpen(false)}
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="m-0 mb-4 text-xl font-semibold text-black">
+                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black">
                   Venues
                 </h2>
                 <MenuList
@@ -182,7 +182,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsArtistMenuOpen(false)}
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="m-0 mb-4 text-xl font-semibold text-black">
+                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black">
                   DJs and Artists
                 </h2>
                 <MenuList

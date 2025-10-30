@@ -57,7 +57,7 @@ const Locator = () => {
 
   return (
     <div>
-      <h2 className="mb-4 px-4">
+      <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl mb-4 px-4">
         Near You in <strong>{cityState}</strong>
       </h2>
       <div className="p-0 pb-6 transition-all duration-200 ease-out sm:px-3 sm:grid sm:grid-cols-2 sm:gap-4 md:mb-5 xl:grid-cols-3">

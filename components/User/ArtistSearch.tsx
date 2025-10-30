@@ -117,7 +117,9 @@ const ArtistSearch = ({ userId, onArtistAdded }: ArtistSearchProps) => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg">
-      <h3>Find Artists to Follow</h3>
+      <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+        Find Artists to Follow
+      </h3>
 
       <div className="relative mb-4">
         <input

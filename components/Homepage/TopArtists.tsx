@@ -49,7 +49,9 @@ const TopArtists = () => {
 
   return (
     <>
-      <h2 className="px-4">Top Touring Artists</h2>
+      <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl px-4">
+        Top Touring Artists
+      </h2>
       <p className="p-4">
         Discover our selection of top touring artists, ranked by their number of
         shows and city appearances. Click to learn more about each artist, read

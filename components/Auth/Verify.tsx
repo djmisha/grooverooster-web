@@ -32,7 +32,9 @@ const Verify = () => {
     showModal && (
       <Modal onClose={closeModal}>
         <div className="verification-success">
-          <h2>Email Verified</h2>
+          <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+            Email Verified
+          </h2>
           <p>
             Thank you for confirming your email. You may now login to our
             site.{" "}
