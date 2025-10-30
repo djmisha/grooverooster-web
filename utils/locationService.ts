@@ -106,6 +106,7 @@ export const createLocationObject = (locationData: any): Location | null => {
     id: locationData.id,
     city: locationData.city,
     state: locationData.state,
+    stateCode: locationData.stateCode,
     latitude: locationData.latitude,
     longitude: locationData.longitude,
   };
