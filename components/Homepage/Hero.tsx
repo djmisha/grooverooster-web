@@ -14,7 +14,7 @@ const Hero = () => {
           <span className="inline-block uppercase text-xs md:text-sm font-medium tracking-wider border-2 border-pink text-pink py-2 px-3 md:py-2 md:px-4 rounded-full mb-2 md:mb-4 shadow-pink/20 shadow bg-transparent">
             Your Next Event Awaits
           </span>
-          <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-3xl md:text-4xl lg:text-6xl font-bold my-1 md:my-2 leading-tight text-[#19c6e6]">
+          <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold my-1 md:my-2 leading-tight text-[#19c6e6]">
             Discover Electronic <br />
             Dance Music Events
             <span className="block w-full h-1 mt-2 mb-1 bg-[#19c6e6] opacity-80 rounded-full" />
