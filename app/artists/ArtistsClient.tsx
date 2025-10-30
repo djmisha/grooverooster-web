@@ -68,7 +68,9 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
       <>
         <NavigationBar setSearchTerm={() => {}} locationData={[]} />
         <div className="text-center my-6">
-          <h1>Top Touring Artists</h1>
+          <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px]">
+            Top Touring Artists
+          </h1>
           <p className="text-gray-600 mt-2">
             Showing {startIndex + 1}-{Math.min(endIndex, totalItems)} of{" "}
             {totalItems} artists (Page {currentPage} of {totalPages})

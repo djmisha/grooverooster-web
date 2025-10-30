@@ -14,7 +14,7 @@ export default function WelcomeMessage() {
 
   return (
     <div className="bg-white text-black p-6 text-center rounded-lg shadow-lg border border-gray-100">
-      <h2 className="text-2xl font-bold pb-3 text-gray-800">
+      <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl text-2xl font-bold pb-3 text-gray-800">
         Welcome to Our Dance Music Community!
       </h2>
       <div className="space-y-3 text-gray-700">

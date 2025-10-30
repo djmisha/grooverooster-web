@@ -48,7 +48,7 @@ const CitiesStates = ({
     <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_ul]:pl-3 [&_ul]:flex [&_ul]:flex-wrap [&_li]:w-1/2 [&_li]:py-3 md:[&_li]:w-1/4 [&_a]:no-underline [&_a]:text-black">
       {!showStatesOnly && (
         <>
-          <h2 className="text-lg mb-4 px-2">
+          <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl text-lg mb-4 px-2">
             Popular Dance Music Cities in North America
           </h2>
           <p className="mb-4 px-2">
@@ -61,7 +61,9 @@ const CitiesStates = ({
       )}
       {!showCitiesOnly && (
         <>
-          <h2 className="text-lg mb-4 px-2">Browse EDM Events by State</h2>
+          <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl text-lg mb-4 px-2">
+            Browse EDM Events by State
+          </h2>
 
           <ul>{renderList(states, "state")}</ul>
         </>

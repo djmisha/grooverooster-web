@@ -38,7 +38,9 @@ export const MenuList = ({
       }`}
       style={{ overflowY: "auto", maxHeight: "100vh" }}
     >
-      <h2>{title}</h2>
+      <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+        {title}
+      </h2>
       {itemsToRender.map((item, index) => {
         const itemName = typeof item === "string" ? item : item.name;
         const itemCount =

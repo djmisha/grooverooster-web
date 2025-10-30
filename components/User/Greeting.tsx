@@ -35,7 +35,7 @@ const Greeting: React.FC<GreetingProps> = ({ username, email }) => {
 
   return (
     <div className="mb-6">
-      <h1 className="text-sm text-gray-800 relative border-none animate-fade-in">
+      <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-sm text-gray-800 relative border-none animate-fade-in">
         Good {timeOfDay}, {displayName}
       </h1>
     </div>

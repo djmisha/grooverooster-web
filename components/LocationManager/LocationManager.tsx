@@ -103,7 +103,7 @@ const LocationManager = ({
       className={`flex flex-col gap-6 bg-white  rounded-lg p-0 max-w-full w-full m-0 md:gap-4 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 ${className}`}
     >
       {title && (
-        <h3 className="m-0 text-2xl font-bold text-blue-600 pb-2 border-b-2 border-blue-500 tracking-tight">
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block m-0 text-2xl font-bold text-blue-600 pb-2 border-b-2 border-blue-500 tracking-tight">
           {title}
         </h3>
       )}

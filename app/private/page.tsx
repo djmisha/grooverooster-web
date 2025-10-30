@@ -19,7 +19,11 @@ export default async function PrivatePage() {
       redirect("/");
     }
 
-    return <h1>Hello, {data.user.email || "user"}!</h1>;
+    return (
+      <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px]">
+        Hello, {data.user.email || "user"}!
+      </h1>
+    );
   } catch (error) {
     // If Supabase is not configured or there's an error, redirect to home
     console.error("Error in private page:", error);

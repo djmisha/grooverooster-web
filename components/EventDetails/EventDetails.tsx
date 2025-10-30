@@ -30,7 +30,10 @@ const EventDetails = ({ event }: EventDetailsProps) => {
 
   return (
     <div className="flex flex-col items-center text-center px-2 py-2 md:px-2 md:py-2">
-      <h2 id="modal-title" className="sr-only">
+      <h2
+        className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl sr-only"
+        id="modal-title"
+      >
         Event Details: {artistList.map((a) => a.name).join(", ")} at {venueName}
       </h2>
       <div

@@ -20,7 +20,9 @@ const Footer = () => {
 
         <div className="col-span-2 flex flex-row gap-4 items-start">
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <h3 className="text-gray-700 mb-3 text-base">Navigation</h3>
+            <h3 className="font-normal mt-10 text-lg text-blue md:inline-block text-gray-700 mb-3 text-base">
+              Navigation
+            </h3>
             <Link
               href="/"
               className="text-gray-500 text-lg no-underline transition-colors hover:text-gray-800"
@@ -53,7 +55,9 @@ const Footer = () => {
             </Link>
           </div>
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <h3 className="text-gray-700 mb-3 text-base">Data Partners</h3>
+            <h3 className="font-normal mt-10 text-lg text-blue md:inline-block text-gray-700 mb-3 text-base">
+              Data Partners
+            </h3>
             <Link
               href="https://djmisha.com"
               target="_blank"
@@ -80,7 +84,7 @@ const Footer = () => {
         </div>
 
         {/* <div>
-          <h3 className="text-gray-800 mb-6 text-lg">Follow Us</h3>
+          <h3 className="font-normal mt-10 text-lg text-blue md:inline-block text-gray-800 mb-6 text-lg">Follow Us</h3>
           <div className="flex gap-5">
             <a
               rel="noreferrer"

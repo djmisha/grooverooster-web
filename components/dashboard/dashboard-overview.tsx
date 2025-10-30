@@ -82,7 +82,7 @@ export default function DashboardOverview({
     <div className="space-y-6">
       {/* Welcome Section */}
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">
+        <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-3xl font-bold tracking-tight">
           {getGreeting()},{" "}
           {serverProfile?.username || user?.email?.split("@")[0] || "there"}!
         </h1>

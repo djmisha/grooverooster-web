@@ -44,7 +44,9 @@ const NavItem = ({
       />
       <MenuOverlay isOpen={isOpen} onClose={handleClose}>
         <div className="px-4">
-          <h2 className="text-2xl mb-8 text-center pt-4">{title}</h2>
+          <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl text-2xl mb-8 text-center pt-4">
+            {title}
+          </h2>
           <MenuList
             navItems={navItems}
             text={text}

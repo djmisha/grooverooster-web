@@ -85,48 +85,6 @@
     @apply bg-background text-foreground;
   }
 
-  h1 {
-    margin-top: 15px;
-    font-size: 20px;
-    color: #1c94a5; /* Using your blue color */
-    font-weight: normal;
-  }
-
-  @media only screen and (min-width: 768px) {
-    h1 {
-      margin-top: 15px;
-      display: block;
-      font-size: 30px;
-    }
-  }
-
-  h2 {
-    font-weight: normal;
-    margin-top: 40px;
-    font-size: 18px;
-    color: #1c94a5;
-  }
-
-  @media only screen and (min-width: 768px) {
-    h2 {
-      display: inline-block;
-      font-size: 20px;
-    }
-  }
-
-  h3 {
-    font-weight: normal;
-    margin-top: 40px;
-    font-size: 18px;
-    color: #1c94a5;
-  }
-
-  @media only screen and (min-width: 768px) {
-    h3 {
-      display: inline-block;
-    }
-  }
-
   p {
     font-size: 16px;
     color: #04092c; /* Using your black color */
@@ -138,30 +96,5 @@
 }
 
 @layer components {
-  /* Utility classes for your common patterns */
-  .loading-spinner {
-    @apply w-24 h-24 fixed;
-    top: calc(40vh - 50px);
-    left: calc(50vw - 50px);
-  }
-
-  .content-padding {
-    @apply px-2.5;
-  }
-
-  .page-heading {
-    @apply mt-4 pl-2.5 text-xl font-normal text-blue border-b-2 border-blue md:mt-4 md:block md:text-3xl;
-  }
-
-  .section-heading {
-    @apply font-normal mt-10 pl-2.5 text-lg text-blue border-b-2 border-blue md:inline-block md:text-xl;
-  }
-
-  .subsection-heading {
-    @apply font-normal mt-10 text-lg text-blue md:inline-block;
-  }
-
-  .body-text {
-    @apply px-2.5 text-base text-black;
-  }
+  /* No custom utility classes - all styles are now inline at component level */
 }

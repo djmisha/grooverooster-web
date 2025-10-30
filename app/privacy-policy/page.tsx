@@ -23,7 +23,9 @@ export default function Page() {
   return (
     <Layout home canonicalUrl={canonicalUrl}>
       <>
-        <h1>Privacy Policy</h1>
+        <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px]">
+          Privacy Policy
+        </h1>
         <p>Last updated: July 29, 2025</p>
         <p>
           This Privacy Policy describes Our policies and procedures on the
@@ -44,15 +46,21 @@ export default function Page() {
           </Link>
           .
         </p>
-        <h2>Interpretation and Definitions</h2>
-        <h3>Interpretation</h3>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Interpretation and Definitions
+        </h2>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Interpretation
+        </h3>
         <p>
           The words of which the initial letter is capitalized have meanings
           defined under the following conditions. The following definitions
           shall have the same meaning regardless of whether they appear in
           singular or in plural.
         </p>
-        <h3>Definitions</h3>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Definitions
+        </h3>
         <p>For the purposes of this Privacy Policy:</p>
         <ul>
           <li>
@@ -147,8 +155,12 @@ export default function Page() {
             </p>
           </li>
         </ul>
-        <h2>Collecting and Using Your Personal Data</h2>
-        <h3>Types of Data Collected</h3>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Collecting and Using Your Personal Data
+        </h2>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Types of Data Collected
+        </h3>
         <h4>Personal Data</h4>
         <p>
           While using Our Service, We may ask You to provide Us with certain
@@ -280,7 +292,9 @@ export default function Page() {
           regarding cookies, please visit our Cookies Policy or the Cookies
           section of our Privacy Policy.
         </p>
-        <h3>Use of Your Personal Data</h3>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Use of Your Personal Data
+        </h3>
         <p>The Company may use Personal Data for the following purposes:</p>
         <ul>
           <li>
@@ -390,7 +404,9 @@ export default function Page() {
             information for any other purpose with Your consent.
           </li>
         </ul>
-        <h3>Retention of Your Personal Data</h3>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Retention of Your Personal Data
+        </h3>
         <p>
           The Company will retain Your Personal Data only for as long as is
           necessary for the purposes set out in this Privacy Policy. We will
@@ -406,7 +422,9 @@ export default function Page() {
           improve the functionality of Our Service, or We are legally obligated
           to retain this data for longer time periods.
         </p>
-        <h3>Transfer of Your Personal Data</h3>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Transfer of Your Personal Data
+        </h3>
         <p>
           Your information, including Personal Data, is processed at the
           Company&apos;s operating offices and in any other places where the
@@ -427,7 +445,9 @@ export default function Page() {
           organization or a country unless there are adequate controls in place
           including the security of Your data and other personal information.
         </p>
-        <h3>Delete Your Personal Data</h3>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Delete Your Personal Data
+        </h3>
         <p>
           You have the right to delete or request that We assist in deleting the
           Personal Data that We have collected about You.
@@ -447,7 +467,9 @@ export default function Page() {
           Please note, however, that We may need to retain certain information
           when we have a legal obligation or lawful basis to do so.
         </p>
-        <h3>Disclosure of Your Personal Data</h3>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Disclosure of Your Personal Data
+        </h3>
         <h4>Business Transactions</h4>
         <p>
           If the Company is involved in a merger, acquisition or asset sale,
@@ -478,7 +500,9 @@ export default function Page() {
           </li>
           <li>Protect against legal liability</li>
         </ul>
-        <h3>Security of Your Personal Data</h3>
+        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
+          Security of Your Personal Data
+        </h3>
         <p>
           The security of Your Personal Data is important to Us, but remember
           that no method of transmission over the Internet, or method of
@@ -486,7 +510,9 @@ export default function Page() {
           acceptable means to protect Your Personal Data, We cannot guarantee
           its absolute security.
         </p>
-        <h2>Children&apos;s Privacy</h2>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Children&apos;s Privacy
+        </h2>
         <p>
           Our Service does not address anyone under the age of 13. We do not
           knowingly collect personally identifiable information from anyone
@@ -502,7 +528,9 @@ export default function Page() {
           require Your parent&apos;s consent before We collect and use that
           information.
         </p>
-        <h2>Links to Other Websites</h2>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Links to Other Websites
+        </h2>
         <p>
           Our Service may contain links to other websites that are not operated
           by Us. If You click on a third party link, You will be directed to
@@ -513,7 +541,9 @@ export default function Page() {
           We have no control over and assume no responsibility for the content,
           privacy policies or practices of any third party sites or services.
         </p>
-        <h2>Changes to this Privacy Policy</h2>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Changes to this Privacy Policy
+        </h2>
         <p>
           We may update Our Privacy Policy from time to time. We will notify You
           of any changes by posting the new Privacy Policy on this page.
@@ -528,7 +558,9 @@ export default function Page() {
           changes. Changes to this Privacy Policy are effective when they are
           posted on this page.
         </p>
-        <h2>Contact Us</h2>
+        <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          Contact Us
+        </h2>
         <p>
           If you have any questions about this Privacy Policy, You can contact
           us:

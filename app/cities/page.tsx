@@ -27,7 +27,9 @@ export default async function CitiesPage() {
   return (
     <Layout home={false} canonicalUrl={canonicalUrl}>
       <ClientNavigationBar />
-      <h1 className="text-center px-2">Events By City</h1>
+      <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-center px-2">
+        Events By City
+      </h1>
       <CitiesStates locations={locations} showCitiesOnly={true} />
     </Layout>
   );

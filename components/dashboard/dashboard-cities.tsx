@@ -86,7 +86,7 @@ function SortableLocationCard({
 
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <h3 className="font-semibold pt-0">
+                <h3 className="font-normal text-lg text-blue md:inline-block font-semibold pt-0">
                   {location.city || location.state}
                 </h3>
                 {location.isDefault && (
@@ -319,7 +319,9 @@ export default function DashboardCities({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">My Cities</h1>
+          <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-3xl font-bold tracking-tight">
+            My Cities
+          </h1>
           <p className="text-muted-foreground mt-2">
             Manage your locations and track events in your favorite cities
           </p>
@@ -382,7 +384,7 @@ export default function DashboardCities({
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <MapPin className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="font-semibold text-lg mb-2 pt-0">
+            <h3 className="font-normal text-lg text-blue md:inline-block font-semibold text-lg mb-2 pt-0">
               No cities added yet
             </h3>
             <p className="text-muted-foreground text-center mb-4">
