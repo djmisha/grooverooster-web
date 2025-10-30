@@ -286,7 +286,7 @@ export default function DashboardArtists({
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Music className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="font-normal mt-10 text-lg text-blue md:inline-block font-semibold text-lg mb-2 pt-0">
+            <h3 className="font-normal text-lg text-blue md:inline-block font-semibold text-lg mb-2 pt-0">
               No artists added yet
             </h3>
             <p className="text-muted-foreground text-center mb-4">
