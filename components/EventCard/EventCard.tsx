@@ -8,6 +8,7 @@ import EventStructuredData from "../SEO/EventStructuredData";
 import { useEventModal } from "../../hooks/useEventModal";
 import { FaRegCalendar, FaRegBuilding, FaUsers, FaVideo } from "react-icons/fa";
 import { Event } from "@/types";
+import { getFirstArtistImageId } from "../../utils/artistImageLookup";
 
 interface EventCardProps {
   event: Event;
@@ -94,12 +95,10 @@ export const EventCard = ({
    * @returns {JSX.Element} Artist image wrapper component
    */
   const ArtistImageWrapper = () => {
-    const artistId = artistList[0]?.id;
-    const numericArtistId = artistId
-      ? typeof artistId === "string"
-        ? Number(artistId)
-        : artistId
-      : undefined;
+    // Try to get the EDMTrain ID for the first artist
+    // This handles both old API (numeric IDs) and new API (UUID strings with name lookup)
+    const numericArtistId = getFirstArtistImageId(artistList);
+
     return (
       <div
         className="bg-white w-28 h-28 bg-no-repeat bg-cover rounded-md mr-5"

@@ -66,7 +66,7 @@ export const searchFilter = (
     const regexString = new RegExp(cleanString(actualSearchTerm), "i"); // used to be 'gi' but was not searching date correctly
 
     events.forEach((article) => {
-      const { id, formattedDate, venue, artistlist, name } = article;
+      const { id, formattedDate, venue, artistlist, name, genres } = article;
       // Support both old and new field names
       const artistList = artistlist || article.artistList || [];
       const { name: venueName } = venue;
@@ -90,6 +90,15 @@ export const searchFilter = (
           results.push(id);
         }
       });
+
+      // Add genre filtering
+      if (genres && Array.isArray(genres)) {
+        genres.forEach((genre) => {
+          if (genre.name && regexString.test(cleanString(genre.name))) {
+            results.push(id);
+          }
+        });
+      }
     });
   }
 

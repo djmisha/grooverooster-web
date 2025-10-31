@@ -15,6 +15,14 @@ export interface Artist {
   b2bInd?: boolean;
 }
 
+// Genre Types
+export interface Genre {
+  id: string;
+  name: string;
+  normalized_name: string;
+  ticketmaster_genre_id?: string;
+}
+
 // Venue Types
 export interface Venue {
   name: string;
@@ -60,6 +68,8 @@ export interface Event {
   starttime?: string;
   endtime?: string;
   createddate?: string;
+  genres?: Genre[];
+  primary_genre?: Genre;
 }
 
 // Location Types

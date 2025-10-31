@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import setDates from "../../utils/setDates";
 import { Event } from "@/types";
+import { getFirstArtistImageId } from "../../utils/artistImageLookup";
 
 interface EventStructuredDataProps {
   event: Event;
@@ -153,8 +154,11 @@ const EventStructuredData = ({
     const generateImageUrl = () => {
       const baseUrl = "https://www.grooverooster.com";
 
-      if (artistList.length > 0 && artistList[0].id) {
-        return `${baseUrl}/images/artists/${artistList[0].id}.jpg`;
+      // Use the artist lookup utility to get the EDMTrain ID
+      const artistImageId = getFirstArtistImageId(artistList);
+
+      if (artistImageId) {
+        return `${baseUrl}/images/artists/${artistImageId}.jpg`;
       }
       return `${baseUrl}/images/fallback-event.jpg`;
     };
