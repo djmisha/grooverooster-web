@@ -145,7 +145,7 @@ export default function DashboardProfile({ user }: DashboardProfileProps) {
     if (!user?.id) return;
 
     if (!validateForm(profile)) {
-      toast.error("Please fix the validation errors before submitting");
+      toast.error("⚠️ Please fix the validation errors before submitting");
       return;
     }
 
@@ -174,13 +174,13 @@ export default function DashboardProfile({ user }: DashboardProfileProps) {
       });
 
       if (error) {
-        toast.error(error.message);
+        toast.error(`❌ ${error.message}`);
       } else {
-        toast.success("Profile updated successfully!");
+        toast.success("✅ Profile updated successfully!");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast.error("An unexpected error occurred");
+      toast.error("❌ An unexpected error occurred");
     } finally {
       setIsLoading(false);
     }
