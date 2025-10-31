@@ -14,6 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Music, Search, Star, Plus, X, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import artistsData from "@/localArtistsDB.json";
+import ArtistImage from "@/components/Artists/ArtistImage";
+import { ToSlugArtist } from "@/utils/utilities";
+import Link from "next/link";
 import {
   DndContext,
   closestCenter,
@@ -63,15 +66,18 @@ function SortableArtistCard({
       <Card className="group">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-3 min-w-0 flex-1">
+            <Link
+              href={`/artist/${ToSlugArtist(artist.name)}`}
+              className="flex items-center gap-3 min-w-0 flex-1 no-underline text-current"
+            >
               <div
                 {...listeners}
                 className="cursor-grab active:cursor-grabbing touch-none"
               >
                 <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0" />
               </div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
-                <Music className="h-6 w-6 text-primary" />
+              <div className="flex-shrink-0 w-12 h-12 overflow-hidden">
+                <ArtistImage id={Number(artist.id)} />
               </div>
               <div className="min-w-0">
                 <CardTitle className="text-base truncate pt-0">
@@ -84,7 +90,7 @@ function SortableArtistCard({
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
             <Button
               variant="ghost"
               size="sm"
@@ -265,8 +271,8 @@ export default function DashboardArtists({
                     onClick={() => handleAddFavorite(artist.arrayIndex!)}
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
-                        <Music className="h-5 w-5 text-primary" />
+                      <div className="flex-shrink-0 w-10 h-10 overflow-hidden">
+                        <ArtistImage id={Number(artist.id)} />
                       </div>
                       <div className="min-w-0">
                         <p className="font-medium truncate">{artist.name}</p>
