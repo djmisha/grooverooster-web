@@ -55,6 +55,22 @@ export const makeArtists = (data: Event[]): string[] => {
   return allArtists;
 };
 
+export const makeGenres = (data: Event[]): string[] => {
+  let allGenres: string[] = [];
+  data.forEach((item) => {
+    if (item.genres && Array.isArray(item.genres)) {
+      item.genres.forEach((genre) => {
+        if (genre.name) {
+          allGenres.push(genre.name);
+        }
+      });
+    }
+  });
+  allGenres = removeDuplicates(allGenres);
+
+  return allGenres.sort();
+};
+
 export const cityOrState = (
   city: string | undefined,
   state: string
@@ -224,5 +240,25 @@ export const makePromotersWithCounts = (
     .map((promoter) => ({
       name: promoter,
       count: eventNameCounts[promoter],
+    }));
+};
+
+export const makeGenresWithCounts = (data: Event[]): FilterItemWithCount[] => {
+  const genreCounts: Record<string, number> = {};
+  data.forEach((item) => {
+    if (item.genres && Array.isArray(item.genres)) {
+      item.genres.forEach((genre) => {
+        if (genre.name) {
+          genreCounts[genre.name] = (genreCounts[genre.name] || 0) + 1;
+        }
+      });
+    }
+  });
+
+  return Object.keys(genreCounts)
+    .sort()
+    .map((genre) => ({
+      name: genre,
+      count: genreCounts[genre],
     }));
 };

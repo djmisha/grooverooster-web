@@ -1,9 +1,10 @@
 import {
   makeVenues,
-  makeArtists,
   makePromoters,
   makeVenuesWithCounts,
   makePromotersWithCounts,
+  makeGenres,
+  makeGenresWithCounts,
 } from "../../utils/utilities";
 import BackToTop from "../BackToTop/BackToTop";
 import {
@@ -30,15 +31,16 @@ interface EventsFilterProps {
 const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
   const [isDateMenuOpen, setIsDateMenuOpen] = useState(false);
   const [isVenueMenuOpen, setIsVenueMenuOpen] = useState(false);
-  const [isArtistMenuOpen, setIsArtistMenuOpen] = useState(false);
+  const [isGenreMenuOpen, setIsGenreMenuOpen] = useState(false);
   const [isPromoterMenuOpen, setIsPromoterMenuOpen] = useState(false);
 
   const venues = makeVenues(events ?? []);
-  const artists = makeArtists(events ?? []);
+  const genres = makeGenres(events ?? []);
   const promoters = makePromoters(events ?? []);
 
   // Get items with counts for display
   const venuesWithCounts = makeVenuesWithCounts(events ?? []);
+  const genresWithCounts = makeGenresWithCounts(events ?? []);
   const promotersWithCounts = makePromotersWithCounts(events ?? []);
 
   // Calculate statistics from events data
@@ -47,7 +49,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
       return {
         totalEvents: 0,
         totalVenues: 0,
-        totalArtists: 0,
+        totalGenres: 0,
         totalPromoters: 0,
       };
     }
@@ -57,7 +59,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
 
     // Count unique venues
     const uniqueVenues = new Set();
-    const uniqueArtists = new Set();
+    const uniqueGenres = new Set();
 
     visibleEvents.forEach((event) => {
       // Count unique venues
@@ -65,12 +67,11 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
         uniqueVenues.add(event.venue.name);
       }
 
-      // Count unique artists - support both old and new field names
-      const artistList = event.artistlist || event.artistList;
-      if (artistList && Array.isArray(artistList)) {
-        artistList.forEach((artist) => {
-          if (artist.name) {
-            uniqueArtists.add(artist.name);
+      // Count unique genres
+      if (event.genres && Array.isArray(event.genres)) {
+        event.genres.forEach((genre) => {
+          if (genre.name) {
+            uniqueGenres.add(genre.name);
           }
         });
       }
@@ -79,12 +80,12 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
     return {
       totalEvents: visibleEvents.length,
       totalVenues: uniqueVenues.size,
-      totalArtists: uniqueArtists.size,
+      totalGenres: uniqueGenres.size,
       totalPromoters: promoters.length,
     };
   };
 
-  const { totalEvents, totalVenues, totalArtists, totalPromoters } =
+  const { totalEvents, totalVenues, totalGenres, totalPromoters } =
     getStatistics();
 
   return (
@@ -163,35 +164,36 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
           <div className="flex-1 flex items-center justify-center">
             <div
               className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white rounded-lg shadow-[0_4px_16px_0_rgba(255,152,0,0.15)] border-2 border-orange/40 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.25)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(255,152,0,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.30)] md:border-2 md:border-orange/50"
-              onClick={() => setIsArtistMenuOpen(true)}
+              onClick={() => setIsGenreMenuOpen(true)}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-orange md:w-10 md:h-10 hover:scale-105">
                 <FaUsers className="text-xs text-white md:text-sm" />
               </div>
               <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
                 <div className="text-xs leading-tight text-black transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
-                  {totalArtists.toLocaleString()}
+                  {totalGenres.toLocaleString()}
                 </div>
                 <div className="text-xs font-medium text-black/70 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 md:leading-tight">
-                  {totalArtists === 1 ? "Artist" : "Artists"}
+                  {totalGenres === 1 ? "Genre" : "Genres"}
                 </div>
               </div>
             </div>
             <MenuOverlay
-              isOpen={isArtistMenuOpen}
-              onClose={() => setIsArtistMenuOpen(false)}
+              isOpen={isGenreMenuOpen}
+              onClose={() => setIsGenreMenuOpen(false)}
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
                 <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black">
-                  DJs and Artists
+                  Genres
                 </h2>
                 <MenuList
-                  navItems={artists}
-                  text="artist"
-                  isOpen={isArtistMenuOpen}
-                  title="DJ's and Artists"
+                  navItems={genres}
+                  navItemsWithCounts={genresWithCounts}
+                  text="genre"
+                  isOpen={isGenreMenuOpen}
+                  title="Genres"
                   setSearchTerm={setSearchTerm}
-                  onClose={() => setIsArtistMenuOpen(false)}
+                  onClose={() => setIsGenreMenuOpen(false)}
                 />
               </div>
             </MenuOverlay>
