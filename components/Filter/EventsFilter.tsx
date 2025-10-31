@@ -10,7 +10,7 @@ import BackToTop from "../BackToTop/BackToTop";
 import {
   FaCalendarAlt,
   FaMapMarkerAlt,
-  FaUsers,
+  FaMusic,
   FaFilter,
   FaBullhorn,
 } from "react-icons/fa";
@@ -167,7 +167,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClick={() => setIsGenreMenuOpen(true)}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-orange md:w-10 md:h-10 hover:scale-105">
-                <FaUsers className="text-xs text-white md:text-sm" />
+                <FaMusic className="text-xs text-white md:text-sm" />
               </div>
               <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
                 <div className="text-xs leading-tight text-black transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
