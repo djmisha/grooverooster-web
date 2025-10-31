@@ -11,9 +11,12 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Music, Search, Star, Plus, X, GripVertical } from "lucide-react";
+import { Music, Search, Plus, X, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import artistsData from "@/localArtistsDB.json";
+import ArtistImage from "@/components/Artists/ArtistImage";
+import { ToSlugArtist } from "@/utils/utilities";
+import Link from "next/link";
 import {
   DndContext,
   closestCenter,
@@ -63,28 +66,26 @@ function SortableArtistCard({
       <Card className="group">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">
-            <div className="flex items-center gap-3 min-w-0 flex-1">
-              <div
-                {...listeners}
-                className="cursor-grab active:cursor-grabbing touch-none"
-              >
-                <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-              </div>
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
-                <Music className="h-6 w-6 text-primary" />
+            <div
+              {...listeners}
+              className="cursor-grab active:cursor-grabbing touch-none flex-shrink-0"
+            >
+              <GripVertical className="h-5 w-5 text-muted-foreground" />
+            </div>
+            <Link
+              href={`/artist/${ToSlugArtist(artist.name)}`}
+              className="flex items-center gap-3 min-w-0 flex-1 no-underline text-current"
+            >
+              {/* Scale ArtistImage (112x112) down to 100x100 using transform: 100/112 = 0.893 */}
+              <div className="flex-shrink-0 overflow-hidden transform scale-[0.89]">
+                <ArtistImage id={Number(artist.id)} />
               </div>
               <div className="min-w-0">
                 <CardTitle className="text-base truncate pt-0">
                   {artist.name}
                 </CardTitle>
-                <div className="flex items-center gap-1 mt-1">
-                  <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                  <span className="text-xs text-muted-foreground">
-                    Favorite
-                  </span>
-                </div>
               </div>
-            </div>
+            </Link>
             <Button
               variant="ghost"
               size="sm"
@@ -265,8 +266,9 @@ export default function DashboardArtists({
                     onClick={() => handleAddFavorite(artist.arrayIndex!)}
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
-                        <Music className="h-5 w-5 text-primary" />
+                      {/* Scale ArtistImage (112x112) down to 100x100 using transform: 100/112 = 0.893 */}
+                      <div className="flex-shrink-0 overflow-hidden transform scale-[0.89]">
+                        <ArtistImage id={Number(artist.id)} />
                       </div>
                       <div className="min-w-0">
                         <p className="font-medium truncate">{artist.name}</p>
