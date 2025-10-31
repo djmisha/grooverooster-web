@@ -76,6 +76,7 @@ function SortableArtistCard({
               href={`/artist/${ToSlugArtist(artist.name)}`}
               className="flex items-center gap-3 min-w-0 flex-1 no-underline text-current"
             >
+              {/* Scale ArtistImage (112x112) down to 48x48 using transform: 48/112 = 0.4286 */}
               <div className="flex-shrink-0 overflow-hidden transform scale-[0.43]">
                 <ArtistImage id={Number(artist.id)} />
               </div>
@@ -271,6 +272,7 @@ export default function DashboardArtists({
                     onClick={() => handleAddFavorite(artist.arrayIndex!)}
                   >
                     <div className="flex items-center gap-3 min-w-0">
+                      {/* Scale ArtistImage (112x112) down to 40x40 using transform: 40/112 = 0.357 */}
                       <div className="flex-shrink-0 overflow-hidden transform scale-[0.36]">
                         <ArtistImage id={Number(artist.id)} />
                       </div>
