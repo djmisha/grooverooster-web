@@ -167,10 +167,10 @@ export default function DashboardArtists({
             .from("profiles")
             .update({ favorite_artists: newOrder })
             .eq("id", userId);
-          toast.success("✅ Artist order saved");
+          toast("✅ Artist order saved");
         } catch (error) {
           console.error("Error saving order:", error);
-          toast.error("❌ Failed to save order");
+          toast("❌ Failed to save order");
           setFavoriteIds(favoriteIds); // Revert on error
         }
       }
@@ -190,11 +190,11 @@ export default function DashboardArtists({
         .eq("id", userId);
 
       const artist = artistsData[artistIndex];
-      toast.success(`✨ Added ${artist.name} to favorites`);
+      toast(`✨ Added ${artist.name} to favorites`);
       setSearchTerm("");
     } catch (error) {
       console.error("Error adding favorite:", error);
-      toast.error("❌ Failed to add artist");
+      toast("❌ Failed to add artist");
       setFavoriteIds(favoriteIds);
     }
   };
@@ -212,10 +212,10 @@ export default function DashboardArtists({
         .eq("id", userId);
 
       const artist = artistsData[artistIndex];
-      toast.success(`🗑️ Removed ${artist.name} from favorites`);
+      toast(`🗑️ Removed ${artist.name} from favorites`);
     } catch (error) {
       console.error("Error removing favorite:", error);
-      toast.error("❌ Failed to remove artist");
+      toast("❌ Failed to remove artist");
       setFavoriteIds(favoriteIds);
     }
   };
