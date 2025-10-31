@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Music, Search, Star, Plus, X, GripVertical } from "lucide-react";
+import { Music, Search, Plus, X, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import artistsData from "@/localArtistsDB.json";
 import ArtistImage from "@/components/Artists/ArtistImage";
@@ -76,20 +76,14 @@ function SortableArtistCard({
               href={`/artist/${ToSlugArtist(artist.name)}`}
               className="flex items-center gap-3 min-w-0 flex-1 no-underline text-current"
             >
-              {/* Scale ArtistImage (112x112) down to 48x48 using transform: 48/112 = 0.4286 */}
-              <div className="flex-shrink-0 overflow-hidden transform scale-[0.43]">
+              {/* Scale ArtistImage (112x112) down to 100x100 using transform: 100/112 = 0.893 */}
+              <div className="flex-shrink-0 overflow-hidden transform scale-[0.89]">
                 <ArtistImage id={Number(artist.id)} />
               </div>
               <div className="min-w-0">
                 <CardTitle className="text-base truncate pt-0">
                   {artist.name}
                 </CardTitle>
-                <div className="flex items-center gap-1 mt-1">
-                  <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                  <span className="text-xs text-muted-foreground">
-                    Favorite
-                  </span>
-                </div>
               </div>
             </Link>
             <Button
@@ -272,8 +266,8 @@ export default function DashboardArtists({
                     onClick={() => handleAddFavorite(artist.arrayIndex!)}
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      {/* Scale ArtistImage (112x112) down to 40x40 using transform: 40/112 = 0.357 */}
-                      <div className="flex-shrink-0 overflow-hidden transform scale-[0.36]">
+                      {/* Scale ArtistImage (112x112) down to 100x100 using transform: 100/112 = 0.893 */}
+                      <div className="flex-shrink-0 overflow-hidden transform scale-[0.89]">
                         <ArtistImage id={Number(artist.id)} />
                       </div>
                       <div className="min-w-0">
