@@ -5,6 +5,7 @@ import setDates from "../../utils/setDates";
 import { FaRegCalendar, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa";
 import Button from "../Button/Button";
 import { Event } from "@/types";
+import { getFirstArtistImageId } from "../../utils/artistImageLookup";
 
 interface EventDetailsProps {
   event: Event;
@@ -44,13 +45,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         }}
       >
         <ArtistImage
-          id={
-            artistList[0]?.id
-              ? typeof artistList[0].id === "string"
-                ? Number(artistList[0].id)
-                : artistList[0].id
-              : undefined
-          }
+          id={getFirstArtistImageId(artistList)}
           imageUrl={imageUrl}
         />
       </div>
