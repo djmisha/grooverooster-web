@@ -1,9 +1,9 @@
 import {
   makeVenues,
   makePromoters,
+  makeGenres,
   makeVenuesWithCounts,
   makePromotersWithCounts,
-  makeGenres,
   makeGenresWithCounts,
 } from "../../utils/utilities";
 import BackToTop from "../BackToTop/BackToTop";
