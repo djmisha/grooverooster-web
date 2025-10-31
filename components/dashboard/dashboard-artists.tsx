@@ -66,17 +66,17 @@ function SortableArtistCard({
       <Card className="group">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">
+            <div
+              {...listeners}
+              className="cursor-grab active:cursor-grabbing touch-none flex-shrink-0"
+            >
+              <GripVertical className="h-5 w-5 text-muted-foreground" />
+            </div>
             <Link
               href={`/artist/${ToSlugArtist(artist.name)}`}
               className="flex items-center gap-3 min-w-0 flex-1 no-underline text-current"
             >
-              <div
-                {...listeners}
-                className="cursor-grab active:cursor-grabbing touch-none"
-              >
-                <GripVertical className="h-5 w-5 text-muted-foreground flex-shrink-0" />
-              </div>
-              <div className="flex-shrink-0 w-12 h-12 overflow-hidden">
+              <div className="flex-shrink-0 overflow-hidden transform scale-[0.43]">
                 <ArtistImage id={Number(artist.id)} />
               </div>
               <div className="min-w-0">
@@ -271,7 +271,7 @@ export default function DashboardArtists({
                     onClick={() => handleAddFavorite(artist.arrayIndex!)}
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex-shrink-0 w-10 h-10 overflow-hidden">
+                      <div className="flex-shrink-0 overflow-hidden transform scale-[0.36]">
                         <ArtistImage id={Number(artist.id)} />
                       </div>
                       <div className="min-w-0">
