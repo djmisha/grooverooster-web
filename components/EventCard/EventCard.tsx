@@ -194,7 +194,7 @@ export const EventCard = ({
             </div>
           </div>
         </div>
-        <div className="mt-3">
+        <div className="mt-4">
           <EventPills event={event} />
         </div>
       </div>
