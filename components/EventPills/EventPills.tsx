@@ -17,8 +17,7 @@ const EventPills = ({ event, centered = false }: EventPillsProps) => {
     genres,
     source,
     eventSource,
-    festivalind,
-    festivalInd,
+    festivalind
   } = event;
 
   // Support both old and new field names
