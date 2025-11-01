@@ -1,12 +1,13 @@
 interface ArtistImageProps {
   id?: number;
   imageUrl?: string;
+  large?: boolean;
 }
 
 /**
  * ArtistImage component displays an artist image with fallback support
  */
-const ArtistImage = ({ id, imageUrl }: ArtistImageProps) => {
+const ArtistImage = ({ id, imageUrl, large = false }: ArtistImageProps) => {
   // Determine which image to use based on props
   let finalUrl: string;
 
@@ -21,9 +22,11 @@ const ArtistImage = ({ id, imageUrl }: ArtistImageProps) => {
     finalUrl = "/images/housemusic192.png";
   }
 
+  const sizeClasses = large ? "w-52 h-52" : "w-28 h-28";
+
   return (
     <div
-      className="bg-white bg-cover bg-center bg-no-repeat w-28 h-28 rounded-md mx-auto overflow-hidden"
+      className={`bg-white bg-cover bg-center bg-no-repeat ${sizeClasses} rounded-md mx-auto overflow-hidden`}
       style={{
         backgroundImage: `url('${finalUrl}'), url('/images/housemusic192.png')`,
         backgroundSize: "cover",

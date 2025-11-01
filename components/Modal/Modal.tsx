@@ -76,7 +76,7 @@ const Modal = ({ component: Component, onClose }: ModalProps) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-[10000]"
+      className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-[20000]"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -84,7 +84,7 @@ const Modal = ({ component: Component, onClose }: ModalProps) => {
     >
       <div
         ref={modalRef}
-        className="bg-white rounded-lg relative max-w-lg w-full max-h-[70vh] overflow-y-auto md:p-6 p-3"
+        className="bg-white rounded-lg relative max-w-lg w-full max-h-[calc(100vh-40px)] overflow-y-auto md:p-6 p-3 md:max-h-[70vh]"
         onClick={(e) => e.stopPropagation()}
       >
         <button

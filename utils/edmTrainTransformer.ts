@@ -43,10 +43,34 @@ export function transformEDMTrainEventData(
 ): Event | null {
   if (!legacyEvent) return null;
 
+  // Handle artist list - if no artists and has event name, use event name as artist and blank event name
+  let artistList =
+    legacyEvent.artistList?.map((artist) => ({
+      id: artist.id,
+      name: artist.name,
+      link: artist.link,
+      b2bInd: artist.b2bInd,
+    })) || [];
+
+  let eventName = legacyEvent.name;
+
+  if (artistList.length === 0 && eventName) {
+    // If no artists listed, move event name to artist field and blank out event name
+    artistList = [
+      {
+        id: undefined,
+        name: eventName,
+        link: undefined,
+        b2bInd: undefined,
+      },
+    ];
+    eventName = "";
+  }
+
   return {
     id: legacyEvent.id,
     link: legacyEvent.link,
-    name: legacyEvent.name,
+    name: eventName,
     ages: legacyEvent.ages,
     festivalind: legacyEvent.festivalInd,
     livestreamind: legacyEvent.livestreamInd,
@@ -66,13 +90,7 @@ export function transformEDMTrainEventData(
       latitude: legacyEvent.venue?.latitude,
       longitude: legacyEvent.venue?.longitude,
     },
-    artistlist:
-      legacyEvent.artistList?.map((artist) => ({
-        id: artist.id,
-        name: artist.name,
-        link: artist.link,
-        b2bInd: artist.b2bInd,
-      })) || [],
+    artistlist: artistList,
     source: legacyEvent.eventSource,
     isVisible: true,
     formattedDate: legacyEvent.date

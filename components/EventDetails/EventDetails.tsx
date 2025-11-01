@@ -2,6 +2,7 @@ import React from "react";
 import Artists from "../Artists/Artists";
 import ArtistImage from "../Artists/ArtistImage";
 import setDates from "../../utils/setDates";
+import EventPills from "../EventPills/EventPills";
 import { FaRegCalendar, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa";
 import Button from "../Button/Button";
 import { Event } from "@/types";
@@ -29,6 +30,27 @@ const EventDetails = ({ event }: EventDetailsProps) => {
   const { name: venueName, address } = venue;
   const { dayOfWeek, dayMonth, daySchema: _daySchema } = setDates(date);
 
+  // Format address with line breaks
+  const formatAddress = (addr: string | undefined) => {
+    if (!addr) return null;
+
+    // Split address by comma to separate street from city/state/zip
+    const parts = addr.split(",").map((p) => p.trim());
+    if (parts.length <= 1) return addr;
+
+    // First part is street, rest is city/state/zip
+    const street = parts[0];
+    const cityStateZip = parts.slice(1).join(", ");
+
+    return (
+      <>
+        {street}
+        <br />
+        {cityStateZip}
+      </>
+    );
+  };
+
   return (
     <div className="flex flex-col items-center text-center px-2 py-2 md:px-2 md:py-2">
       <h2
@@ -38,7 +60,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         Event Details: {artistList.map((a) => a.name).join(", ")} at {venueName}
       </h2>
       <div
-        className="bg-white w-28 h-28 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto"
+        className="bg-white w-52 h-52 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto"
         style={{
           backgroundImage:
             "url('https://www.grooverooster.com/images/housemusic192.png')",
@@ -47,6 +69,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         <ArtistImage
           id={getFirstArtistImageId(artistList)}
           imageUrl={imageUrl}
+          large={true}
         />
       </div>
       <div className="w-full">
@@ -74,9 +97,12 @@ const EventDetails = ({ event }: EventDetailsProps) => {
             className="text-black flex items-center gap-2 justify-center no-underline hover:underline pt-2 pb-2"
           >
             <FaMapMarkerAlt className="text-blue-500 text-lg" />
-            <span className="block text-sm leading-5">{address}</span>
+            <span className="block text-sm leading-5">
+              {formatAddress(address)}
+            </span>
           </a>
         )}
+        <EventPills event={event} centered={true} />
         <div className="mt-8 md:mt-10">
           <Button
             href={link}

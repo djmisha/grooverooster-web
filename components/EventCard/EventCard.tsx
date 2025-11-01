@@ -5,6 +5,7 @@ import setDates from "../../utils/setDates";
 import Modal from "../Modal/Modal";
 import EventDetails from "../EventDetails/EventDetails";
 import EventStructuredData from "../SEO/EventStructuredData";
+import EventPills from "../EventPills/EventPills";
 import { useEventModal } from "../../hooks/useEventModal";
 import { FaRegCalendar, FaRegBuilding, FaUsers, FaVideo } from "react-icons/fa";
 import { Event } from "@/types";
@@ -119,7 +120,7 @@ export const EventCard = ({
         currentUrl={typeof window !== "undefined" ? window.location.href : ""}
       />
       <div
-        className={`relative transition-all duration-100 ease-out text-left py-5 px-4 mx-3 mb-6 md:m-0 md:p-5 bg-white top-0 flex overflow-hidden border border-gray-200 cursor-pointer shadow-md transform-none rounded-lg h-auto ${
+        className={`relative transition-all duration-100 ease-out text-left py-5 px-4 mx-3 mb-6 md:m-0 md:p-5 bg-white top-0 flex flex-col overflow-hidden border border-gray-200 cursor-pointer shadow-md transform-none rounded-lg h-auto ${
           !isVisible ? "hidden" : ""
         } ${
           eventSource === "ticketmaster" ? "border-2 border-pink-500" : ""
@@ -132,64 +133,69 @@ export const EventCard = ({
         tabIndex={0}
         aria-label={`View details for ${artistList.map((a) => a.name).join(", ")} at ${venueName} on ${dayMonth}`}
       >
-        <ArtistImageWrapper />
-        <div className="w-[calc(100%-140px)] flex flex-col justify-between gap-2.5 h-auto">
-          <div>
-            <div className="flex justify-between items-center w-full">
-              <div
-                className="text-sm leading-7 font-medium flex items-center gap-2 m-0 p-0"
-                style={{ color: "#1c94a5" }}
-                itemProp="startDate"
-                content={daySchema}
-              >
-                <FaRegCalendar className="text-current" />
-                <div>
-                  {dayOfWeek}, {dayMonth}
+        <div className="flex">
+          <ArtistImageWrapper />
+          <div className="w-[calc(100%-140px)] flex flex-col justify-between gap-2.5 h-auto">
+            <div>
+              <div className="flex justify-between items-center w-full">
+                <div
+                  className="text-sm leading-7 font-medium flex items-center gap-2 m-0 p-0"
+                  style={{ color: "#1c94a5" }}
+                  itemProp="startDate"
+                  content={daySchema}
+                >
+                  <FaRegCalendar className="text-current" />
+                  <div>
+                    {dayOfWeek}, {dayMonth}
+                  </div>
                 </div>
+              </div>
+
+              {name && (
+                <span
+                  className="text-black block whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%] mt-1"
+                  itemProp="name"
+                >
+                  {name}
+                </span>
+              )}
+              <div className="flex">
+                {festivalInd && (
+                  <div className="flex items-center gap-1 text-orange-500 text-xs font-medium mr-2.5">
+                    <FaUsers className="text-current text-xs" />
+                    <span>Festival</span>
+                  </div>
+                )}
+
+                {livestreamInd && (
+                  <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
+                    <FaVideo className="text-current text-xs" />
+                    <span>Stream</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            {name && (
-              <span
-                className="text-black block whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%] mt-1"
-                itemProp="name"
-              >
-                {name}
-              </span>
-            )}
-            <div className="flex">
-              {festivalInd && (
-                <div className="flex items-center gap-1 text-orange-500 text-xs font-medium mr-2.5">
-                  <FaUsers className="text-current text-xs" />
-                  <span>Festival</span>
-                </div>
-              )}
+            <div
+              className="break-anywhere font-semibold text-xl leading-6 text-left relative pb-2.5 m-0 p-0 md:pb-2.5"
+              itemProp="name"
+            >
+              <Artists data={truncatedArtistList} />
+            </div>
 
-              {livestreamInd && (
-                <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
-                  <FaVideo className="text-current text-xs" />
-                  <span>Stream</span>
-                </div>
-              )}
+            <div
+              className="flex items-center gap-2 text-sm leading-4 text-black m-0 p-0 font-medium"
+              itemProp="location"
+              itemScope
+              itemType="http://schema.org/Place"
+            >
+              <FaRegBuilding className="text-current" />
+              <span itemProp="name">{venueName}</span>
             </div>
           </div>
-
-          <div
-            className="break-anywhere font-semibold text-xl leading-6 text-left relative pb-2.5 m-0 p-0 md:pb-2.5"
-            itemProp="name"
-          >
-            <Artists data={truncatedArtistList} />
-          </div>
-
-          <div
-            className="flex items-center gap-2 text-sm leading-4 text-black m-0 p-0 font-medium"
-            itemProp="location"
-            itemScope
-            itemType="http://schema.org/Place"
-          >
-            <FaRegBuilding className="text-current" />
-            <span itemProp="name">{venueName}</span>
-          </div>
+        </div>
+        <div className="mt-3">
+          <EventPills event={event} />
         </div>
       </div>
       {isModalOpen && (
