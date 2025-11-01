@@ -76,7 +76,7 @@ const Modal = ({ component: Component, onClose }: ModalProps) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-[20000]"
+      className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-[30000]"
       onClick={onClose}
       role="dialog"
       aria-modal="true"

@@ -11,11 +11,11 @@ const ToastProvider = () => {
       position="bottom-right"
       toastOptions={{
         duration: 5000,
-        closeButton: false, // Disabled for custom toasts like Filter component
-        unstyled: true, // Allow custom toasts to have full control over styling
-        style: {
-          zIndex: 10000, // Below modal (z-[20000]) but above other content
-        },
+        closeButton: false,
+        unstyled: true,
+      }}
+      style={{
+        zIndex: 10000,
       }}
     />
   );
