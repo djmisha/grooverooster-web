@@ -96,7 +96,11 @@ const EventStructuredData = ({
         // try to get it from the venue's city or location field
         if (!citySlug && venue) {
           // Check venue.city first, then fall back to venue.location
-          const cityName = venue.city || venue.location?.split(",")[0]?.trim();
+          const cityName =
+            venue.city ||
+            (typeof venue.location === "string"
+              ? venue.location.split(",")[0]?.trim()
+              : null);
           if (cityName) {
             citySlug = ToSlugArtist(cityName);
           }
