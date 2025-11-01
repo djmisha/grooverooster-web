@@ -289,6 +289,7 @@ const formatEDMTrainEvents = (apiData: EDMTrainAPIResponse): Event[] => {
 };
 
 /**
+ * TODO! THIS IS NOT USED ANYMORE.  Remvoe once ready.
  * Format TicketMaster API response into standardized event format
  */
 const formatTicketMasterEvents = (apiData: TicketMasterResponse): any[] => {
@@ -328,6 +329,7 @@ const formatTicketMasterEvents = (apiData: TicketMasterResponse): any[] => {
       let artistList: Artist[] = [];
       let eventName = event.name;
 
+      debugger;
       if (
         event._embedded?.attractions &&
         event._embedded.attractions.length > 0
@@ -337,7 +339,7 @@ const formatTicketMasterEvents = (apiData: TicketMasterResponse): any[] => {
         }));
       } else if (event.name) {
         // If no attractions but has event name, use event name as the artist and blank out event name
-        artistList = [{ name: event.name }];
+        // artistList = [{ name: event.name }];
         eventName = ""; // Blank out the event name
       }
 

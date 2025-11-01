@@ -202,6 +202,7 @@ const formatTicketMasterwithImagesArtists = (
       return {
         ...event,
         artistlist: [{ name: event.name }],
+        name: "",
       };
     }
 
