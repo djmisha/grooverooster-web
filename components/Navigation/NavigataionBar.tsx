@@ -2,7 +2,6 @@
 
 import LocationSelectModal from "./LocationSelectModal";
 import Hamburger from "../Hamburger/Hamburger";
-import BackToTop from "../BackToTop/BackToTop";
 import UserGreeting from "../User/UserGreeting";
 import { Location } from "@/types";
 
@@ -26,7 +25,6 @@ const NavigationBar = ({
           <UserGreeting />
         </div>
       </div>
-      <BackToTop />
     </div>
   );
 };

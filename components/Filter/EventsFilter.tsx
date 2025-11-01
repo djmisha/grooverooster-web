@@ -6,7 +6,6 @@ import {
   makePromotersWithCounts,
   makeGenresWithCounts,
 } from "../../utils/utilities";
-import BackToTop from "../BackToTop/BackToTop";
 import {
   FaCalendarAlt,
   FaMapMarkerAlt,
@@ -234,7 +233,6 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
           </div>
         </div>
       </div>
-      <BackToTop />
     </div>
   );
 };

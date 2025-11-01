@@ -336,9 +336,9 @@ const formatTicketMasterEvents = (apiData: TicketMasterResponse): any[] => {
           name: attraction.name,
         }));
       } else if (event.name) {
-        // If no attractions but has event name, use event name as the artist and remove event name
+        // If no attractions but has event name, use event name as the artist and blank out event name
         artistList = [{ name: event.name }];
-        eventName = event.promoter?.name || event.name; // Remove the event name
+        eventName = ""; // Blank out the event name
       }
 
       return {

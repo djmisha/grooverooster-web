@@ -13,6 +13,9 @@ const ToastProvider = () => {
         duration: 5000,
         closeButton: false, // Disabled for custom toasts like Filter component
         unstyled: true, // Allow custom toasts to have full control over styling
+        style: {
+          zIndex: 10000, // Below modal (z-[20000]) but above other content
+        },
       }}
     />
   );
