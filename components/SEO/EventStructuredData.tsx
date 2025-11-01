@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import setDates from "../../utils/setDates";
 import { Event } from "@/types";
 import { getFirstArtistImageId } from "../../utils/artistImageLookup";
+import { ToSlugArtist } from "../../utils/utilities";
 
 interface EventStructuredDataProps {
   event: Event;
@@ -82,19 +83,36 @@ const EventStructuredData = ({
         // Use grooverooster.com as the base URL structure
         const baseUrl = "https://www.grooverooster.com";
 
-        // Extract location from current URL or use a default
-        let location = "events";
+        // Try to extract location from current URL first
+        let citySlug: string | null = null;
         if (currentUrl) {
           const urlMatch = currentUrl.match(/\/events\/([^\/\?#]+)/);
           if (urlMatch) {
-            location = `events/${urlMatch[1]}`;
+            citySlug = urlMatch[1];
           }
         }
+
+        // If we couldn't extract city from URL (e.g., on homepage),
+        // try to get it from the venue's city or location field
+        if (!citySlug && venue) {
+          // Check venue.city first, then fall back to venue.location
+          const cityName =
+            venue.city ||
+            (typeof venue.location === "string"
+              ? venue.location.split(",")[0]?.trim()
+              : null);
+          if (cityName) {
+            citySlug = ToSlugArtist(cityName);
+          }
+        }
+
+        // Build the URL with city slug if available, otherwise use generic events path
+        const location = citySlug ? `events/${citySlug}` : "events";
 
         return `${baseUrl}/${location}#event-${id}`;
       } catch (error) {
         console.warn("Could not generate event URL:", error);
-        return link || `https:/www.grooverooster.com/events#event-${id}`;
+        return link || `https://www.grooverooster.com/events#event-${id}`;
       }
     };
 
