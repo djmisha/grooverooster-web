@@ -38,7 +38,7 @@ function ArtistSearchAutocomplete({
       artists
         .filter((artist) => artist.id !== undefined)
         .map((artist, index) => ({
-          id: artist.id || index,
+          id: artist.id ?? index,
           name: artist.name,
         })),
     [artists]
@@ -73,10 +73,7 @@ function ArtistSearchAutocomplete({
       item.name.toLowerCase().includes(searchString.toLowerCase());
 
     return (
-      <span
-        style={{ display: "block", textAlign: "left" }}
-        className={`block text-left ${isMatch ? "font-medium" : ""}`}
-      >
+      <span className={`block text-left ${isMatch ? "font-medium" : ""}`}>
         {item.name}
       </span>
     );
