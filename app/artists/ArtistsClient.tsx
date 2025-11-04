@@ -95,7 +95,7 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
 
         {/* Artist Search Component */}
         <div className="w-full max-w-3xl mx-auto px-4 mb-8">
-          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
+          <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
             <ArtistSearchAutocomplete
               artists={baseArtists}
               onSearchChange={handleSearchChange}
