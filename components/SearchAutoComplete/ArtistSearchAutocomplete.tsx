@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
-import { X } from "lucide-react";
 
 interface Artist {
   id?: string | number;
@@ -83,44 +82,45 @@ function ArtistSearchAutocomplete({
     // Skeleton loader to prevent layout shift
     return (
       <div className="w-full max-w-full">
-        <div className="relative flex items-center gap-2">
-          <div className="flex-1 min-w-0">
-            <div className="h-11 w-full bg-gray-200 dark:bg-gray-700 rounded-3xl animate-pulse" />
-          </div>
-          <div className="flex-shrink-0 h-11 w-11 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
-        </div>
+        <div className="h-11 w-full bg-gray-200 dark:bg-gray-700 rounded-3xl animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-full">
-      <div className="relative flex items-center gap-2">
-        <div className="flex-1 min-w-0">
-          <ReactSearchAutocomplete
-            items={searchItems}
-            onSelect={handleOnSelect}
-            onSearch={handleOnSearch}
-            formatResult={formatResult}
-            placeholder="Search for an artist..."
-            showIcon={true}
-            inputSearchString={searchString}
-            styling={{
-              zIndex: 999,
-            }}
-          />
-        </div>
-        {searchString && (
-          <button
-            onClick={handleClear}
-            className="flex-shrink-0 h-11 w-11 flex items-center justify-center rounded-lg bg-red-500 hover:bg-red-600 text-white transition-all"
-            title="Clear search"
-            aria-label="Clear search"
-          >
-            <X size={20} />
-          </button>
-        )}
-      </div>
+    <div className="w-full max-w-full artist-search-wrapper">
+      <style jsx>{`
+        .artist-search-wrapper :global(ul) {
+          display: none !important;
+        }
+      `}</style>
+      <ReactSearchAutocomplete
+        items={searchItems}
+        onSelect={handleOnSelect}
+        onSearch={handleOnSearch}
+        onClear={handleClear}
+        formatResult={formatResult}
+        placeholder="Search for an artist..."
+        showIcon={true}
+        showClear={true}
+        inputSearchString={searchString}
+        maxResults={0}
+        styling={{
+          zIndex: 999,
+          height: "44px",
+          border: "1px solid #dfe1e5",
+          borderRadius: "24px",
+          backgroundColor: "white",
+          boxShadow: "none",
+          hoverBackgroundColor: "#f8f9fa",
+          color: "#212121",
+          fontSize: "16px",
+          iconColor: "#4d5156",
+          lineColor: "#dfe1e5",
+          placeholderColor: "#70757a",
+          clearIconMargin: "3px 8px 0 0",
+        }}
+      />
     </div>
   );
 }

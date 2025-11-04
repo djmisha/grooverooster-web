@@ -91,15 +91,11 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
           <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px]">
             Top Touring Artists
           </h1>
-          <p className="text-gray-600 mt-2">
-            Showing {startIndex + 1}-{Math.min(endIndex, totalItems)} of{" "}
-            {totalItems} artists (Page {currentPage} of {totalPages})
-          </p>
         </div>
 
         {/* Artist Search Component */}
         <div className="w-full max-w-3xl mx-auto px-4 mb-8">
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+          <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-xl shadow-sm">
             <ArtistSearchAutocomplete
               artists={baseArtists}
               onSearchChange={handleSearchChange}
@@ -113,8 +109,16 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
           ))}
         </div>
 
+        {/* Artist count moved to bottom */}
+        <div className="text-center py-6">
+          <p className="text-gray-600">
+            Showing {startIndex + 1}-{Math.min(endIndex, totalItems)} of{" "}
+            {totalItems} artists (Page {currentPage} of {totalPages})
+          </p>
+        </div>
+
         {totalPages > 1 && (
-          <div className="mt-8 mb-6">
+          <div className="mt-4 mb-6">
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
