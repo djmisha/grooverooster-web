@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Layout from "@/components/layout";
 import { filterSurpriseGuest } from "@/utils/utilities";
 import NavigationBar from "@/components/Navigation/NavigataionBar";
 import TopArtistsCard from "@/components/TopArtistsCard/TopArtistsCard";
+import ArtistSearchAutocomplete from "@/components/SearchAutoComplete/ArtistSearchAutocomplete";
 import {
   Pagination,
   PaginationContent,
@@ -17,10 +18,23 @@ import {
 import { getCanonicalUrl } from "@/utils/canonicalUrl";
 
 const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
-  const filteredArtists = filterSurpriseGuest(uniqueArtists);
-  const apiEvents = filteredArtists.slice(0, 30);
+  const baseArtists = filterSurpriseGuest(uniqueArtists);
+  const apiEvents = baseArtists.slice(0, 30);
   const hasFetched = useRef(false);
   const canonicalUrl = getCanonicalUrl("/artists");
+
+  // Search state
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter artists based on search term
+  const filteredArtists = useMemo(() => {
+    if (searchTerm.trim() === "") {
+      return baseArtists;
+    }
+    return baseArtists.filter((artist) =>
+      artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [baseArtists, searchTerm]);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,6 +46,12 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentArtists = filteredArtists.slice(startIndex, endIndex);
+
+  // Handle search change
+  const handleSearchChange = (search: string) => {
+    setSearchTerm(search);
+    setCurrentPage(1); // Reset to first page when search changes
+  };
 
   // Handle page change
   const handlePageChange = (page: number) => {
@@ -76,6 +96,17 @@ const Artists = ({ uniqueArtists }: { uniqueArtists: any[] }) => {
             {totalItems} artists (Page {currentPage} of {totalPages})
           </p>
         </div>
+
+        {/* Artist Search Component */}
+        <div className="w-full max-w-3xl mx-auto px-4 mb-8">
+          <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg">
+            <ArtistSearchAutocomplete
+              artists={baseArtists}
+              onSearchChange={handleSearchChange}
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-2 md:gap-6">
           {currentArtists?.map((artist: any) => (
             <TopArtistsCard key={artist.id} artist={artist} />
