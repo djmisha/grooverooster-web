@@ -86,11 +86,13 @@ const Filter = ({
       const timeoutId = setTimeout(() => {
         // Show new toast with wrapping text layout
         toastIdRef.current = toast(
-          <div className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-lg border border-gray-200 w-full max-w-full ">
+          <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 w-full max-w-full transition-colors duration-200">
             <div className="text-xl flex-shrink-0">{emoji}</div>
-            <div className="flex-1 text-sm text-gray-700 break-words">
+            <div className="flex-1 text-sm text-gray-700 dark:text-gray-300 break-words">
               {resultCount} {resultCount === 1 ? "result" : "results"} for{" "}
-              <span className="font-semibold text-gray-900">{displayTerm}</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">
+                {displayTerm}
+              </span>
             </div>
             <button
               onClick={() => {
