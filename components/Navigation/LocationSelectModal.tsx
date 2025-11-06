@@ -6,12 +6,10 @@ import { useLocation } from "../../hooks/useLocation";
 import { Location } from "@/types";
 
 interface LocationSelectModalProps {
-  image: string;
   text?: string;
 }
 
 const LocationSelectModal = ({
-  image,
   text = "Location",
 }: LocationSelectModalProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,12 +52,9 @@ const LocationSelectModal = ({
   return (
     <div className="relative">
       <MenuTrigger
-        icon={image}
+        icon="map"
         text={displayText}
         onClick={handleOpenModal}
-        iconAlt={text}
-        iconWidth={18}
-        iconHeight={18}
         className={`mt-2 ${hasLocation ? "hasLocationTrigger" : ""}`}
       />
 

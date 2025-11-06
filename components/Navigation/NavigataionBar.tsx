@@ -20,7 +20,7 @@ const NavigationBar = ({
         <div className="flex justify-between w-full pr-2.5 mx-auto">
           <Hamburger />
           <div className="min-w-[60px] h-[60px] flex items-center justify-center">
-            <LocationSelectModal image="/images/icon-map.svg" text="Location" />
+            <LocationSelectModal text="Location" />
           </div>
           <UserGreeting />
         </div>

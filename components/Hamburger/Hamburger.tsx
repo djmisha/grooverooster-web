@@ -5,6 +5,7 @@ import { AppContext } from "../../features/AppContext";
 import { toSlug } from "../../utils/getLocations";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
+import { ThemeToggle } from "../ThemeToggle";
 import {
   Home,
   Music,
@@ -124,6 +125,12 @@ const Hamburger = () => {
       )}
 
       <div className="flex-grow"></div>
+
+      {/* Dark Mode Toggle */}
+      <div className="p-4 border-t border-gray-200 dark:border-gray-600 flex justify-center">
+        <ThemeToggle />
+      </div>
+
       <div className="p-8 border-t border-gray-200 dark:border-gray-600 flex flex-col items-center pb-10">
         <Image
           width={120}
@@ -142,11 +149,7 @@ const Hamburger = () => {
   return (
     <>
       <div className="flex flex-nowrap items-center justify-around relative left-0 h-15 pb-0 bg-white dark:bg-gray-900 md:m-0 transition-colors duration-200">
-        <MenuTrigger
-          icon="/images/icon-bars-solid.svg"
-          text="Menu"
-          onClick={() => setIsOpen(true)}
-        />
+        <MenuTrigger icon="menu" text="Menu" onClick={() => setIsOpen(true)} />
       </div>
       <MenuOverlay isOpen={isOpen} onClose={handleClose}>
         {menuContent}
