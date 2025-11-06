@@ -87,7 +87,7 @@
 
   p {
     font-size: 16px;
-    color: #04092c; /* Using your black color */
+    @apply text-foreground;
   }
 
   * {
