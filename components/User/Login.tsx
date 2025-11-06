@@ -126,7 +126,7 @@ export default function Login() {
             <button
               type="button"
               onClick={logIn}
-              className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 bg-pink text-white hover:bg-pink/90 disabled:opacity-70 disabled:cursor-not-allowed"
               disabled={isLoggingIn || !captchaToken}
             >
               {isLoggingIn ? "Logging in..." : "Log in"}
@@ -135,7 +135,7 @@ export default function Login() {
         </form>
 
         <p
-          className="text-center text-indigo-600 cursor-pointer mt-4"
+          className="text-center text-pink dark:text-pink cursor-pointer mt-4 hover:underline"
           onClick={() => router.push("/passwordreset")}
         >
           Forgot your password?

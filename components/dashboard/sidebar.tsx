@@ -53,10 +53,10 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
   const SidebarContent = () => (
     <div className="flex h-full flex-col">
       {/* Logo/Header */}
-      <div className="flex h-16 items-center border-b border-gray-200 px-6">
+      <div className="flex h-16 items-center border-b border-gray-200 dark:border-gray-700 px-6 bg-white dark:bg-gray-800 transition-colors duration-200">
         <Link
           href="/dashboard"
-          className="flex items-center gap-2 font-semibold"
+          className="flex items-center gap-2 font-semibold text-gray-900 dark:text-gray-100"
         >
           <LayoutDashboard className="h-6 w-6" />
           <span className="text-xl">GrooveRooster</span>
@@ -97,7 +97,7 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
       </ScrollArea>
 
       {/* Footer */}
-      <div className="border-t border-gray-200 p-4">
+      <div className="border-t border-gray-200 dark:border-gray-700 p-4 transition-colors duration-200">
         <Button
           variant="outline"
           className="w-full justify-start gap-3"
@@ -115,7 +115,7 @@ export function DashboardSidebar({ className, onLogout }: SidebarProps) {
       {/* Desktop Sidebar */}
       <aside
         className={cn(
-          "hidden w-64 border-r border-gray-200 bg-white lg:block",
+          "hidden w-64 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 transition-colors duration-200 lg:block",
           className
         )}
       >

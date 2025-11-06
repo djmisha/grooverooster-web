@@ -28,15 +28,17 @@ const FavoriteArtistCard = ({
   const showCounts = !!(count && locations);
 
   const content = (
-    <div className="flex justify-between items-center bg-gray-100 rounded-lg p-2.5 mb-3 shadow-md relative h-20">
+    <div className="flex justify-between items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-2.5 mb-3 shadow-md dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.3)] relative h-20 transition-colors duration-200">
       <div className="flex items-center w-full">
         <div className="w-15 h-15 flex-shrink-0 mr-4 overflow-hidden rounded">
           <FavoriteArtistImage id={id} />
         </div>
         <div className="flex-1">
-          <div className="font-bold text-base mb-1">{name}</div>
+          <div className="font-bold text-base mb-1 text-gray-900 dark:text-gray-100">
+            {name}
+          </div>
           {showCounts && (
-            <div className="flex gap-4 text-xs text-gray-600">
+            <div className="flex gap-4 text-xs text-gray-600 dark:text-gray-400">
               <div className="flex items-center">
                 <FaTicketAlt className="mr-1.5 text-xs" />
                 <span>{count} shows</span>
