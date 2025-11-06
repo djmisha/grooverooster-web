@@ -5,6 +5,18 @@ import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
 
+const inputClasses = [
+  "w-full px-4 py-3 border rounded-md text-base transition-colors duration-150",
+  "border-gray-300 dark:border-gray-600",
+  "bg-white dark:bg-gray-700",
+  "text-gray-900 dark:text-gray-100",
+  "focus:border-indigo-600 dark:focus:border-indigo-400",
+  "focus:outline-none focus:ring-4",
+  "focus:ring-indigo-100 dark:focus:ring-indigo-900",
+  "disabled:bg-gray-100 dark:disabled:bg-gray-800",
+  "disabled:cursor-not-allowed",
+].join(" ");
+
 export default function Login() {
   const router = useRouter();
   const { supabase } = useAppContext();
@@ -77,7 +89,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md text-base bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-150 focus:border-indigo-600 dark:focus:border-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900 disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed"
+              className={inputClasses}
               placeholder="your@email.com"
               disabled={isLoggingIn}
               aria-required="true"
@@ -97,7 +109,7 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md text-base bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors duration-150 focus:border-indigo-600 dark:focus:border-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900 disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed"
+              className={inputClasses}
               placeholder="••••••••"
               disabled={isLoggingIn}
               aria-required="true"

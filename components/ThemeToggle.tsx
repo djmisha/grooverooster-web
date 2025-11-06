@@ -21,8 +21,7 @@ export function ThemeToggle() {
     // Return a placeholder with the same dimensions to avoid layout shift
     return (
       <button
-        className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-200"
-        style={{ minWidth: "140px", minHeight: "44px" }}
+        className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-200 min-w-[140px] min-h-[44px]"
         aria-label="Toggle theme"
       >
         <span className="opacity-0">Loading...</span>
@@ -32,10 +31,19 @@ export function ThemeToggle() {
 
   const isDark = theme === "dark";
 
+  const buttonClasses = [
+    "flex items-center gap-2 px-4 py-2 rounded-lg border-2",
+    "border-gray-300 dark:border-gray-600",
+    "bg-white dark:bg-gray-800",
+    "text-gray-800 dark:text-gray-200",
+    "transition-all duration-200",
+    "hover:border-pink dark:hover:border-pink hover:shadow-md",
+  ].join(" ");
+
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 transition-all duration-200 hover:border-pink dark:hover:border-pink hover:shadow-md"
+      className={buttonClasses}
       aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
       {isDark ? (
