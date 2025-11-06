@@ -219,6 +219,9 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsPromoterMenuOpen(false)}
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
+                <h2 className="font-normal mt-10 text-lg text-blue dark:text-gray-100 md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold">
+                  Promoters
+                </h2>
                 <MenuList
                   navItems={promoters}
                   navItemsWithCounts={promotersWithCounts}
