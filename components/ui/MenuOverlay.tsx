@@ -61,7 +61,7 @@ const MenuOverlay = ({ isOpen, onClose, children }: MenuOverlayProps) => {
     >
       <nav
         ref={menuRef}
-        className={`fixed top-0 left-0 h-full w-full max-w-[400px] bg-white shadow-[2px_0_8px_rgba(0,0,0,0.15)] z-[1001] transition-transform duration-200 ease-in-out max-[400px]:max-w-none flex flex-col ${
+        className={`fixed top-0 left-0 h-full w-full max-w-[400px] bg-white dark:bg-gray-800 shadow-[2px_0_8px_rgba(0,0,0,0.15)] dark:shadow-[2px_0_8px_rgba(0,0,0,0.4)] z-[1001] transition-all duration-200 ease-in-out max-[400px]:max-w-none flex flex-col ${
           isOpen ? "transform translate-x-0" : "transform -translate-x-full"
         }`}
         aria-label="Main navigation"
