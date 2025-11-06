@@ -60,7 +60,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         Event Details: {artistList.map((a) => a.name).join(", ")} at {venueName}
       </h2>
       <div
-        className="bg-white w-52 h-52 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto"
+        className="bg-white dark:bg-gray-700 w-52 h-52 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto transition-colors duration-200"
         style={{
           backgroundImage:
             "url('https://www.grooverooster.com/images/housemusic192.png')",
@@ -73,20 +73,22 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         />
       </div>
       <div className="w-full">
-        <div className="flex items-center justify-center gap-2 text-blue text-base font-medium pb-4 border-b border-gray-200">
-          <FaRegCalendar className="text-blue text-lg" />
+        <div className="flex items-center justify-center gap-2 text-blue dark:text-blue-400 text-base font-medium pb-4 border-b border-gray-200 dark:border-gray-600 transition-colors duration-200">
+          <FaRegCalendar className="text-blue dark:text-blue-400 text-lg" />
           <span className="text-base font-medium">
             {dayOfWeek}, {dayMonth}
           </span>
         </div>
         {name && (
-          <div className="text-black text-base font-medium pt-4 ">{name}</div>
+          <div className="text-black dark:text-gray-200 text-base font-medium pt-4 transition-colors duration-200">
+            {name}
+          </div>
         )}
-        <div className="text-pink-600 text-2xl font-bold pb-4 border-b border-gray-200 py-4">
+        <div className="text-pink-600 dark:text-pink-400 text-2xl font-bold pb-4 border-b border-gray-200 dark:border-gray-600 py-4 transition-colors duration-200">
           <Artists data={artistList} />
         </div>
-        <div className="flex items-center gap-2 text-black text-base font-medium pt-6 pb-2 justify-center">
-          <FaRegBuilding className="text-gray-700 text-lg" />
+        <div className="flex items-center gap-2 text-black dark:text-gray-200 text-base font-medium pt-6 pb-2 justify-center transition-colors duration-200">
+          <FaRegBuilding className="text-gray-700 dark:text-gray-400 text-lg" />
           <span>{venueName}</span>
         </div>
         {address && (
@@ -94,9 +96,9 @@ const EventDetails = ({ event }: EventDetailsProps) => {
             rel="noreferrer"
             href={`https://www.google.com/maps/search/${venueName} ${address}`}
             target="_blank"
-            className="text-black flex items-center gap-2 justify-center no-underline hover:underline pt-2 pb-2"
+            className="text-black dark:text-gray-200 flex items-center gap-2 justify-center no-underline hover:underline pt-2 pb-2 transition-colors duration-200"
           >
-            <FaMapMarkerAlt className="text-blue-500 text-lg" />
+            <FaMapMarkerAlt className="text-blue-500 dark:text-blue-400 text-lg" />
             <span className="block text-sm leading-5">
               {formatAddress(address)}
             </span>

@@ -24,7 +24,7 @@ const MenuTrigger = ({
 }: MenuTriggerProps) => {
   return (
     <button
-      className={`cursor-pointer flex flex-col items-center justify-center gap-2 p-2 bg-transparent border-none transition-all duration-200 ease-in-out text-black visited:text-black ${className}`}
+      className={`cursor-pointer flex flex-col items-center justify-center gap-2 p-2 bg-transparent border-none transition-all duration-200 ease-in-out text-black dark:text-gray-200 visited:text-black dark:visited:text-gray-200 ${className}`}
       onClick={onClick}
       aria-label={text || "Open menu"}
     >
@@ -32,7 +32,7 @@ const MenuTrigger = ({
         <Image src={icon} alt={iconAlt} width={iconWidth} height={iconHeight} />
       )}
       {text && (
-        <span className="text-xs font-medium uppercase tracking-wider text-black">
+        <span className="text-xs font-medium uppercase tracking-wider text-black dark:text-gray-200">
           {text}
         </span>
       )}

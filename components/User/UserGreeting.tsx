@@ -30,7 +30,7 @@ const UserGreeting = () => {
     <div className="w-10">
       <Link
         href={href}
-        className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-black"
+        className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-black dark:text-gray-200"
       >
         <Image
           src={iconSrc}

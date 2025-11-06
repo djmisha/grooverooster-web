@@ -50,11 +50,11 @@ const Hamburger = () => {
 
   const menuContent = (
     <>
-      <div className="flex flex-col border-t border-gray-300">
+      <div className="flex flex-col border-t border-gray-300 dark:border-gray-600">
         <Link
           href="/"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Home size={24} />
           <span>Home</span>
@@ -62,7 +62,7 @@ const Hamburger = () => {
         <Link
           href="/artists"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Music size={24} />
           <span>Top Artists</span>
@@ -70,7 +70,7 @@ const Hamburger = () => {
         <Link
           href="/cities"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Building2 size={24} />
           <span>Events by City</span>
@@ -78,7 +78,7 @@ const Hamburger = () => {
         <Link
           href="/states"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Map size={24} />
           <span>Events by State</span>
@@ -87,7 +87,7 @@ const Hamburger = () => {
           <Link
             href="/dashboard"
             onClick={handleClose}
-            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
           >
             <LayoutDashboard size={24} />
             <span>Dashboard</span>
@@ -96,7 +96,7 @@ const Hamburger = () => {
           <Link
             href="/login"
             onClick={handleClose}
-            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 hover:bg-indigo-600/10 transition-colors duration-200"
+            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
           >
             <LogIn size={24} />
             <span>Login / Sign Up</span>
@@ -105,11 +105,11 @@ const Hamburger = () => {
       </div>
 
       {context && context.locationCtx?.length > 0 && (
-        <div className="p-4 border-t border-gray-200">
-          <span className="font-semibold text-gray-700 mb-2 block">
+        <div className="p-4 border-t border-gray-200 dark:border-gray-600">
+          <span className="font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
             Recently Viewed
           </span>
-          <ul className="space-y-2">
+          <ul className="space-y-2 text-gray-900 dark:text-gray-100">
             {context.locationCtx?.map((location) => (
               <li key={`${location.city}-${location.state}`}>
                 <LocationLink
@@ -124,7 +124,7 @@ const Hamburger = () => {
       )}
 
       <div className="flex-grow"></div>
-      <div className="p-8 border-t border-gray-200 flex flex-col items-center pb-10">
+      <div className="p-8 border-t border-gray-200 dark:border-gray-600 flex flex-col items-center pb-10">
         <Image
           width={120}
           height={120}
@@ -132,14 +132,16 @@ const Hamburger = () => {
           alt="GrooveRooster Logo"
           className="max-w-full h-auto mb-2"
         />
-        <p className="text-lg font-semibold text-gray-800">GrooveRooster</p>
+        <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+          GrooveRooster
+        </p>
       </div>
     </>
   );
 
   return (
     <>
-      <div className="flex flex-nowrap items-center justify-around relative left-0 h-15 pb-0 bg-white md:m-0">
+      <div className="flex flex-nowrap items-center justify-around relative left-0 h-15 pb-0 bg-white dark:bg-gray-900 md:m-0 transition-colors duration-200">
         <MenuTrigger
           icon="/images/icon-bars-solid.svg"
           text="Menu"

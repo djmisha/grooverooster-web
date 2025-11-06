@@ -36,17 +36,17 @@ const EventPills = ({ event, centered = false }: EventPillsProps) => {
   return (
     <div className={containerClasses}>
       {genreName && (
-        <span className="px-3 py-1 bg-gray-200 text-gray-800 text-xs font-medium rounded-full">
+        <span className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium rounded-full transition-colors duration-200">
           {genreName}
         </span>
       )}
       {sourceValue && (
-        <span className="px-3 py-1 bg-gray-200 text-gray-800 text-xs font-medium rounded-full">
+        <span className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium rounded-full transition-colors duration-200">
           {sourceValue}
         </span>
       )}
       {festivalIndicator && (
-        <span className="px-3 py-1 bg-gray-200 text-gray-800 text-xs font-medium rounded-full">
+        <span className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-medium rounded-full transition-colors duration-200">
           Festival
         </span>
       )}

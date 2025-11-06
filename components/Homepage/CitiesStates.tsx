@@ -45,13 +45,13 @@ const CitiesStates = ({
   };
 
   return (
-    <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_ul]:pl-3 [&_ul]:flex [&_ul]:flex-wrap [&_li]:w-1/2 [&_li]:py-3 md:[&_li]:w-1/4 [&_a]:no-underline [&_a]:text-black">
+    <div className="[&_ul]:list-none [&_ul]:m-0 [&_ul]:p-0 [&_ul]:pl-3 [&_ul]:flex [&_ul]:flex-wrap [&_li]:w-1/2 [&_li]:py-3 md:[&_li]:w-1/4 [&_a]:no-underline [&_a]:text-black dark:[&_a]:text-gray-200 [&_a]:transition-colors [&_a]:duration-200">
       {!showStatesOnly && (
         <>
           <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl text-lg mb-4 px-2">
             Popular Dance Music Cities in North America
           </h2>
-          <p className="mb-4 px-2">
+          <p className="mb-4 px-2 text-gray-900 dark:text-gray-300">
             Explore electronic dance music events in major North American
             cities. From nightclub shows to festivals and DJ performances, find
             upcoming events in your city or plan your next music destination.
