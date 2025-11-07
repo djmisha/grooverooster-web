@@ -34,17 +34,17 @@ const UserGreeting = () => {
         className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-black dark:text-gray-200"
       >
         {iconType === "default" ? (
-          <UserIcon size={29} className="mt-2 text-black dark:text-gray-200" />
+          <UserIcon size={24} className="mt-0 text-black dark:text-gray-200" />
         ) : iconSrc ? (
           <Image
             src={iconSrc}
             alt={iconAlt}
-            width={29}
-            height={29}
+            width={24}
+            height={24}
             className="mt-2 rounded-full"
           />
         ) : (
-          <UserIcon size={29} className="mt-2 text-black dark:text-gray-200" />
+          <UserIcon size={24} className="mt-2 text-black dark:text-gray-200" />
         )}
         {text && <div className="text-black dark:text-gray-200">{text}</div>}
       </Link>
