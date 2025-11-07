@@ -40,25 +40,22 @@ const Hero = () => {
         </svg>
       </div>
 
-      {/* Content container - moved up by 80px */}
+      
       <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl -mt-20">
         <div className="space-y-6 md:space-y-8">
-          {/* Headline - left-aligned, single line, thin font */}
+      
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-left text-white leading-tight">
             Find Music Events.
           </h1>
 
-          {/* Search box */}
           <div className="w-full bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/20">
             <HomeSearchAutocomplete />
           </div>
 
-          {/* Separator with padding */}
           <div className="flex items-center justify-center py-4">
             <div className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent w-full max-w-xs" />
           </div>
 
-          {/* Location button - limited width on desktop */}
           <div className="w-full md:max-w-md md:mx-auto">
             <QuickLocationFinder />
           </div>
