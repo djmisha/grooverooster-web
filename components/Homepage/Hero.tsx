@@ -40,10 +40,8 @@ const Hero = () => {
         </svg>
       </div>
 
-      
       <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl -mt-20">
         <div className="space-y-6 md:space-y-8">
-      
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-left text-white leading-tight">
             Find Music Events.
           </h1>
