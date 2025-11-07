@@ -100,72 +100,87 @@ const LocationManager = ({
 
   return (
     <div
-      className={`flex flex-col gap-6 bg-white  rounded-lg p-0 max-w-full w-full m-0 md:gap-4 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 ${className}`}
+      className={`flex flex-col gap-6 bg-white rounded-lg p-0 max-w-full w-full m-0 md:gap-4 dark:bg-gray-800 dark:text-gray-100 ${className}`}
     >
       {title && (
-        <h3 className="font-normal mt-10 text-lg text-blue md:inline-block m-0 text-2xl font-bold text-blue-600 pb-2 border-b-2 border-blue-500 tracking-tight">
+        <h3 className="font-normal mt-10 text-lg md:inline-block m-0 text-2xl font-bold text-gray-900 dark:text-gray-100 pb-2 border-b-2 border-gray-300 dark:border-gray-600 tracking-tight">
           {title}
         </h3>
       )}
 
       {showCurrentLocation && currentLocation && (
-        <div className="flex items-center justify-between p-4 bg-blue-400 border border-gray-400 rounded-lg gap-4 md:flex-col md:items-start md:gap-3 relative">
-          <div className="flex flex-col gap-1 flex-1 md:w-full">
-            <span className="text-sm font-semibold text-blue-700 uppercase tracking-wide">
-              Current Location:
+        <div className="flex flex-col p-5 bg-blue-50 dark:bg-gray-700 border-2 border-blue-300 dark:border-blue-600 rounded-lg gap-4 relative">
+          <div className="flex flex-col gap-2 flex-1">
+            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
+              Selected Location
             </span>
-            <div className="flex items-center gap-4 flex-wrap md:gap-3">
-              <span className="text-lg font-medium text-gray-900">
-                {formatLocationDisplay(currentLocation)}
-              </span>
-              {hasValidLocationUrl(currentLocation) && (
-                <Button
-                  href={getLocationEventsUrl(currentLocation) || undefined}
-                  className="ml-2"
-                >
-                  View Events
-                </Button>
-              )}
-            </div>
+            <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              {formatLocationDisplay(currentLocation)}
+            </span>
           </div>
-          <button
-            type="button"
-            onClick={handleClearLocation}
-            className="absolute top-2 right-2 flex items-center justify-center w-8 h-8 bg-black text-white border-none rounded-full text-base font-bold cursor-pointer transition-all duration-200 hover:bg-red-700 hover:scale-110 active:scale-95 focus:outline-none focus:shadow-[0_0_0_3px_rgba(244,67,54,0.25)] z-10"
-            aria-label="Clear current location"
-          >
-            ✕
-          </button>
+          <div className="flex flex-wrap gap-3">
+            {hasValidLocationUrl(currentLocation) && (
+              <Button
+                href={getLocationEventsUrl(currentLocation) || undefined}
+                className="flex-1 min-w-[180px]"
+              >
+                View Events in This Location
+              </Button>
+            )}
+            <Button
+              onClick={handleClearLocation}
+              variant="secondary"
+              className="flex-1 min-w-[140px]"
+              aria-label="Clear location"
+            >
+              Clear Location
+            </Button>
+          </div>
         </div>
       )}
 
       {hasError && (
         <div
-          className="p-3 px-4 bg-red-100 text-red-800 border border-red-200 rounded-lg text-sm leading-6 contrast-[high]:border-2 dark:bg-red-900/50 dark:text-red-200 dark:border-red-700"
+          className="p-3 px-4 bg-red-100 text-red-800 border border-red-200 rounded-lg text-sm leading-6 dark:bg-red-900/50 dark:text-red-200 dark:border-red-700"
           role="alert"
         >
           {errorMessage}
         </div>
       )}
 
-      <div className="flex flex-col gap-6 md:gap-4">
-        {showLocationSwitch && (
-          <div className="flex flex-col gap-3">
-            <div className="text-base font-medium text-gray-600 mb-2">
-              Search for a location:
+      <div className="flex flex-col gap-6 md:gap-5">
+        {showShareButton && (
+          <div className="flex flex-col gap-3 p-5 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+            <div className="flex flex-col gap-2">
+              <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                📍 Automatic Location Detection
+              </h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Click the button below to automatically detect your location
+                using your browser&apos;s location services.
+              </p>
             </div>
-            <LocationSwitch
-              onLocationChanged={handleLocationChanged}
-              placeholder="Search cities or states..."
+            <ShareLocation
+              onLocationDetected={handleLocationDetected}
+              onLocationError={handleLocationError}
             />
           </div>
         )}
 
-        {showShareButton && (
-          <div className="flex flex-col gap-3">
-            <ShareLocation
-              onLocationDetected={handleLocationDetected}
-              onLocationError={handleLocationError}
+        {showLocationSwitch && (
+          <div className="flex flex-col gap-3 p-5 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+            <div className="flex flex-col gap-2">
+              <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                🔍 Manual Location Search
+              </h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Type a city name below to search and select your location
+                manually.
+              </p>
+            </div>
+            <LocationSwitch
+              onLocationChanged={handleLocationChanged}
+              placeholder="Search cities or states..."
             />
           </div>
         )}

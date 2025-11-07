@@ -28,8 +28,10 @@ const Button = ({
     "inline-block px-6 py-3 text-base font-medium text-center no-underline rounded-full transition-all duration-200 ease-in-out cursor-pointer hover:-translate-y-0.5 hover:shadow-lg";
 
   const variantClasses = {
-    primary: "bg-pink text-white border-none hover:bg-pink/90",
-    secondary: "bg-transparent text-blue border-2 border-blue hover:bg-blue/10",
+    primary:
+      "bg-pink text-white border-none hover:bg-pink/90 dark:bg-pink dark:hover:bg-pink/80",
+    secondary:
+      "bg-transparent text-blue dark:text-blue-400 border-2 border-blue dark:border-blue-400 hover:bg-blue/10 dark:hover:bg-blue-400/10",
   };
 
   const buttonClass = [
