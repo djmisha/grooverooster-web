@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useAppContext } from "@/features/AppContext";
+import { User as UserIcon } from "lucide-react";
 
 const UserGreeting = () => {
   const { profile } = useAppContext();
-  const DEFAULT_ICON = "/images/icon-user.svg";
 
   const renderContent = () => {
     if (!profile) {
       return {
         href: "/login",
-        iconSrc: DEFAULT_ICON,
+        iconType: "default" as const,
         iconAlt: "Login",
         text: "Login",
       };
@@ -18,28 +18,35 @@ const UserGreeting = () => {
 
     return {
       href: "/dashboard",
-      iconSrc: profile.avatar_url || DEFAULT_ICON,
+      iconType: "avatar" as const,
+      iconSrc: profile.avatar_url,
       iconAlt: profile.username || "Profile",
       text: profile.username || "Profile",
     };
   };
 
-  const { href, iconSrc, iconAlt, text } = renderContent();
+  const { href, iconType, iconSrc, iconAlt, text } = renderContent();
 
   return (
     <div className="w-10">
       <Link
         href={href}
-        className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-black"
+        className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-black dark:text-gray-200"
       >
-        <Image
-          src={iconSrc}
-          alt={iconAlt}
-          width={29}
-          height={29}
-          className="mt-2 rounded-full"
-        />
-        {text && <div>{text}</div>}
+        {iconType === "default" ? (
+          <UserIcon size={29} className="mt-2 text-black dark:text-gray-200" />
+        ) : iconSrc ? (
+          <Image
+            src={iconSrc}
+            alt={iconAlt}
+            width={29}
+            height={29}
+            className="mt-2 rounded-full"
+          />
+        ) : (
+          <UserIcon size={29} className="mt-2 text-black dark:text-gray-200" />
+        )}
+        {text && <div className="text-black dark:text-gray-200">{text}</div>}
       </Link>
     </div>
   );

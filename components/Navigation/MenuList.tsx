@@ -33,12 +33,12 @@ export const MenuList = ({
   return (
     <div
       id={`${text}-list`}
-      className={`bg-white fixed top-0 left-0 right-0 h-screen z-[9999] px-4 py-0 border-b border-gray-300 transition-all duration-300 ease-in-out ${
+      className={`bg-white dark:bg-gray-900 fixed top-0 left-0 right-0 h-screen z-[9999] px-4 py-0 border-b border-gray-300 dark:border-gray-700 transition-all duration-300 ease-in-out ${
         isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
       style={{ overflowY: "auto", maxHeight: "100vh" }}
     >
-      <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+      <h2 className="font-normal mt-10 text-lg text-blue dark:text-gray-100 md:inline-block md:text-xl">
         {title}
       </h2>
       {itemsToRender.map((item, index) => {
@@ -60,11 +60,11 @@ export const MenuList = ({
               if (setSearchTerm) setSearchTerm(searchValue);
               onClose(e);
             }}
-            className="flex justify-between items-center cursor-pointer py-2.5 px-4 text-base font-normal text-black border-b border-gray-300 transition-colors duration-200 ease-in hover:bg-indigo-600/10 bg-white"
+            className="flex justify-between items-center cursor-pointer py-2.5 px-4 text-base font-normal text-black dark:text-gray-200 border-b border-gray-300 dark:border-gray-700 transition-colors duration-200 ease-in hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 bg-white dark:bg-gray-900"
           >
             <div>{itemName}</div>
             {itemCount && (
-              <div className="bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold ml-2">
+              <div className="bg-black dark:bg-gray-700 text-white dark:text-gray-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold ml-2">
                 {itemCount}
               </div>
             )}

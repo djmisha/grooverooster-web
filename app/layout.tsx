@@ -2,6 +2,7 @@ import { AppProvider } from "@/features/AppContext";
 import { Poppins } from "next/font/google";
 import ToastProvider from "@/components/ui/ToastProvider.sonner";
 import SkipLink from "@/components/SkipLink/SkipLink";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "../styles/tailwind.css";
 import "../styles/global.scss";
 import type { Metadata } from "next";
@@ -33,13 +34,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
-        <SkipLink />
-        <AppProvider>
-          {children}
-          <ToastProvider />
-        </AppProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <SkipLink />
+          <AppProvider>
+            {children}
+            <ToastProvider />
+          </AppProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

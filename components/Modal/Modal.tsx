@@ -84,12 +84,12 @@ const Modal = ({ component: Component, onClose }: ModalProps) => {
     >
       <div
         ref={modalRef}
-        className="bg-white rounded-lg relative max-w-lg w-full max-h-[calc(100vh-40px)] overflow-y-auto md:p-6 p-3 md:max-h-[70vh]"
+        className="bg-white dark:bg-gray-800 rounded-lg relative max-w-lg w-full max-h-[calc(100vh-40px)] overflow-y-auto md:p-6 p-3 md:max-h-[70vh] transition-colors duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           ref={closeButtonRef}
-          className="absolute top-2.5 right-2.5 bg-transparent border-none text-2xl cursor-pointer w-12 h-12"
+          className="absolute top-2.5 right-2.5 bg-transparent border-none text-gray-600 dark:text-gray-300 text-2xl cursor-pointer w-12 h-12 hover:text-gray-900 dark:hover:text-white transition-colors"
           onClick={onClose}
           aria-label="Close modal"
         >

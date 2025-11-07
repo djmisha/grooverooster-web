@@ -5,6 +5,18 @@ import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
 
+const inputClasses = [
+  "w-full px-4 py-3 border rounded-md text-base transition-colors duration-150",
+  "border-gray-300 dark:border-gray-600",
+  "bg-white dark:bg-gray-700",
+  "text-gray-900 dark:text-gray-100",
+  "focus:border-indigo-600 dark:focus:border-indigo-400",
+  "focus:outline-none focus:ring-4",
+  "focus:ring-indigo-100 dark:focus:ring-indigo-900",
+  "disabled:bg-gray-100 dark:disabled:bg-gray-800",
+  "disabled:cursor-not-allowed",
+].join(" ");
+
 export default function Login() {
   const router = useRouter();
   const { supabase } = useAppContext();
@@ -53,13 +65,13 @@ export default function Login() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="mb-16 w-full max-w-sm bg-white rounded-lg shadow-lg p-4 md:p-8">
-        <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-2xl font-semibold text-center mb-6 text-gray-900">
+      <div className="mb-16 w-full max-w-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 md:p-8 transition-colors duration-200">
+        <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-2xl font-semibold text-center mb-6 text-gray-900 dark:text-gray-100">
           Login
         </h1>
 
         {errorMessage && (
-          <div className="p-3 mb-4 bg-red-50 text-red-800 rounded-md text-sm text-center border border-red-200">
+          <div className="p-3 mb-4 bg-red-50 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-md text-sm text-center border border-red-200 dark:border-red-800">
             {errorMessage}
           </div>
         )}
@@ -68,7 +80,7 @@ export default function Login() {
           <div className="mb-5">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             >
               Email Address
             </label>
@@ -77,7 +89,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md text-base transition-colors duration-150 focus:border-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className={inputClasses}
               placeholder="your@email.com"
               disabled={isLoggingIn}
               aria-required="true"
@@ -88,7 +100,7 @@ export default function Login() {
           <div className="mb-5">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             >
               Password
             </label>
@@ -97,7 +109,7 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md text-base transition-colors duration-150 focus:border-indigo-600 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className={inputClasses}
               placeholder="••••••••"
               disabled={isLoggingIn}
               aria-required="true"
@@ -114,7 +126,7 @@ export default function Login() {
             <button
               type="button"
               onClick={logIn}
-              className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 bg-pink text-white hover:bg-pink/90 disabled:opacity-70 disabled:cursor-not-allowed"
               disabled={isLoggingIn || !captchaToken}
             >
               {isLoggingIn ? "Logging in..." : "Log in"}
@@ -123,7 +135,7 @@ export default function Login() {
         </form>
 
         <p
-          className="text-center text-indigo-600 cursor-pointer mt-4"
+          className="text-center text-pink dark:text-pink cursor-pointer mt-4 hover:underline"
           onClick={() => router.push("/passwordreset")}
         >
           Forgot your password?

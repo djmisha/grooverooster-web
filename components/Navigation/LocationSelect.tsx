@@ -5,18 +5,12 @@ import MenuOverlay from "../ui/MenuOverlay";
 import MenuTrigger from "../ui/MenuTrigger";
 
 interface LocationSelectProps {
-  image: string;
   text: string;
   title: string;
   navItems: string[];
 }
 
-const LocationSelect = ({
-  image,
-  text,
-  title,
-  navItems,
-}: LocationSelectProps) => {
+const LocationSelect = ({ text, title, navItems }: LocationSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -37,10 +31,9 @@ const LocationSelect = ({
   return (
     <div className="relative">
       <MenuTrigger
-        icon={image}
+        icon="map"
         text={"Location"}
         onClick={() => setIsOpen(true)}
-        iconAlt={text}
       />
       <MenuOverlay isOpen={isOpen} onClose={handleClose}>
         <div className="p-4 h-full flex flex-col">

@@ -83,7 +83,7 @@ export const EventCard = ({
           ...artistList.slice(0, 2),
           {
             name: (
-              <span className="text-gray-500 text-sm font-normal inline">
+              <span className="text-gray-500 dark:text-gray-400 text-sm font-normal inline">
                 ... {artistList.length - 2} more artists
               </span>
             ),
@@ -120,11 +120,11 @@ export const EventCard = ({
         currentUrl={typeof window !== "undefined" ? window.location.href : ""}
       />
       <div
-        className={`relative transition-all duration-100 ease-out text-left py-5 px-4 mx-3 mb-6 md:m-0 md:p-5 bg-white top-0 flex flex-col overflow-hidden border border-gray-200 cursor-pointer shadow-md transform-none rounded-lg h-auto ${
+        className={`relative transition-all duration-100 ease-out text-left py-5 px-4 mx-3 mb-6 md:m-0 md:p-5 bg-white dark:bg-gray-800 top-0 flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700 cursor-pointer shadow-md dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.3)] transform-none rounded-lg h-auto ${
           !isVisible ? "hidden" : ""
         } ${
           eventSource === "ticketmaster" ? "border-2 border-pink-500" : ""
-        } md:hover:-translate-y-0.5 md:hover:scale-[1.005] md:hover:shadow-lg`}
+        } md:hover:-translate-y-0.5 md:hover:scale-[1.005] md:hover:shadow-lg dark:md:hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.4)]`}
         itemScope
         itemType="http://schema.org/Event"
         onClick={handleModalOpen}
@@ -153,7 +153,7 @@ export const EventCard = ({
 
               {name && (
                 <span
-                  className="text-black block whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%] mt-1"
+                  className="text-black dark:text-gray-200 block whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%] mt-1"
                   itemProp="name"
                 >
                   {name}
@@ -184,7 +184,7 @@ export const EventCard = ({
             </div>
 
             <div
-              className="flex items-center gap-2 text-sm leading-4 text-black m-0 p-0 font-medium"
+              className="flex items-center gap-2 text-sm leading-4 text-black dark:text-gray-200 m-0 p-0 font-medium"
               itemProp="location"
               itemScope
               itemType="http://schema.org/Place"

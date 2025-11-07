@@ -13,7 +13,7 @@ const CloseButton = forwardRef<HTMLButtonElement, CloseButtonProps>(
     return (
       <button
         ref={ref}
-        className={`absolute right-4 top-4 bg-transparent border-none text-2xl cursor-pointer p-2 leading-none z-[99999] hover:opacity-70 transition-opacity duration-200 ${
+        className={`absolute right-4 top-4 bg-transparent border-none text-2xl text-gray-700 dark:text-gray-300 cursor-pointer p-2 leading-none z-[99999] hover:opacity-70 transition-all duration-200 ${
           className || ""
         }`}
         onClick={onClick}

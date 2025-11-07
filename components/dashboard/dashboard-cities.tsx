@@ -86,7 +86,7 @@ function SortableLocationCard({
 
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <h3 className="font-normal text-lg text-blue md:inline-block font-semibold pt-0">
+                <h3 className="font-normal text-lg text-blue dark:text-gray-100 md:inline-block font-semibold pt-0">
                   {location.city || location.state}
                 </h3>
                 {location.isDefault && (

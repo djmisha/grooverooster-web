@@ -88,26 +88,26 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
     getStatistics();
 
   return (
-    <div className="h-15 w-[calc(100%-20px)] relative bg-white z-10 m-2.5 mb-5 md:h-16">
-      <div className="text-lg font-semibold flex flex-nowrap items-center justify-around relative left-0 z-[800] h-15 pb-0 bg-white w-full border-none md:h-12 md:justify-center md:m-0">
-        <div className="border border-light-grey w-32 uppercase bg-white text-black px-4 flex items-center gap-2 text-xs font-semibold tracking-wide hidden md:flex h-12">
-          <FaFilter className="text-xs text-black/60" />
+    <div className="h-15 w-[calc(100%-20px)] relative bg-white dark:bg-gray-900 z-10 m-2.5 mb-5 md:h-16 transition-colors duration-200">
+      <div className="text-lg font-semibold flex flex-nowrap items-center justify-around relative left-0 z-[800] h-15 pb-0 bg-white dark:bg-gray-900 w-full border-none md:h-12 md:justify-center md:m-0">
+        <div className="border border-light-grey dark:border-gray-700 w-32 uppercase bg-white dark:bg-gray-800 text-black dark:text-gray-200 px-4 flex items-center gap-2 text-xs font-semibold tracking-wide hidden md:flex h-12 transition-colors duration-200">
+          <FaFilter className="text-xs text-black/60 dark:text-gray-400" />
           <span className="whitespace-nowrap">Filter By</span>
         </div>
         <div className="flex gap-1 w-full mx-auto justify-between md:gap-4">
           <div className="flex-1 flex items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white rounded-lg shadow-[0_4px_16px_0_rgba(233,30,99,0.15)] border-2 border-pink/40 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.25)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(233,30,99,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.30)] md:border-2 md:border-pink/50"
+              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(233,30,99,0.15)] dark:shadow-[0_4px_16px_0_rgba(233,30,99,0.25)] border-2 border-pink/40 dark:border-pink/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(233,30,99,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.30)] md:border-2 md:border-pink/50 dark:md:border-pink/70"
               onClick={() => setIsDateMenuOpen(true)}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-pink md:w-10 md:h-10 hover:scale-105">
                 <FaCalendarAlt className="text-xs text-white md:text-sm" />
               </div>
               <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
+                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
                   {totalEvents.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 md:leading-tight">
+                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
                   {totalEvents === 1 ? "Date" : "Dates"}
                 </div>
               </div>
@@ -125,17 +125,17 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
           </div>
           <div className="flex-1 flex items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white rounded-lg shadow-[0_4px_16px_0_rgba(25,198,230,0.15)] border-2 border-blue/40 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.25)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(25,198,230,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.30)] md:border-2 md:border-blue/50"
+              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(25,198,230,0.15)] dark:shadow-[0_4px_16px_0_rgba(25,198,230,0.25)] border-2 border-blue/40 dark:border-blue/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(25,198,230,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.30)] md:border-2 md:border-blue/50 dark:md:border-blue/70"
               onClick={() => setIsVenueMenuOpen(true)}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-blue md:w-10 md:h-10 hover:scale-105">
                 <FaMapMarkerAlt className="text-xs text-white md:text-sm" />
               </div>
               <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
+                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
                   {totalVenues.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 md:leading-tight">
+                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
                   {totalVenues === 1 ? "Venue" : "Venues"}
                 </div>
               </div>
@@ -145,7 +145,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsVenueMenuOpen(false)}
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black">
+                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black dark:text-gray-200">
                   Venues
                 </h2>
                 <MenuList
@@ -162,17 +162,17 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
           </div>
           <div className="flex-1 flex items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white rounded-lg shadow-[0_4px_16px_0_rgba(255,152,0,0.15)] border-2 border-orange/40 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.25)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(255,152,0,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.30)] md:border-2 md:border-orange/50"
+              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(255,152,0,0.15)] dark:shadow-[0_4px_16px_0_rgba(255,152,0,0.25)] border-2 border-orange/40 dark:border-orange/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(255,152,0,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.30)] md:border-2 md:border-orange/50 dark:md:border-orange/70"
               onClick={() => setIsGenreMenuOpen(true)}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-orange md:w-10 md:h-10 hover:scale-105">
                 <FaMusic className="text-xs text-white md:text-sm" />
               </div>
               <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
+                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
                   {totalGenres.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 md:leading-tight">
+                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
                   {totalGenres === 1 ? "Genre" : "Genres"}
                 </div>
               </div>
@@ -182,7 +182,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsGenreMenuOpen(false)}
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black">
+                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black dark:text-gray-200">
                   Genres
                 </h2>
                 <MenuList
@@ -199,17 +199,17 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
           </div>
           <div className="flex-1 flex items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white rounded-lg shadow-[0_4px_16px_0_rgba(0,191,165,0.15)] border-2 border-green/40 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.25)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(0,191,165,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.30)] md:border-2 md:border-green/50"
+              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(0,191,165,0.15)] dark:shadow-[0_4px_16px_0_rgba(0,191,165,0.25)] border-2 border-green/40 dark:border-green/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(0,191,165,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.30)] md:border-2 md:border-green/50 dark:md:border-green/70"
               onClick={() => setIsPromoterMenuOpen(true)}
             >
               <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-green md:w-10 md:h-10 hover:scale-105">
                 <FaBullhorn className="text-xs text-white md:text-sm" />
               </div>
               <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
+                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
                   {totalPromoters.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 md:leading-tight">
+                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
                   {totalPromoters === 1 ? "Promoter" : "Promoters"}
                 </div>
               </div>
@@ -219,6 +219,9 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsPromoterMenuOpen(false)}
             >
               <div className="p-4 max-h-[80vh] overflow-y-auto">
+                <h2 className="font-normal mt-10 text-lg text-blue dark:text-gray-100 md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold">
+                  Promoters
+                </h2>
                 <MenuList
                   navItems={promoters}
                   navItemsWithCounts={promotersWithCounts}
