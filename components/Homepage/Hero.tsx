@@ -17,6 +17,7 @@ const Hero = () => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
+          aria-hidden="true"
         >
           <path
             fill="rgba(206, 49, 151, 0.15)"
@@ -29,6 +30,7 @@ const Hero = () => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
+          aria-hidden="true"
         >
           <path
             fill="rgba(28, 148, 165, 0.15)"
@@ -42,7 +44,7 @@ const Hero = () => {
       <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl">
         <div className="space-y-6 md:space-y-8">
           {/* Headline - left-aligned, single line, thin font */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-left text-gray-900 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-left text-gray-800 leading-tight">
             Find Music Events.
           </h1>
 
