@@ -80,6 +80,9 @@ module.exports = {
       },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in-out",
+        "gradient-shift": "gradientShift 15s ease infinite",
+        "wave-slow": "wave 20s ease-in-out infinite",
+        "wave-slower": "wave 25s ease-in-out infinite reverse",
       },
       keyframes: {
         fadeIn: {
@@ -90,6 +93,28 @@ module.exports = {
           "100%": {
             opacity: "1",
             transform: "translateY(0)",
+          },
+        },
+        gradientShift: {
+          "0%, 100%": {
+            backgroundPosition: "0% 50%",
+          },
+          "50%": {
+            backgroundPosition: "100% 50%",
+          },
+        },
+        wave: {
+          "0%, 100%": {
+            transform: "translateX(0) translateY(0)",
+          },
+          "25%": {
+            transform: "translateX(-2%) translateY(-1%)",
+          },
+          "50%": {
+            transform: "translateX(0) translateY(-2%)",
+          },
+          "75%": {
+            transform: "translateX(2%) translateY(-1%)",
           },
         },
       },
