@@ -9,52 +9,57 @@ import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
 const Hero = () => {
   return (
     <div className="relative h-dvh flex items-center justify-center overflow-hidden">
-      {/* Animated wavy gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#d0e5f5] via-[#e8d4eb] to-[#b8d5e8] animate-gradient-shift bg-[length:200%_200%]" />
-      <div className="absolute inset-0 opacity-30">
+      {/* Animated wavy gradient background - primarily dark with lighter accents */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#2d2d44] to-[#16213e] animate-gradient-shift bg-[length:200%_200%]" />
+      <div className="absolute inset-0 opacity-20">
         <svg
-          className="absolute w-full h-full"
+          className="absolute w-full h-full animate-wave-slow"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
           aria-hidden="true"
         >
           <path
-            fill="rgba(206, 49, 151, 0.15)"
+            fill="rgba(206, 49, 151, 0.3)"
             fillOpacity="1"
             d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,133.3C672,117,768,107,864,122.7C960,139,1056,181,1152,186.7C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           />
         </svg>
         <svg
-          className="absolute w-full h-full"
+          className="absolute w-full h-full animate-wave-slower"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
           aria-hidden="true"
         >
           <path
-            fill="rgba(28, 148, 165, 0.15)"
+            fill="rgba(28, 148, 165, 0.25)"
             fillOpacity="1"
             d="M0,224L48,213.3C96,203,192,181,288,176C384,171,480,181,576,197.3C672,213,768,235,864,240C960,245,1056,235,1152,218.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
           />
         </svg>
       </div>
 
-      {/* Content container */}
-      <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl">
+      {/* Content container - moved up by 80px */}
+      <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl -mt-20">
         <div className="space-y-6 md:space-y-8">
           {/* Headline - left-aligned, single line, thin font */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-left text-gray-800 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-left text-white leading-tight">
             Find Music Events.
           </h1>
 
           {/* Search box */}
-          <div className="w-full bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-lg">
+          <div className="w-full bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/20">
             <HomeSearchAutocomplete />
           </div>
 
-          {/* Location button */}
-          <div className="w-full">
+          {/* Separator with padding */}
+          <div className="flex items-center justify-center py-4">
+            <div className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent w-full max-w-xs" />
+          </div>
+
+          {/* Location button - limited width on desktop */}
+          <div className="w-full md:max-w-md md:mx-auto">
             <QuickLocationFinder />
           </div>
         </div>
