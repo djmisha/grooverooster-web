@@ -165,7 +165,7 @@ const LocationManager = ({
           />
         </div>
       )}
-    
+
       <div className="flex flex-col gap-6 md:gap-5">
         {showShareButton && (
           <div className="flex flex-col gap-3 p-5 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
