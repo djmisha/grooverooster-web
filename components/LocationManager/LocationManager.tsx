@@ -103,7 +103,7 @@ const LocationManager = ({
       className={`flex flex-col gap-6 bg-white rounded-lg p-0 max-w-full w-full m-0 md:gap-4 dark:bg-gray-800 dark:text-gray-100 ${className}`}
     >
       {title && (
-        <h3 className="font-normal mt-10 text-lg md:inline-block m-0 text-2xl font-bold text-gray-900 dark:text-gray-100 pb-2 border-b-2 border-gray-300 dark:border-gray-600 tracking-tight">
+        <h3 className="font-normal text-lg md:inline-block m-0 text-2xl font-bold text-gray-900 dark:text-gray-100 pb-2 border-b-2 border-gray-300 dark:border-gray-600 tracking-tight">
           {title}
         </h3>
       )}
@@ -124,7 +124,7 @@ const LocationManager = ({
                 href={getLocationEventsUrl(currentLocation) || undefined}
                 className="flex-1 min-w-[180px]"
               >
-                View Events in This Location
+                View Events
               </Button>
             )}
             <Button
@@ -148,6 +148,24 @@ const LocationManager = ({
         </div>
       )}
 
+      {showLocationSwitch && (
+        <div className="flex flex-col gap-3 p-5 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+          <div className="flex flex-col gap-2">
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              🔍 Manual Location Search
+            </h4>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Type a city name below to search and select your location
+              manually.
+            </p>
+          </div>
+          <LocationSwitch
+            onLocationChanged={handleLocationChanged}
+            placeholder="Search cities or states..."
+          />
+        </div>
+      )}
+    
       <div className="flex flex-col gap-6 md:gap-5">
         {showShareButton && (
           <div className="flex flex-col gap-3 p-5 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
@@ -163,24 +181,6 @@ const LocationManager = ({
             <ShareLocation
               onLocationDetected={handleLocationDetected}
               onLocationError={handleLocationError}
-            />
-          </div>
-        )}
-
-        {showLocationSwitch && (
-          <div className="flex flex-col gap-3 p-5 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
-            <div className="flex flex-col gap-2">
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                🔍 Manual Location Search
-              </h4>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                Type a city name below to search and select your location
-                manually.
-              </p>
-            </div>
-            <LocationSwitch
-              onLocationChanged={handleLocationChanged}
-              placeholder="Search cities or states..."
             />
           </div>
         )}
