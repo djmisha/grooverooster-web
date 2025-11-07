@@ -49,7 +49,7 @@ const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
 
   if (isLoading) {
     return (
-      <div className={`max-w-lg mx-auto my-8 px-4 ${className}`}>
+      <div className={`w-full ${className}`}>
         <div className="w-full h-12 bg-pink/20 animate-pulse rounded-full" />
       </div>
     );
@@ -86,8 +86,8 @@ const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
       : "Share your location";
 
   return (
-    <div className={`max-w-lg mx-auto my-8 px-4 ${className}`}>
-      <Button onClick={handleButtonClick} variant="primary">
+    <div className={`w-full ${className}`}>
+      <Button onClick={handleButtonClick} variant="primary" className="w-full">
         {buttonText}
       </Button>
     </div>
