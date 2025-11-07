@@ -101,13 +101,7 @@ export const EventCard = ({
     const numericArtistId = getFirstArtistImageId(artistList);
 
     return (
-      <div
-        className="bg-white w-28 h-28 bg-no-repeat bg-cover rounded-md mr-5"
-        style={{
-          backgroundImage:
-            "url('https://www.grooverooster.com/images/housemusic192.png')",
-        }}
-      >
+      <div className="w-28 h-28 bg-no-repeat bg-cover rounded-md mr-5">
         <ArtistImage id={numericArtistId} imageUrl={imageUrl} />
       </div>
     );

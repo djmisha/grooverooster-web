@@ -1,3 +1,5 @@
+import { HiMusicalNote } from "react-icons/hi2";
+
 interface ArtistImageProps {
   id?: number;
   imageUrl?: string;
@@ -18,20 +20,28 @@ const ArtistImage = ({ id, imageUrl, large = false }: ArtistImageProps) => {
     // If ID is provided, use the local image path with fallback
     finalUrl = `/images/artists/${id}.jpg`;
   } else {
-    // No imageUrl or ID, use fallback directly
-    finalUrl = "/images/housemusic192.png";
+    // No imageUrl or ID, show only the icon
+    finalUrl = "";
   }
 
   const sizeClasses = large ? "w-52 h-52" : "w-28 h-28";
 
   return (
     <div
-      className={`bg-white bg-cover bg-center bg-no-repeat ${sizeClasses} rounded-md mx-auto overflow-hidden`}
+      className={`relative bg-cover bg-center bg-no-repeat ${sizeClasses} rounded-md mx-auto overflow-hidden`}
       style={{
-        backgroundImage: `url('${finalUrl}'), url('/images/housemusic192.png')`,
+        backgroundImage: finalUrl ? `url('${finalUrl}')` : "none",
         backgroundSize: "cover",
       }}
-    ></div>
+    >
+      <div
+        className={`absolute inset-0 flex items-center justify-center ${
+          finalUrl ? "-z-10" : "z-10"
+        }`}
+      >
+        <HiMusicalNote className="text-gray-300 dark:text-gray-600" size={48} />
+      </div>
+    </div>
   );
 };
 

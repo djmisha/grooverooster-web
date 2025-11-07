@@ -59,13 +59,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
       >
         Event Details: {artistList.map((a) => a.name).join(", ")} at {venueName}
       </h2>
-      <div
-        className="bg-white dark:bg-gray-700 w-52 h-52 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto transition-colors duration-200"
-        style={{
-          backgroundImage:
-            "url('https://www.grooverooster.com/images/housemusic192.png')",
-        }}
-      >
+      <div className="bg-white dark:bg-gray-700 w-52 h-52 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto transition-colors duration-200">
         <ArtistImage
           id={getFirstArtistImageId(artistList)}
           imageUrl={imageUrl}
