@@ -26,7 +26,7 @@ const MenuTrigger = ({
 
     switch (icon) {
       case "menu":
-        return <Menu size={26} className="text-black dark:text-gray-200" />;
+        return <Menu size={27} className="text-black dark:text-gray-200" />;
       case "map":
         return <MapPin size={22} className="text-black dark:text-gray-200" />;
       case "user":

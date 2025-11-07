@@ -55,7 +55,7 @@ const LocationSelectModal = ({
         icon="map"
         text={displayText}
         onClick={handleOpenModal}
-        className={`mt-2 ${hasLocation ? "hasLocationTrigger" : ""}`}
+        className={`mt-1 ${hasLocation ? "hasLocationTrigger" : ""}`}
       />
 
       {isModalOpen && (

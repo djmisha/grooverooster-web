@@ -34,7 +34,7 @@ const UserGreeting = () => {
         className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-black dark:text-gray-200"
       >
         {iconType === "default" ? (
-          <UserIcon size={24} className="mt-0 text-black dark:text-gray-200" />
+          <UserIcon size={24} className="mt-1 text-black dark:text-gray-200" />
         ) : iconSrc ? (
           <Image
             src={iconSrc}
@@ -46,7 +46,7 @@ const UserGreeting = () => {
         ) : (
           <UserIcon size={24} className="mt-2 text-black dark:text-gray-200" />
         )}
-        {text && <div className="text-black dark:text-gray-200">{text}</div>}
+        {text && <div className="text-black  dark:text-gray-200">{text}</div>}
       </Link>
     </div>
   );
