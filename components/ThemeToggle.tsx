@@ -37,7 +37,7 @@ export function ThemeToggle() {
     "bg-white dark:bg-gray-800",
     "text-gray-800 dark:text-gray-200",
     "transition-all duration-200",
-    "hover:border-pink dark:hover:border-pink hover:shadow-md",
+    " hover:shadow-md",
   ].join(" ");
 
   return (

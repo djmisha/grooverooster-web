@@ -28,19 +28,20 @@ const ArtistImage = ({ id, imageUrl, large = false }: ArtistImageProps) => {
 
   return (
     <div
-      className={`relative bg-cover bg-center bg-no-repeat ${sizeClasses} rounded-md mx-auto overflow-hidden`}
-      style={{
-        backgroundImage: finalUrl ? `url('${finalUrl}')` : "none",
-        backgroundSize: "cover",
-      }}
+      className={`relative ${sizeClasses} rounded-md mx-auto overflow-hidden flex items-center justify-center ${
+        !finalUrl ? "border border-gray-200 dark:border-gray-700" : ""
+      }`}
     >
-      <div
-        className={`absolute inset-0 flex items-center justify-center ${
-          finalUrl ? "-z-10" : "z-10"
-        }`}
-      >
-        <HiMusicalNote className="text-gray-300 dark:text-gray-600" size={48} />
-      </div>
+      {/* Outer container */}
+      <HiMusicalNote className="text-gray-300 dark:text-gray-600" size={48} />
+      {/* Fallback icon */}
+      {/* Background image div */}
+      {finalUrl /* Background image div */ && (
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${finalUrl}')` }}
+        ></div>
+      )}
     </div>
   );
 };

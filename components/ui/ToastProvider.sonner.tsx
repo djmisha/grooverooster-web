@@ -8,7 +8,7 @@ import { Toaster } from "sonner";
 const ToastProvider = () => {
   return (
     <Toaster
-      position="bottom-right"
+      position="bottom-center"
       toastOptions={{
         duration: 5000,
         closeButton: false,
