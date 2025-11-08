@@ -210,6 +210,21 @@ const formatTicketMasterwithImagesArtists = (
   });
 };
 
+// Function to handle EDM Train events
+const formatEDMTrainEvents = (events: SDHMEvent[]): SDHMEvent[] => {
+  return events.map((event: SDHMEvent) => {
+    if (event.source === "edmtrain" && event.name) {
+      // Puts the event name as the artist if no match found
+      return {
+        ...event,
+        artistlist: [{ name: event.name }],
+        name: "",
+      };
+    }
+    return event;
+  });
+};
+
 /**
  * Convert a date to YYYY-MM-DD string format, handling timezone issues
  * @param {Date|string} date - Date object or date string
@@ -279,10 +294,13 @@ const processSDHMEvents = (rawEvents: SDHMEvent[], city = ""): SDHMEvent[] => {
     // Step 3: Format with local artists data and add IDs
     const withArtistsEvents = formatTicketMasterwithImagesArtists(deduped);
 
-    // Step 4: Filter out past events
-    const filteredEvents = filterPastEvents(withArtistsEvents);
+    // Step 4: Format EDM Train events
+    const withEDMTrainEvents = formatEDMTrainEvents(withArtistsEvents);
 
-    // Step 5: Add formatted date and visibility flag
+    // Step 5: Filter out past events
+    const filteredEvents = filterPastEvents(withEDMTrainEvents);
+
+    // Step 6: Add formatted date and visibility flag
     const finalEvents = addFormattedFields(filteredEvents);
 
     return finalEvents;
