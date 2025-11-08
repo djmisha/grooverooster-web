@@ -16,15 +16,7 @@ interface EventDetailsProps {
  * EventDetails component displays detailed information about an event in a modal
  */
 const EventDetails = ({ event }: EventDetailsProps) => {
-  const {
-    date,
-    artistlist,
-    name,
-    venue,
-    link,
-    source: _source,
-    imageUrl,
-  } = event;
+  const { date, artistlist, name, venue, link, source: _source, image } = event;
   // Support both old and new field names during transition
   const artistList = artistlist || event.artistList || [];
   const { name: venueName, address } = venue;
@@ -62,7 +54,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
       <div className="bg-white dark:bg-gray-700 w-52 h-52 bg-no-repeat bg-cover rounded-md mb-6 md:mb-8 mx-auto transition-colors duration-200">
         <ArtistImage
           id={getFirstArtistImageId(artistList)}
-          imageUrl={imageUrl}
+          image={image}
           large={true}
         />
       </div>

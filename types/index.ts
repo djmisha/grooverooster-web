@@ -47,7 +47,7 @@ export interface Event {
   venue: Venue;
   artistlist?: Artist[];
   artistList?: Artist[];
-  imageUrl?: string;
+  image?: string;
   description?: string;
   ticketUrl?: string;
   price?: string;

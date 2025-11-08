@@ -1,26 +1,27 @@
 import { HiMusicalNote } from "react-icons/hi2";
+import { FaTicketAlt } from "react-icons/fa"; // Importing a solid ticket icon
 
 interface ArtistImageProps {
   id?: number;
-  imageUrl?: string;
+  image?: string;
   large?: boolean;
 }
 
 /**
  * ArtistImage component displays an artist image with fallback support
  */
-const ArtistImage = ({ id, imageUrl, large = false }: ArtistImageProps) => {
+const ArtistImage = ({ id, image, large = false }: ArtistImageProps) => {
   // Determine which image to use based on props
   let finalUrl: string;
 
-  if (imageUrl) {
-    // If imageUrl is provided, use it (for remote images like Ticketmaster)
-    finalUrl = imageUrl;
+  if (image) {
+    // If image is provided, use it
+    finalUrl = image;
   } else if (id) {
     // If ID is provided, use the local image path with fallback
     finalUrl = `/images/artists/${id}.jpg`;
   } else {
-    // No imageUrl or ID, show only the icon
+    // No image or ID, show only the icon
     finalUrl = "";
   }
 
@@ -33,10 +34,16 @@ const ArtistImage = ({ id, imageUrl, large = false }: ArtistImageProps) => {
       }`}
     >
       {/* Outer container */}
-      <HiMusicalNote className="text-gray-300 dark:text-gray-600" size={48} />
-      {/* Fallback icon */}
+      <div className="relative flex items-center justify-center w-24 h-14">
+        {/* Ticket Icon */}
+        <FaTicketAlt className="text-gray-300 dark:text-gray-600 w-full h-full" />
+        {/* Music Icon as overlay */}
+        <HiMusicalNote
+          className={`absolute w-4 h-4 text-gray-300 dark:text-gray-700`}
+        />
+      </div>
       {/* Background image div */}
-      {finalUrl /* Background image div */ && (
+      {finalUrl && (
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${finalUrl}')` }}

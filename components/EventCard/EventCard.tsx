@@ -34,7 +34,7 @@ export const EventCard = ({
     source,
     festivalind,
     livestreamind,
-    imageUrl,
+    image,
   } = event;
   // Support both old and new field names during transition
   const artistList = artistlist || event.artistList || [];
@@ -102,7 +102,7 @@ export const EventCard = ({
 
     return (
       <div className="w-28 h-28 bg-no-repeat bg-cover rounded-md mr-5">
-        <ArtistImage id={numericArtistId} imageUrl={imageUrl} />
+        <ArtistImage id={numericArtistId} image={image} />
       </div>
     );
   };
