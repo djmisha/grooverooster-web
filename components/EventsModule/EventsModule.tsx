@@ -9,6 +9,7 @@ import { makePageHeadline } from "../../utils/utilities";
 import Filter from "../../components/Filter/Filter";
 import EventsFiltered from "../../components/Filter/EventsFilter";
 import EventsPagination from "../../components/EventsPagination/EventsPagination";
+import GenreNav from "../../components/GenreNav/GenreNav";
 import { useEventModalManager } from "../../hooks/useEventModal";
 import { Event, Location } from "@/types";
 
@@ -37,6 +38,7 @@ const EventsModule = ({
   const [allEvents, setAllEvents] = useState(initialEvents); // Store original events
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [lastPageBeforeFilter, setLastPageBeforeFilter] = useState(initialPage); // Remember page before filtering
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null); // Track selected genre
   const eventsPerPage = 21;
   const { city, state, id } = locationData;
   const title = makePageHeadline(city, state);
@@ -48,6 +50,7 @@ const EventsModule = ({
     if (dataFetchedRef.current === id) return;
     dataFetchedRef.current = id;
     setFilterVisible(false);
+    setSelectedGenre(null); // Reset genre selection on location change
     setCurrentPage(initialPage); // Use initial page from props
     setLastPageBeforeFilter(initialPage);
     setAllEvents(initialEvents); // Update stored original events
@@ -70,6 +73,23 @@ const EventsModule = ({
     }
   }, [searchTerm, allEvents, currentPage, filterVisible]);
 
+  // Helper function to filter events by genre
+  const filterEventsByGenre = (
+    eventsToFilter: Event[],
+    genre: string | null
+  ): Event[] => {
+    if (!genre) {
+      return eventsToFilter;
+    }
+
+    return eventsToFilter.filter((event) => {
+      if (event.genres && Array.isArray(event.genres)) {
+        return event.genres.some((g) => g.name === genre);
+      }
+      return false;
+    });
+  };
+
   // Helper function to get events for current page when not filtering
   const getPaginatedEvents = () => {
     if (filterVisible) {
@@ -80,7 +100,10 @@ const EventsModule = ({
     // When not filtering, show paginated events
     const startIndex = (currentPage - 1) * eventsPerPage;
     const endIndex = startIndex + eventsPerPage;
-    return allEvents.slice(startIndex, endIndex);
+    const baseEvents = allEvents.slice(startIndex, endIndex);
+
+    // Apply genre filter if selected
+    return filterEventsByGenre(baseEvents, selectedGenre);
   };
 
   // Get total count of visible events for pagination info
@@ -88,7 +111,28 @@ const EventsModule = ({
     if (filterVisible) {
       return events.filter((event) => event.isVisible !== false).length;
     }
+    // When genre is selected, count filtered events
+    if (selectedGenre) {
+      return filterEventsByGenre(allEvents, selectedGenre).length;
+    }
     return allEvents.length;
+  };
+
+  // Handle genre selection
+  const handleGenreSelect = (genre: string | null) => {
+    setSelectedGenre(genre);
+    // Reset to page 1 when genre changes
+    if (currentPage !== 1) {
+      setCurrentPage(1);
+      const newUrl =
+        genre === null
+          ? `/events/${locationData.slug}`
+          : `/events/${locationData.slug}`;
+      router.push(newUrl + "#top");
+    } else {
+      // Just scroll to top if already on page 1
+      window.location.href = "#top";
+    }
   };
 
   const handlePageChange = (pageNumber: number) => {
@@ -145,6 +189,14 @@ const EventsModule = ({
             setFilterVisible={setFilterVisible}
             onClearFilter={handleClearFilter}
           />
+          {/* Genre Navigation - shown below filters, above event listings */}
+          {!filterVisible && allEvents.length > 0 && (
+            <GenreNav
+              events={allEvents}
+              selectedGenre={selectedGenre}
+              onGenreSelect={handleGenreSelect}
+            />
+          )}
           <div className="p-0 pb-10 transition-all duration-300 ease-out sm:px-2.5 sm:grid sm:grid-cols-2 sm:gap-4 md:mb-5 xl:grid-cols-3">
             {displayEvents?.map((event) => {
               return (
