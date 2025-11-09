@@ -29,9 +29,7 @@ const ArtistImage = ({ id, image, large = false }: ArtistImageProps) => {
 
   return (
     <div
-      className={`relative ${sizeClasses} rounded-md mx-auto overflow-hidden flex items-center justify-center ${
-        !finalUrl ? "border border-gray-200 dark:border-gray-700" : ""
-      }`}
+      className={`relative ${sizeClasses} rounded-md mx-auto overflow-hidden flex items-center justify-center border border-gray-200 dark:border-gray-700`}
     >
       {/* Outer container */}
       <div className="relative flex items-center justify-center w-24 h-14">
@@ -39,7 +37,7 @@ const ArtistImage = ({ id, image, large = false }: ArtistImageProps) => {
         <FaTicketAlt className="text-gray-300 dark:text-gray-600 w-full h-full" />
         {/* Music Icon as overlay */}
         <HiMusicalNote
-          className={`absolute w-4 h-4 text-gray-300 dark:text-gray-700`}
+          className={`absolute w-4 h-4 text-gray-100 dark:text-gray-700`}
         />
       </div>
       {/* Background image div */}
