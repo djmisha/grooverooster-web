@@ -184,20 +184,6 @@ const formatTicketMasterwithImagesArtists = (
       event.artistlist.length === 0 &&
       event.name
     ) {
-      const matchedArtist = localArtists.find((artist) => {
-        return (
-          event.artistlist![0].name.toLowerCase() == artist.name.toLowerCase()
-        );
-      });
-
-      // If a match is found, use the local artist's name and ID for image to work
-      if (matchedArtist) {
-        return {
-          ...event,
-          artistlist: [{ name: matchedArtist.name, id: matchedArtist.id }],
-        };
-      }
-
       // puts the event name as the artist if no match found
       return {
         ...event,
