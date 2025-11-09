@@ -5,7 +5,6 @@ import {
   formatValidationError,
 } from "@/lib/validation/schemas";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
-import localArtists from "@/localArtistsDB.json";
 import setDates from "@/utils/setDates";
 import type { RateLimitResult } from "@/types/rateLimit";
 
@@ -169,22 +168,18 @@ const sortEventsByDate = (events: SDHMEvent[]): SDHMEvent[] => {
 };
 
 /**
- * Format TicketMaster events with local artists data
+ * Format TicketMaster events with event name as artist if no artists found
  * @param {Array} events - Array of events
  * @returns {Array} - Formatted events array
  */
-const formatTicketMasterwithImagesArtists = (
-  events: SDHMEvent[]
-): SDHMEvent[] => {
+const formatTicketMasterEventName = (events: SDHMEvent[]): SDHMEvent[] => {
   return events.map((event: SDHMEvent) => {
-    // Check if artistlist is not empty and event name exists (using new schema field name)
     if (
       event.source === "ticketmaster" &&
       event.artistlist &&
       event.artistlist.length === 0 &&
       event.name
     ) {
-      // puts the event name as the artist if no match found
       return {
         ...event,
         artistlist: [{ name: event.name }],
@@ -196,7 +191,7 @@ const formatTicketMasterwithImagesArtists = (
   });
 };
 
-// Function to handle EDM Train events
+// Function to handle EDM Train events with no artists
 const formatEDMTrainEvents = (events: SDHMEvent[]): SDHMEvent[] => {
   return events.map((event: SDHMEvent) => {
     if (
@@ -283,7 +278,7 @@ const processSDHMEvents = (rawEvents: SDHMEvent[], city = ""): SDHMEvent[] => {
     const deduped = removeDuplicateEvents(sorted, city);
 
     // Step 3: Format with local artists data and add IDs
-    const withArtistsEvents = formatTicketMasterwithImagesArtists(deduped);
+    const withArtistsEvents = formatTicketMasterEventName(deduped);
 
     // Step 4: Format EDM Train events
     const withEDMTrainEvents = formatEDMTrainEvents(withArtistsEvents);
