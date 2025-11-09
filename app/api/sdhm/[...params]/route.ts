@@ -231,20 +231,20 @@ const formatEDMTrainEvents = (events: SDHMEvent[]): SDHMEvent[] => {
 };
 
 /**
- * Convert a date to YYYY-MM-DD string format in UTC timezone
+ * Convert a date to YYYY-MM-DD string format, handling timezone issues
  * @param {Date|string} date - Date object or date string
- * @returns {string} - Date in YYYY-MM-DD format (UTC)
+ * @returns {string} - Date in YYYY-MM-DD format
  */
 const toDateString = (date: Date | string): string => {
   if (typeof date === "string") {
     return date.split("T")[0]; // Extract date part from ISO string
   }
 
-  // For Date objects, use UTC methods to ensure timezone-independent filtering
+  // For Date objects, use local date to avoid timezone issues
   const d = date instanceof Date ? date : new Date(date);
-  const year = d.getUTCFullYear();
-  const month = String(d.getUTCMonth() + 1).padStart(2, "0");
-  const day = String(d.getUTCDate()).padStart(2, "0");
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 };
