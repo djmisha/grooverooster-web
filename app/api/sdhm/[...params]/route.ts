@@ -181,7 +181,7 @@ const formatTicketMasterwithImagesArtists = (
     if (
       event.source === "ticketmaster" &&
       event.artistlist &&
-      event.artistlist.length > 0 &&
+      event.artistlist.length === 0 &&
       event.name
     ) {
       const matchedArtist = localArtists.find((artist) => {
@@ -217,7 +217,7 @@ const formatEDMTrainEvents = (events: SDHMEvent[]): SDHMEvent[] => {
       event.source === "edmtrain" &&
       event.name &&
       event.artistlist &&
-      event.artistlist.length > 0
+      event.artistlist.length === 0
     ) {
       // Puts the event name as the artist if no match found
       return {
