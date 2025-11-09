@@ -65,8 +65,9 @@ interface EDMTrainAPIResponse {
  * Simple wrapper for SDHM events data (processing now done on API side)
  *
  * NOTE: As of the latest update, all event processing (sorting, deduplication,
- * transformation, artist matching, and filtering) is now done on the API side
+ * transformation, artist matching) is now done on the API side
  * in /api/sdhm/[...params].js for better caching and performance.
+ * Date filtering is done client-side to respect user's local timezone.
  */
 export const processSDHMEvents = (
   processedEvents: Event[],
@@ -76,9 +77,9 @@ export const processSDHMEvents = (
     return [];
   }
 
-  // Events are already processed on the API side, just return them
-  // This function is kept for backward compatibility
-  return processedEvents;
+  // Filter events based on client's local timezone
+  // This ensures users only see events that haven't passed in their timezone
+  return filterPastEvents(processedEvents);
 };
 
 /**

@@ -231,39 +231,6 @@ const formatEDMTrainEvents = (events: SDHMEvent[]): SDHMEvent[] => {
 };
 
 /**
- * Convert a date to YYYY-MM-DD string format, handling timezone issues
- * @param {Date|string} date - Date object or date string
- * @returns {string} - Date in YYYY-MM-DD format
- */
-const toDateString = (date: Date | string): string => {
-  if (typeof date === "string") {
-    return date.split("T")[0]; // Extract date part from ISO string
-  }
-
-  // For Date objects, use local date to avoid timezone issues
-  const d = date instanceof Date ? date : new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-};
-
-/**
- * Filter out events that are past today's date
- * @param {Array} events - Array of events
- * @returns {Array} - Array with past events removed
- */
-const filterPastEvents = (events: SDHMEvent[]): SDHMEvent[] => {
-  const todayString = toDateString(new Date());
-
-  return events.filter((event) => {
-    if (!event.date) return false;
-    return toDateString(event.date) >= todayString;
-  });
-};
-
-/**
  * Add formatted date and visibility flag to events
  * @param {Array} events - Array of events
  * @returns {Array} - Array with formattedDate and isVisible fields added
@@ -282,7 +249,7 @@ const addFormattedFields = (events: SDHMEvent[]): SDHMEvent[] => {
  * Process SDHM events through the complete pipeline
  * @param {Array} rawEvents - Raw events data from SDHM API
  * @param {string} city - City name for venue normalization
- * @returns {Array} - Processed and filtered events array
+ * @returns {Array} - Processed events array (filtering happens client-side)
  */
 const processSDHMEvents = (rawEvents: SDHMEvent[], city = ""): SDHMEvent[] => {
   if (!Array.isArray(rawEvents) || rawEvents.length === 0) {
@@ -302,11 +269,9 @@ const processSDHMEvents = (rawEvents: SDHMEvent[], city = ""): SDHMEvent[] => {
     // Step 4: Format EDM Train events
     const withEDMTrainEvents = formatEDMTrainEvents(withArtistsEvents);
 
-    // Step 5: Filter out past events
-    const filteredEvents = filterPastEvents(withEDMTrainEvents);
-
-    // Step 6: Add formatted date and visibility flag
-    const finalEvents = addFormattedFields(filteredEvents);
+    // Step 5: Add formatted date and visibility flag
+    // Note: Date filtering is intentionally done on the client side to respect user's timezone
+    const finalEvents = addFormattedFields(withEDMTrainEvents);
 
     return finalEvents;
   } catch (error) {
