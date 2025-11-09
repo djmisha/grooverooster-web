@@ -213,7 +213,12 @@ const formatTicketMasterwithImagesArtists = (
 // Function to handle EDM Train events
 const formatEDMTrainEvents = (events: SDHMEvent[]): SDHMEvent[] => {
   return events.map((event: SDHMEvent) => {
-    if (event.source === "edmtrain" && event.name && event.artistlist.length > 0) {
+    if (
+      event.source === "edmtrain" &&
+      event.name &&
+      event.artistlist &&
+      event.artistlist.length > 0
+    ) {
       // Puts the event name as the artist if no match found
       return {
         ...event,
