@@ -2,6 +2,7 @@
 
 import HomeSearchAutocomplete from "../SearchAutoComplete/HomeSearchAutocomplete";
 import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
+import SoundWaveBackground from "./SoundWaveBackground";
 import { useTheme } from "next-themes";
 
 /**
@@ -21,34 +22,9 @@ const Hero = () => {
       {isDarkMode && (
         <div className="absolute inset-0 bg-gradient-to-br from-[#0f0f1e] via-[#1d1d33] to-[#0c162e] animate-gradient-shift bg-[length:200%_200%]" />
       )}
-      <div className="absolute inset-0 opacity-20">
-        <svg
-          className="absolute w-[120%] h-[120%] animate-wave-slow"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path
-            fill="rgba(206, 49, 151, 0.4)"
-            fillOpacity="1"
-            d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,133.3C672,117,768,107,864,122.7C960,139,1056,181,1152,186.7C1248,192,1344,160,1392,144L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          />
-        </svg>
-        <svg
-          className="absolute w-[120%] h-[120%] animate-wave-slower"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 320"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path
-            fill="rgba(28, 148, 165, 0.35)"
-            fillOpacity="1"
-            d="M0,224L48,213.3C96,203,192,181,288,176C384,171,480,181,576,197.3C672,213,768,235,864,240C960,245,1056,235,1152,218.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          />
-        </svg>
-      </div>
+
+      {/* Sound wave spectrum background - only visible in dark mode */}
+      <SoundWaveBackground />
 
       <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl -mt-20">
         <div className="space-y-6 md:space-y-8">

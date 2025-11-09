@@ -57,7 +57,7 @@ const Footer = () => {
           </div>
           <div className="flex flex-col gap-2 flex-1 min-w-0">
             <h3 className="font-normal mt-10 text-lg text-blue md:inline-block text-gray-700 dark:text-gray-300 mb-3 text-base">
-              Data Partners
+              Data Sources
             </h3>
             <Link
               href="https://djmisha.com"
@@ -80,6 +80,13 @@ const Footer = () => {
               className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200"
             >
               Last Fm
+            </Link>
+            <Link
+              href="https://www.ticketmaster.com"
+              target="_blank"
+              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200"
+            >
+              Ticketmaster
             </Link>
           </div>
         </div>

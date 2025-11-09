@@ -83,6 +83,9 @@ module.exports = {
         "gradient-shift": "gradientShift 15s ease infinite",
         "wave-slow": "wave 20s ease-in-out infinite",
         "wave-slower": "wave 25s ease-in-out infinite reverse",
+        "spectrum-bass": "spectrumBass 3.375s ease-in-out infinite",
+        "spectrum-mids": "spectrumMids 2.85s ease-in-out infinite",
+        "spectrum-highs": "spectrumHighs 2.4s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -115,6 +118,72 @@ module.exports = {
           },
           "75%": {
             transform: "translateX(2%) translateY(-1%)",
+          },
+        },
+        // Bass frequencies: Slower, bigger movements, more sustained
+        spectrumBass: {
+          "0%": {
+            height: "8%",
+          },
+          "20%": {
+            height: "23.4%",
+          },
+          "40%": {
+            height: "28.6%",
+          },
+          "60%": {
+            height: "20.8%",
+          },
+          "80%": {
+            height: "15.6%",
+          },
+          "100%": {
+            height: "8%",
+          },
+        },
+        // Mid frequencies: Medium movements, balanced
+        spectrumMids: {
+          "0%": {
+            height: "8%",
+          },
+          "25%": {
+            height: "18.2%",
+          },
+          "50%": {
+            height: "23.4%",
+          },
+          "75%": {
+            height: "15.6%",
+          },
+          "100%": {
+            height: "8%",
+          },
+        },
+        // High frequencies: Faster, shorter, more erratic
+        spectrumHighs: {
+          "0%": {
+            height: "8%",
+          },
+          "15%": {
+            height: "13%",
+          },
+          "30%": {
+            height: "10.4%",
+          },
+          "45%": {
+            height: "16.9%",
+          },
+          "60%": {
+            height: "11.7%",
+          },
+          "75%": {
+            height: "14.3%",
+          },
+          "90%": {
+            height: "9.1%",
+          },
+          "100%": {
+            height: "8%",
           },
         },
       },
