@@ -120,7 +120,7 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
 
   return (
     <nav
-      className="w-full bg-white dark:bg-gray-900 transition-colors duration-200 py-4"
+      className="w-full bg-white dark:bg-gray-900 transition-colors duration-200 pt-1 pb-4"
       aria-label="Genre navigation"
     >
       <div
