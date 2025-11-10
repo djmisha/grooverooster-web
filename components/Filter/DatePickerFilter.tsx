@@ -87,8 +87,8 @@ const DatePickerFilter = ({
   };
 
   return (
-    <div className="p-4 pt-6 max-h-[80vh] overflow-y-auto">
-      <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-normal text-blue">
+    <div className="p-4 pt-2 max-h-[80vh] overflow-y-auto">
+      <h2 className="font-normal mt-0 text-lg text-blue text-center md:text-xl m-0 mb-4 text-xl font-normal text-blue">
         Filter by Date
       </h2>
 
