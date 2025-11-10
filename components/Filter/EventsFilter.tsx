@@ -88,7 +88,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
     getStatistics();
 
   return (
-    <div className="h-15 w-[calc(100%-20px)] relative bg-white dark:bg-gray-900 z-10 m-2.5 mb-5 md:h-16 transition-colors duration-200">
+    <div className="h-15 w-[calc(100%-20px)] relative bg-white dark:bg-gray-900 z-10 m-2.5 mb-3 md:h-16 transition-colors duration-200">
       <div className="text-lg font-semibold flex flex-nowrap items-center justify-around relative left-0 z-[800] h-15 pb-0 bg-white dark:bg-gray-900 w-full border-none md:h-12 md:justify-center md:m-0">
         <div className="border border-light-grey dark:border-gray-700 w-32 uppercase bg-white dark:bg-gray-800 text-black dark:text-gray-200 px-4 flex items-center gap-2 text-xs font-semibold tracking-wide hidden md:flex h-12 transition-colors duration-200">
           <FaFilter className="text-xs text-black/60 dark:text-gray-400" />
