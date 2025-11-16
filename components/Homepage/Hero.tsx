@@ -2,7 +2,7 @@
 
 import HomeSearchAutocomplete from "../SearchAutoComplete/HomeSearchAutocomplete";
 import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
-import SoundWaveBackground from "./SoundWaveBackground";
+// import SoundWaveBackground from "./SoundWaveBackground";
 import { useTheme } from "next-themes";
 
 /**
