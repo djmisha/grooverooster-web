@@ -25,11 +25,11 @@ const ArtistImage = ({ id, image, large = false }: ArtistImageProps) => {
     finalUrl = "";
   }
 
-  const sizeClasses = large ? "w-52 h-52" : "w-28 h-28";
+  const sizeClasses = large ? "w-52 h-52" : "w-full h-full";
 
   return (
     <div
-      className={`relative ${sizeClasses} rounded-md mx-auto overflow-hidden flex items-center justify-center border border-gray-200 dark:border-gray-700`}
+      className={`relative ${sizeClasses} mx-auto overflow-hidden flex items-center justify-center `}
     >
       {/* Outer container */}
       <div className="relative flex items-center justify-center w-24 h-14">

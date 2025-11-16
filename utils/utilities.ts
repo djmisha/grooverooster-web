@@ -262,3 +262,23 @@ export const makeGenresWithCounts = (data: Event[]): FilterItemWithCount[] => {
       count: genreCounts[genre],
     }));
 };
+
+export const makeArtistsWithCounts = (data: Event[]): FilterItemWithCount[] => {
+  const artistCounts: Record<string, number> = {};
+  data.forEach((item) => {
+    // Support both old and new field names
+    const artistList = item.artistlist || item.artistList || [];
+    artistList.forEach((artist) => {
+      if (artist.name) {
+        artistCounts[artist.name] = (artistCounts[artist.name] || 0) + 1;
+      }
+    });
+  });
+
+  return Object.keys(artistCounts)
+    .sort()
+    .map((artist) => ({
+      name: artist,
+      count: artistCounts[artist],
+    }));
+};

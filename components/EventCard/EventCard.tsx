@@ -77,14 +77,25 @@ export const EventCard = ({
     }
   };
 
+  /**
+   * Checks if event name matches the first artist name exactly
+   * @returns {boolean} True if event name should be hidden
+   */
+  const shouldHideEventName = (): boolean => {
+    if (!name || artistList.length === 0) return false;
+    const firstArtistName = artistList[0]?.name;
+    if (!firstArtistName || typeof firstArtistName !== "string") return false;
+    return name.trim().toLowerCase() === firstArtistName.trim().toLowerCase();
+  };
+
   const truncatedArtistList =
     artistList.length > 2
       ? ([
           ...artistList.slice(0, 2),
           {
             name: (
-              <span className="text-gray-500 dark:text-gray-400 text-sm font-normal inline">
-                ... {artistList.length - 2} more artists
+              <span className="text-gray-400 dark:text-gray-500 text-xs font-normal inline">
+                + {artistList.length - 2} more artists
               </span>
             ),
           },
@@ -101,7 +112,7 @@ export const EventCard = ({
     const numericArtistId = getFirstArtistImageId(artistList);
 
     return (
-      <div className="w-28 h-28 bg-no-repeat bg-cover rounded-md mr-5">
+      <div className="w-40 h-40 flex-shrink-0 bg-no-repeat bg-cover">
         <ArtistImage id={numericArtistId} image={image} />
       </div>
     );
@@ -114,7 +125,7 @@ export const EventCard = ({
         currentUrl={typeof window !== "undefined" ? window.location.href : ""}
       />
       <div
-        className={`relative transition-all duration-100 ease-out text-left py-5 px-4 mx-3 mb-6 md:m-0 md:p-5 bg-white dark:bg-gray-800 top-0 flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700 cursor-pointer shadow-md dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.3)] transform-none rounded-lg h-auto ${
+        className={`relative transition-all duration-100 ease-out text-left mx-3 mb-6 md:m-0 bg-white dark:bg-gray-800 top-0 flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700 cursor-pointer shadow-md dark:shadow-[0_4px_6px_-1px_rgba(0,0,0,0.3)] transform-none rounded-lg h-auto ${
           !isVisible ? "hidden" : ""
         } ${
           eventSource === "ticketmaster" ? "border-2 border-pink-500" : ""
@@ -127,69 +138,73 @@ export const EventCard = ({
         tabIndex={0}
         aria-label={`View details for ${artistList.map((a) => a.name).join(", ")} at ${venueName} on ${dayMonth}`}
       >
-        <div className="flex">
+        {/* Top Section - Image and Event Info */}
+        <div className="flex p-0">
           <ArtistImageWrapper />
-          <div className="w-[calc(100%-140px)] flex flex-col justify-between gap-2.5 h-auto">
-            <div>
-              <div className="flex justify-between items-center w-full">
-                <div
-                  className="text-sm leading-7 font-medium flex items-center gap-2 m-0 p-0"
-                  style={{ color: "#1c94a5" }}
-                  itemProp="startDate"
-                  content={daySchema}
-                >
-                  <FaRegCalendar className="text-current" />
-                  <div>
-                    {dayOfWeek}, {dayMonth}
-                  </div>
-                </div>
-              </div>
-
-              {name && (
-                <span
-                  className="text-black dark:text-gray-200 block whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%] mt-1"
-                  itemProp="name"
-                >
-                  {name}
-                </span>
-              )}
-              <div className="flex">
-                {festivalInd && (
-                  <div className="flex items-center gap-1 text-orange-500 text-xs font-medium mr-2.5">
-                    <FaUsers className="text-current text-xs" />
-                    <span>Festival</span>
-                  </div>
-                )}
-
-                {livestreamInd && (
-                  <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
-                    <FaVideo className="text-current text-xs" />
-                    <span>Stream</span>
-                  </div>
-                )}
-              </div>
-            </div>
+          <div className="flex-1 p-2 pr-4 pl-4 flex flex-col justify-center gap-2">
+            {name && !shouldHideEventName() && (
+              <span
+                className="text-gray-400 dark:text-gray-600 block text-sm font-medium"
+                itemProp="name"
+              >
+                {name}
+              </span>
+            )}
 
             <div
-              className="break-anywhere font-semibold text-xl leading-6 text-left relative pb-2.5 m-0 p-0 md:pb-2.5"
+              className="break-anywhere font-semibold text-xl leading-6 text-left"
               itemProp="name"
             >
               <Artists data={truncatedArtistList} />
             </div>
 
-            <div
-              className="flex items-center gap-2 text-sm leading-4 text-black dark:text-gray-200 m-0 p-0 font-medium"
-              itemProp="location"
-              itemScope
-              itemType="http://schema.org/Place"
-            >
-              <FaRegBuilding className="text-current" />
-              <span itemProp="name">{venueName}</span>
+            <div className="flex gap-2">
+              {festivalInd && (
+                <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
+                  <FaUsers className="text-current text-xs" />
+                  <span>Festival</span>
+                </div>
+              )}
+
+              {livestreamInd && (
+                <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
+                  <FaVideo className="text-current text-xs" />
+                  <span>Stream</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
-        <div className="mt-6">
-          <EventPills event={event} />
+
+        {/* Separator Line */}
+        <div className="border-t border-gray-200 dark:border-gray-700"></div>
+
+        {/* Bottom Section - Date, Venue, Tags */}
+        <div className="px-4 py-6 flex flex-col gap-3">
+          <div
+            className="text-sm leading-7 font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400"
+            itemProp="startDate"
+            content={daySchema}
+          >
+            <FaRegCalendar className="text-gray-600 dark:text-gray-400" />
+            <div>
+              {dayOfWeek}, {dayMonth}
+            </div>
+          </div>
+
+          <div
+            className="flex items-center gap-2 text-sm leading-4 text-gray-600 dark:text-gray-400 font-medium"
+            itemProp="location"
+            itemScope
+            itemType="http://schema.org/Place"
+          >
+            <FaRegBuilding className="text-gray-600 dark:text-gray-400" />
+            <span itemProp="name">{venueName}</span>
+          </div>
+
+          <div className="mt-4">
+            <EventPills event={event} />
+          </div>
         </div>
       </div>
       {isModalOpen && (

@@ -173,9 +173,9 @@ const EventsModule = ({
         />
       )}
       <div className="flex flex-col md:p-5 md:flex-row-reverse" id="top">
-        <section className="md:w-full md:pb-20 [&_h1]:border-none [&_h1]:text-center [&_h1]:pb-2.5 [&_h1]:leading-tight">
+        <section className="md:w-full md:pb-20 [&_h1]:border-none [&_h1]:text-left [&_h1]:pb-2.5 [&_h1]:leading-tight">
           <h1
-            className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px]"
+            className="mt-[15px] text-[16px] pl-2 text-blue text-left font-normal md:mt-[15px] md:block md:text-[20px]"
             id="top"
           >
             {title}

@@ -149,7 +149,7 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
             ${
               selectedGenre === null
                 ? "bg-pink text-white shadow-md hover:bg-pink/90"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700"
             }
           `}
           aria-label="Show all genres"
@@ -172,7 +172,7 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
               ${
                 selectedGenre === genre
                   ? "bg-pink text-white shadow-md hover:bg-pink/90"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700"
               }
             `}
             aria-label={`Filter by ${genre}`}

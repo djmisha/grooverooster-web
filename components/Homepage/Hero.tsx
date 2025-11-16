@@ -24,7 +24,7 @@ const Hero = () => {
       )}
 
       {/* Sound wave spectrum background - only visible in dark mode */}
-      <SoundWaveBackground />
+      {/* <SoundWaveBackground /> */}
 
       <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl -mt-20">
         <div className="space-y-6 md:space-y-8">

@@ -1,17 +1,17 @@
 import {
   makeVenues,
   makePromoters,
-  makeGenres,
+  makeArtists,
   makeVenuesWithCounts,
   makePromotersWithCounts,
-  makeGenresWithCounts,
+  makeArtistsWithCounts,
 } from "../../utils/utilities";
 import {
   FaCalendarAlt,
   FaMapMarkerAlt,
-  FaMusic,
+  FaUser,
   FaFilter,
-  FaBullhorn,
+  FaRecycle,
 } from "react-icons/fa";
 import { useState } from "react";
 import MenuOverlay from "../ui/MenuOverlay";
@@ -30,16 +30,16 @@ interface EventsFilterProps {
 const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
   const [isDateMenuOpen, setIsDateMenuOpen] = useState(false);
   const [isVenueMenuOpen, setIsVenueMenuOpen] = useState(false);
-  const [isGenreMenuOpen, setIsGenreMenuOpen] = useState(false);
+  const [isArtistMenuOpen, setIsArtistMenuOpen] = useState(false);
   const [isPromoterMenuOpen, setIsPromoterMenuOpen] = useState(false);
 
   const venues = makeVenues(events ?? []);
-  const genres = makeGenres(events ?? []);
+  const artists = makeArtists(events ?? []);
   const promoters = makePromoters(events ?? []);
 
   // Get items with counts for display
   const venuesWithCounts = makeVenuesWithCounts(events ?? []);
-  const genresWithCounts = makeGenresWithCounts(events ?? []);
+  const artistsWithCounts = makeArtistsWithCounts(events ?? []);
   const promotersWithCounts = makePromotersWithCounts(events ?? []);
 
   // Calculate statistics from events data
@@ -48,7 +48,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
       return {
         totalEvents: 0,
         totalVenues: 0,
-        totalGenres: 0,
+        totalArtists: 0,
         totalPromoters: 0,
       };
     }
@@ -58,7 +58,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
 
     // Count unique venues
     const uniqueVenues = new Set();
-    const uniqueGenres = new Set();
+    const uniqueArtists = new Set();
 
     visibleEvents.forEach((event) => {
       // Count unique venues
@@ -66,48 +66,45 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
         uniqueVenues.add(event.venue.name);
       }
 
-      // Count unique genres
-      if (event.genres && Array.isArray(event.genres)) {
-        event.genres.forEach((genre) => {
-          if (genre.name) {
-            uniqueGenres.add(genre.name);
-          }
-        });
-      }
+      // Count unique artists
+      const artistList = event.artistlist || event.artistList || [];
+      artistList.forEach((artist) => {
+        if (artist.name) {
+          uniqueArtists.add(artist.name);
+        }
+      });
     });
 
     return {
       totalEvents: visibleEvents.length,
       totalVenues: uniqueVenues.size,
-      totalGenres: uniqueGenres.size,
+      totalArtists: uniqueArtists.size,
       totalPromoters: promoters.length,
     };
   };
 
-  const { totalEvents, totalVenues, totalGenres, totalPromoters } =
+  const { totalEvents, totalVenues, totalArtists, totalPromoters } =
     getStatistics();
 
   return (
-    <div className="h-15 w-[calc(100%-20px)] relative bg-white dark:bg-gray-900 z-10 m-2.5 mb-3 md:h-16 transition-colors duration-200">
-      <div className="text-lg font-semibold flex flex-nowrap items-center justify-around relative left-0 z-[800] h-15 pb-0 bg-white dark:bg-gray-900 w-full border-none md:h-12 md:justify-center md:m-0">
-        <div className="border border-light-grey dark:border-gray-700 w-32 uppercase bg-white dark:bg-gray-800 text-black dark:text-gray-200 px-4 flex items-center gap-2 text-xs font-semibold tracking-wide hidden md:flex h-12 transition-colors duration-200">
-          <FaFilter className="text-xs text-black/60 dark:text-gray-400" />
+    <div className="relative w-[calc(100%-20px)] m-2.5 mb-3 bg-white dark:bg-gray-900 transition-colors duration-200 z-10">
+      <div className="relative flex flex-nowrap items-center justify-around w-full pb-0 bg-white dark:bg-gray-900 text-lg font-semibold border-none left-0 z-[800] md:justify-center md:m-0">
+        <div className="hidden h-12 w-32 items-center gap-2 border border-light-grey dark:border-gray-700 bg-white dark:bg-gray-800 px-4 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-200 transition-colors duration-200 md:flex">
+          <FaFilter className="text-xs text-gray-400 dark:text-gray-400" />
           <span className="whitespace-nowrap">Filter By</span>
         </div>
-        <div className="flex gap-1 w-full mx-auto justify-between md:gap-4">
-          <div className="flex-1 flex items-center justify-center">
+        <div className="flex w-full mx-auto justify-between gap-1 md:gap-4">
+          <div className="flex flex-1 items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(233,30,99,0.15)] dark:shadow-[0_4px_16px_0_rgba(233,30,99,0.25)] border-2 border-pink/40 dark:border-pink/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(233,30,99,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(233,30,99,0.30)] md:border-2 md:border-pink/50 dark:md:border-pink/70"
+              className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
               onClick={() => setIsDateMenuOpen(true)}
             >
-              <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-pink md:w-10 md:h-10 hover:scale-105">
-                <FaCalendarAlt className="text-xs text-white md:text-sm" />
-              </div>
-              <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
+              <FaCalendarAlt className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+              <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
+                <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
                   {totalEvents.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
+                <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
                   {totalEvents === 1 ? "Date" : "Dates"}
                 </div>
               </div>
@@ -123,19 +120,17 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               />
             </MenuOverlay>
           </div>
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex flex-1 items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(25,198,230,0.15)] dark:shadow-[0_4px_16px_0_rgba(25,198,230,0.25)] border-2 border-blue/40 dark:border-blue/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(25,198,230,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(25,198,230,0.30)] md:border-2 md:border-blue/50 dark:md:border-blue/70"
+              className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
               onClick={() => setIsVenueMenuOpen(true)}
             >
-              <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-blue md:w-10 md:h-10 hover:scale-105">
-                <FaMapMarkerAlt className="text-xs text-white md:text-sm" />
-              </div>
-              <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
+              <FaMapMarkerAlt className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+              <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
+                <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
                   {totalVenues.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
+                <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
                   {totalVenues === 1 ? "Venue" : "Venues"}
                 </div>
               </div>
@@ -144,8 +139,8 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               isOpen={isVenueMenuOpen}
               onClose={() => setIsVenueMenuOpen(false)}
             >
-              <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black dark:text-gray-200">
+              <div className="max-h-[80vh] overflow-y-auto p-4">
+                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-black dark:text-gray-200 md:inline-block">
                   Venues
                 </h2>
                 <MenuList
@@ -160,57 +155,53 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               </div>
             </MenuOverlay>
           </div>
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex flex-1 items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(255,152,0,0.15)] dark:shadow-[0_4px_16px_0_rgba(255,152,0,0.25)] border-2 border-orange/40 dark:border-orange/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(255,152,0,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(255,152,0,0.30)] md:border-2 md:border-orange/50 dark:md:border-orange/70"
-              onClick={() => setIsGenreMenuOpen(true)}
+              className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
+              onClick={() => setIsArtistMenuOpen(true)}
             >
-              <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-orange md:w-10 md:h-10 hover:scale-105">
-                <FaMusic className="text-xs text-white md:text-sm" />
-              </div>
-              <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
-                  {totalGenres.toLocaleString()}
+              <FaUser className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+              <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
+                <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                  {totalArtists.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
-                  {totalGenres === 1 ? "Genre" : "Genres"}
+                <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  {totalArtists === 1 ? "Artist" : "Artists"}
                 </div>
               </div>
             </div>
             <MenuOverlay
-              isOpen={isGenreMenuOpen}
-              onClose={() => setIsGenreMenuOpen(false)}
+              isOpen={isArtistMenuOpen}
+              onClose={() => setIsArtistMenuOpen(false)}
             >
-              <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold text-black dark:text-gray-200">
-                  Genres
+              <div className="max-h-[80vh] overflow-y-auto p-4">
+                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-black dark:text-gray-200 md:inline-block">
+                  Artists
                 </h2>
                 <MenuList
-                  navItems={genres}
-                  navItemsWithCounts={genresWithCounts}
-                  text="genre"
-                  isOpen={isGenreMenuOpen}
-                  title="Genres"
+                  navItems={artists}
+                  navItemsWithCounts={artistsWithCounts}
+                  text="artist"
+                  isOpen={isArtistMenuOpen}
+                  title="Artists"
                   setSearchTerm={setSearchTerm}
-                  onClose={() => setIsGenreMenuOpen(false)}
+                  onClose={() => setIsArtistMenuOpen(false)}
                 />
               </div>
             </MenuOverlay>
           </div>
-          <div className="flex-1 flex items-center justify-center">
+          <div className="flex flex-1 items-center justify-center">
             <div
-              className="flex flex-col items-center gap-1 px-1 py-9 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-[0_4px_16px_0_rgba(0,191,165,0.15)] dark:shadow-[0_4px_16px_0_rgba(0,191,165,0.25)] border-2 border-green/40 dark:border-green/60 transition-all duration-200 w-full cursor-pointer hover:-translate-y-px hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.25)] dark:hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.35)] active:translate-y-0 text-center justify-center md:flex-row md:gap-3 md:py-6 md:px-4 md:h-16 md:items-center md:text-left md:shadow-[0_4px_16px_0_rgba(0,191,165,0.20)] md:hover:shadow-[0_6px_20px_0_rgba(0,191,165,0.30)] md:border-2 md:border-green/50 dark:md:border-green/70"
+              className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
               onClick={() => setIsPromoterMenuOpen(true)}
             >
-              <div className="flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0 transition-all duration-200 bg-green md:w-10 md:h-10 hover:scale-105">
-                <FaBullhorn className="text-xs text-white md:text-sm" />
-              </div>
-              <div className="flex flex-col gap-0 min-w-0 flex-1 md:gap-0">
-                <div className="text-xs leading-tight text-black dark:text-gray-200 transition-colors duration-200 md:text-xl md:font-bold md:leading-tight">
+              <FaRecycle className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+              <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
+                <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
                   {totalPromoters.toLocaleString()}
                 </div>
-                <div className="text-xs font-medium text-black/70 dark:text-gray-400 uppercase tracking-wide leading-tight md:text-sm md:tracking-normal md:text-gray-600 dark:md:text-gray-400 md:leading-tight">
-                  {totalPromoters === 1 ? "Promoter" : "Promoters"}
+                <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  {totalPromoters === 1 ? "Series" : "Series"}
                 </div>
               </div>
             </div>
@@ -218,15 +209,15 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               isOpen={isPromoterMenuOpen}
               onClose={() => setIsPromoterMenuOpen(false)}
             >
-              <div className="p-4 max-h-[80vh] overflow-y-auto">
-                <h2 className="font-normal mt-10 text-lg text-blue dark:text-gray-100 md:inline-block md:text-xl m-0 mb-4 text-xl font-semibold">
-                  Promoters
+              <div className="max-h-[80vh] overflow-y-auto p-4">
+                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-black dark:text-gray-100 md:inline-block">
+                  Series
                 </h2>
                 <MenuList
                   navItems={promoters}
                   navItemsWithCounts={promotersWithCounts}
-                  text="promoter"
-                  title="Promoters"
+                  text="series"
+                  title="Series"
                   isOpen={isPromoterMenuOpen}
                   setSearchTerm={setSearchTerm}
                   onClose={() => setIsPromoterMenuOpen(false)}
