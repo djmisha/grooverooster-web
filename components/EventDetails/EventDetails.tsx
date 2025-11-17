@@ -29,12 +29,12 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     name,
     venue,
     link,
-    source: _source,
+    source,
     image,
     festivalind,
     livestreamind,
   } = event;
-  const { date, artistlist, name, venue, link, source, image } = event;
+
   // Support both old and new field names during transition
   const artistList = artistlist || event.artistList || [];
   const festivalInd =
