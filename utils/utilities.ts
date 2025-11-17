@@ -164,7 +164,7 @@ export function filterSurpriseGuest(artists: Artist[]): Artist[] {
   });
 }
 
-export const makePromoters = (data: Event[]): string[] => {
+export const makeSeries = (data: Event[]): string[] => {
   // Count occurrences of each event name
   const eventNameCounts: Record<string, number> = {};
   data.forEach((item) => {
@@ -174,12 +174,12 @@ export const makePromoters = (data: Event[]): string[] => {
   });
 
   // Filter to only include event names with more than 2 events
-  const promoters = Object.keys(eventNameCounts).filter(
+  const series = Object.keys(eventNameCounts).filter(
     (eventName) => eventNameCounts[eventName] > 1
   );
 
   // Alphabetize the list and remove duplicates
-  return removeDuplicates(promoters).sort();
+  return removeDuplicates(series).sort();
 };
 
 export const makeVenuesWithCounts = (data: Event[]): FilterItemWithCount[] => {
@@ -223,9 +223,7 @@ export const makeDatesWithCounts = (data: Event[]): FilterItemWithCount[] => {
     });
 };
 
-export const makePromotersWithCounts = (
-  data: Event[]
-): FilterItemWithCount[] => {
+export const makeSeriesWithCounts = (data: Event[]): FilterItemWithCount[] => {
   const eventNameCounts: Record<string, number> = {};
   data.forEach((item) => {
     if (item.name) {
@@ -237,9 +235,9 @@ export const makePromotersWithCounts = (
   return Object.keys(eventNameCounts)
     .filter((eventName) => eventNameCounts[eventName] > 1)
     .sort()
-    .map((promoter) => ({
-      name: promoter,
-      count: eventNameCounts[promoter],
+    .map((seriesItem) => ({
+      name: seriesItem,
+      count: eventNameCounts[seriesItem],
     }));
 };
 

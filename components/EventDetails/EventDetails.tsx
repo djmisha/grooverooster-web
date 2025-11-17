@@ -9,6 +9,7 @@ import {
   FaMapMarkerAlt,
   FaUsers,
   FaVideo,
+  FaExternalLinkAlt,
 } from "react-icons/fa";
 import Button from "../Button/Button";
 import { Event } from "@/types";
@@ -33,6 +34,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     festivalind,
     livestreamind,
   } = event;
+  const { date, artistlist, name, venue, link, source, image } = event;
   // Support both old and new field names during transition
   const artistList = artistlist || event.artistList || [];
   const festivalInd =
@@ -52,6 +54,9 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     if (!firstArtistName || typeof firstArtistName !== "string") return false;
     return name.trim().toLowerCase() === firstArtistName.trim().toLowerCase();
   };
+  // Determine button text based on source
+  const isEDMTrain = source === "edmtrain";
+  const buttonText = isEDMTrain ? "View Details" : "Get Tickets";
 
   // Format address with line breaks
   const formatAddress = (addr: string | undefined) => {
@@ -154,7 +159,10 @@ const EventDetails = ({ event }: EventDetailsProps) => {
             target="_blank"
             rel="noreferrer"
           >
-            Get Tickets
+            <span className="flex items-center gap-2">
+              {buttonText}
+              <FaExternalLinkAlt className="text-sm" />
+            </span>
           </Button>
         </div>
       </div>
