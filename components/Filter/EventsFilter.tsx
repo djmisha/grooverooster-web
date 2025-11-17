@@ -1,9 +1,9 @@
 import {
   makeVenues,
-  makePromoters,
+  makeSeries,
   makeArtists,
   makeVenuesWithCounts,
-  makePromotersWithCounts,
+  makeSeriesWithCounts,
   makeArtistsWithCounts,
 } from "../../utils/utilities";
 import {
@@ -31,16 +31,16 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
   const [isDateMenuOpen, setIsDateMenuOpen] = useState(false);
   const [isVenueMenuOpen, setIsVenueMenuOpen] = useState(false);
   const [isArtistMenuOpen, setIsArtistMenuOpen] = useState(false);
-  const [isPromoterMenuOpen, setIsPromoterMenuOpen] = useState(false);
+  const [isSeriesMenuOpen, setIsSeriesMenuOpen] = useState(false);
 
   const venues = makeVenues(events ?? []);
   const artists = makeArtists(events ?? []);
-  const promoters = makePromoters(events ?? []);
+  const series = makeSeries(events ?? []);
 
   // Get items with counts for display
   const venuesWithCounts = makeVenuesWithCounts(events ?? []);
   const artistsWithCounts = makeArtistsWithCounts(events ?? []);
-  const promotersWithCounts = makePromotersWithCounts(events ?? []);
+  const seriesWithCounts = makeSeriesWithCounts(events ?? []);
 
   // Calculate statistics from events data
   const getStatistics = () => {
@@ -49,7 +49,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
         totalEvents: 0,
         totalVenues: 0,
         totalArtists: 0,
-        totalPromoters: 0,
+        totalSeries: 0,
       };
     }
 
@@ -79,11 +79,11 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
       totalEvents: visibleEvents.length,
       totalVenues: uniqueVenues.size,
       totalArtists: uniqueArtists.size,
-      totalPromoters: promoters.length,
+      totalSeries: series.length,
     };
   };
 
-  const { totalEvents, totalVenues, totalArtists, totalPromoters } =
+  const { totalEvents, totalVenues, totalArtists, totalSeries } =
     getStatistics();
 
   return (
@@ -193,34 +193,34 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
           <div className="flex flex-1 items-center justify-center">
             <div
               className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
-              onClick={() => setIsPromoterMenuOpen(true)}
+              onClick={() => setIsSeriesMenuOpen(true)}
             >
               <FaRecycle className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
               <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
                 <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
-                  {totalPromoters.toLocaleString()}
+                  {totalSeries.toLocaleString()}
                 </div>
                 <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
-                  {totalPromoters === 1 ? "Series" : "Series"}
+                  {totalSeries === 1 ? "Series" : "Series"}
                 </div>
               </div>
             </div>
             <MenuOverlay
-              isOpen={isPromoterMenuOpen}
-              onClose={() => setIsPromoterMenuOpen(false)}
+              isOpen={isSeriesMenuOpen}
+              onClose={() => setIsSeriesMenuOpen(false)}
             >
               <div className="max-h-[80vh] overflow-y-auto p-4">
                 <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-black dark:text-gray-100 md:inline-block">
                   Series
                 </h2>
                 <MenuList
-                  navItems={promoters}
-                  navItemsWithCounts={promotersWithCounts}
+                  navItems={series}
+                  navItemsWithCounts={seriesWithCounts}
                   text="series"
                   title="Series"
-                  isOpen={isPromoterMenuOpen}
+                  isOpen={isSeriesMenuOpen}
                   setSearchTerm={setSearchTerm}
-                  onClose={() => setIsPromoterMenuOpen(false)}
+                  onClose={() => setIsSeriesMenuOpen(false)}
                 />
               </div>
             </MenuOverlay>
