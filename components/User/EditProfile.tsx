@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import type { User } from "@supabase/supabase-js";
 import { useAppContext } from "@/features/AppContext";
 import locations from "@/utils/locations.json";
+import Button from "../Button/Button";
 
 interface Profile {
   id: string;
@@ -405,17 +406,17 @@ export default function EditProfile({ user }: ProfileFormProps) {
           </div>
 
           <div className="flex gap-4 mt-6">
-            <button
+            <Button
               type="button"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 updateProfile();
               }}
               disabled={isLoadingProfile || !formValid}
-              className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 ease-in-out bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-70 disabled:cursor-not-allowed"
+              isLoading={isLoadingProfile}
+              className="flex-1"
             >
-              {isLoadingProfile ? "Updating..." : "Update Profile"}
-            </button>
+              Update Profile
+            </Button>
           </div>
         </form>
       </div>

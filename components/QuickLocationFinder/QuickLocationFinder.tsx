@@ -20,6 +20,7 @@ const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [hasLocationCookie, setHasLocationCookie] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDetecting, setIsDetecting] = useState(false);
 
   // Check for saved location on mount
   useEffect(() => {
@@ -59,22 +60,34 @@ const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
 
   const handleButtonClick = async () => {
     if (hasLocationCookie && currentLocation) {
+      setIsDetecting(true);
       const url = getEventsUrl();
       if (url) {
         router.push(url);
+        // Keep loading state active during navigation
+        // The loading indicator will remain until the page loads
       }
     } else {
+      setIsDetecting(true);
       try {
         const location = await detectUserLocation();
         if (location) {
           setCurrentLocation(location);
           setHasLocationCookie(true);
+          // Navigation will happen on next render when currentLocation is set
+          const url = getLocationEventsUrl(location);
+          if (url) {
+            router.push(url);
+            // Keep loading state active during navigation
+          }
         } else {
+          setIsDetecting(false);
           alert(
             "Unable to detect your location. Please try again or select manually."
           );
         }
       } catch (error) {
+        setIsDetecting(false);
         alert(
           "Unable to detect your location. Please try again or select manually."
         );
@@ -89,7 +102,12 @@ const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
 
   return (
     <div className={`w-full ${className}`}>
-      <Button onClick={handleButtonClick} variant="primary" className="w-full">
+      <Button
+        onClick={handleButtonClick}
+        variant="primary"
+        className="w-full"
+        isLoading={isDetecting}
+      >
         {buttonText}
       </Button>
     </div>

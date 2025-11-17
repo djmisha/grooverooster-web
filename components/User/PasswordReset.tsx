@@ -3,6 +3,7 @@
 import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
+import Button from "../Button/Button";
 
 export default function PasswordReset() {
   const { supabase } = useAppContext();
@@ -76,14 +77,16 @@ export default function PasswordReset() {
           onVerify={(token) => setCaptchaToken(token)}
         />
         <div className="flex gap-4 mt-4">
-          <button
+          <Button
             type="button"
             onClick={resetPassword}
-            className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 bg-gray-50 text-gray-600 border border-gray-300 hover:bg-gray-100 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="flex-1"
             disabled={isResetting || !captchaToken}
+            isLoading={isResetting}
+            variant="secondary"
           >
-            {isResetting ? "Sending..." : "Reset Password"}
-          </button>
+            Reset Password
+          </Button>
         </div>
       </div>
     </div>

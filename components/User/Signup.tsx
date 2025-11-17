@@ -5,6 +5,7 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
 import PasswordStrengthIndicator from "./PasswordStrengthIndicator";
 import { isPasswordValid } from "@/utils/passwordValidation";
+import Button from "../Button/Button";
 
 const inputClasses = [
   "w-full px-4 py-3 border rounded-md text-base transition-colors duration-150",
@@ -130,14 +131,15 @@ export default function Signup() {
           />
 
           <div className="flex gap-4 mt-6">
-            <button
+            <Button
               type="button"
               onClick={signUp}
-              className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 bg-pink text-white hover:bg-pink/90 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="flex-1"
               disabled={isSigningUp || !captchaToken}
+              isLoading={isSigningUp}
             >
-              {isSigningUp ? "Signing up..." : "Sign up"}
-            </button>
+              Sign up
+            </Button>
           </div>
           {signupErrorMessage && (
             <div className="p-3 mt-4 bg-red-50 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-md text-sm text-center border border-red-200 dark:border-red-800">
