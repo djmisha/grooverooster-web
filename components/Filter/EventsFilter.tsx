@@ -140,7 +140,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsVenueMenuOpen(false)}
             >
               <div className="max-h-[80vh] overflow-y-auto p-4">
-                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-black dark:text-gray-200 md:inline-block">
+                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-gray-600 dark:text-gray-300 md:inline-block">
                   Venues
                 </h2>
                 <MenuList
@@ -151,6 +151,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                   title="Venues"
                   setSearchTerm={setSearchTerm}
                   onClose={() => setIsVenueMenuOpen(false)}
+                  showCounts={true}
                 />
               </div>
             </MenuOverlay>
@@ -175,7 +176,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsArtistMenuOpen(false)}
             >
               <div className="max-h-[80vh] overflow-y-auto p-4">
-                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-black dark:text-gray-200 md:inline-block">
+                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-gray-600 dark:text-gray-300 md:inline-block">
                   Artists
                 </h2>
                 <MenuList
@@ -186,6 +187,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                   title="Artists"
                   setSearchTerm={setSearchTerm}
                   onClose={() => setIsArtistMenuOpen(false)}
+                  showCounts={false}
                 />
               </div>
             </MenuOverlay>
@@ -210,7 +212,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               onClose={() => setIsSeriesMenuOpen(false)}
             >
               <div className="max-h-[80vh] overflow-y-auto p-4">
-                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-black dark:text-gray-100 md:inline-block">
+                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-gray-600 dark:text-gray-300 md:inline-block">
                   Series
                 </h2>
                 <MenuList
@@ -221,6 +223,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                   isOpen={isSeriesMenuOpen}
                   setSearchTerm={setSearchTerm}
                   onClose={() => setIsSeriesMenuOpen(false)}
+                  showCounts={true}
                 />
               </div>
             </MenuOverlay>

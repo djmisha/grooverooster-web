@@ -223,9 +223,7 @@ export const makeDatesWithCounts = (data: Event[]): FilterItemWithCount[] => {
     });
 };
 
-export const makeSeriesWithCounts = (
-  data: Event[]
-): FilterItemWithCount[] => {
+export const makeSeriesWithCounts = (data: Event[]): FilterItemWithCount[] => {
   const eventNameCounts: Record<string, number> = {};
   data.forEach((item) => {
     if (item.name) {
