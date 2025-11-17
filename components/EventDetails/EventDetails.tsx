@@ -28,8 +28,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
   const { dayOfWeek, dayMonth, daySchema: _daySchema } = setDates(date);
 
   // Determine button text based on source
-  const eventSource = source || event.eventSource;
-  const isEDMTrain = eventSource === "edmtrain.com";
+  const isEDMTrain = source === "edmtrain";
   const buttonText = isEDMTrain ? "View Details" : "Get Tickets";
 
   // Format address with line breaks
