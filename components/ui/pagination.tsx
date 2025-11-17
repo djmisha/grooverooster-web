@@ -56,8 +56,8 @@ const PaginationLink = ({
         size,
       }),
       isActive
-        ? "!bg-[#3B82F6] !text-white !border-0 hover:!bg-[#2563EB]"
-        : "hover:!bg-[#EFF6FF] hover:!text-[#2563EB] !border !border-gray-200",
+        ? "!bg-pink/80 !text-white !border-0 hover:!bg-pink/70"
+        : "!bg-gray-100 dark:!bg-gray-800 !text-gray-500 dark:!text-gray-500 hover:!bg-gray-200 dark:hover:!bg-gray-700 !border-0",
       "transition-all duration-200 text-base px-4 py-2 min-h-[44px]",
       className
     )}
@@ -74,7 +74,7 @@ const PaginationPrevious = ({
     aria-label="Go to previous page"
     size="default"
     className={cn(
-      "gap-1.5 pl-3 hover:!bg-[#EFF6FF] hover:!text-[#2563EB] !border !border-gray-200 transition-all duration-200",
+      "gap-1.5 pl-3 !bg-gray-100 dark:!bg-gray-800 !text-gray-500 dark:!text-gray-500 hover:!bg-gray-200 dark:hover:!bg-gray-700 transition-all duration-200",
       className
     )}
     {...props}
@@ -94,7 +94,7 @@ const PaginationNext = ({
     aria-label="Go to next page"
     size="default"
     className={cn(
-      "gap-1.5 pr-3 hover:!bg-[#EFF6FF] hover:!text-[#2563EB] !border !border-gray-200 transition-all duration-200",
+      "gap-1.5 pr-3 !bg-gray-100 dark:!bg-gray-800 !text-gray-500 dark:!text-gray-500 hover:!bg-gray-200 dark:hover:!bg-gray-700 transition-all duration-200",
       className
     )}
     {...props}
