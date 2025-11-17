@@ -93,7 +93,7 @@ const EventsPagination: React.FC<EventsPaginationProps> = ({
   return (
     <div className="flex flex-col items-center gap-4 mt-8 mb-6">
       {/* Events count display */}
-      <div className="text-sm text-gray-600 text-center font-medium">
+      <div className="text-sm text-gray-500 dark:text-gray-500 text-center font-medium">
         Showing {startEvent} - {endEvent} of {totalEvents} events
       </div>
 
