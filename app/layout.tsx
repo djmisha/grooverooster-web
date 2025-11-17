@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import ToastProvider from "@/components/ui/ToastProvider.sonner";
 import SkipLink from "@/components/SkipLink/SkipLink";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import NextTopLoader from "nextjs-toploader";
 import "../styles/tailwind.css";
 import "../styles/global.scss";
 import type { Metadata } from "next";
@@ -36,6 +37,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
+        <NextTopLoader
+          color="#ce3197"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={5}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #ce3197,0 0 5px #ce3197"
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

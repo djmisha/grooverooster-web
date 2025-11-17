@@ -346,9 +346,10 @@ export default function DashboardProfile({ user }: DashboardProfileProps) {
           <Button
             onClick={updateProfile}
             disabled={isLoading || !formValid}
+            isLoading={isLoading}
             className="w-full sm:w-auto"
           >
-            {isLoading ? "Updating..." : "Update Profile"}
+            Update Profile
           </Button>
         </CardContent>
       </Card>

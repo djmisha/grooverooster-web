@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
+import Button from "../Button/Button";
 
 const inputClasses = [
   "w-full px-4 py-3 border rounded-md text-base transition-colors duration-150",
@@ -123,14 +124,15 @@ export default function Login() {
           />
 
           <div className="flex gap-4 mt-6">
-            <button
+            <Button
               type="button"
               onClick={logIn}
-              className="flex-1 py-3 px-4 border-none rounded-md text-sm font-medium cursor-pointer transition-all duration-150 bg-pink text-white hover:bg-pink/90 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="flex-1"
               disabled={isLoggingIn || !captchaToken}
+              isLoading={isLoggingIn}
             >
-              {isLoggingIn ? "Logging in..." : "Log in"}
-            </button>
+              Log in
+            </Button>
           </div>
         </form>
 
