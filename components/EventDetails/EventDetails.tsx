@@ -84,8 +84,8 @@ const EventDetails = ({ event }: EventDetailsProps) => {
       </h2>
 
       {/* Top Section - Image and Event Info */}
-      <div className="flex p-0">
-        <div className="w-40 h-40 flex-shrink-0 bg-no-repeat bg-cover">
+      <div className="flex p-0 pt-[60px] border-t border-gray-200 dark:border-gray-700">
+        <div className="w-40 h-40 flex-shrink-0 bg-no-repeat bg-cover rounded-r-lg">
           <ArtistImage id={getFirstArtistImageId(artistList)} image={image} />
         </div>
         <div className="flex-1 p-2 pr-4 pl-4 flex flex-col justify-center gap-2">
@@ -117,9 +117,6 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         </div>
       </div>
 
-      {/* Separator Line */}
-      <div className="border-t border-gray-200 dark:border-gray-700"></div>
-
       {/* Bottom Section - Date, Venue, Address, Tags, Button */}
       <div className="px-4 py-6 flex flex-col gap-3">
         <div className="text-sm leading-7 font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400">
@@ -146,11 +143,11 @@ const EventDetails = ({ event }: EventDetailsProps) => {
           </a>
         )}
 
-        <div className="mt-1">
+        <div className="mt-2">
           <EventPills event={event} />
         </div>
 
-        <div className="mt-2">
+        <div className="mt-4">
           <Button
             href={link}
             variant="primary"
