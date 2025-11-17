@@ -25,7 +25,7 @@ interface EventsFilterProps {
 }
 
 /**
- * EventsFilter component provides filtering UI for events by venue, artist, date, and promoter
+ * EventsFilter component provides filtering UI for events by venue, artist, date, and series
  */
 const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
   const [isDateMenuOpen, setIsDateMenuOpen] = useState(false);
