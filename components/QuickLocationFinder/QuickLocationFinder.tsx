@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Button from "../Button/Button";
 import { Location } from "@/types";
 import {
@@ -15,6 +16,7 @@ interface QuickLocationFinderProps {
  * QuickLocationFinder component detects user location and provides quick access to local events
  */
 const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
+  const router = useRouter();
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [hasLocationCookie, setHasLocationCookie] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +61,7 @@ const QuickLocationFinder = ({ className = "" }: QuickLocationFinderProps) => {
     if (hasLocationCookie && currentLocation) {
       const url = getEventsUrl();
       if (url) {
-        window.location.href = url;
+        router.push(url);
       }
     } else {
       try {

@@ -4,6 +4,7 @@ import {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
 } from "react";
+import Link from "next/link";
 
 type ButtonProps = {
   children: ReactNode;
@@ -43,14 +44,33 @@ const Button = ({
     .join(" ");
 
   if (href) {
+    // Check if it's an external link
+    const isExternal =
+      href.startsWith("http://") ||
+      href.startsWith("https://") ||
+      href.startsWith("//");
+
+    if (isExternal) {
+      return (
+        <a
+          href={href}
+          className={buttonClass}
+          {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    // Use Next.js Link for internal navigation to trigger loading bar
     return (
-      <a
+      <Link
         href={href}
         className={buttonClass}
         {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {children}
-      </a>
+      </Link>
     );
   }
 

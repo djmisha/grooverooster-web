@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ExternalLink } from "lucide-react";
 
 /**
  * Footer component displays site navigation, data partners, and copyright information
@@ -63,30 +64,34 @@ const Footer = () => {
               href="https://djmisha.com"
               target="_blank"
               title="San Diego DJ"
-              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200"
+              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200 inline-flex items-center gap-1"
             >
               San Diego DJ
+              <ExternalLink className="w-3 h-3" aria-label="Opens in new tab" />
             </Link>
             <Link
               href="https://edmtrain.com"
               target="_blank"
-              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200"
+              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200 inline-flex items-center gap-1"
             >
               EDM Train
+              <ExternalLink className="w-3 h-3" aria-label="Opens in new tab" />
             </Link>
             <Link
               href="https://www.last.fm"
               target="_blank"
-              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200"
+              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200 inline-flex items-center gap-1"
             >
               Last Fm
+              <ExternalLink className="w-3 h-3" aria-label="Opens in new tab" />
             </Link>
             <Link
               href="https://www.ticketmaster.com"
               target="_blank"
-              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200"
+              className="text-gray-500 dark:text-gray-400 text-lg no-underline transition-colors hover:text-gray-800 dark:hover:text-gray-200 inline-flex items-center gap-1"
             >
               Ticketmaster
+              <ExternalLink className="w-3 h-3" aria-label="Opens in new tab" />
             </Link>
           </div>
         </div>
