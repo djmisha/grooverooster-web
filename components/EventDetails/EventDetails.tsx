@@ -3,7 +3,12 @@ import Artists from "../Artists/Artists";
 import ArtistImage from "../Artists/ArtistImage";
 import setDates from "../../utils/setDates";
 import EventPills from "../EventPills/EventPills";
-import { FaRegCalendar, FaRegBuilding, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaRegCalendar,
+  FaRegBuilding,
+  FaMapMarkerAlt,
+  FaExternalLinkAlt,
+} from "react-icons/fa";
 import Button from "../Button/Button";
 import { Event } from "@/types";
 import { getFirstArtistImageId } from "../../utils/artistImageLookup";
@@ -16,11 +21,15 @@ interface EventDetailsProps {
  * EventDetails component displays detailed information about an event in a modal
  */
 const EventDetails = ({ event }: EventDetailsProps) => {
-  const { date, artistlist, name, venue, link, source: _source, image } = event;
+  const { date, artistlist, name, venue, link, source, image } = event;
   // Support both old and new field names during transition
   const artistList = artistlist || event.artistList || [];
   const { name: venueName, address } = venue;
   const { dayOfWeek, dayMonth, daySchema: _daySchema } = setDates(date);
+
+  // Determine button text based on source
+  const isEDMTrain = source === "edmtrain";
+  const buttonText = isEDMTrain ? "View Details" : "Get Tickets";
 
   // Format address with line breaks
   const formatAddress = (addr: string | undefined) => {
@@ -98,7 +107,10 @@ const EventDetails = ({ event }: EventDetailsProps) => {
             target="_blank"
             rel="noreferrer"
           >
-            Get Tickets
+            <span className="flex items-center gap-2">
+              {buttonText}
+              <FaExternalLinkAlt className="text-sm" />
+            </span>
           </Button>
         </div>
       </div>
