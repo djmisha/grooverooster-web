@@ -53,7 +53,7 @@ export default async function Artist({ params }: ArtistPageProps) {
         <ClientNavigationBar />
         <div className="text-center [&_h1]:border-none [&_h1]:text-center pt-10">
           <div className="artist-header">
-            <ArtistImage id={artistData.id} image={undefined} />
+            <ArtistImage id={artistData.id} image={undefined} large={true} />
             <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px]">
               {name}
             </h1>
