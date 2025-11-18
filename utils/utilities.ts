@@ -280,3 +280,32 @@ export const makeArtistsWithCounts = (data: Event[]): FilterItemWithCount[] => {
       count: artistCounts[artist],
     }));
 };
+
+export const makeFestivals = (data: Event[]): string[] => {
+  // Filter events that are festivals and get unique names
+  const festivals = data
+    .filter((item) => item.festivalind === true || item.festivalInd === true)
+    .map((item) => item.name)
+    .filter((name) => name); // Remove any undefined/null names
+
+  // Alphabetize and remove duplicates
+  return removeDuplicates(festivals).sort();
+};
+
+export const makeFestivalsWithCounts = (
+  data: Event[]
+): FilterItemWithCount[] => {
+  const festivalCounts: Record<string, number> = {};
+  data.forEach((item) => {
+    if ((item.festivalind === true || item.festivalInd === true) && item.name) {
+      festivalCounts[item.name] = (festivalCounts[item.name] || 0) + 1;
+    }
+  });
+
+  return Object.keys(festivalCounts)
+    .sort()
+    .map((festival) => ({
+      name: festival,
+      count: festivalCounts[festival],
+    }));
+};

@@ -5,6 +5,8 @@ import {
   makeVenuesWithCounts,
   makeSeriesWithCounts,
   makeArtistsWithCounts,
+  makeFestivals,
+  makeFestivalsWithCounts,
 } from "../../utils/utilities";
 import {
   FaCalendarAlt,
@@ -12,8 +14,9 @@ import {
   FaUser,
   FaFilter,
   FaRecycle,
+  FaUsers,
 } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import MenuOverlay from "../ui/MenuOverlay";
 import MenuList from "../Navigation/MenuList";
 import DatePickerFilter from "./DatePickerFilter";
@@ -32,15 +35,78 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
   const [isVenueMenuOpen, setIsVenueMenuOpen] = useState(false);
   const [isArtistMenuOpen, setIsArtistMenuOpen] = useState(false);
   const [isSeriesMenuOpen, setIsSeriesMenuOpen] = useState(false);
+  const [isFestivalMenuOpen, setIsFestivalMenuOpen] = useState(false);
+
+  // Scroll container ref and drag state
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const venues = makeVenues(events ?? []);
   const artists = makeArtists(events ?? []);
   const series = makeSeries(events ?? []);
+  const festivals = makeFestivals(events ?? []);
 
   // Get items with counts for display
   const venuesWithCounts = makeVenuesWithCounts(events ?? []);
   const artistsWithCounts = makeArtistsWithCounts(events ?? []);
   const seriesWithCounts = makeSeriesWithCounts(events ?? []);
+  const festivalsWithCounts = makeFestivalsWithCounts(events ?? []);
+
+  // Mouse drag handlers for smooth scrolling
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollContainerRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  // Touch handlers for mobile swipe
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let touchStartX = 0;
+    let touchScrollLeft = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].pageX - container.offsetLeft;
+      touchScrollLeft = container.scrollLeft;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const walk = (x - touchStartX) * 2;
+      container.scrollLeft = touchScrollLeft - walk;
+    };
+
+    container.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    container.addEventListener("touchmove", handleTouchMove, { passive: true });
+
+    return () => {
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, []);
 
   // Calculate statistics from events data
   const getStatistics = () => {
@@ -50,6 +116,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
         totalVenues: 0,
         totalArtists: 0,
         totalSeries: 0,
+        totalFestivals: 0,
       };
     }
 
@@ -80,11 +147,17 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
       totalVenues: uniqueVenues.size,
       totalArtists: uniqueArtists.size,
       totalSeries: series.length,
+      totalFestivals: festivals.length,
     };
   };
 
-  const { totalEvents, totalVenues, totalArtists, totalSeries } =
-    getStatistics();
+  const {
+    totalEvents,
+    totalVenues,
+    totalArtists,
+    totalSeries,
+    totalFestivals,
+  } = getStatistics();
 
   return (
     <div className="relative w-[calc(100%-20px)] m-2.5 mb-3 bg-white dark:bg-gray-900 transition-colors duration-200 z-10">
@@ -93,8 +166,20 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
           <FaFilter className="text-xs text-gray-400 dark:text-gray-400" />
           <span className="whitespace-nowrap">Filter By</span>
         </div>
-        <div className="flex w-full mx-auto justify-between gap-1 md:gap-4">
-          <div className="flex flex-1 items-center justify-center">
+        <div
+          ref={scrollContainerRef}
+          className="flex w-full mx-auto justify-between gap-1 md:gap-4 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+          style={{
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            WebkitOverflowScrolling: "touch",
+          }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="flex flex-1 items-center justify-center flex-shrink-0">
             <div
               className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
               onClick={() => setIsDateMenuOpen(true)}
@@ -120,7 +205,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               />
             </MenuOverlay>
           </div>
-          <div className="flex flex-1 items-center justify-center">
+          <div className="flex flex-1 items-center justify-center flex-shrink-0">
             <div
               className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
               onClick={() => setIsVenueMenuOpen(true)}
@@ -156,7 +241,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               </div>
             </MenuOverlay>
           </div>
-          <div className="flex flex-1 items-center justify-center">
+          <div className="flex flex-1 items-center justify-center flex-shrink-0">
             <div
               className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
               onClick={() => setIsArtistMenuOpen(true)}
@@ -192,7 +277,7 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
               </div>
             </MenuOverlay>
           </div>
-          <div className="flex flex-1 items-center justify-center">
+          <div className="flex flex-1 items-center justify-center flex-shrink-0">
             <div
               className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
               onClick={() => setIsSeriesMenuOpen(true)}
@@ -223,6 +308,42 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                   isOpen={isSeriesMenuOpen}
                   setSearchTerm={setSearchTerm}
                   onClose={() => setIsSeriesMenuOpen(false)}
+                  showCounts={true}
+                />
+              </div>
+            </MenuOverlay>
+          </div>
+          <div className="flex flex-1 items-center justify-center flex-shrink-0">
+            <div
+              className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
+              onClick={() => setIsFestivalMenuOpen(true)}
+            >
+              <FaUsers className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+              <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
+                <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                  {totalFestivals.toLocaleString()}
+                </div>
+                <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  {totalFestivals === 1 ? "Festival" : "Festivals"}
+                </div>
+              </div>
+            </div>
+            <MenuOverlay
+              isOpen={isFestivalMenuOpen}
+              onClose={() => setIsFestivalMenuOpen(false)}
+            >
+              <div className="max-h-[80vh] overflow-y-auto p-4">
+                <h2 className="m-0 mb-4 mt-10 text-xl font-semibold text-gray-600 dark:text-gray-300 md:inline-block">
+                  Festivals
+                </h2>
+                <MenuList
+                  navItems={festivals}
+                  navItemsWithCounts={festivalsWithCounts}
+                  text="festival"
+                  title="Festivals"
+                  isOpen={isFestivalMenuOpen}
+                  setSearchTerm={setSearchTerm}
+                  onClose={() => setIsFestivalMenuOpen(false)}
                   showCounts={true}
                 />
               </div>
