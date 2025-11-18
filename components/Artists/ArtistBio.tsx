@@ -63,6 +63,19 @@ const ArtistBio = ({ name, lastFMdata }: ArtistBioProps) => {
 
   return (
     <div className="px-2.5 max-w-3xl mx-auto [&_p]:text-md text-left">
+      {hasTags && (
+        <div className="text-center">
+          <h3 className="font-normal mt-4 text-lg text-blue">Music Style</h3>
+          <div className="[&_span]:py-1 [&_span]:px-4 [&_span]:m-1 [&_span]:border [&_span]:border-blue [&_span]:rounded-2xl [&_span]:text-xs [&_span]:text-center [&_span]:inline-block [&_span]:bg-blue [&_span]:text-white">
+            {tags.map((tag) => (
+              <span key={tag.name} className="artist-tag">
+                {tag.name.toLowerCase().replace(/-/g, " ")}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       {bioContent && (
         <>
           <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
@@ -74,21 +87,6 @@ const ArtistBio = ({ name, lastFMdata }: ArtistBioProps) => {
               __html: sanitizeHtml(bioContent),
             }}
           />
-        </>
-      )}
-
-      {hasTags && (
-        <>
-          <h3 className="font-normal mt-10 text-lg text-blue md:inline-block">
-            {name} Music Style
-          </h3>
-          <div className="[&_span]:py-1 [&_span]:px-4 [&_span]:m-1 [&_span]:border [&_span]:border-blue [&_span]:rounded-2xl [&_span]:text-xs [&_span]:text-center [&_span]:inline-block [&_span]:bg-blue [&_span]:text-white">
-            {tags.map((tag) => (
-              <span key={tag.name} className="artist-tag">
-                {tag.name.toLowerCase().replace(/-/g, " ")}
-              </span>
-            ))}
-          </div>
         </>
       )}
     </div>

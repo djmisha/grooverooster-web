@@ -33,6 +33,16 @@ const EventPills = ({ event, centered = false }: EventPillsProps) => {
     ? "flex flex-wrap justify-center gap-2 py-4"
     : "flex flex-wrap gap-2";
 
+  const formatSource = (src: string): string => {
+    if (src.toLowerCase() === "edmtrain") {
+      return "EDM Train";
+    }
+    if (src.toLowerCase() === "ticketmaster") {
+      return "Ticketmaster";
+    }
+    return src;
+  };
+
   return (
     <div className={containerClasses}>
       {genreName && (
@@ -42,7 +52,7 @@ const EventPills = ({ event, centered = false }: EventPillsProps) => {
       )}
       {sourceValue && (
         <span className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded-full transition-colors duration-200">
-          {sourceValue}
+          {formatSource(sourceValue)}
         </span>
       )}
       {festivalIndicator && (

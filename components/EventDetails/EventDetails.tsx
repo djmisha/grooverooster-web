@@ -80,7 +80,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
   };
 
   return (
-    <div className="flex flex-col text-left bg-white dark:bg-gray-800 rounded-lg overflow-hidden transition-colors duration-200">
+    <div className="flex flex-col text-left bg-white dark:bg-gray-800 rounded-lg overflow-hidden transition-colors duration-200 pt-16">
       <h2
         className="font-normal text-lg text-blue md:inline-block md:text-xl sr-only"
         id="modal-title"
@@ -89,7 +89,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
       </h2>
 
       {/* Top Section - Image and Event Info */}
-      <div className="flex p-0 pt-[60px] border-t border-gray-200 dark:border-gray-700">
+      <div className="flex p-0  border-t border-b border-gray-200 dark:border-gray-700">
         <div className="w-40 h-40 flex-shrink-0 bg-no-repeat bg-cover rounded-r-lg">
           <ArtistImage id={getFirstArtistImageId(artistList)} image={image} />
         </div>
@@ -123,7 +123,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
       </div>
 
       {/* Bottom Section - Date, Venue, Address, Tags, Button */}
-      <div className="px-4 py-6 flex flex-col gap-3">
+      <div className="px-4 py-10 flex flex-col gap-4">
         <div className="text-sm leading-7 font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400">
           <FaRegCalendar className="text-gray-600 dark:text-gray-400" />
           <div>
@@ -145,14 +145,15 @@ const EventDetails = ({ event }: EventDetailsProps) => {
           >
             <FaMapMarkerAlt className="text-gray-600 dark:text-gray-400" />
             <span className="block leading-5">{formatAddress(address)}</span>
+            <FaExternalLinkAlt className="text-xs" />
           </a>
         )}
 
-        <div className="mt-2">
+        <div className="mt-6">
           <EventPills event={event} />
         </div>
 
-        <div className="mt-4">
+        <div className="mt-8">
           <Button
             href={link}
             variant="primary"

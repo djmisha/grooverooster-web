@@ -197,7 +197,7 @@ const EventsModule = ({
               onGenreSelect={handleGenreSelect}
             />
           )}
-          <div className="p-0 pb-10 transition-all duration-300 ease-out sm:px-2.5 sm:grid sm:grid-cols-2 sm:gap-4 md:mb-5 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 p-0 px-2.5 pb-10 transition-all duration-300 ease-out md:grid-cols-2 md:gap-8 xl:grid-cols-3">
             {displayEvents?.map((event) => {
               return (
                 <EventCard
