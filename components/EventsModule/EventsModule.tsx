@@ -128,15 +128,31 @@ const EventsModule = ({
         genre === null
           ? `/events/${locationData.slug}`
           : `/events/${locationData.slug}`;
-      router.push(newUrl + "#top");
+
+      // Scroll to top immediately
+      const topElement = document.getElementById("top");
+      if (topElement) {
+        topElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      router.replace(newUrl, { scroll: false });
     } else {
       // Just scroll to top if already on page 1
-      window.location.href = "#top";
+      const topElement = document.getElementById("top");
+      if (topElement) {
+        topElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   };
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+
+    // Scroll to top immediately
+    const topElement = document.getElementById("top");
+    if (topElement) {
+      topElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
     // Update URL to include page number using slug instead of id
     const newUrl =
@@ -144,8 +160,8 @@ const EventsModule = ({
         ? `/events/${locationData.slug}`
         : `/events/${locationData.slug}?page=${pageNumber}`;
 
-    // Use router.push to navigate
-    router.push(newUrl + "#top");
+    // Use router.replace to update URL without full navigation
+    router.replace(newUrl, { scroll: false });
   };
 
   // Function to handle clearing filters and returning to remembered page
@@ -153,13 +169,19 @@ const EventsModule = ({
     setFilterVisible(false);
     setCurrentPage(lastPageBeforeFilter);
 
+    // Scroll to top immediately
+    const topElement = document.getElementById("top");
+    if (topElement) {
+      topElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
     // Update URL to remembered page using slug instead of id
     const newUrl =
       lastPageBeforeFilter === 1
         ? `/events/${locationData.slug}`
         : `/events/${locationData.slug}?page=${lastPageBeforeFilter}`;
 
-    router.push(newUrl + "#top");
+    router.replace(newUrl, { scroll: false });
   };
 
   const displayEvents = getPaginatedEvents();
