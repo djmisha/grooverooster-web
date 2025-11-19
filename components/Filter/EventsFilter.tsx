@@ -231,22 +231,6 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
             <div className="flex flex-1 items-center justify-center flex-shrink-0">
               <div
                 className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
-                onClick={() => setIsSeriesMenuOpen(true)}
-              >
-                <FaRecycle className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
-                <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
-                  <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
-                    {totalSeries.toLocaleString()}
-                  </div>
-                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
-                    {totalSeries === 1 ? "Series" : "Series"}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-1 items-center justify-center flex-shrink-0">
-              <div
-                className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
                 onClick={() => setIsFestivalMenuOpen(true)}
               >
                 <FaUsers className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
@@ -256,6 +240,22 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                   </div>
                   <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
                     {totalFestivals === 1 ? "Festival" : "Festivals"}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center justify-center flex-shrink-0">
+              <div
+                className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
+                onClick={() => setIsSeriesMenuOpen(true)}
+              >
+                <FaRecycle className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+                <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
+                  <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                    {totalSeries.toLocaleString()}
+                  </div>
+                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                    {totalSeries === 1 ? "Series" : "Series"}
                   </div>
                 </div>
               </div>

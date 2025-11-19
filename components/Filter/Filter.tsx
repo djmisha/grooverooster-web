@@ -1,7 +1,7 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useCallback } from "react";
 import { clearSearch } from "../../utils/searchFilter";
-import { toast } from "sonner";
 import { Event } from "@/types";
+import FilterStatusBar from "./FilterStatusBar";
 
 interface FilterProps {
   events: Event[];
@@ -13,8 +13,9 @@ interface FilterProps {
 }
 
 /**
- * Filter component that displays persistent toast notifications for search results
- * instead of the traditional inline filter display.
+ * Filter component that displays an accessible filter status bar
+ * instead of toast notifications.
+ * Based on Primer accessibility guidelines: https://primer.style/accessibility/toasts/
  */
 const Filter = ({
   events,
@@ -24,20 +25,12 @@ const Filter = ({
   setFilterVisible,
   onClearFilter,
 }: FilterProps) => {
-  const toastIdRef = useRef<string | number | null>(null);
-
   /**
-   * Handles clearing the filter, updating events, and dismissing toast
+   * Handles clearing the filter and updating events
    */
   const handleClearFilter = useCallback(() => {
     const newEvents = clearSearch(events);
     setEvents(newEvents);
-
-    // Dismiss the toast
-    if (toastIdRef.current) {
-      toast.dismiss(toastIdRef.current);
-      toastIdRef.current = null;
-    }
 
     // Use custom clear handler if provided (for pagination persistence)
     if (onClearFilter) {
@@ -53,86 +46,22 @@ const Filter = ({
     }
   }, [events, setEvents, onClearFilter, setFilterVisible]);
 
-  // Show toast when filter becomes visible
-  useEffect(() => {
-    if (filterVisible && searchTerm && events && events.length > 0) {
-      const resultCount = events.filter(
-        (event) => event.isVisible !== false
-      ).length;
+  // Only show the status bar if filter is visible and we have events
+  if (!filterVisible || !searchTerm || !events || events.length === 0) {
+    return null;
+  }
 
-      // Add appropriate emoji based on result count
-      let emoji = "🔍";
-      if (resultCount === 0) {
-        emoji = "😔";
-      } else if (resultCount === 1) {
-        emoji = "🎯";
-      } else if (resultCount > 5) {
-        emoji = "🎉";
-      }
+  const resultCount = events.filter(
+    (event) => event.isVisible !== false
+  ).length;
 
-      // Extract display term if it contains a pipe separator (display|filter format)
-      let displayTerm = searchTerm;
-      if (searchTerm.includes("|")) {
-        displayTerm = searchTerm.split("|")[0];
-      }
-
-      // Dismiss any existing toast first
-      if (toastIdRef.current) {
-        toast.dismiss(toastIdRef.current);
-        toastIdRef.current = null;
-      }
-
-      // Use setTimeout to ensure the dismissal is processed before creating new toast
-      const timeoutId = setTimeout(() => {
-        // Show new toast with wrapping text layout
-        toastIdRef.current = toast(
-          <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 w-full max-w-full transition-colors duration-200">
-            <div className="text-xl flex-shrink-0">{emoji}</div>
-            <div className="flex-1 text-sm text-gray-700 dark:text-gray-300 break-words">
-              {resultCount} {resultCount === 1 ? "result" : "results"} for{" "}
-              <span className="font-semibold text-gray-900 dark:text-gray-100">
-                {displayTerm}
-              </span>
-            </div>
-            <button
-              onClick={() => {
-                handleClearFilter();
-              }}
-              title="Clear filter and show all events"
-              className="w-8 h-8 flex items-center justify-center rounded-full text-white hover:opacity-80 transition-colors duration-200 font-bold text-sm flex-shrink-0"
-              style={{ backgroundColor: "#ce3197" }}
-            >
-              ✕
-            </button>
-          </div>,
-          {
-            duration: Infinity,
-          }
-        );
-      }, 0);
-
-      // Clean up timeout if component unmounts
-      return () => clearTimeout(timeoutId);
-    } else if (!filterVisible) {
-      // Dismiss toast when filter is not visible
-      if (toastIdRef.current) {
-        toast.dismiss(toastIdRef.current);
-        toastIdRef.current = null;
-      }
-    }
-    return undefined;
-  }, [filterVisible, searchTerm, events, handleClearFilter]);
-
-  // Clean up toast on component unmount
-  useEffect(() => {
-    return () => {
-      if (toastIdRef.current) {
-        toast.dismiss(toastIdRef.current);
-      }
-    };
-  }, []);
-
-  return null; // No longer rendering the original filter UI - everything is handled via toast
+  return (
+    <FilterStatusBar
+      searchTerm={searchTerm}
+      resultCount={resultCount}
+      onClear={handleClearFilter}
+    />
+  );
 };
 
 export default Filter;
