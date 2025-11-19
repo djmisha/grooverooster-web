@@ -138,14 +138,14 @@ const EventDetails = ({ event }: EventDetailsProps) => {
             {dayOfWeek}, {dayMonth}
             {eventTime && (
               <>
-                {" • "}
+                {"   "}
                 <FaRegClock className="inline text-gray-600 dark:text-gray-400 mr-1" />
                 {eventTime}
               </>
             )}
             {ages && (
               <>
-                {" • "}
+                {"   "}
                 {ages}
               </>
             )}
