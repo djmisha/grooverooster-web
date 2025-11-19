@@ -1,7 +1,7 @@
 "use client";
 
-import HomeSearchAutocomplete from "../SearchAutoComplete/HomeSearchAutocomplete";
-import QuickLocationFinder from "../QuickLocationFinder/QuickLocationFinder";
+import HomeSearchAutocomplete from "@/components/SearchAutoComplete/HomeSearchAutocomplete";
+import QuickLocationFinder from "@/components/QuickLocationFinder/QuickLocationFinder";
 // import SoundWaveBackground from "./SoundWaveBackground";
 import { useTheme } from "next-themes";
 

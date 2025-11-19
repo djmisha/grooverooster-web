@@ -1,6 +1,6 @@
 import Link from "next/link";
-import ArtistImage from "../Artists/ArtistImage";
-import { ToSlugArtist } from "../../utils/utilities";
+import ArtistImage from "@/components/Artists/ArtistImage";
+import { ToSlugArtist } from "@/utils/utilities";
 import { FaTicketAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 interface TopArtistsCardProps {

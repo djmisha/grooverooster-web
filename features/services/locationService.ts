@@ -1,10 +1,10 @@
-import { urlBigData } from "../../utils/utilities";
+import { urlBigData } from "@/utils/utilities";
 import {
   UserLocationService,
   matchesCity,
   getLocationId,
   createLocationObject,
-} from "../../utils/getUserLocation";
+} from "@/utils/getUserLocation";
 import { Location } from "@/types";
 
 /**

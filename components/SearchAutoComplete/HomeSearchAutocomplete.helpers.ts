@@ -1,5 +1,5 @@
-import { allArtists } from "../../utils/getArtists";
-import locations from "../../utils/locations.json";
+import { allArtists } from "@/utils/getArtists";
+import locations from "@/utils/locations.json";
 import { Location, SearchItem } from "@/types";
 
 interface ArtistLike {

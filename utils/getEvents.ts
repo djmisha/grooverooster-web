@@ -1,5 +1,5 @@
 import setDates from "./setDates";
-import localArtists from "../localArtistsDB.json";
+import localArtists from "@/localArtistsDB.json";
 import { authenticatedFetch } from "./authenticatedFetch";
 import { Event, Artist } from "@/types";
 

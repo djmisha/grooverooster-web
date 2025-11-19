@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useContext } from "react";
-import { AppContext } from "../../features/AppContext";
-import { toSlug } from "../../utils/getLocations";
-import MenuOverlay from "../ui/MenuOverlay";
-import MenuTrigger from "../ui/MenuTrigger";
-import { ThemeToggle } from "../ThemeToggle";
+import { AppContext } from "@/features/AppContext";
+import { toSlug } from "@/utils/getLocations";
+import MenuOverlay from "@/components/ui/MenuOverlay";
+import MenuTrigger from "@/components/ui/MenuTrigger";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Home,
   Music,

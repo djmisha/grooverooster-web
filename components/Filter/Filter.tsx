@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { clearSearch } from "../../utils/searchFilter";
+import { clearSearch } from "@/utils/searchFilter";
 import { Event } from "@/types";
 import FilterStatusBar from "./FilterStatusBar";
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import LocationManager from "../LocationManager/LocationManager";
-import Modal from "../Modal/Modal";
-import MenuTrigger from "../ui/MenuTrigger";
-import { useLocation } from "../../hooks/useLocation";
+import LocationManager from "@/components/LocationManager/LocationManager";
+import Modal from "@/components/Modal/Modal";
+import MenuTrigger from "@/components/ui/MenuTrigger";
+import { useLocation } from "@/hooks/useLocation";
 import { Location } from "@/types";
 
 interface LocationSelectModalProps {

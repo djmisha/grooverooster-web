@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Modal from "../Modal/VerifyModal";
-import Button from "../Button/Button";
+import Modal from "@/components/Modal/VerifyModal";
+import Button from "@/components/Button/Button";
 
 /**
  * Verify component displays email verification success modal when user confirms email

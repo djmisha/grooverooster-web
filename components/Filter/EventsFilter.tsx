@@ -7,7 +7,7 @@ import {
   makeArtistsWithCounts,
   makeFestivals,
   makeFestivalsWithCounts,
-} from "../../utils/utilities";
+} from "@/utils/utilities";
 import {
   FaCalendarAlt,
   FaMapMarkerAlt,
@@ -17,8 +17,8 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { useState, useRef, useEffect } from "react";
-import MenuOverlay from "../ui/MenuOverlay";
-import MenuList from "../Navigation/MenuList";
+import MenuOverlay from "@/components/ui/MenuOverlay";
+import MenuList from "@/components/Navigation/MenuList";
 import DatePickerFilter from "./DatePickerFilter";
 import { Event } from "@/types";
 

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState, useContext } from "react";
-import { AppContext } from "../../features/AppContext";
-import { getSDHMEventsClient } from "../../utils/getEvents";
-import { ToSlugArtist } from "../../utils/utilities";
-import EventCard from "../EventCard/EventCard";
-import Button from "../Button/Button";
-import { useEventModalManager } from "../../hooks/useEventModal";
+import { AppContext } from "@/features/AppContext";
+import { getSDHMEventsClient } from "@/utils/getEvents";
+import { ToSlugArtist } from "@/utils/utilities";
+import EventCard from "@/components/EventCard/EventCard";
+import Button from "@/components/Button/Button";
+import { useEventModalManager } from "@/hooks/useEventModal";
 import { Event } from "@/types";
 
 /**
@@ -76,10 +76,7 @@ const Locator = () => {
         ))}
       </div>
       <div className="mt-6 flex justify-center">
-        <Button
-          href={`/events/${locationSlug}`}
-          variant="primary"
-        >
+        <Button href={`/events/${locationSlug}`} variant="primary">
           {`View all events in ${cityState}`}
         </Button>
       </div>

@@ -1,8 +1,8 @@
 "use client";
 
 import LocationSelectModal from "./LocationSelectModal";
-import Hamburger from "../Hamburger/Hamburger";
-import UserGreeting from "../User/UserGreeting";
+import Hamburger from "@/components/Hamburger/Hamburger";
+import UserGreeting from "@/components/User/UserGreeting";
 import { Location } from "@/types";
 
 interface NavigationBarProps {

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useState } from "react";
-import { toSlug } from "../../utils/getLocations";
-import MenuOverlay from "../ui/MenuOverlay";
-import MenuTrigger from "../ui/MenuTrigger";
+import { toSlug } from "@/utils/getLocations";
+import MenuOverlay from "@/components/ui/MenuOverlay";
+import MenuTrigger from "@/components/ui/MenuTrigger";
 
 interface LocationSelectProps {
   text: string;

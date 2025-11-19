@@ -1,4 +1,4 @@
-import localArtistsDB from "../localArtistsDB.json";
+import localArtistsDB from "@/localArtistsDB.json";
 
 /**
  * Looks up an artist's EDMTrain ID from the local database by name

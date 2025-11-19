@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 
 const inputClasses = [
   "w-full px-4 py-3 border rounded-md text-base transition-colors duration-150",

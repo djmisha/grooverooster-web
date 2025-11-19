@@ -1,6 +1,6 @@
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { formatDataforSearch } from "./SearchAutoComplete.helpers";
-import { clearSearch } from "../../utils/searchFilter";
+import { clearSearch } from "@/utils/searchFilter";
 import { Event, SearchItem } from "@/types";
 
 interface SearchAutoCompleteProps {

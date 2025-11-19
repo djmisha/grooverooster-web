@@ -1,12 +1,12 @@
 import React, { useState, useContext, ReactNode } from "react";
-import { AppContext } from "../../features/AppContext";
-import Button from "../Button/Button";
+import { AppContext } from "@/features/AppContext";
+import Button from "@/components/Button/Button";
 import { Location } from "@/types";
 import {
   detectUserLocation,
   saveLocationToCookie,
   UserLocationService,
-} from "../../utils/locationService";
+} from "@/utils/locationService";
 
 interface ShareLocationProps {
   onLocationDetected?: (location: Location) => void;

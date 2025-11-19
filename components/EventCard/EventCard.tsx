@@ -1,15 +1,15 @@
 import React from "react";
-import Artists from "../Artists/Artists";
-import ArtistImage from "../Artists/ArtistImage";
-import setDates from "../../utils/setDates";
-import Modal from "../Modal/Modal";
-import EventDetails from "../EventDetails/EventDetails";
-import EventStructuredData from "../SEO/EventStructuredData";
-import EventPills from "../EventPills/EventPills";
-import { useEventModal } from "../../hooks/useEventModal";
+import Artists from "@/components/Artists/Artists";
+import ArtistImage from "@/components/Artists/ArtistImage";
+import setDates from "@/utils/setDates";
+import Modal from "@/components/Modal/Modal";
+import EventDetails from "@/components/EventDetails/EventDetails";
+import EventStructuredData from "@/components/SEO/EventStructuredData";
+import EventPills from "@/components/EventPills/EventPills";
+import { useEventModal } from "@/hooks/useEventModal";
 import { FaRegCalendar, FaRegBuilding, FaUsers, FaVideo } from "react-icons/fa";
 import { Event } from "@/types";
-import { getFirstArtistImageId } from "../../utils/artistImageLookup";
+import { getFirstArtistImageId } from "@/utils/artistImageLookup";
 
 interface EventCardProps {
   event: Event;

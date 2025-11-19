@@ -1,9 +1,9 @@
 import React from "react";
-import Artists from "../Artists/Artists";
-import ArtistImage from "../Artists/ArtistImage";
-import setDates from "../../utils/setDates";
-import EventPills from "../EventPills/EventPills";
-import { formatTimeRange } from "../../utils/formatEventTime";
+import Artists from "@/components/Artists/Artists";
+import ArtistImage from "@/components/Artists/ArtistImage";
+import setDates from "@/utils/setDates";
+import EventPills from "@/components/EventPills/EventPills";
+import { formatTimeRange } from "@/utils/formatEventTime";
 import {
   FaRegCalendar,
   FaRegBuilding,
@@ -13,9 +13,9 @@ import {
   FaExternalLinkAlt,
   FaRegClock,
 } from "react-icons/fa";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 import { Event } from "@/types";
-import { getFirstArtistImageId } from "../../utils/artistImageLookup";
+import { getFirstArtistImageId } from "@/utils/artistImageLookup";
 
 interface EventDetailsProps {
   event: Event;

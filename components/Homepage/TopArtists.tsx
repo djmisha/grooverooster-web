@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { shuffleArray, filterSurpriseGuest } from "../../utils/utilities";
-import TopArtistsCard from "../TopArtistsCard/TopArtistsCard";
-import Button from "../Button/Button";
-import ButtonWrapper from "../Button/ButtonWrapper";
+import { shuffleArray, filterSurpriseGuest } from "@/utils/utilities";
+import TopArtistsCard from "@/components/TopArtistsCard/TopArtistsCard";
+import Button from "@/components/Button/Button";
+import ButtonWrapper from "@/components/Button/ButtonWrapper";
 import { Artist } from "@/types";
 
 /**

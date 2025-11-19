@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 import { Location } from "@/types";
 import {
   getSavedLocation,
   getLocationEventsUrl,
   detectUserLocation,
-} from "../../utils/locationService";
+} from "@/utils/locationService";
 
 interface QuickLocationFinderProps {
   className?: string;

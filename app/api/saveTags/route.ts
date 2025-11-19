@@ -3,7 +3,7 @@ import {
   saveTagsBodySchema,
   validateData,
   formatValidationError,
-} from "../../../lib/validation/schemas";
+} from "@/lib/validation/schemas";
 import { supabaseAdmin } from "@/features/Supabase";
 import { secureAppRouterEndpoint } from "@/utils/appRouterSecurity";
 import type { RateLimitResult } from "@/types/rateLimit";

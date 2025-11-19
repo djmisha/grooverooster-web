@@ -1,6 +1,6 @@
 import { useState } from "react";
-import MenuOverlay from "../ui/MenuOverlay";
-import MenuTrigger from "../ui/MenuTrigger";
+import MenuOverlay from "@/components/ui/MenuOverlay";
+import MenuTrigger from "@/components/ui/MenuTrigger";
 import MenuList from "./MenuList";
 
 interface NavItemProps {

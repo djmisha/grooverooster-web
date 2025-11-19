@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { AppContext } from "../../features/AppContext";
-import ShareLocation from "../ShareLocation/ShareLocation";
-import Button from "../Button/Button";
-import LocationSwitch from "../LocationSwitch/LocationSwitch";
+import { AppContext } from "@/features/AppContext";
+import ShareLocation from "@/components/ShareLocation/ShareLocation";
+import Button from "@/components/Button/Button";
+import LocationSwitch from "@/components/LocationSwitch/LocationSwitch";
 import {
   getSavedLocation,
   getLocationEventsUrl,
   hasValidLocationUrl,
-} from "../../utils/locationService";
+} from "@/utils/locationService";
 import { Location } from "@/types";
 
 interface LocationManagerProps {

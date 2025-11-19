@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "../../features/AppContext";
+import { AppContext } from "@/features/AppContext";
 
 /**
  * WelcomeMessage component displays a welcome message when user hasn't set a location

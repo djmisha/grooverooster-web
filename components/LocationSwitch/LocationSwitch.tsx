@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { AppContext } from "../../features/AppContext";
+import { AppContext } from "@/features/AppContext";
 import {
   updateUserLocation,
   searchLocations,
   getSavedLocation,
-} from "../../utils/locationService";
+} from "@/utils/locationService";
 import { Location } from "@/types";
 
 interface LocationSwitchProps {

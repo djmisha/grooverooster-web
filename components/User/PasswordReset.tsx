@@ -3,7 +3,7 @@
 import { useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useAppContext } from "@/features/AppContext";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 
 export default function PasswordReset() {
   const { supabase } = useAppContext();

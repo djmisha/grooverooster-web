@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import setDates from "../../utils/setDates";
+import setDates from "@/utils/setDates";
 import { Event } from "@/types";
-import { getFirstArtistImageId } from "../../utils/artistImageLookup";
-import { ToSlugArtist } from "../../utils/utilities";
+import { getFirstArtistImageId } from "@/utils/artistImageLookup";
+import { ToSlugArtist } from "@/utils/utilities";
 
 interface EventStructuredDataProps {
   event: Event;

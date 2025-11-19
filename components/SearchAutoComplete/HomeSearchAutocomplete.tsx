@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { formatDataforSearch } from "./HomeSearchAutocomplete.helpers";
-import { toSlug } from "../../utils/getLocations";
-import { ToSlugArtist } from "../../utils/utilities";
+import { toSlug } from "@/utils/getLocations";
+import { ToSlugArtist } from "@/utils/utilities";
 import { CornerDownLeft } from "lucide-react";
 import { SearchItem } from "@/types";
 

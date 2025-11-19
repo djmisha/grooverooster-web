@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import EventCard from "../../components/EventCard/EventCard";
-import NavigationBar from "../../components/Navigation/NavigataionBar";
-import { searchFilter } from "../../utils/searchFilter";
-import { makePageHeadline } from "../../utils/utilities";
-import Filter from "../../components/Filter/Filter";
-import EventsFiltered from "../../components/Filter/EventsFilter";
-import EventsPagination from "../../components/EventsPagination/EventsPagination";
-import GenreNav from "../../components/GenreNav/GenreNav";
-import { useEventModalManager } from "../../hooks/useEventModal";
+import EventCard from "@/components/EventCard/EventCard";
+import NavigationBar from "@/components/Navigation/NavigataionBar";
+import { searchFilter } from "@/utils/searchFilter";
+import { makePageHeadline } from "@/utils/utilities";
+import Filter from "@/components/Filter/Filter";
+import EventsFiltered from "@/components/Filter/EventsFilter";
+import EventsPagination from "@/components/EventsPagination/EventsPagination";
+import GenreNav from "@/components/GenreNav/GenreNav";
+import { useEventModalManager } from "@/hooks/useEventModal";
 import { Event, Location } from "@/types";
 
 interface EventsModuleProps {

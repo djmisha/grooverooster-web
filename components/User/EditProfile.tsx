@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import type { User } from "@supabase/supabase-js";
 import { useAppContext } from "@/features/AppContext";
 import locations from "@/utils/locations.json";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 
 interface Profile {
   id: string;

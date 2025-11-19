@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { makePageHeadline } from "../../utils/utilities";
-import NavigationBar from "../Navigation/NavigataionBar";
+import { makePageHeadline } from "@/utils/utilities";
+import NavigationBar from "@/components/Navigation/NavigataionBar";
 import { Location } from "@/types";
 
 interface City {
