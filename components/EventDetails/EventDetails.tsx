@@ -3,6 +3,7 @@ import Artists from "../Artists/Artists";
 import ArtistImage from "../Artists/ArtistImage";
 import setDates from "../../utils/setDates";
 import EventPills from "../EventPills/EventPills";
+import { formatTimeRange } from "../../utils/formatEventTime";
 import {
   FaRegCalendar,
   FaRegBuilding,
@@ -10,6 +11,7 @@ import {
   FaUsers,
   FaVideo,
   FaExternalLinkAlt,
+  FaRegClock,
 } from "react-icons/fa";
 import Button from "../Button/Button";
 import { Event } from "@/types";
@@ -33,6 +35,9 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     image,
     festivalind,
     livestreamind,
+    starttime,
+    endtime,
+    ages,
   } = event;
 
   // Support both old and new field names during transition
@@ -78,6 +83,9 @@ const EventDetails = ({ event }: EventDetailsProps) => {
       </>
     );
   };
+
+  // Format event time
+  const eventTime = formatTimeRange(starttime, endtime);
 
   return (
     <div className="flex flex-col text-left bg-white dark:bg-gray-800 rounded-lg overflow-hidden transition-colors duration-200 pt-16">
@@ -128,6 +136,13 @@ const EventDetails = ({ event }: EventDetailsProps) => {
           <FaRegCalendar className="text-gray-600 dark:text-gray-400" />
           <div>
             {dayOfWeek}, {dayMonth}
+            {eventTime && (
+              <span className="ml-6">
+                <FaRegClock className="inline text-gray-600 dark:text-gray-400 mr-1" />
+                {eventTime}
+              </span>
+            )}
+            {ages && <span className="ml-6">{ages}</span>}
           </div>
         </div>
 
