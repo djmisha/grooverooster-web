@@ -55,6 +55,10 @@ const Locator = () => {
     .filter(Boolean)
     .join(", ");
 
+  const locationSlug = ToSlugArtist(
+    context.currentUserLocation.city || context.currentUserLocation.state
+  );
+
   return (
     <div>
       <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl mb-4 px-4">
@@ -67,15 +71,13 @@ const Locator = () => {
             key={event.id}
             openEventId={openEventId}
             setOpenEventId={setOpenEventId}
+            locationSlug={locationSlug}
           />
         ))}
       </div>
       <div className="mt-6 flex justify-center">
         <Button
-          href={`/events/${ToSlugArtist(
-            context.currentUserLocation.city ||
-              context.currentUserLocation.state
-          )}`}
+          href={`/events/${locationSlug}`}
           variant="primary"
         >
           {`View all events in ${cityState}`}

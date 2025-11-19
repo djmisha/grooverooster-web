@@ -19,24 +19,36 @@ interface UseEventModalReturn {
 export const useEventModal = (
   eventId: EventId,
   openEventId: EventId | null,
-  setOpenEventId: (id: EventId | null) => void
+  setOpenEventId: (id: EventId | null) => void,
+  locationSlug?: string
 ): UseEventModalReturn => {
   // Update URL hash with event ID
-  const updateUrlHash = useCallback((id: EventId | null) => {
-    if (typeof window === "undefined") return;
+  const updateUrlHash = useCallback(
+    (id: EventId | null) => {
+      if (typeof window === "undefined") return;
 
-    try {
-      const currentUrl = new URL(window.location.href);
-      if (id) {
-        currentUrl.hash = `event-${id}`;
-      } else {
-        currentUrl.hash = "";
+      try {
+        const currentUrl = new URL(window.location.href);
+
+        // If locationSlug is provided, update the path to include it
+        if (locationSlug && id) {
+          // Only update path if we're not already on an events page or if we want to force the location
+          // But for the Locator on homepage case, we want to change / to /events/slug
+          currentUrl.pathname = `/events/${locationSlug}`;
+        }
+
+        if (id) {
+          currentUrl.hash = `event-${id}`;
+        } else {
+          currentUrl.hash = "";
+        }
+        window.history.pushState(null, "", currentUrl.toString());
+      } catch (error) {
+        console.warn("Could not update URL hash:", error);
       }
-      window.history.pushState(null, "", currentUrl.toString());
-    } catch (error) {
-      console.warn("Could not update URL hash:", error);
-    }
-  }, []);
+    },
+    [locationSlug]
+  );
 
   // Open modal for this event
   const openModal = useCallback(() => {

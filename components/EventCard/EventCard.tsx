@@ -15,6 +15,7 @@ interface EventCardProps {
   event: Event;
   openEventId: string | number | null;
   setOpenEventId: (id: string | number | null) => void;
+  locationSlug?: string;
 }
 
 /**
@@ -24,6 +25,7 @@ export const EventCard = ({
   event,
   openEventId,
   setOpenEventId,
+  locationSlug,
 }: EventCardProps) => {
   const {
     date,
@@ -50,7 +52,8 @@ export const EventCard = ({
   const { isModalOpen, openModal, closeModal } = useEventModal(
     event.id,
     openEventId,
-    setOpenEventId
+    setOpenEventId,
+    locationSlug
   );
 
   /**
