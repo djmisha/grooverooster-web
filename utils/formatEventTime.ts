@@ -14,7 +14,7 @@ export const formatTime = (time: string | undefined): string | null => {
     // Parse 24-hour format (19:00:00 or 19:00)
     const timeStr = time.replace(/[^\d:]/g, ""); // Remove non-digit/colon chars
     const [hours, minutes] = timeStr.split(":");
-    
+
     if (!hours) return null;
 
     const hour = parseInt(hours);
@@ -25,10 +25,10 @@ export const formatTime = (time: string | undefined): string | null => {
     // Convert to 12-hour format
     const period = hour >= 12 ? "PM" : "AM";
     const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-    
+
     // Only show minutes if they're not :00
     const minuteStr = minute !== 0 ? `:${String(minute).padStart(2, "0")}` : "";
-    
+
     return `${hour12}${minuteStr} ${period}`;
   } catch (error) {
     console.warn("Error formatting time:", error);

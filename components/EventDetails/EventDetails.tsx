@@ -137,18 +137,12 @@ const EventDetails = ({ event }: EventDetailsProps) => {
           <div>
             {dayOfWeek}, {dayMonth}
             {eventTime && (
-              <>
-                {"   "}
+              <span className="ml-6">
                 <FaRegClock className="inline text-gray-600 dark:text-gray-400 mr-1" />
                 {eventTime}
-              </>
+              </span>
             )}
-            {ages && (
-              <>
-                {"   "}
-                {ages}
-              </>
-            )}
+            {ages && <span className="ml-6">{ages}</span>}
           </div>
         </div>
 
