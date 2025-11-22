@@ -103,7 +103,7 @@ const LocationManager = ({
       className={`flex flex-col gap-6 bg-white rounded-lg p-0 max-w-full w-full m-0 md:gap-4 dark:bg-gray-800 dark:text-gray-100 ${className}`}
     >
       {title && (
-        <h3 className="font-normal text-lg md:inline-block m-0 text-2xl font-bold text-gray-900 dark:text-gray-100 pb-2 border-b-2 border-gray-300 dark:border-gray-600 tracking-tight">
+        <h3 className="font-normal pt-10 md:pt-4 text-lg md:inline-block m-0 text-2xl font-bold text-gray-900 dark:text-gray-100 pb-2 border-b-2 border-gray-300 dark:border-gray-600 tracking-tight">
           {title}
         </h3>
       )}
@@ -133,7 +133,7 @@ const LocationManager = ({
               className="flex-1 min-w-[140px]"
               aria-label="Clear location"
             >
-              Clear Location
+              Clear
             </Button>
           </div>
         </div>
