@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import EventCard from "@/components/EventCard/EventCard";
 import NavigationBar from "@/components/Navigation/NavigataionBar";
@@ -12,6 +12,7 @@ import EventsPagination from "@/components/EventsPagination/EventsPagination";
 import GenreNav from "@/components/GenreNav/GenreNav";
 import { useEventModalManager } from "@/hooks/useEventModal";
 import { Event, Location } from "@/types";
+import { filterPastEventsClientSide } from "@/utils/dateFilterHelpers";
 
 interface EventsModuleProps {
   locationData: Location;
@@ -34,8 +35,15 @@ const EventsModule = ({
   const router = useRouter();
   const { openEventId, setOpenEventId } = useEventModalManager(); // Use the hook
   let [filterVisible, setFilterVisible] = useState(false);
-  const [events, setEvents] = useState(initialEvents);
-  const [allEvents, setAllEvents] = useState(initialEvents); // Store original events
+
+  // Filter out past events based on user's local timezone
+  const filteredInitialEvents = useMemo(
+    () => filterPastEventsClientSide(initialEvents),
+    [initialEvents]
+  );
+
+  const [events, setEvents] = useState(filteredInitialEvents);
+  const [allEvents, setAllEvents] = useState(filteredInitialEvents); // Store original events
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [lastPageBeforeFilter, setLastPageBeforeFilter] = useState(initialPage); // Remember page before filtering
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null); // Track selected genre
@@ -53,8 +61,8 @@ const EventsModule = ({
     setSelectedGenre(null); // Reset genre selection on location change
     setCurrentPage(initialPage); // Use initial page from props
     setLastPageBeforeFilter(initialPage);
-    setAllEvents(initialEvents); // Update stored original events
-  }, [id, initialEvents, initialPage]);
+    setAllEvents(filteredInitialEvents); // Update stored original events (already filtered)
+  }, [id, filteredInitialEvents, initialPage]);
 
   useEffect(() => {
     if (searchTerm && allEvents) {

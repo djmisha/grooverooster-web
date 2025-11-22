@@ -231,16 +231,22 @@ const toDateString = (date: Date | string): string => {
 };
 
 /**
- * Filter out events that are past today's date
+ * Filter out events that are definitively old (more than 1 day in the past)
+ * Conservative filter to reduce payload size while letting client handle "today"
+ * in the user's local timezone
  * @param {Array} events - Array of events
- * @returns {Array} - Array with past events removed
+ * @returns {Array} - Array with very old events removed
  */
 const filterPastEvents = (events: SDHMEvent[]): SDHMEvent[] => {
-  const todayString = toDateString(new Date());
+  // Get yesterday's date in UTC (conservative approach)
+  const yesterday = new Date();
+  yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+  const yesterdayString = toDateString(yesterday);
 
   return events.filter((event) => {
     if (!event.date) return false;
-    return toDateString(event.date) >= todayString;
+    // Keep events from yesterday onwards (client will filter "today" properly)
+    return toDateString(event.date) >= yesterdayString;
   });
 };
 
