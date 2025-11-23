@@ -27,18 +27,18 @@ const TopArtistsCard = ({ artist, showCounts = true }: TopArtistsCardProps) => {
             id={id ? (typeof id === "string" ? Number(id) : id) : undefined}
           />
         </div>
-        <div className="flex flex-col p-2 pr-4 pl-4 w-full justify-center gap-2">
-          <div className="text-2xl font-semibold text-pink-500 dark:text-pink-400 transition-colors duration-200">
+        <div className="flex flex-col p-2 pr-4 pl-4 w-full justify-between">
+          <div className="text-xl font-semibold text-pink-500 dark:text-pink-400 transition-colors duration-200">
             {name}
           </div>
           {showCounts && count !== undefined && locations !== undefined && (
-            <div className="flex gap-4">
-              <div className="flex items-center gap-2 text-sm font-medium leading-3 text-gray-600 dark:text-gray-400 transition-colors duration-200">
-                <FaTicketAlt className="text-current" />
+            <div className="flex gap-2 mt-auto">
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200">
+                <FaTicketAlt className="text-current text-xs" />
                 <span>{count} shows</span>
               </div>
-              <div className="flex items-center gap-2 text-sm font-medium leading-3 text-gray-600 dark:text-gray-400 transition-colors duration-200">
-                <FaMapMarkerAlt className="text-current" />
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-full text-xs font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200">
+                <FaMapMarkerAlt className="text-current text-xs" />
                 <span>{locations} cities</span>
               </div>
             </div>
