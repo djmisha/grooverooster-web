@@ -65,6 +65,23 @@ export type Database = {
         >;
         Update: Partial<Database["public"]["Tables"]["top_artists"]["Insert"]>;
       };
+      topartists: {
+        Row: {
+          id?: number | string;
+          name: string;
+          rank?: number;
+          image?: string;
+          count?: number;
+          locations?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Insert: Omit<
+          Database["public"]["Tables"]["topartists"]["Row"],
+          "created_at" | "updated_at"
+        >;
+        Update: Partial<Database["public"]["Tables"]["topartists"]["Insert"]>;
+      };
     };
   };
 };
