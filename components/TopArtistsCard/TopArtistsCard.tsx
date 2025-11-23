@@ -27,7 +27,7 @@ const TopArtistsCard = ({ artist, showCounts = true }: TopArtistsCardProps) => {
             id={id ? (typeof id === "string" ? Number(id) : id) : undefined}
           />
         </div>
-        <div className="flex flex-col p-4 pr-4 pl-4 w-full justify-center gap-2">
+        <div className="flex flex-col p-2 pr-4 pl-4 w-full justify-center gap-2">
           <div className="text-2xl font-semibold text-pink-500 dark:text-pink-400 transition-colors duration-200">
             {name}
           </div>
