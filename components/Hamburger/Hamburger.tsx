@@ -55,7 +55,7 @@ const Hamburger = () => {
         <Link
           href="/"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Home size={24} />
           <span>Home</span>
@@ -63,7 +63,7 @@ const Hamburger = () => {
         <Link
           href="/artists"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Music size={24} />
           <span>Top Artists</span>
@@ -71,7 +71,7 @@ const Hamburger = () => {
         <Link
           href="/cities"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Building2 size={24} />
           <span>Events by City</span>
@@ -79,7 +79,7 @@ const Hamburger = () => {
         <Link
           href="/states"
           onClick={handleClose}
-          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
+          className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
         >
           <Map size={24} />
           <span>Events by State</span>
@@ -88,7 +88,7 @@ const Hamburger = () => {
           <Link
             href="/dashboard"
             onClick={handleClose}
-            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
+            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
           >
             <LayoutDashboard size={24} />
             <span>Dashboard</span>
@@ -97,7 +97,7 @@ const Hamburger = () => {
           <Link
             href="/login"
             onClick={handleClose}
-            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
+            className="flex items-center gap-3 px-4 py-4 text-xl border-b border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-indigo-600/10 dark:hover:bg-indigo-400/10 transition-colors duration-200"
           >
             <LogIn size={24} />
             <span>Login / Sign Up</span>
@@ -110,7 +110,7 @@ const Hamburger = () => {
           <span className="font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
             Recently Viewed
           </span>
-          <ul className="space-y-2 text-gray-900 dark:text-gray-100">
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             {context.locationCtx?.map((location) => (
               <li key={`${location.city}-${location.state}`}>
                 <LocationLink
@@ -139,7 +139,7 @@ const Hamburger = () => {
           alt="GrooveRooster Logo"
           className="max-w-full h-auto mb-2"
         />
-        <p className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+        <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
           GrooveRooster
         </p>
       </div>
@@ -148,7 +148,7 @@ const Hamburger = () => {
 
   return (
     <>
-      <div className="flex flex-nowrap items-center justify-around relative left-0 h-15 pb-0 bg-white dark:bg-gray-900 md:m-0 transition-colors duration-200">
+      <div className="flex flex-nowrap items-center justify-around relative left-0 h-15 pb-0 bg-gray-100 dark:bg-gray-900 md:m-0 transition-colors duration-200">
         <MenuTrigger icon="menu" text="Menu" onClick={() => setIsOpen(true)} />
       </div>
       <MenuOverlay isOpen={isOpen} onClose={handleClose}>

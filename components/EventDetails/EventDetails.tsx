@@ -103,25 +103,25 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         </div>
         <div className="flex-1 p-2 pr-4 pl-4 flex flex-col justify-center gap-2">
           {name && !shouldHideEventName() && (
-            <span className="text-gray-400 dark:text-gray-600 block text-sm font-medium">
+            <span className="text-gray-400 dark:text-gray-400 block text-sm font-medium leading-tight">
               {name}
             </span>
           )}
 
-          <div className="break-anywhere font-semibold text-xl leading-6 text-left">
+          <div className="break-anywhere font-semibold text-xl leading-tight text-left">
             <Artists data={artistList} />
           </div>
 
           <div className="flex gap-2">
             {festivalInd && (
-              <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
+              <div className="flex items-center gap-1 text-gray-400 dark:text-gray-400 text-xs font-medium">
                 <FaUsers className="text-current text-xs" />
                 <span>Festival</span>
               </div>
             )}
 
             {livestreamInd && (
-              <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
+              <div className="flex items-center gap-1 text-gray-400 dark:text-gray-400 text-xs font-medium">
                 <FaVideo className="text-current text-xs" />
                 <span>Stream</span>
               </div>
@@ -137,7 +137,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
           <div>
             {dayOfWeek}, {dayMonth}
             {eventTime && (
-              <span className="ml-2">
+              <span className="ml-5">
                 <FaRegClock className="inline text-gray-600 dark:text-gray-400 mr-1" />
                 {eventTime}
               </span>

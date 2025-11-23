@@ -97,7 +97,7 @@ export const EventCard = ({
           ...artistList.slice(0, 2),
           {
             name: (
-              <span className="text-gray-400 dark:text-gray-500 text-xs font-normal inline">
+              <span className="text-gray-400 dark:text-gray-400 text-xs font-normal inline">
                 + {artistList.length - 2} more artists
               </span>
             ),
@@ -147,7 +147,7 @@ export const EventCard = ({
           <div className="flex-1 p-2 pr-4 pl-4 flex flex-col justify-center gap-2">
             {name && !shouldHideEventName() && (
               <span
-                className="text-gray-400 dark:text-gray-600 block text-sm font-medium"
+                className="text-gray-400 dark:text-gray-400 block text-sm font-medium leading-tight"
                 itemProp="name"
               >
                 {name}
@@ -155,7 +155,7 @@ export const EventCard = ({
             )}
 
             <div
-              className="break-anywhere font-semibold text-xl leading-6 text-left"
+              className="break-anywhere font-semibold text-xl leading-tight text-left"
               itemProp="name"
             >
               <Artists data={truncatedArtistList} />
@@ -163,14 +163,14 @@ export const EventCard = ({
 
             <div className="flex gap-2">
               {festivalInd && (
-                <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
+                <div className="flex items-center gap-1 text-gray-400 dark:text-gray-400 text-xs font-medium">
                   <FaUsers className="text-current text-xs" />
                   <span>Festival</span>
                 </div>
               )}
 
               {livestreamInd && (
-                <div className="flex items-center gap-1 text-orange-500 text-xs font-medium">
+                <div className="flex items-center gap-1 text-gray-400 dark:text-gray-400 text-xs font-medium">
                   <FaVideo className="text-current text-xs" />
                   <span>Stream</span>
                 </div>

@@ -142,14 +142,14 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
           onClick={() => handleGenreClick(null)}
           onKeyDown={(e) => handleKeyDown(e, null)}
           className={`
-            px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium
+            px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium
             transition-all duration-200 flex-shrink-0
             focus:outline-none focus:ring-2 focus:ring-pink focus:ring-offset-2
             dark:focus:ring-offset-gray-900
             ${
               selectedGenre === null
                 ? "bg-pink text-white shadow-md hover:bg-pink/90"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
             }
           `}
           aria-label="Show all genres"
@@ -165,14 +165,14 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
             onClick={() => handleGenreClick(genre)}
             onKeyDown={(e) => handleKeyDown(e, genre)}
             className={`
-              px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium
+              px-4 py-2 rounded-lg whitespace-nowrap text-sm font-medium
               transition-all duration-200 flex-shrink-0
               focus:outline-none focus:ring-2 focus:ring-pink focus:ring-offset-2
               dark:focus:ring-offset-gray-900
               ${
                 selectedGenre === genre
                   ? "bg-pink text-white shadow-md hover:bg-pink/90"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }
             `}
             aria-label={`Filter by ${genre}`}
