@@ -133,6 +133,8 @@ export const topArtistSchema = z.object({
   name: z.string().min(1).max(255),
   rank: z.number().int().positive().optional(),
   image: z.string().url().optional(),
+  count: z.number().int().nonnegative().optional(),
+  locations: z.number().int().nonnegative().optional(),
 });
 
 /**
