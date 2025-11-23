@@ -26,11 +26,13 @@ const MenuTrigger = ({
 
     switch (icon) {
       case "menu":
-        return <Menu size={27} className="text-black dark:text-gray-200" />;
+        return <Menu size={27} className="text-gray-700 dark:text-gray-300" />;
       case "map":
-        return <MapPin size={22} className="text-black dark:text-gray-200" />;
+        return (
+          <MapPin size={22} className="text-gray-700 dark:text-gray-300" />
+        );
       case "user":
-        return <User size={22} className="text-black dark:text-gray-200" />;
+        return <User size={22} className="text-gray-700 dark:text-gray-300" />;
       default:
         return null;
     }
@@ -38,13 +40,13 @@ const MenuTrigger = ({
 
   return (
     <button
-      className={`cursor-pointer flex flex-col items-center justify-center gap-1 p-2 bg-transparent border-none transition-all duration-200 ease-in-out text-black dark:text-gray-200 visited:text-black dark:visited:text-gray-200 ${className}`}
+      className={`cursor-pointer flex flex-col items-center justify-center gap-1 p-2 bg-transparent border-none transition-all duration-200 ease-in-out text-gray-700 dark:text-gray-300 visited:text-gray-700 dark:visited:text-gray-300 ${className}`}
       onClick={onClick}
       aria-label={text || "Open menu"}
     >
       {getIcon()}
       {text && (
-        <span className="text-xs font-medium uppercase tracking-wider text-black dark:text-gray-200">
+        <span className="text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
           {text}
         </span>
       )}

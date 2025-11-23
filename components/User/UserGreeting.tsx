@@ -31,10 +31,13 @@ const UserGreeting = () => {
     <div className="w-10">
       <Link
         href={href}
-        className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-black dark:text-gray-200"
+        className="flex h-full flex-col justify-center items-center font-medium text-xs uppercase no-underline text-gray-700 dark:text-gray-300"
       >
         {iconType === "default" ? (
-          <UserIcon size={24} className="mt-1 text-black dark:text-gray-200" />
+          <UserIcon
+            size={24}
+            className="mt-1 text-gray-700 dark:text-gray-300"
+          />
         ) : iconSrc ? (
           <Image
             src={iconSrc}
@@ -44,9 +47,12 @@ const UserGreeting = () => {
             className="mt-2 rounded-full"
           />
         ) : (
-          <UserIcon size={24} className="mt-2 text-black dark:text-gray-200" />
+          <UserIcon
+            size={24}
+            className="mt-2 text-gray-700 dark:text-gray-300"
+          />
         )}
-        {text && <div className="text-black  dark:text-gray-200">{text}</div>}
+        {text && <div className="text-gray-700 dark:text-gray-300">{text}</div>}
       </Link>
     </div>
   );
