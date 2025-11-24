@@ -8,7 +8,7 @@ import { ExternalLink } from "lucide-react";
  */
 const Footer = () => {
   return (
-    <footer className="py-20 px-4 pb-10 bg-white dark:bg-gray-900 text-gray-400 dark:text-gray-500 border-t-2 border-gray-200 dark:border-gray-700 mt-10 transition-colors duration-200">
+    <footer className="py-20 px-4 pb-10 mt-36 bg-white dark:bg-gray-900 text-gray-400 dark:text-gray-500 border-t-2 border-gray-200 dark:border-gray-700 mt-10 transition-colors duration-200">
       <div className="mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 mb-10">
         <div className="flex items-start mt-8 min-w-[200px] col-span-1 md:col-span-1">
           <Image

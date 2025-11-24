@@ -49,7 +49,7 @@ const TopArtists = () => {
   }, [artists]);
 
   return (
-    <>
+    <div className="max-w-[1440] m-auto">
       <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl px-4">
         Top Touring Artists
       </h2>
@@ -58,7 +58,7 @@ const TopArtists = () => {
         shows and city appearances. Click to learn more about each artist, read
         their bios, and explore upcoming events.
       </p>
-      <div className="p-0 pb-10 transition-all duration-200 ease-out sm:px-3 sm:grid sm:grid-cols-2 sm:gap-4 md:mb-5 xl:grid-cols-3">
+      <div className="p-0 pb-10 transition-all duration-200 ease-out sm:px-3 sm:grid sm:grid-cols-2 sm:gap-8 md:mb-5 xl:grid-cols-3">
         {randomArtists?.map((artist, index) => {
           if (index >= 9) return null;
           return <TopArtistsCard key={artist.id} artist={artist} />;
@@ -69,7 +69,7 @@ const TopArtists = () => {
           View More Top Touring Artists
         </Button>
       </ButtonWrapper>
-    </>
+    </div>
   );
 };
 

@@ -202,7 +202,10 @@ const EventsModule = ({
           locationData={[locationData]}
         />
       )}
-      <div className="flex flex-col md:p-5 md:flex-row-reverse" id="top">
+      <div
+        className="flex flex-col md:p-5 md:flex-row-reverse max-w-[1440] m-auto"
+        id="top"
+      >
         <section className="md:w-full md:pb-20 [&_h1]:border-none [&_h1]:text-left [&_h1]:pb-2.5 [&_h1]:leading-tight">
           <h1 className="mt-4 text-[16px] pl-2 text-gray-500 text-left font-normal  md:mt-4 md:mb-6 md:block md:text-[20px]">
             {title}

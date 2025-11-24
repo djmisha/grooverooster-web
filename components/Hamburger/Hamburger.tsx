@@ -133,14 +133,14 @@ const Hamburger = () => {
 
       <div className="p-8 border-t border-gray-200 dark:border-gray-600 flex flex-col items-center pb-10">
         <Image
-          width={120}
-          height={120}
+          width={100}
+          height={100}
           src="/images/logo.png"
           alt="GrooveRooster Logo"
           className="max-w-full h-auto mb-2"
         />
-        <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">
-          GrooveRooster
+        <p className="text-md text-gray-600 dark:text-gray-400">
+          Groove Rooster
         </p>
       </div>
     </>
