@@ -32,6 +32,7 @@ const TopArtists = () => {
       if (res.ok) {
         const data = await res.json();
         setArtists(data.data);
+        console.log("Fetched top artists data:", data.data);
       } else {
         console.error("Error fetching data: ", res.status);
       }

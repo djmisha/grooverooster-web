@@ -12,8 +12,8 @@ const Footer = () => {
       <div className="mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 mb-10">
         <div className="flex items-start mt-8 min-w-[200px] col-span-1 md:col-span-1">
           <Image
-            width={150}
-            height={150}
+            width={100}
+            height={100}
             src="/images/logo.png"
             alt="grooverooster.com"
             className="max-w-full h-auto"
@@ -22,8 +22,8 @@ const Footer = () => {
 
         <div className="col-span-2 flex flex-row gap-4 items-start">
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <h3 className="font-normal mt-10 text-lg text-blue md:inline-block text-gray-700 dark:text-gray-300 mb-3 text-base">
-              Navigation
+            <h3 className="font-normal mt-10 text-sm text-blue md:inline-block text-gray-700 dark:text-gray-300 mb-3 text-base">
+              Music Events Near You
             </h3>
             <Link
               href="/"
@@ -57,7 +57,7 @@ const Footer = () => {
             </Link>
           </div>
           <div className="flex flex-col gap-2 flex-1 min-w-0">
-            <h3 className="font-normal mt-10 text-lg text-blue md:inline-block text-gray-700 dark:text-gray-300 mb-3 text-base">
+            <h3 className="font-normal mt-10 text-sm text-blue md:inline-block text-gray-700 dark:text-gray-300 mb-3 text-base">
               Data Sources
             </h3>
             <Link
