@@ -55,6 +55,18 @@ export async function GET(
       );
     }
 
+    // Check if API URL is configured
+    if (!apiUrl) {
+      console.error("API_URL_SDHM environment variable not set");
+      return NextResponse.json(
+        {
+          error: "Server configuration error",
+          message: "API URL not configured",
+        },
+        { status: 500 }
+      );
+    }
+
     // URL encode the venue name for safe URL construction
     const encodedVenueName = encodeURIComponent(
       validation.data.venueName.toLowerCase()

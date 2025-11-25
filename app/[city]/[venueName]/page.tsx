@@ -16,6 +16,16 @@ export const viewport: Viewport = {
 };
 
 /**
+ * Format a URL parameter name for display (replace hyphens with spaces, capitalize each word)
+ */
+const formatName = (name: string) =>
+  name
+    .replace(/-/g, " ")
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+
+/**
  * Generate metadata for the venue page
  */
 export async function generateMetadata({
@@ -24,15 +34,8 @@ export async function generateMetadata({
   const { city, venueName } = await params;
 
   // Decode and format names for display
-  const decodedVenueName = decodeURIComponent(venueName).replace(/-/g, " ");
-  const decodedCity = decodeURIComponent(city).replace(/-/g, " ");
-
-  // Capitalize each word
-  const formatName = (name: string) =>
-    name
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
+  const decodedVenueName = decodeURIComponent(venueName);
+  const decodedCity = decodeURIComponent(city);
 
   const formattedVenueName = formatName(decodedVenueName);
   const formattedCity = formatName(decodedCity);
@@ -57,14 +60,7 @@ export default async function VenuePage({ params }: VenuePageProps) {
   const decodedVenueName = decodeURIComponent(venueName);
   const decodedCity = decodeURIComponent(city);
 
-  // Format the venue name for display (replace hyphens with spaces, capitalize)
-  const formatName = (name: string) =>
-    name
-      .replace(/-/g, " ")
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
-
+  // Format the venue name and city for display
   const formattedVenueName = formatName(decodedVenueName);
   const formattedCity = formatName(decodedCity);
 
