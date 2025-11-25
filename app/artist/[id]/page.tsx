@@ -52,16 +52,18 @@ export default async function Artist({ params }: ArtistPageProps) {
         <GoogleAutoAds />
         <ClientNavigationBar />
         <div className="text-center [&_h1]:border-none [&_h1]:text-center pt-10">
-          <div className="artist-header">
-            <ArtistImage id={artistData.id} image={undefined} large={true} />
-            <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px]">
+          <div className="artist-header mt-6">
+            <div className="rounded-xl overflow-hidden mx-auto w-fit pt-4">
+              <ArtistImage id={artistData.id} image={undefined} large={true} />
+            </div>
+            <h1 className="mt-5 text-[25px] text-pink font-normal md:mt-5 md:block md:text-[37.5px] pb-2">
               {name}
             </h1>
           </div>
           <ArtistBio name={name} lastFMdata={lastFMdata} />
           {events?.length != 0 && (
             <>
-              <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl text-xl mb-4">
+              <h2 className="font-normal mt-10 text-lg text-pink md:inline-block md:text-xl pb-3">
                 {name} Upcoming Events
               </h2>
               <ArtistEventsClient events={events} />

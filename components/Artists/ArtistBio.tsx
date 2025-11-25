@@ -65,8 +65,10 @@ const ArtistBio = ({ name, lastFMdata }: ArtistBioProps) => {
     <div className="px-2.5 max-w-3xl mx-auto [&_p]:text-md text-left">
       {hasTags && (
         <div className="text-center">
-          <h3 className="font-normal mt-4 text-lg text-blue">Music Style</h3>
-          <div className="[&_span]:py-1 [&_span]:px-4 [&_span]:m-1 [&_span]:border [&_span]:border-blue [&_span]:rounded-2xl [&_span]:text-xs [&_span]:text-center [&_span]:inline-block [&_span]:bg-blue [&_span]:text-white">
+          <h3 className="font-normal mt-4 text-lg text-pink pb-3">
+            Music Style
+          </h3>
+          <div className="[&_span]:py-1 [&_span]:px-4 [&_span]:m-1 [&_span]:border [&_span]:border-gray-300 [&_span]:dark:border-gray-600 [&_span]:rounded-2xl [&_span]:text-xs [&_span]:text-center [&_span]:inline-block [&_span]:bg-gray-200 [&_span]:dark:bg-gray-700 [&_span]:text-gray-600 [&_span]:dark:text-gray-400">
             {tags.map((tag) => (
               <span key={tag.name} className="artist-tag">
                 {tag.name.toLowerCase().replace(/-/g, " ")}
@@ -78,7 +80,7 @@ const ArtistBio = ({ name, lastFMdata }: ArtistBioProps) => {
 
       {bioContent && (
         <>
-          <h2 className="font-normal mt-10 text-lg text-blue md:inline-block md:text-xl">
+          <h2 className="font-normal mt-10 text-lg text-pink md:inline-block md:text-xl pb-3">
             About {name}
           </h2>
           <div
