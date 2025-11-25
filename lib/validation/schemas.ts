@@ -40,6 +40,14 @@ export const artistNameSchema = z
  */
 export const uuidSchema = z.string().uuid("Invalid UUID format");
 
+/**
+ * Schema for validating venue names from route parameters
+ */
+export const venueNameSchema = z
+  .string()
+  .min(1, "Venue name cannot be empty")
+  .max(255, "Venue name is too long");
+
 // ============================================================================
 // SDHM API Endpoint Schemas
 // ============================================================================
@@ -49,6 +57,13 @@ export const uuidSchema = z.string().uuid("Invalid UUID format");
  */
 export const sdhmParamsSchema = z.object({
   params: z.tuple([numericIdSchema, cityNameSchema]),
+});
+
+/**
+ * Schema for SDHM venues route parameters: /api/sdhm/venues/[venueName]
+ */
+export const sdhmVenuesParamsSchema = z.object({
+  venueName: venueNameSchema,
 });
 
 // ============================================================================
