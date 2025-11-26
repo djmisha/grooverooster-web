@@ -1,7 +1,13 @@
 import localArtistsDB from "@/localArtistsDB.json";
+import { ToSlugArtist } from "@/utils/utilities";
 
 // Create a Set of artist IDs for O(1) lookup
 const artistIdSet = new Set(localArtistsDB.map((a) => a.id));
+
+// Create a Map for O(1) name lookup by normalized name
+const artistNameMap = new Map(
+  localArtistsDB.map((a) => [a.name.toLowerCase().trim(), a.name])
+);
 
 /**
  * Checks if an artist exists in the local database by ID
@@ -82,6 +88,42 @@ export const getFirstArtistImageId = (
   // If the ID is a UUID string (new API format), look up by name
   if (typeof firstArtist.id === "string" && firstArtist.name) {
     return getArtistIdByName(firstArtist.name);
+  }
+
+  return undefined;
+};
+
+/**
+ * Gets the artist slug for linking if the artist exists in the local database
+ * The slug is derived from the artist name and used for the /artist/{slug} route
+ * @param artist - Artist object with optional id and name
+ * @returns The artist slug if found in database, undefined otherwise
+ */
+export const getArtistSlug = (artist: {
+  id?: string | number;
+  name: string;
+}): string | undefined => {
+  if (!artist.name) return undefined;
+
+  const normalizedName = artist.name.toLowerCase().trim();
+
+  // Check if artist exists in database by name
+  const dbArtistName = artistNameMap.get(normalizedName);
+  if (dbArtistName) {
+    return ToSlugArtist(dbArtistName);
+  }
+
+  // If not found by name, check by ID
+  if (artist.id) {
+    const numericId =
+      typeof artist.id === "string" ? parseInt(artist.id, 10) : artist.id;
+    if (artistIdSet.has(numericId)) {
+      // Find the artist name from the database by ID
+      const dbArtist = localArtistsDB.find((a) => a.id === numericId);
+      if (dbArtist) {
+        return ToSlugArtist(dbArtist.name);
+      }
+    }
   }
 
   return undefined;

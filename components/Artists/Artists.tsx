@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import { FiExternalLink } from "react-icons/fi";
-import { getArtistDbId } from "@/utils/artistImageLookup";
+import { getArtistSlug } from "@/utils/artistImageLookup";
 
 interface Artist {
   name: string | ReactNode;
@@ -28,19 +28,19 @@ const Artists = ({ data, showLinks = false }: ArtistsProps) => {
     // Check if artist exists in database (only if name is a string and showLinks is true)
     const artistName =
       typeof artist.name === "string" ? artist.name : undefined;
-    const artistDbId =
+    const artistSlug =
       showLinks && artistName
-        ? getArtistDbId({ id: artist.id, name: artistName })
+        ? getArtistSlug({ id: artist.id, name: artistName })
         : undefined;
 
-    const artistEl = artistDbId ? (
+    const artistEl = artistSlug ? (
       <div
         className="block [&_h1]:border-none [&_h1]:text-center"
         key={index}
         style={{ color }}
       >
         <Link
-          href={`/artist/${artistDbId}`}
+          href={`/artist/${artistSlug}`}
           className="inline-flex items-center gap-1 border-b border-gray-300 dark:border-gray-600 hover:border-gray-500 dark:hover:border-gray-400 transition-colors"
           style={{ color }}
         >
