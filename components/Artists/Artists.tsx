@@ -11,25 +11,27 @@ interface Artist {
 
 interface ArtistsProps {
   data: Artist[];
+  showLinks?: boolean;
 }
 
 /**
  * Artists component renders a list of artist names with alternating colors
- * Links to artist page if artist exists in local database
+ * Links to artist page if artist exists in local database (only when showLinks is true)
  */
-const Artists = ({ data }: ArtistsProps) => {
+const Artists = ({ data, showLinks = false }: ArtistsProps) => {
   let artists: React.ReactElement[] = [];
   data.map((artist, index) => {
     // Alternating colors: first (0) = pink, second (1) = orange, third (2) = pink, etc.
     const isPink = index % 2 === 0;
     const color = isPink ? "#ce3197" : "#f97316";
 
-    // Check if artist exists in database (only if name is a string)
+    // Check if artist exists in database (only if name is a string and showLinks is true)
     const artistName =
       typeof artist.name === "string" ? artist.name : undefined;
-    const artistDbId = artistName
-      ? getArtistDbId({ id: artist.id, name: artistName })
-      : undefined;
+    const artistDbId =
+      showLinks && artistName
+        ? getArtistDbId({ id: artist.id, name: artistName })
+        : undefined;
 
     const artistEl = artistDbId ? (
       <div

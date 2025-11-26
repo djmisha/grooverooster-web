@@ -96,20 +96,23 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         Event Details: {artistList.map((a) => a.name).join(", ")} at {venueName}
       </h2>
 
-      {/* Top Section - Image and Event Info */}
-      <div className="flex p-0  border-t border-b border-gray-200 dark:border-gray-700">
-        <div className="w-40 h-40 flex-shrink-0 bg-no-repeat bg-cover rounded-r-lg">
+      {/* Top Section - Image on top, stacked vertically */}
+      <div className="flex flex-col border-t border-b border-gray-200 dark:border-gray-700">
+        {/* Image Section */}
+        <div className="w-full h-48 bg-no-repeat bg-cover">
           <ArtistImage id={getFirstArtistImageId(artistList)} image={image} />
         </div>
-        <div className="flex-1 p-2 pr-4 pl-4 flex flex-col justify-center gap-2">
+
+        {/* Event Info Section */}
+        <div className="p-4 flex flex-col gap-3 border-t border-b border-gray-200 dark:border-gray-700">
           {name && !shouldHideEventName() && (
             <span className="text-gray-400 dark:text-gray-400 block text-sm font-medium leading-tight">
               {name}
             </span>
           )}
 
-          <div className="break-anywhere font-semibold text-xl leading-tight text-left">
-            <Artists data={artistList} />
+          <div className="break-anywhere font-semibold text-2xl leading-tight text-left space-y-2">
+            <Artists data={artistList} showLinks={true} />
           </div>
 
           <div className="flex gap-2">
