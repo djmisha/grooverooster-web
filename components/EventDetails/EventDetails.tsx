@@ -104,7 +104,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         </div>
 
         {/* Event Info Section */}
-        <div className="p-4 flex flex-col gap-3 border-t border-b border-gray-200 dark:border-gray-700">
+        <div className="p-4 flex flex-col gap-3">
           {name && !shouldHideEventName() && (
             <span className="text-gray-400 dark:text-gray-400 block text-sm font-medium leading-tight">
               {name}
