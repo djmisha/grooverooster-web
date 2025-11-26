@@ -59,6 +59,23 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     if (!firstArtistName || typeof firstArtistName !== "string") return false;
     return name.trim().toLowerCase() === firstArtistName.trim().toLowerCase();
   };
+
+  // Truncate artist list to show max 5 artists, with "more artists" link
+  const maxArtistsToShow = 5;
+  const truncatedArtistList =
+    artistList.length > maxArtistsToShow
+      ? ([
+          ...artistList.slice(0, maxArtistsToShow),
+          {
+            name: (
+              <span className="text-gray-400 dark:text-gray-400 text-sm font-normal inline">
+                + {artistList.length - maxArtistsToShow} more artists
+              </span>
+            ),
+          },
+        ] as any[])
+      : artistList;
+
   // Determine button text based on source
   const isEDMTrain = source === "edmtrain";
   const buttonText = isEDMTrain ? "View Details" : "Get Tickets";
@@ -96,20 +113,23 @@ const EventDetails = ({ event }: EventDetailsProps) => {
         Event Details: {artistList.map((a) => a.name).join(", ")} at {venueName}
       </h2>
 
-      {/* Top Section - Image and Event Info */}
-      <div className="flex p-0 border-t border-b border-gray-200 dark:border-gray-700">
-        <div className="w-40 h-40 flex-shrink-0 bg-no-repeat bg-cover ml-4 my-4">
+      {/* Top Section - Image and Event Info stacked vertically */}
+      <div className="flex flex-col border-t border-b border-gray-200 dark:border-gray-700">
+        {/* Image Section - Center aligned */}
+        <div className="w-40 h-40 mx-auto my-4 bg-no-repeat bg-cover">
           <ArtistImage id={getFirstArtistImageId(artistList)} image={image} />
         </div>
-        <div className="flex-1 p-4 flex flex-col gap-3">
+
+        {/* Event Name and Artists Section - Left aligned with borders */}
+        <div className="border-t border-b border-gray-200 dark:border-gray-700 px-4 py-4 flex flex-col gap-3">
           {name && !shouldHideEventName() && (
-            <span className="text-gray-400 dark:text-gray-400 block text-sm font-medium leading-tight">
+            <span className="text-gray-400 dark:text-gray-400 block text-sm font-medium leading-tight text-left">
               {name}
             </span>
           )}
 
           <div className="break-anywhere font-semibold text-2xl leading-tight text-left space-y-2">
-            <Artists data={artistList} showLinks={true} />
+            <Artists data={truncatedArtistList} showLinks={true} />
           </div>
 
           <div className="flex gap-2">

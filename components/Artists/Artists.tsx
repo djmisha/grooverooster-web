@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
-import { FiExternalLink } from "react-icons/fi";
+import { FiLink } from "react-icons/fi";
 import { getArtistSlug } from "@/utils/artistImageLookup";
 
 interface Artist {
@@ -45,7 +45,7 @@ const Artists = ({ data, showLinks = false }: ArtistsProps) => {
           style={{ color }}
         >
           {artist.name}
-          <FiExternalLink className="w-3.5 h-3.5 opacity-60" />
+          <FiLink className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
         </Link>
       </div>
     ) : (

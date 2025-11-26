@@ -55,11 +55,22 @@ interface ArtistBioProps {
 }
 
 const ArtistBio = ({ name, lastFMdata }: ArtistBioProps) => {
-  if (!lastFMdata || lastFMdata.error) return null;
-
   const bioContent = lastFMdata?.artist?.bio?.content;
   const tags = lastFMdata?.artist?.tags?.tag;
   const hasTags = Array.isArray(tags) && tags.length > 0;
+  const hasContent = bioContent || hasTags;
+
+  // Show fallback message if no data available
+  if (!lastFMdata || lastFMdata.error || !hasContent) {
+    return (
+      <div className="px-2.5 max-w-3xl mx-auto text-center mt-8">
+        <p className="text-gray-500 dark:text-gray-400 text-sm italic">
+          No information is currently available for this artist. Please check
+          back later.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="px-2.5 max-w-3xl mx-auto [&_p]:text-md text-left">
