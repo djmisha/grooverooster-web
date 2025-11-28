@@ -4,11 +4,6 @@ import { ToSlugArtist } from "@/utils/utilities";
 // Create a Set of artist IDs for O(1) lookup
 const artistIdSet = new Set(localArtistsDB.map((a) => a.id));
 
-// Create a Map for O(1) name lookup by normalized name
-const artistNameMap = new Map(
-  localArtistsDB.map((a) => [a.name.toLowerCase().trim(), a.name])
-);
-
 /**
  * Checks if an artist exists in the local database by ID
  * @param artistId - The ID of the artist to check
@@ -96,24 +91,15 @@ export const getFirstArtistImageId = (
 /**
  * Gets the artist slug for linking if the artist exists in the local database
  * The slug is derived from the artist name and used for the /artist/{slug} route
+ * Only matches by ID - name matching is disabled
  * @param artist - Artist object with optional id and name
- * @returns The artist slug if found in database, undefined otherwise
+ * @returns The artist slug if found in database by ID, undefined otherwise
  */
 export const getArtistSlug = (artist: {
   id?: string | number;
   name: string;
 }): string | undefined => {
-  if (!artist.name) return undefined;
-
-  const normalizedName = artist.name.toLowerCase().trim();
-
-  // Check if artist exists in database by name
-  const dbArtistName = artistNameMap.get(normalizedName);
-  if (dbArtistName) {
-    return ToSlugArtist(dbArtistName);
-  }
-
-  // If not found by name, check by ID
+  // Only match by ID, not by name
   if (artist.id) {
     const numericId =
       typeof artist.id === "string" ? parseInt(artist.id, 10) : artist.id;
