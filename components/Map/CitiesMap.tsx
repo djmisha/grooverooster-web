@@ -14,10 +14,8 @@ import Link from "next/link";
 import locations from "@/utils/locations.json";
 import { toSlug } from "@/utils/getLocations";
 
-// TopoJSON URLs for US states and Canadian provinces
-const usStatesUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
-const canadaProvincesUrl =
-  "https://cdn.jsdelivr.net/npm/canada-atlas@1/provinces-10m.json";
+// TopoJSON URLs - US states from local file, Canada from country outline
+const usStatesUrl = "/topojson/states-10m.json";
 
 // Zoom threshold for showing city labels on mobile
 const MOBILE_LABEL_ZOOM_THRESHOLD = 2;
@@ -300,34 +298,13 @@ export default function CitiesMap() {
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    fill="#E8E8EC"
-                    stroke="#FFFFFF"
-                    strokeWidth={0.5}
-                    className="dark:fill-gray-600 dark:stroke-gray-500 outline-none focus:outline-none"
+                    fill="#D4D4D8"
+                    stroke="#9CA3AF"
+                    strokeWidth={0.75}
+                    className="dark:fill-gray-700 dark:stroke-gray-500 outline-none focus:outline-none"
                     style={{
                       default: { outline: "none" },
-                      hover: { outline: "none", fill: "#D8D8DC" },
-                      pressed: { outline: "none" },
-                    }}
-                  />
-                ))
-              }
-            </Geographies>
-
-            {/* Canadian Provinces */}
-            <Geographies geography={canadaProvincesUrl}>
-              {({ geographies }) =>
-                geographies.map((geo) => (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    fill="#E8E8EC"
-                    stroke="#FFFFFF"
-                    strokeWidth={0.5}
-                    className="dark:fill-gray-600 dark:stroke-gray-500 outline-none focus:outline-none"
-                    style={{
-                      default: { outline: "none" },
-                      hover: { outline: "none", fill: "#D8D8DC" },
+                      hover: { outline: "none", fill: "#C4C4C8" },
                       pressed: { outline: "none" },
                     }}
                   />
