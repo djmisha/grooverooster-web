@@ -91,25 +91,26 @@ export const getFirstArtistImageId = (
 /**
  * Gets the artist slug for linking if the artist exists in the local database
  * The slug is derived from the artist name and used for the /artist/{slug} route
- * Only matches by ID - name matching is disabled
+ * Matches by exact name only (case-insensitive)
  * @param artist - Artist object with optional id and name
- * @returns The artist slug if found in database by ID, undefined otherwise
+ * @returns The artist slug if found in database by exact name match, undefined otherwise
  */
 export const getArtistSlug = (artist: {
   id?: string | number;
   name: string;
 }): string | undefined => {
-  // Only match by ID, not by name
-  if (artist.id) {
-    const numericId =
-      typeof artist.id === "string" ? parseInt(artist.id, 10) : artist.id;
-    if (artistIdSet.has(numericId)) {
-      // Find the artist name from the database by ID
-      const dbArtist = localArtistsDB.find((a) => a.id === numericId);
-      if (dbArtist) {
-        return ToSlugArtist(dbArtist.name);
-      }
-    }
+  if (!artist.name) return undefined;
+
+  // Normalize the artist name for comparison (case-insensitive, trim whitespace)
+  const normalizedSearchName = artist.name.toLowerCase().trim();
+
+  // Find an exact name match in the local database
+  const dbArtist = localArtistsDB.find(
+    (a) => a.name.toLowerCase().trim() === normalizedSearchName
+  );
+
+  if (dbArtist) {
+    return ToSlugArtist(dbArtist.name);
   }
 
   return undefined;
