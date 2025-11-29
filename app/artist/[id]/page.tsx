@@ -52,7 +52,7 @@ export default async function Artist({ params }: ArtistPageProps) {
         <GoogleAutoAds />
         <ClientNavigationBar />
         <div className="text-center [&_h1]:border-none [&_h1]:text-center pt-10">
-          <div className="artist-header mt-6">
+          <div className="artist-header mt-2">
             <div className="rounded-xl overflow-hidden mx-auto w-fit pt-4">
               <ArtistImage id={artistData.id} image={undefined} large={true} />
             </div>
