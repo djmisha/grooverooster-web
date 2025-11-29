@@ -59,6 +59,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     if (!firstArtistName || typeof firstArtistName !== "string") return false;
     return name.trim().toLowerCase() === firstArtistName.trim().toLowerCase();
   };
+
   // Determine button text based on source
   const isEDMTrain = source === "edmtrain";
   const buttonText = isEDMTrain ? "View Details" : "Get Tickets";
@@ -97,7 +98,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
       </h2>
 
       {/* Top Section - Image and Event Info */}
-      <div className="flex p-0  border-t border-b border-gray-200 dark:border-gray-700">
+      <div className="flex p-0 border-t border-b border-gray-200 dark:border-gray-700">
         <div className="w-40 h-40 flex-shrink-0 bg-no-repeat bg-cover rounded-r-lg">
           <ArtistImage id={getFirstArtistImageId(artistList)} image={image} />
         </div>
@@ -109,7 +110,7 @@ const EventDetails = ({ event }: EventDetailsProps) => {
           )}
 
           <div className="break-anywhere font-semibold text-xl leading-tight text-left">
-            <Artists data={artistList} />
+            <Artists data={artistList} showLinks={true} />
           </div>
 
           <div className="flex gap-2">
