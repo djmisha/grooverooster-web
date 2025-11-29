@@ -14,8 +14,13 @@ import Link from "next/link";
 import locations from "@/utils/locations.json";
 import { toSlug } from "@/utils/getLocations";
 
-// TopoJSON for North America
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+// TopoJSON URLs for US states and Canadian provinces
+const usStatesUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
+const canadaProvincesUrl =
+  "https://cdn.jsdelivr.net/npm/canada-atlas@1/provinces-10m.json";
+
+// Zoom threshold for showing city labels on mobile
+const MOBILE_LABEL_ZOOM_THRESHOLD = 2;
 
 interface MapLocation {
   id: number;
@@ -70,10 +75,17 @@ export default function CitiesMap() {
   const [mapCenter, setMapCenter] = useState<[number, number]>([-97, 42]);
   const [zoom, setZoom] = useState(0.7);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Handle hydration mismatch
+  // Handle hydration mismatch and detect mobile
   useEffect(() => {
     setIsMounted(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Check for perfect match when search string changes
@@ -178,6 +190,19 @@ export default function CitiesMap() {
     return Math.max(3, 6 / zoom);
   }, [zoom]);
 
+  // Determine if city labels should be shown
+  const showCityLabels = useMemo(() => {
+    // On desktop, always show labels
+    if (!isMobile) return true;
+    // On mobile, only show after zooming in past threshold
+    return zoom >= MOBILE_LABEL_ZOOM_THRESHOLD;
+  }, [isMobile, zoom]);
+
+  // Label font size based on zoom
+  const labelFontSize = useMemo(() => {
+    return Math.max(8, Math.min(12, 10 / zoom));
+  }, [zoom]);
+
   if (!isMounted) {
     return (
       <div className="w-full h-[500px] md:h-[600px] bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse flex items-center justify-center">
@@ -268,19 +293,41 @@ export default function CitiesMap() {
             minZoom={0.5}
             maxZoom={8}
           >
-            <Geographies geography={geoUrl}>
+            {/* US States */}
+            <Geographies geography={usStatesUrl}>
               {({ geographies }) =>
                 geographies.map((geo) => (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    fill="#D6D6DA"
+                    fill="#E8E8EC"
                     stroke="#FFFFFF"
                     strokeWidth={0.5}
                     className="dark:fill-gray-600 dark:stroke-gray-500 outline-none focus:outline-none"
                     style={{
                       default: { outline: "none" },
-                      hover: { outline: "none", fill: "#B8B8BC" },
+                      hover: { outline: "none", fill: "#D8D8DC" },
+                      pressed: { outline: "none" },
+                    }}
+                  />
+                ))
+              }
+            </Geographies>
+
+            {/* Canadian Provinces */}
+            <Geographies geography={canadaProvincesUrl}>
+              {({ geographies }) =>
+                geographies.map((geo) => (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill="#E8E8EC"
+                    stroke="#FFFFFF"
+                    strokeWidth={0.5}
+                    className="dark:fill-gray-600 dark:stroke-gray-500 outline-none focus:outline-none"
+                    style={{
+                      default: { outline: "none" },
+                      hover: { outline: "none", fill: "#D8D8DC" },
                       pressed: { outline: "none" },
                     }}
                   />
@@ -310,6 +357,27 @@ export default function CitiesMap() {
                   strokeWidth={1}
                   className="cursor-pointer transition-all duration-200 hover:fill-pink"
                 />
+                {/* City label */}
+                {showCityLabels && (
+                  <text
+                    textAnchor="middle"
+                    y={-markerSize - 3}
+                    style={{
+                      fontSize: `${labelFontSize}px`,
+                      fontFamily: "system-ui, sans-serif",
+                      fontWeight:
+                        selectedCity?.id === location.id ? "600" : "400",
+                      fill:
+                        selectedCity?.id === location.id
+                          ? "#ce3197"
+                          : "#374151",
+                      pointerEvents: "none",
+                    }}
+                    className="dark:fill-gray-200"
+                  >
+                    {location.city}
+                  </text>
+                )}
               </Marker>
             ))}
           </ZoomableGroup>
