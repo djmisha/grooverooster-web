@@ -1,44 +1,90 @@
 import React, { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 interface ModalProps {
   component: React.ComponentType;
   onClose: () => void;
 }
 
+// Track number of open modals globally to handle nested modals correctly
+let modalCount = 0;
+
+// Store original body styles when first modal opens
+let storedOverflow = "";
+let storedPaddingRight = "";
+
+/**
+ * Resets body scroll state - used both in cleanup and on navigation
+ */
+const resetBodyScroll = () => {
+  document.body.style.overflow = storedOverflow || "";
+  document.body.style.paddingRight = storedPaddingRight || "";
+  modalCount = 0;
+  storedOverflow = "";
+  storedPaddingRight = "";
+};
+
 /**
  * Modal component that displays content in an overlay with scroll lock
+ * Handles nested modals by using a counter to track open modal count
+ * Ensures scroll is restored on route changes
  */
 const Modal = ({ component: Component, onClose }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
 
-  // Disable body scroll when modal is open
+  // Reset scroll on route change (handles navigation while modal is open)
   useEffect(() => {
-    // Store original values
-    const originalOverflow = document.body.style.overflow;
-    const originalPaddingRight = document.body.style.paddingRight;
+    // When pathname changes while modal is mounted, reset and close
+    return () => {
+      if (modalCount > 0) {
+        resetBodyScroll();
+      }
+    };
+  }, [pathname]);
 
-    // Calculate scrollbar width to prevent layout shift
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
+  // Disable body scroll when modal is open, handle nested modals
+  useEffect(() => {
+    // Only store and modify body styles when this is the first modal
+    const isFirstModal = modalCount === 0;
 
-    // Apply scroll lock styles
-    document.body.style.overflow = "hidden";
+    if (isFirstModal) {
+      storedOverflow = document.body.style.overflow;
+      storedPaddingRight = document.body.style.paddingRight;
 
-    // Compensate for scrollbar removal to prevent layout shift
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      // Calculate scrollbar width to prevent layout shift
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+
+      // Apply scroll lock styles
+      document.body.style.overflow = "hidden";
+
+      // Compensate for scrollbar removal to prevent layout shift
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
     }
+
+    // Increment modal count
+    modalCount++;
 
     // Focus the close button when modal opens
     if (closeButtonRef.current) {
       closeButtonRef.current.focus();
     }
 
-    // Cleanup function to restore scrolling
+    // Cleanup function to restore scrolling only when all modals are closed
     return () => {
-      document.body.style.overflow = originalOverflow;
-      document.body.style.paddingRight = originalPaddingRight;
+      modalCount--;
+
+      // Only restore body styles when this was the last modal
+      if (modalCount === 0) {
+        document.body.style.overflow = storedOverflow || "";
+        document.body.style.paddingRight = storedPaddingRight || "";
+        storedOverflow = "";
+        storedPaddingRight = "";
+      }
     };
   }, []);
 
