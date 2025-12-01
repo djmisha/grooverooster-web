@@ -48,8 +48,8 @@ const RelatedEventCard = ({ event, onClick }: RelatedEventCardProps) => {
       tabIndex={0}
       aria-label={`View details for ${firstArtistName} at ${venueName} on ${dayMonth}`}
     >
-      {/* Image Section */}
-      <div className="w-full h-28 bg-no-repeat bg-cover">
+      {/* Image Section - increased height by 25% (h-28 to h-36) */}
+      <div className="w-full h-36 bg-no-repeat bg-cover">
         <ArtistImage id={getFirstArtistImageId(artistList)} image={image} />
       </div>
 
@@ -60,7 +60,7 @@ const RelatedEventCard = ({ event, onClick }: RelatedEventCardProps) => {
           {firstArtistName}
           {additionalArtists > 0 && (
             <span className="text-gray-400 dark:text-gray-500 font-normal text-xs ml-1">
-              +{additionalArtists}
+              +{additionalArtists} artist{additionalArtists > 1 ? "s" : ""}
             </span>
           )}
         </div>
