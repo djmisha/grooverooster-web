@@ -14,8 +14,8 @@ interface RelatedEventsProps {
 
 /**
  * RelatedEvents component displays a horizontal carousel of related events
- * Shows events at the same venue or on the same date
- * Prioritizes venue matches over date matches
+ * Shows events on the same date or at the same venue
+ * Prioritizes date matches over venue matches
  * Limited to 6 events maximum
  * Uses Embla Carousel for smooth mobile scrolling
  */
@@ -43,8 +43,8 @@ const RelatedEvents = ({ currentEvent, allEvents }: RelatedEventsProps) => {
   );
 
   /**
-   * Gets related events based on same venue or same date
-   * Prioritizes venue matches, then date matches
+   * Gets related events based on same date or same venue
+   * Prioritizes date matches, then venue matches
    * Excludes the current event and limits to 6 results
    */
   const getRelatedEvents = useCallback((): Event[] => {
@@ -52,26 +52,24 @@ const RelatedEvents = ({ currentEvent, allEvents }: RelatedEventsProps) => {
 
     const current = getEventData(currentEvent);
 
-    // Find events at the same venue (highest priority)
+    // Find events on the same date (highest priority)
+    const sameDateEvents = allEvents.filter((event) => {
+      const eventData = getEventData(event);
+      return eventData.id !== current.id && eventData.date === current.date;
+    });
+
+    // Find events at the same venue (excluding date matches)
     const sameVenueEvents = allEvents.filter((event) => {
       const eventData = getEventData(event);
       return (
-        eventData.id !== current.id && eventData.venueName === current.venueName
-      );
-    });
-
-    // Find events on the same date (excluding venue matches)
-    const sameDateEvents = allEvents.filter((event) => {
-      const eventData = getEventData(event);
-      return (
         eventData.id !== current.id &&
-        eventData.date === current.date &&
-        eventData.venueName !== current.venueName
+        eventData.venueName === current.venueName &&
+        eventData.date !== current.date
       );
     });
 
-    // Combine and limit to 6
-    const relatedEvents = [...sameVenueEvents, ...sameDateEvents].slice(0, 6);
+    // Combine and limit to 6 (date first, then venue)
+    const relatedEvents = [...sameDateEvents, ...sameVenueEvents].slice(0, 6);
 
     return relatedEvents;
   }, [allEvents, currentEvent, getEventData]);
