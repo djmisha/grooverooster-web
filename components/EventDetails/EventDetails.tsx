@@ -16,15 +16,17 @@ import {
 import Button from "@/components/Button/Button";
 import { Event } from "@/types";
 import { getFirstArtistImageId } from "@/utils/artistImageLookup";
+import RelatedEvents from "@/components/RelatedEvents/RelatedEvents";
 
 interface EventDetailsProps {
   event: Event;
+  allEvents?: Event[];
 }
 
 /**
  * EventDetails component displays detailed information about an event in a modal
  */
-const EventDetails = ({ event }: EventDetailsProps) => {
+const EventDetails = ({ event, allEvents }: EventDetailsProps) => {
   const {
     date,
     artistlist,
@@ -183,6 +185,11 @@ const EventDetails = ({ event }: EventDetailsProps) => {
           </Button>
         </div>
       </div>
+
+      {/* Related Events Section */}
+      {allEvents && allEvents.length > 0 && (
+        <RelatedEvents currentEvent={event} allEvents={allEvents} />
+      )}
     </div>
   );
 };

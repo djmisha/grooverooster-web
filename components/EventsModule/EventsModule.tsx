@@ -235,6 +235,7 @@ const EventsModule = ({
                   key={event.id}
                   openEventId={openEventId}
                   setOpenEventId={setOpenEventId}
+                  allEvents={allEvents}
                 />
               );
             })}
