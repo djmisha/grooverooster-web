@@ -25,6 +25,15 @@ const RelatedEvents = ({ currentEvent, allEvents }: RelatedEventsProps) => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   /**
+   * Extracts normalized event data for comparison
+   */
+  const getEventData = (event: Event) => ({
+    id: String(event.id),
+    venueName: event.venue?.name?.toLowerCase() || "",
+    date: event.date?.split("T")[0] || "",
+  });
+
+  /**
    * Gets related events based on same venue or same date
    * Prioritizes venue matches, then date matches
    * Excludes the current event and limits to 6 results
@@ -32,27 +41,23 @@ const RelatedEvents = ({ currentEvent, allEvents }: RelatedEventsProps) => {
   const getRelatedEvents = (): Event[] => {
     if (!allEvents || allEvents.length === 0) return [];
 
-    const currentEventId = String(currentEvent.id);
-    const currentVenueName = currentEvent.venue?.name?.toLowerCase() || "";
-    const currentDate = currentEvent.date?.split("T")[0] || "";
+    const current = getEventData(currentEvent);
 
     // Find events at the same venue (highest priority)
     const sameVenueEvents = allEvents.filter((event) => {
-      const eventId = String(event.id);
-      const venueName = event.venue?.name?.toLowerCase() || "";
-      return eventId !== currentEventId && venueName === currentVenueName;
+      const eventData = getEventData(event);
+      return (
+        eventData.id !== current.id && eventData.venueName === current.venueName
+      );
     });
 
-    // Find events on the same date
+    // Find events on the same date (excluding venue matches)
     const sameDateEvents = allEvents.filter((event) => {
-      const eventId = String(event.id);
-      const eventDate = event.date?.split("T")[0] || "";
-      const venueName = event.venue?.name?.toLowerCase() || "";
-      // Exclude current event and already included venue matches
+      const eventData = getEventData(event);
       return (
-        eventId !== currentEventId &&
-        eventDate === currentDate &&
-        venueName !== currentVenueName
+        eventData.id !== current.id &&
+        eventData.date === current.date &&
+        eventData.venueName !== current.venueName
       );
     });
 
@@ -145,7 +150,7 @@ const RelatedEvents = ({ currentEvent, allEvents }: RelatedEventsProps) => {
 
       <div
         ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-grab active:cursor-grabbing snap-x snap-mandatory md:snap-none"
+        className="flex gap-4 overflow-x-auto px-4 pb-4 scrollbar-hide cursor-grab active:cursor-grabbing snap-x snap-mandatory"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -157,7 +162,7 @@ const RelatedEvents = ({ currentEvent, allEvents }: RelatedEventsProps) => {
         onMouseLeave={handleMouseLeave}
       >
         {relatedEvents.map((event) => (
-          <div key={event.id} className="snap-start md:snap-align-none">
+          <div key={event.id} className="snap-start">
             <RelatedEventCard
               event={event}
               onClick={() => handleEventClick(event)}
@@ -169,7 +174,9 @@ const RelatedEvents = ({ currentEvent, allEvents }: RelatedEventsProps) => {
       {/* Modal for viewing event details */}
       {selectedEvent && (
         <Modal
-          component={() => <EventDetails event={selectedEvent} />}
+          component={() => (
+            <EventDetails event={selectedEvent} allEvents={allEvents} />
+          )}
           onClose={handleModalClose}
         />
       )}
