@@ -1,4 +1,3 @@
-import sampleEvents from "./allevents.sample.json";
 import artistDB from "./../localArtistsDB.json";
 import { removeDuplicates, ToSlugArtist } from "./utilities";
 import { parseData } from "./getEvents";
@@ -27,38 +26,7 @@ interface ArtistEvent {
   [key: string]: any;
 }
 
-/**
- * on Dev we return a sample array vs Prod we make a fetch call
- * @returns function based on env
- */
-export const getArtists = (): ArtistCount[] | undefined => {
-  if (process.env.NODE_ENV === "development") {
-    return getArtistsSample(sampleEvents as any[]);
-  } else {
-    // return getArtistsProd();
-    return undefined;
-  }
-};
-
-const getArtistsSample = (sampleEvents: any[]) => {
-  return getArtistsCounts(sampleEvents);
-};
-
-// Commented out as not currently used
-// const getArtistsProd = async () => {
-//   const PATH = "https://www.grooverooster.com/api/allevents/";
-//   await fetch(PATH, { mode: "cors" })
-//     .then(function (response) {
-//       response.json.then((res) => {
-//         getArtistsCounts(res.data);
-//       });
-//     })
-//     .catch(function (error) {
-//       console.error(error);
-//     });
-// };
-
-// Removes Duplicate items from an array
+// Removes Duplicate items from an array (used by getUniqueArtists)
 const dedupeObjArray = (array: Artist[]): Artist[] => {
   const unique = array.reduce((accumulator: Artist[], current) => {
     if (!accumulator.find((item) => item.id === current.id)) {
@@ -182,31 +150,9 @@ export const getArtistsCounts = (array: ArtistEvent[]): ArtistCount[] => {
 };
 
 /**
- *
+ * *
  * functions to create unique artists pages
  */
-// Commented out as not currently used
-// const uniqueArtists = getUniqueArtists(sampleEvents as any[]);
-
-interface ArtistParams {
-  params: {
-    id: string;
-  };
-}
-
-// gets slug for each artists
-export const getAritstIds = async (): Promise<ArtistParams[]> => {
-  return (artistDB as Artist[]).map((artist) => {
-    const { name } = artist;
-    const id = ToSlugArtist(name);
-
-    return {
-      params: {
-        id,
-      },
-    };
-  });
-};
 
 // get data for each artist
 export const getArtistData = async (slug: string): Promise<any> => {
