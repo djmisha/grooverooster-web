@@ -3,6 +3,7 @@ import Layout from "@/components/layout";
 import CitiesStates from "@/components/Homepage/CitiesStates";
 import { getLocations } from "@/utils/getLocations";
 import ClientNavigationBar from "@/app/cities/ClientNavigationBar";
+import CitiesMapWrapper from "@/app/cities/CitiesMapWrapper";
 import { getCanonicalUrl } from "@/utils/canonicalUrl";
 
 export const metadata: Metadata = {
@@ -30,6 +31,11 @@ export default async function CitiesPage() {
       <h1 className="mt-[15px] text-[20px] text-blue font-normal md:mt-[15px] md:block md:text-[30px] text-center px-2">
         Events By City
       </h1>
+      <p className="text-center text-gray-600 dark:text-gray-400 mb-4 px-4">
+        Click on a city to view events, or use the search bar to find a specific
+        location.
+      </p>
+      <CitiesMapWrapper />
       <CitiesStates locations={locations} showCitiesOnly={true} />
     </Layout>
   );
