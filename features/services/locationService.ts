@@ -1,11 +1,16 @@
 import { urlBigData } from "@/utils/utilities";
 import {
   UserLocationService,
-  matchesCity,
   getLocationId,
   createLocationObject,
-} from "@/utils/getUserLocation";
+} from "@/utils/locationService";
+import locations from "@/utils/locations.json";
 import { Location } from "@/types";
+
+// Helper function to check if city matches a city in the locations list
+const matchesCity = (city: string, locationsList: any[]): boolean => {
+  return locationsList.some((location) => location.city === city);
+};
 
 /**
  * Gets user's geolocation and updates location context
@@ -52,10 +57,15 @@ const handleGeolocationSuccess = async (
   const locationData = await locationResponse.json();
   const { city, principalSubdivision: state } = locationData;
 
-  setHasCity(matchesCity(city));
+  setHasCity(matchesCity(city, locations));
 
   const id = getLocationId(locations, city, state);
-  const locationObject = createLocationObject(city, state, id);
+
+  // Create location object with the data we have
+  const foundLocation = locations.find((loc: any) => loc.id === id);
+  const locationObject = foundLocation
+    ? createLocationObject(foundLocation)
+    : null;
 
   if (id && locationObject) {
     setUserLocation(locationObject);
@@ -75,7 +85,7 @@ const handleGeolocationError = async (
   if (error.PERMISSION_DENIED) {
     const location = await UserLocationService();
     if (location && location.city) {
-      setHasCity(matchesCity(location.city));
+      setHasCity(matchesCity(location.city, locations as any));
       setUserLocation(location);
       addLocation(location);
     }
