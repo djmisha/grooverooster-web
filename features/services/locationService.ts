@@ -60,10 +60,12 @@ const handleGeolocationSuccess = async (
   setHasCity(matchesCity(city, locations));
 
   const id = getLocationId(locations, city, state);
-  
+
   // Create location object with the data we have
   const foundLocation = locations.find((loc: any) => loc.id === id);
-  const locationObject = foundLocation ? createLocationObject(foundLocation) : null;
+  const locationObject = foundLocation
+    ? createLocationObject(foundLocation)
+    : null;
 
   if (id && locationObject) {
     setUserLocation(locationObject);

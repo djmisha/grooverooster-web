@@ -115,7 +115,8 @@ export const getSDHMEventsClient = async (
 
 /**
  * Parse and format events data for display
- * Used by getArtists.ts for backward compatibility
+ * Used by getArtists.ts which parses EDMTrain API responses
+ * Adds isVisible flag and formattedDate field to each event
  */
 export const parseData = (data: any[]): Event[] => {
   if (!Array.isArray(data)) return [];
