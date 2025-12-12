@@ -41,36 +41,3 @@ export async function authenticatedFetch<T = any>(
     throw error;
   }
 }
-
-/**
- * Make an authenticated GET request
- */
-export async function authenticatedGet<T = any>(endpoint: string): Promise<T> {
-  return authenticatedFetch<T>(endpoint, { method: "GET" });
-}
-
-/**
- * Make an authenticated POST request
- */
-export async function authenticatedPost<T = any>(
-  endpoint: string,
-  data: any
-): Promise<T> {
-  return authenticatedFetch<T>(endpoint, {
-    method: "POST",
-    body: JSON.stringify(data),
-  });
-}
-
-/**
- * Make an authenticated PUT request
- */
-export async function authenticatedPut<T = any>(
-  endpoint: string,
-  data: any
-): Promise<T> {
-  return authenticatedFetch<T>(endpoint, {
-    method: "PUT",
-    body: JSON.stringify(data),
-  });
-}

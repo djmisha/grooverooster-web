@@ -16,6 +16,7 @@ interface EventCardProps {
   openEventId: string | number | null;
   setOpenEventId: (id: string | number | null) => void;
   locationSlug?: string;
+  allEvents?: Event[];
 }
 
 /**
@@ -26,6 +27,7 @@ export const EventCard = ({
   openEventId,
   setOpenEventId,
   locationSlug,
+  allEvents,
 }: EventCardProps) => {
   const {
     date,
@@ -212,7 +214,7 @@ export const EventCard = ({
       </div>
       {isModalOpen && (
         <Modal
-          component={() => <EventDetails event={event} />}
+          component={() => <EventDetails event={event} allEvents={allEvents} />}
           onClose={handleModalClose}
         />
       )}

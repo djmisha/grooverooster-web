@@ -14,10 +14,10 @@ interface CookieOptions {
 }
 
 /**
- * Delete a cookie by name
+ * Delete a cookie by name (internal use only)
  * @param name - Cookie name
  */
-export const deleteCookie = (name: string): void => {
+const deleteCookie = (name: string): void => {
   try {
     // Set cookie with past expiration date to delete it
     // Include security flags for consistency

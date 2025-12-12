@@ -114,31 +114,5 @@ function secureApiEndpoint(
   return { allowed: true };
 }
 
-/**
- * Higher-order function that wraps API handlers with security
- */
-export function withApiSecurity(
-  handler: (req: NextApiRequest, res: NextApiResponse) => Promise<any>
-) {
-  return async (req: NextApiRequest, res: NextApiResponse) => {
-    const security = secureApiEndpoint(req, res);
-
-    // Handle preflight requests
-    if (security.isPreflight) {
-      return res.status(200).end();
-    }
-
-    // Check if request is allowed
-    if (!security.allowed) {
-      return res.status(401).json({
-        error: security.error || "Unauthorized access",
-      });
-    }
-
-    // Call the original handler
-    return handler(req, res);
-  };
-}
-
 // Export both named and default
 export default secureApiEndpoint;
