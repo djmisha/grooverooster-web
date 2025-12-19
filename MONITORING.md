@@ -16,6 +16,7 @@ This guide provides recommendations and instructions for setting up comprehensiv
 ## Overview
 
 Effective monitoring and logging are crucial for:
+
 - **Early problem detection**: Identify issues before they affect users
 - **Performance optimization**: Track resource usage and bottlenecks
 - **Debugging**: Quickly diagnose and resolve issues
@@ -87,6 +88,7 @@ crontab -e
 ```
 
 Add this line:
+
 ```
 */5 * * * * /opt/grooverooster/monitor.sh
 ```
@@ -283,6 +285,7 @@ crontab -e
 ```
 
 Add:
+
 ```
 */5 * * * * /opt/grooverooster/system-monitor.sh
 ```
@@ -294,6 +297,7 @@ Add:
 **Website**: https://uptimerobot.com
 
 **Features**:
+
 - Free plan: 50 monitors, 5-minute intervals
 - HTTP(S) monitoring
 - Keyword monitoring
@@ -301,6 +305,7 @@ Add:
 - Public status pages
 
 **Setup**:
+
 1. Create account at uptimerobot.com
 2. Add new monitor:
    - Type: HTTP(s)
@@ -314,6 +319,7 @@ Add:
 **Website**: https://github.com/louislam/uptime-kuma
 
 **Features**:
+
 - Self-hosted
 - Beautiful dashboard
 - Multiple notification channels
@@ -338,6 +344,7 @@ docker run -d \
 ```
 
 Configure monitoring:
+
 1. Access web interface
 2. Create admin account
 3. Add monitor for https://www.grooverooster.com/api/health
@@ -348,12 +355,14 @@ Configure monitoring:
 **Website**: https://healthchecks.io
 
 **Features**:
+
 - Cron job monitoring
 - HTTP monitoring
 - Free plan: 20 checks
 - Email/SMS/Slack alerts
 
 **Setup**:
+
 1. Create account
 2. Create new check
 3. Configure ping URL
@@ -365,6 +374,7 @@ crontab -e
 ```
 
 Add:
+
 ```
 */5 * * * * curl -fsS --retry 3 https://hc-ping.com/your-uuid > /dev/null
 ```
@@ -471,11 +481,11 @@ scrape_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 5s
     relabel_configs:
-      - source_labels: ['__meta_docker_container_name']
-        regex: '/(.*)'
-        target_label: 'container'
-      - source_labels: ['__meta_docker_container_log_stream']
-        target_label: 'stream'
+      - source_labels: ["__meta_docker_container_name"]
+        regex: "/(.*)"
+        target_label: "container"
+      - source_labels: ["__meta_docker_container_log_stream"]
+        target_label: "stream"
 ```
 
 Run Promtail:
@@ -503,6 +513,7 @@ docker run -d \
 ```
 
 Configure:
+
 1. Access http://your-vps-ip:3002
 2. Login (admin/admin)
 3. Add Loki data source
@@ -513,6 +524,7 @@ Configure:
 **Website**: https://www.papertrail.com
 
 **Features**:
+
 - Cloud-based log aggregation
 - Real-time log viewing
 - Alerts and graphs
@@ -577,6 +589,7 @@ crontab -e
 ```
 
 Add:
+
 ```
 0 2 * * * /opt/grooverooster/aggregate-logs.sh
 ```
@@ -632,6 +645,7 @@ crontab -e
 ```
 
 Add:
+
 ```
 */5 * * * * /opt/grooverooster/alert.sh
 ```
@@ -643,6 +657,7 @@ Add:
 #### Next.js Analytics
 
 Consider integrating:
+
 - Vercel Analytics (if using Vercel)
 - Google Analytics
 - Sentry for error tracking
@@ -657,11 +672,11 @@ export async function middleware(request: Request) {
   const start = Date.now();
   const response = await next();
   const duration = Date.now() - start;
-  
+
   if (duration > 1000) {
     console.warn(`Slow request: ${request.url} took ${duration}ms`);
   }
-  
+
   return response;
 }
 ```
@@ -669,6 +684,7 @@ export async function middleware(request: Request) {
 ### Database Performance
 
 Monitor Supabase performance:
+
 - Use Supabase Dashboard for query performance
 - Enable slow query logging
 - Monitor connection pool usage
@@ -757,6 +773,7 @@ watch -n 10 /opt/grooverooster/dashboard.sh
 ### For Small to Medium Projects
 
 **Free/Low-Cost Option**:
+
 - UptimeRobot for uptime monitoring
 - Docker logs with log rotation
 - Simple monitoring scripts (provided above)
@@ -767,6 +784,7 @@ watch -n 10 /opt/grooverooster/dashboard.sh
 ### For Production/Enterprise
 
 **Comprehensive Option**:
+
 - Uptime Kuma (self-hosted) or Pingdom (paid)
 - Loki + Grafana for log aggregation
 - Prometheus for metrics

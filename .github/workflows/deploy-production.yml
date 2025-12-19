@@ -9,7 +9,7 @@ on:
 env:
   DOCKER_IMAGE_NAME: grooverooster-web
   DOCKER_REGISTRY: ghcr.io
-  
+
 jobs:
   build-and-push:
     name: Build and Push Docker Image
@@ -17,7 +17,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,7 +66,7 @@ jobs:
     name: Deploy to VPS
     needs: build-and-push
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout deployment scripts
         uses: actions/checkout@v4
@@ -85,24 +85,24 @@ jobs:
           script: |
             # Navigate to deployment directory
             cd /opt/grooverooster
-            
+
             # Pull latest image
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ github.actor }} --password-stdin
             docker pull ${{ env.DOCKER_REGISTRY }}/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE_NAME }}:latest
-            
+
             # Stop and remove old container
             docker-compose down || true
-            
+
             # Start new container with updated image
             docker-compose up -d
-            
+
             # Clean up old images
             docker image prune -f
-            
+
             # Check container health
             sleep 10
             docker ps | grep grooverooster-web
-            
+
       - name: Verify deployment
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -116,13 +116,13 @@ jobs:
               echo "Container is not running!"
               exit 1
             fi
-            
+
             # Check health endpoint
             if ! curl -f http://localhost:3000/api/health; then
               echo "Health check failed!"
               exit 1
             fi
-            
+
             echo "Deployment successful!"
 
   notify:
@@ -130,7 +130,7 @@ jobs:
     needs: [build-and-push, deploy]
     runs-on: ubuntu-latest
     if: always()
-    
+
     steps:
       - name: Deployment Status
         run: |

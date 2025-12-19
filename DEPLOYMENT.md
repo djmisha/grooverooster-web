@@ -30,6 +30,7 @@ The GrooveRooster Web application is deployed using a containerized approach wit
 Before starting the deployment process, ensure you have:
 
 ### On the VPS
+
 - Ubuntu 22.04 LTS or later
 - Docker and Docker Compose installed
 - Nginx configured as reverse proxy
@@ -39,6 +40,7 @@ Before starting the deployment process, ensure you have:
 See `VPS_SETUP.md` for detailed setup instructions.
 
 ### On GitHub
+
 - Repository access
 - GitHub Actions enabled
 - Required secrets configured
@@ -141,12 +143,14 @@ Navigate to your repository: Settings → Secrets and variables → Actions
 Add the following secrets:
 
 **VPS Connection Secrets:**
+
 - `VPS_HOST`: Your VPS IP or domain (e.g., `203.0.113.1`)
 - `VPS_USERNAME`: SSH username (e.g., `grooverooster`)
 - `VPS_SSH_PRIVATE_KEY`: Your SSH private key
 - `VPS_SSH_PORT`: SSH port (default: `22`)
 
 **Application Secrets (Build-time):**
+
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `NEXT_PUBLIC_API_KEY_EDMTRAIN`
@@ -223,6 +227,7 @@ The deployment workflow (`.github/workflows/deploy-production.yml`) is triggered
    - `master-{commit-sha}` (specific version)
 
 **Image Optimizations:**
+
 - Multi-stage build reduces final image size
 - Layer caching speeds up builds
 - Standalone Next.js output minimizes dependencies
@@ -249,6 +254,7 @@ The deployment workflow (`.github/workflows/deploy-production.yml`) is triggered
 ### Monitoring the Pipeline
 
 View pipeline status:
+
 1. Go to your repository on GitHub
 2. Click the "Actions" tab
 3. Select the latest "Deploy to Production VPS" workflow run
@@ -287,16 +293,19 @@ cd /opt/grooverooster
 After deployment, verify:
 
 1. **Container Status**:
+
 ```bash
 docker ps | grep grooverooster-web
 ```
 
 2. **Application Logs**:
+
 ```bash
 docker logs grooverooster-web --tail 100 -f
 ```
 
 3. **Health Check**:
+
 ```bash
 curl http://localhost:3000/api/health
 curl https://www.grooverooster.com/api/health
@@ -376,10 +385,12 @@ docker-compose up -d
 **Issue**: Docker build fails in GitHub Actions
 
 **Solutions**:
+
 1. Check GitHub Actions logs for specific errors
 2. Verify all required secrets are set
 3. Ensure build-time environment variables are correct
 4. Test build locally:
+
 ```bash
 docker build \
   --build-arg NEXT_PUBLIC_SUPABASE_URL=your-url \
@@ -393,6 +404,7 @@ docker build \
 **Issue**: SSH connection fails
 
 **Solutions**:
+
 1. Verify VPS is accessible: `ping your-vps-ip`
 2. Check SSH key is correctly added to GitHub Secrets
 3. Verify SSH port is correct (default: 22)
@@ -401,6 +413,7 @@ docker build \
 **Issue**: Docker pull fails
 
 **Solutions**:
+
 1. Verify GitHub token has correct permissions
 2. Check VPS can access ghcr.io: `curl https://ghcr.io`
 3. Re-authenticate: `echo $TOKEN | docker login ghcr.io -u username --password-stdin`
@@ -410,6 +423,7 @@ docker build \
 **Issue**: Container starts but application doesn't work
 
 **Solutions**:
+
 1. Check logs: `docker logs grooverooster-web -f`
 2. Verify environment variables: `docker exec grooverooster-web env`
 3. Check health endpoint: `curl http://localhost:3000/api/health`
@@ -419,6 +433,7 @@ docker build \
 **Issue**: High memory usage
 
 **Solutions**:
+
 1. Check container stats: `docker stats grooverooster-web`
 2. Review memory limits in `docker-compose.yml`
 3. Check for memory leaks in application logs
@@ -427,6 +442,7 @@ docker build \
 **Issue**: SSL certificate issues
 
 **Solutions**:
+
 1. Check certificate status: `sudo certbot certificates`
 2. Renew manually: `sudo certbot renew`
 3. Verify Nginx configuration: `sudo nginx -t`
@@ -437,6 +453,7 @@ docker build \
 **Issue**: Slow response times
 
 **Solutions**:
+
 1. Check Nginx logs for bottlenecks
 2. Review application logs for slow queries
 3. Monitor CPU/memory usage
@@ -446,6 +463,7 @@ docker build \
 **Issue**: Rate limiting triggered
 
 **Solutions**:
+
 1. Review Nginx rate limit settings
 2. Adjust limits in `/etc/nginx/sites-available/grooverooster`
 3. Reload Nginx: `sudo systemctl reload nginx`
@@ -515,6 +533,7 @@ docker build \
 ## Support and Resources
 
 ### Documentation
+
 - [VPS Setup Guide](./VPS_SETUP.md)
 - [Monitoring Guide](./MONITORING.md)
 - [Next.js Deployment Docs](https://nextjs.org/docs/deployment)
@@ -523,12 +542,14 @@ docker build \
 ### Logs Location
 
 **On VPS**:
+
 - Docker logs: `docker logs grooverooster-web`
 - Nginx access: `/var/log/nginx/grooverooster_access.log`
 - Nginx error: `/var/log/nginx/grooverooster_error.log`
 - System logs: `journalctl -u docker`
 
 **On GitHub**:
+
 - Actions logs: Repository → Actions → Select workflow run
 
 ### Useful Commands

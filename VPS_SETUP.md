@@ -34,6 +34,7 @@ su - grooverooster
 ### 1.3 Set Up SSH Key Authentication
 
 On your local machine (or GitHub Actions):
+
 ```bash
 # Generate SSH key pair (if not already done)
 ssh-keygen -t ed25519 -C "grooverooster-deployment"
@@ -210,7 +211,7 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
-        
+
         # Timeouts
         proxy_connect_timeout 60s;
         proxy_send_timeout 60s;
@@ -524,6 +525,7 @@ cd /opt/grooverooster
 ### Backup
 
 Regularly backup:
+
 1. Environment variables (`.env` file)
 2. Nginx configuration
 3. SSL certificates
@@ -558,6 +560,7 @@ Regularly backup:
 ## Support
 
 For issues or questions:
+
 - Check application logs: `docker logs grooverooster-web`
 - Check Nginx logs: `sudo tail -f /var/log/nginx/grooverooster_error.log`
 - Review deployment documentation in the repository

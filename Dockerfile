@@ -4,7 +4,6 @@
 # Stage 1: Dependencies
 # Install only production dependencies for smaller final image
 FROM node:20-alpine AS deps
-RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 

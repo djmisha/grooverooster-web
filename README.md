@@ -6,6 +6,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 - Node.js 20.0.0 or later (managed via Volta)
 - Yarn 1.22.19 or npm
+- Docker and Docker Compose (for containerized deployment)
 
 ### Environment Variables
 
@@ -118,6 +119,35 @@ yarn format:check  # Check formatting without modifying files
 yarn tsc --noEmit  # Run TypeScript type checking
 ```
 
+## Docker Deployment
+
+This application is fully containerized and can be deployed using Docker. We provide comprehensive documentation for both local development and production deployment.
+
+### Quick Start with Docker
+
+```bash
+# Local development
+docker-compose up --build
+
+# Access at http://localhost:3000
+```
+
+### Deployment Documentation
+
+- **[DOCKER_QUICK_START.md](./DOCKER_QUICK_START.md)** - Quick guide for local Docker development
+- **[VPS_SETUP.md](./VPS_SETUP.md)** - Complete VPS setup guide with Docker, Nginx, and SSL
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Comprehensive CI/CD deployment guide
+- **[MONITORING.md](./MONITORING.md)** - Monitoring and logging recommendations
+
+### Production Deployment Features
+
+- ✅ Multi-stage Docker build for optimized image size (~150-250MB)
+- ✅ Automated CI/CD with GitHub Actions
+- ✅ Nginx reverse proxy with SSL termination
+- ✅ Health checks and auto-restart
+- ✅ Security hardening (non-root user, minimal base image)
+- ✅ Log rotation and monitoring scripts
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
@@ -127,7 +157,16 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deployment Options
+
+### Option 1: Docker on VPS (Recommended for Production)
+
+Follow our comprehensive guides:
+1. Set up your VPS using [VPS_SETUP.md](./VPS_SETUP.md)
+2. Configure GitHub Actions using [DEPLOYMENT.md](./DEPLOYMENT.md)
+3. Push to `master` branch for automatic deployment
+
+### Option 2: Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
