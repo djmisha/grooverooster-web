@@ -162,6 +162,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 ### Option 1: Docker on VPS (Recommended for Production)
 
 Follow our comprehensive guides:
+
 1. Set up your VPS using [VPS_SETUP.md](./VPS_SETUP.md)
 2. Configure GitHub Actions using [DEPLOYMENT.md](./DEPLOYMENT.md)
 3. Push to `master` branch for automatic deployment
