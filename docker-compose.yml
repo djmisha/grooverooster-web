@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  grooverooster-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Build-time environment variables
+        # These values should come from .env file or be passed via command line
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+        NEXT_PUBLIC_API_KEY_EDMTRAIN: ${NEXT_PUBLIC_API_KEY_EDMTRAIN}
+        NEXT_PUBLIC_API_URL_EDMTRAIN: ${NEXT_PUBLIC_API_URL_EDMTRAIN}
+        NEXT_PUBLIC_API_URL_EDMTRAIN_ARTIST: ${NEXT_PUBLIC_API_URL_EDMTRAIN_ARTIST}
+        NEXT_PUBLIC_API_KEY_LASTFM: ${NEXT_PUBLIC_API_KEY_LASTFM}
+        NEXT_PUBLIC_HCAPTCHA_SITE_KEY: ${NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
+        NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL}
+    container_name: grooverooster-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # Runtime environment variables (server-side only)
+      NODE_ENV: production
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      API_KEY_TICKETMASTER: ${API_KEY_TICKETMASTER}
+      API_KEY_SDHM: ${API_KEY_SDHM}
+      API_URL_SDHM: ${API_URL_SDHM}
+      API_ALLOWED_TOKENS: ${API_ALLOWED_TOKENS}
+      HCAPTCHA_SECRET_KEY: ${HCAPTCHA_SECRET_KEY}
+    networks:
+      - grooverooster-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    # Resource limits (adjust based on your VPS capacity)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+networks:
+  grooverooster-network:
+    driver: bridge
