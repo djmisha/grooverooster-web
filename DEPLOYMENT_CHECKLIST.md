@@ -5,12 +5,14 @@ Use this checklist to ensure a smooth deployment of the GrooveRooster Web applic
 ## Pre-Deployment Checklist
 
 ### VPS Preparation
+
 - [ ] VPS provisioned (Ubuntu 22.04 LTS, 2GB+ RAM, 20GB+ disk)
 - [ ] Root or sudo access configured
 - [ ] Domain name configured to point to VPS IP
 - [ ] SSH access verified
 
 ### Local Setup
+
 - [ ] Docker Desktop installed
 - [ ] Git repository cloned
 - [ ] SSH key generated for GitHub Actions
@@ -20,30 +22,35 @@ Use this checklist to ensure a smooth deployment of the GrooveRooster Web applic
 Follow [VPS_SETUP.md](./VPS_SETUP.md) for detailed instructions.
 
 ### System Setup
+
 - [ ] System packages updated (`apt update && apt upgrade`)
 - [ ] Firewall configured (UFW - ports 22, 80, 443)
 - [ ] SSH key authentication set up
 - [ ] Deployment user created (optional)
 
 ### Docker Installation
+
 - [ ] Docker installed and verified (`docker --version`)
 - [ ] Docker Compose installed (`docker compose version`)
 - [ ] User added to docker group
 - [ ] Docker daemon configured (optional logging settings)
 
 ### Nginx Configuration
+
 - [ ] Nginx installed
 - [ ] Site configuration created (`/etc/nginx/sites-available/grooverooster`)
 - [ ] Site enabled (symlink in `/etc/nginx/sites-enabled/`)
 - [ ] Configuration tested (`nginx -t`)
 
 ### SSL Certificate
+
 - [ ] Certbot installed
 - [ ] SSL certificate obtained for domain
 - [ ] Auto-renewal configured
 - [ ] Certificate tested
 
 ### Deployment Directory
+
 - [ ] Directory created at `/opt/grooverooster`
 - [ ] Ownership set correctly
 - [ ] `docker-compose.yml` copied
@@ -53,6 +60,7 @@ Follow [VPS_SETUP.md](./VPS_SETUP.md) for detailed instructions.
 - [ ] `deploy.sh` script copied and made executable
 
 ### GitHub Container Registry
+
 - [ ] GitHub Personal Access Token created
 - [ ] Token added to `.env` file as `GITHUB_TOKEN`
 - [ ] Docker login to GHCR tested
@@ -62,15 +70,18 @@ Follow [VPS_SETUP.md](./VPS_SETUP.md) for detailed instructions.
 Follow [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
 
 ### GitHub Secrets
+
 Navigate to: Repository → Settings → Secrets and variables → Actions
 
 #### VPS Connection Secrets
+
 - [ ] `VPS_HOST` (VPS IP or domain)
 - [ ] `VPS_USERNAME` (SSH username)
 - [ ] `VPS_SSH_PRIVATE_KEY` (SSH private key)
 - [ ] `VPS_SSH_PORT` (default: 22)
 
 #### Build-time Environment Variables
+
 - [ ] `NEXT_PUBLIC_SUPABASE_URL`
 - [ ] `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - [ ] `NEXT_PUBLIC_API_KEY_EDMTRAIN`
@@ -81,6 +92,7 @@ Navigate to: Repository → Settings → Secrets and variables → Actions
 - [ ] `NEXT_PUBLIC_BASE_URL`
 
 ### Repository Configuration
+
 - [ ] GitHub Actions enabled
 - [ ] Workflow file present (`.github/workflows/deploy-production.yml`)
 - [ ] Main branch set to `master`
@@ -88,13 +100,16 @@ Navigate to: Repository → Settings → Secrets and variables → Actions
 ## First Deployment
 
 ### Manual Deployment (Recommended for First Time)
+
 SSH into VPS and run:
+
 ```bash
 cd /opt/grooverooster
 ./deploy.sh
 ```
 
 ### Verification Steps
+
 - [ ] Container running: `docker ps | grep grooverooster-web`
 - [ ] Health check passes: `curl http://localhost:3000/api/health`
 - [ ] Website accessible: `https://www.grooverooster.com`
@@ -104,6 +119,7 @@ cd /opt/grooverooster
 - [ ] No console errors
 
 ### Logs Check
+
 - [ ] Docker logs clean: `docker logs grooverooster-web --tail 50`
 - [ ] Nginx access logs present: `sudo tail /var/log/nginx/grooverooster_access.log`
 - [ ] Nginx error logs clean: `sudo tail /var/log/nginx/grooverooster_error.log`
@@ -111,6 +127,7 @@ cd /opt/grooverooster
 ## Automated Deployment Setup
 
 ### GitHub Actions Deployment
+
 - [ ] Push to master branch (or merge PR)
 - [ ] GitHub Actions workflow runs successfully
 - [ ] Build and push stage completes
@@ -119,6 +136,7 @@ cd /opt/grooverooster
 - [ ] Website updates with new changes
 
 ### Test Rollback
+
 - [ ] Know how to rollback (see DEPLOYMENT.md)
 - [ ] Test manual rollback procedure
 - [ ] Verify health checks after rollback
@@ -128,12 +146,14 @@ cd /opt/grooverooster
 Follow [MONITORING.md](./MONITORING.md) for detailed options.
 
 ### Basic Monitoring (Minimum)
+
 - [ ] Uptime monitoring configured (UptimeRobot or similar)
 - [ ] Health check endpoint monitored
 - [ ] Email alerts configured
 - [ ] Manual log checking procedure established
 
 ### Advanced Monitoring (Recommended)
+
 - [ ] Container monitoring scripts installed
 - [ ] System monitoring scripts installed
 - [ ] Log rotation configured
@@ -144,12 +164,14 @@ Follow [MONITORING.md](./MONITORING.md) for detailed options.
 ## Post-Deployment Tasks
 
 ### Documentation
+
 - [ ] Update internal documentation with VPS IP and credentials
 - [ ] Document any custom configurations
 - [ ] Save GitHub Secrets in secure location
 - [ ] Document emergency contacts
 
 ### Security Audit
+
 - [ ] Firewall rules verified
 - [ ] SSH password authentication disabled (key-only)
 - [ ] Secrets not committed to repository
@@ -158,6 +180,7 @@ Follow [MONITORING.md](./MONITORING.md) for detailed options.
 - [ ] System updates scheduled
 
 ### Backup Strategy
+
 - [ ] Environment variables backed up (securely)
 - [ ] Nginx configuration backed up
 - [ ] SSL certificates backup location noted
@@ -165,6 +188,7 @@ Follow [MONITORING.md](./MONITORING.md) for detailed options.
 - [ ] Deployment scripts backed up
 
 ### Team Access
+
 - [ ] Team members have VPS access (if needed)
 - [ ] Team members have GitHub repository access
 - [ ] Emergency procedures documented
@@ -173,17 +197,20 @@ Follow [MONITORING.md](./MONITORING.md) for detailed options.
 ## Regular Maintenance Schedule
 
 ### Daily (Automated)
+
 - [ ] Uptime monitoring active
 - [ ] Automated health checks running
 - [ ] Log rotation working
 
 ### Weekly
+
 - [ ] Review application logs
 - [ ] Check container resource usage
 - [ ] Review uptime reports
 - [ ] Check for security alerts
 
 ### Monthly
+
 - [ ] Update Docker images (if new versions available)
 - [ ] Review and rotate secrets (if needed)
 - [ ] Update system packages: `apt update && apt upgrade`
@@ -191,6 +218,7 @@ Follow [MONITORING.md](./MONITORING.md) for detailed options.
 - [ ] Review access logs for anomalies
 
 ### Quarterly
+
 - [ ] Performance audit
 - [ ] Security audit
 - [ ] Review resource limits
@@ -242,22 +270,26 @@ cd /opt/grooverooster && ./deploy.sh
 ### Common Issues
 
 **Container won't start:**
+
 1. Check logs: `docker logs grooverooster-web`
 2. Verify environment variables: `docker exec grooverooster-web env`
 3. Check disk space: `df -h`
 
 **Website not accessible:**
+
 1. Check container: `docker ps | grep grooverooster`
 2. Check Nginx: `sudo systemctl status nginx`
 3. Test locally: `curl http://localhost:3000/api/health`
 4. Check firewall: `sudo ufw status`
 
 **SSL issues:**
+
 1. Check certificate: `sudo certbot certificates`
 2. Renew: `sudo certbot renew`
 3. Restart Nginx: `sudo systemctl restart nginx`
 
 **High resource usage:**
+
 1. Check stats: `docker stats grooverooster-web`
 2. Review logs for errors
 3. Check for memory leaks
@@ -267,20 +299,20 @@ cd /opt/grooverooster && ./deploy.sh
 
 Document your emergency contacts here:
 
-- **VPS Provider Support**: _____________
-- **Domain Registrar**: _____________
-- **On-Call Developer**: _____________
-- **Team Lead**: _____________
-- **Backup Contact**: _____________
+- **VPS Provider Support**: ******\_******
+- **Domain Registrar**: ******\_******
+- **On-Call Developer**: ******\_******
+- **Team Lead**: ******\_******
+- **Backup Contact**: ******\_******
 
 ## Important URLs
 
 - **Production Website**: https://www.grooverooster.com
 - **Health Check**: https://www.grooverooster.com/api/health
 - **GitHub Repository**: https://github.com/djmisha/grooverooster-web
-- **VPS Control Panel**: _____________
-- **Uptime Monitor**: _____________
-- **Monitoring Dashboard**: _____________
+- **VPS Control Panel**: ******\_******
+- **Uptime Monitor**: ******\_******
+- **Monitoring Dashboard**: ******\_******
 
 ## Notes
 
@@ -303,6 +335,7 @@ Notes:
 **Tip**: Print this checklist and keep it handy for your first deployment. Check off items as you complete them.
 
 **Reference Documents**:
+
 - Detailed VPS setup: [VPS_SETUP.md](./VPS_SETUP.md)
 - Deployment guide: [DEPLOYMENT.md](./DEPLOYMENT.md)
 - Monitoring setup: [MONITORING.md](./MONITORING.md)
