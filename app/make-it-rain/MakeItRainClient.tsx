@@ -42,6 +42,14 @@ interface Particle {
   life: number;
 }
 
+// Performance limits — caps keep frame rate smooth by preventing unbounded object accumulation.
+// MAX_BILLS/MAX_COINS tested to stay ~60fps on mid-range hardware; raise carefully.
+const MAX_BILLS = 40;
+const MAX_COINS = 15;
+const MAX_PARTICLES = 30;
+// Slower interval (vs. original 80ms) prevents the canvas filling up instantly.
+const SPAWN_INTERVAL_MS = 200;
+
 const DENOMINATIONS = [
   { label: "$100", color: "#2d6a2d", borderColor: "#1a4a1a" },
   { label: "$50", color: "#5a2d8a", borderColor: "#3a1a6a" },
@@ -105,6 +113,7 @@ export default function MakeItRainClient() {
   const [showExplosion, setShowExplosion] = useState(false);
 
   const spawnBill = useCallback((canvas: HTMLCanvasElement) => {
+    if (billsRef.current.length >= MAX_BILLS) return;
     const denom =
       DENOMINATIONS[Math.floor(Math.random() * DENOMINATIONS.length)];
     const bill: MoneyBill = {
@@ -126,6 +135,7 @@ export default function MakeItRainClient() {
   }, []);
 
   const spawnCoin = useCallback((canvas: HTMLCanvasElement) => {
+    if (coinsRef.current.length >= MAX_COINS) return;
     const coin: Coin = {
       id: nextIdRef.current++,
       x: Math.random() * canvas.width,
@@ -142,7 +152,10 @@ export default function MakeItRainClient() {
 
   const spawnParticles = useCallback(
     (canvas: HTMLCanvasElement, count: number) => {
-      for (let i = 0; i < count; i++) {
+      if (particlesRef.current.length >= MAX_PARTICLES) return;
+      const available = MAX_PARTICLES - particlesRef.current.length;
+      const toSpawn = Math.min(count, available);
+      for (let i = 0; i < toSpawn; i++) {
         const particle: Particle = {
           id: nextIdRef.current++,
           x: Math.random() * canvas.width,
@@ -175,12 +188,6 @@ export default function MakeItRainClient() {
     const w = bill.size * 1.8;
     const h = bill.size * 0.9;
 
-    // Bill shadow
-    ctx.shadowColor = "rgba(0,0,0,0.4)";
-    ctx.shadowBlur = 8;
-    ctx.shadowOffsetX = 3;
-    ctx.shadowOffsetY = 3;
-
     // Bill body
     const grad = ctx.createLinearGradient(-w / 2, -h / 2, w / 2, h / 2);
     grad.addColorStop(0, bill.color);
@@ -202,10 +209,6 @@ export default function MakeItRainClient() {
     ctx.strokeRect(-w / 2 + 4, -h / 2 + 4, w - 8, h - 8);
 
     // Denomination text
-    ctx.shadowColor = "transparent";
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
     ctx.fillStyle = "#ffd700";
     ctx.font = `bold ${bill.size * 0.35}px Arial`;
     ctx.textAlign = "center";
@@ -232,7 +235,7 @@ export default function MakeItRainClient() {
 
     // Coin glow
     ctx.shadowColor = "#ffd700";
-    ctx.shadowBlur = 12;
+    ctx.shadowBlur = 4;
 
     // Coin body
     const grad = ctx.createRadialGradient(
@@ -271,8 +274,6 @@ export default function MakeItRainClient() {
     ctx.save();
     ctx.globalAlpha = particle.opacity;
     ctx.fillStyle = particle.color;
-    ctx.shadowColor = particle.color;
-    ctx.shadowBlur = 6;
     ctx.beginPath();
     ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
     ctx.fill();
@@ -333,14 +334,14 @@ export default function MakeItRainClient() {
     setTimeout(() => setShowExplosion(false), 600);
 
     // Spawn initial burst
-    spawnParticles(canvas, 60);
-    for (let i = 0; i < 20; i++) {
+    spawnParticles(canvas, 20);
+    for (let i = 0; i < 8; i++) {
       setTimeout(() => {
         if (canvas) {
           spawnBill(canvas);
           if (Math.random() > 0.5) spawnCoin(canvas);
         }
-      }, i * 50);
+      }, i * 100);
     }
 
     setMoneyCount((c) => c + 1);
@@ -359,11 +360,10 @@ export default function MakeItRainClient() {
 
     const interval = setInterval(() => {
       spawnBill(canvas);
-      if (Math.random() > 0.4) spawnBill(canvas);
       if (Math.random() > 0.6) spawnCoin(canvas);
-      if (Math.random() > 0.8) spawnParticles(canvas, 5);
+      if (Math.random() > 0.85) spawnParticles(canvas, 3);
       setMoneyCount((c) => c + 1);
-    }, 80);
+    }, SPAWN_INTERVAL_MS);
 
     return () => clearInterval(interval);
   }, [isRaining, spawnBill, spawnCoin, spawnParticles]);
