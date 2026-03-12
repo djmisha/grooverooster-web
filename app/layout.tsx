@@ -15,12 +15,57 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.grooverooster.com"),
   title: {
     default: "GrooveRooster - Discover Electronic Music Events Near You",
     template: "%s | GrooveRooster",
   },
   description:
     "Find the best electronic music events, shows, and festivals in your city. Track your favorite artists and never miss a beat.",
+  keywords: [
+    "electronic music events",
+    "EDM events",
+    "house music events",
+    "dance music concerts",
+    "nightclub events",
+    "DJ shows",
+    "rave events",
+    "EDM festivals",
+    "electronic dance music",
+    "techno events",
+  ],
+  openGraph: {
+    siteName: "GrooveRooster",
+    type: "website",
+    locale: "en_US",
+    url: "https://www.grooverooster.com",
+    title: "GrooveRooster - Discover Electronic Music Events Near You",
+    description:
+      "Find the best electronic music events, shows, and festivals in your city. Track your favorite artists and never miss a beat.",
+    images: [
+      {
+        url: "/images/housemusic.png",
+        width: 1200,
+        height: 630,
+        alt: "GrooveRooster - Electronic Music Events",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GrooveRooster - Discover Electronic Music Events Near You",
+    description:
+      "Find the best electronic music events, shows, and festivals in your city. Track your favorite artists and never miss a beat.",
+    images: ["/images/housemusic.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 /**

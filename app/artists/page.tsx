@@ -6,6 +6,30 @@ const title = "Top Touring EDM DJ's & Artists";
 
 export const metadata: Metadata = {
   title: title,
+  description:
+    "Browse top touring EDM DJs and electronic music artists. Find upcoming shows, tour dates and events for your favorite house music and dance music artists.",
+  openGraph: {
+    title: title,
+    description:
+      "Browse top touring EDM DJs and electronic music artists. Find upcoming shows, tour dates and events for your favorite house music and dance music artists.",
+    type: "website",
+    url: "https://www.grooverooster.com/artists",
+    images: [
+      {
+        url: "/images/housemusic.png",
+        width: 1200,
+        height: 630,
+        alt: "Top Touring EDM DJs & Artists",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: title,
+    description:
+      "Browse top touring EDM DJs and electronic music artists. Find upcoming shows, tour dates and events.",
+    images: ["/images/housemusic.png"],
+  },
 };
 
 /**

@@ -6,6 +6,45 @@ import HomeClient from "@/app/HomeClient";
 
 export const metadata: Metadata = {
   title: siteTitle,
+  description:
+    "Find house music, EDM, and electronic dance music events in a city near you. Discover upcoming DJ shows, nightclub events, raves and music festivals.",
+  keywords: [
+    "house music events",
+    "EDM events near me",
+    "electronic dance music",
+    "nightclub events",
+    "DJ shows",
+    "rave events",
+    "EDM festivals",
+    "dance music concerts",
+    "electronic music near me",
+    "techno events",
+  ],
+  alternates: {
+    canonical: "https://www.grooverooster.com/",
+  },
+  openGraph: {
+    title: siteTitle,
+    description:
+      "Find house music, EDM, and electronic dance music events in a city near you. Discover upcoming DJ shows, nightclub events, raves and music festivals.",
+    url: "https://www.grooverooster.com/",
+    type: "website",
+    images: [
+      {
+        url: "/images/housemusic.png",
+        width: 1200,
+        height: 630,
+        alt: "GrooveRooster - House Music & EDM Events",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description:
+      "Find house music, EDM, and electronic dance music events in a city near you.",
+    images: ["/images/housemusic.png"],
+  },
   other: {
     "impact-site-verification": "5cfd0d65-e35f-46d0-888f-cd6252e7d10c",
   },

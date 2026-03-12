@@ -7,6 +7,30 @@ import { getCanonicalUrl } from "@/utils/canonicalUrl";
 
 export const metadata: Metadata = {
   title: "Events By City",
+  description:
+    "Find electronic music events, EDM shows and nightclub DJ events in cities across North America. Browse events by city to discover house music and dance music near you.",
+  openGraph: {
+    title: "Events By City - GrooveRooster",
+    description:
+      "Find electronic music events, EDM shows and nightclub DJ events in cities across North America.",
+    type: "website",
+    url: "https://www.grooverooster.com/cities",
+    images: [
+      {
+        url: "/images/housemusic.png",
+        width: 1200,
+        height: 630,
+        alt: "Electronic Music Events By City",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Events By City - GrooveRooster",
+    description:
+      "Find electronic music events, EDM shows and nightclub DJ events in cities across North America.",
+    images: ["/images/housemusic.png"],
+  },
 };
 
 /**
