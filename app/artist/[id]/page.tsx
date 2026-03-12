@@ -24,11 +24,33 @@ export async function generateMetadata({
   try {
     const artistData = await getArtistData(id);
     const title = `${artistData.name} - Upcoming Events & Artist Information`;
-    const description = `${artistData.name} Tour Dates, Shows, Concert Tickets & Live Streams. Learn more about ${artistData.name}`;
+    const description = `${artistData.name} tour dates, shows, DJ sets & live streams. Find tickets and upcoming events for ${artistData.name} near you.`;
+    const canonicalUrl = getCanonicalUrl(`/artist/${artistData.slug}`);
 
     return {
       title,
       description,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        title,
+        description,
+        url: canonicalUrl,
+        type: "profile",
+        images: [
+          {
+            url: "/images/housemusic.png",
+            width: 1200,
+            height: 630,
+            alt: `${artistData.name} - Upcoming Events`,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: ["/images/housemusic.png"],
+      },
     };
   } catch (error) {
     return {

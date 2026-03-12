@@ -27,7 +27,32 @@ export async function generateMetadata({
     if (stateInfo) {
       const title = makePageTitle(undefined, stateInfo.name);
       const description = makePageDescription(undefined, stateInfo.name);
-      return { title, description };
+      const canonicalUrl = getCanonicalUrl(`/events/${stateInfo.slug}`);
+      return {
+        title,
+        description,
+        alternates: { canonical: canonicalUrl },
+        openGraph: {
+          title,
+          description,
+          url: canonicalUrl,
+          type: "website",
+          images: [
+            {
+              url: "/images/housemusic.png",
+              width: 1200,
+              height: 630,
+              alt: `EDM & House Music Events in ${stateInfo.name}`,
+            },
+          ],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title,
+          description,
+          images: ["/images/housemusic.png"],
+        },
+      };
     }
   }
 
@@ -36,7 +61,32 @@ export async function generateMetadata({
     const { city, state } = locationData;
     const title = makePageTitle(city ?? undefined, state);
     const description = makePageDescription(city ?? undefined, state);
-    return { title, description };
+    const canonicalUrl = getCanonicalUrl(`/events/${locationData.slug}`);
+    return {
+      title,
+      description,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        title,
+        description,
+        url: canonicalUrl,
+        type: "website",
+        images: [
+          {
+            url: "/images/housemusic.png",
+            width: 1200,
+            height: 630,
+            alt: `EDM & House Music Events in ${city ? `${city}, ${state}` : state}`,
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: ["/images/housemusic.png"],
+      },
+    };
   }
 
   return { title: "Location Not Found" };

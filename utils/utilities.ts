@@ -83,10 +83,10 @@ export const makePageTitle = (
   city: string | undefined,
   state: string
 ): string => {
-  return `Dance Music Events in ${cityOrState(
+  return `EDM & House Music Events in ${cityOrState(
     city,
     state
-  )} - Nightclub DJ & Concerts`;
+  )} - DJ Shows, Raves & Concerts`;
 };
 
 export const makePageHeadline = (
@@ -100,10 +100,10 @@ export const makePageDescription = (
   city: string | undefined,
   state: string
 ): string => {
-  const title = `Find electronic dance music events in  ${cityOrState(
+  const title = `Find electronic dance music (EDM) events in ${cityOrState(
     city,
     state
-  )}! From nightclub DJ's to EDM concerts - experience live music at raves, parties and clubs near you.`;
+  )}! From nightclub DJ sets to EDM concerts - experience live music at raves, parties and clubs near you.`;
   return title;
 };
 
