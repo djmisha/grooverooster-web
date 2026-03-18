@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Events By City",
   description:
     "Find electronic music events, EDM shows and nightclub DJ events in cities across North America. Browse events by city to discover house music and dance music near you.",
+  alternates: {
+    canonical: "https://www.grooverooster.com/cities",
+  },
   openGraph: {
     title: "Events By City - GrooveRooster",
     description:

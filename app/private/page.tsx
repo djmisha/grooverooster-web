@@ -4,6 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Private",
+  robots: { index: false, follow: false },
 };
 
 // Force dynamic rendering since this page uses cookies
