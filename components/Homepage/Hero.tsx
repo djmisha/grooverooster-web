@@ -2,7 +2,6 @@
 
 import HomeSearchAutocomplete from "@/components/SearchAutoComplete/HomeSearchAutocomplete";
 import QuickLocationFinder from "@/components/QuickLocationFinder/QuickLocationFinder";
-// import SoundWaveBackground from "./SoundWaveBackground";
 import { useTheme } from "next-themes";
 
 /**
@@ -22,9 +21,6 @@ const Hero = () => {
       {isDarkMode && (
         <div className="absolute inset-0 bg-gradient-to-br from-[#0f0f1e] via-[#1d1d33] to-[#0c162e] animate-gradient-shift bg-[length:200%_200%]" />
       )}
-
-      {/* Sound wave spectrum background - only visible in dark mode */}
-      {/* <SoundWaveBackground /> */}
 
       <div className="relative z-10 w-full px-5 md:px-10 max-w-4xl -mt-20">
         <div className="space-y-6 md:space-y-8">
