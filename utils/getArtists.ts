@@ -26,17 +26,6 @@ interface ArtistEvent {
   [key: string]: any;
 }
 
-// Removes Duplicate items from an array (used by getUniqueArtists)
-const dedupeObjArray = (array: Artist[]): Artist[] => {
-  const unique = array.reduce((accumulator: Artist[], current) => {
-    if (!accumulator.find((item) => item.id === current.id)) {
-      accumulator.push(current);
-    }
-    return accumulator;
-  }, []);
-  return unique;
-};
-
 /**
  * Returns all unique artists in all events array
  *
@@ -59,10 +48,18 @@ export const getUniqueArtists = (array: Artist[]): ArtistWithSlug[] => {
     });
   });
 
-  // TODO:  probably dont need this anymore, array is already unique but double check
-  const cleanArtists = dedupeObjArray(allArtists) as ArtistWithSlug[];
+  return allArtists;
+};
 
-  return cleanArtists;
+// Removes Duplicate items from an array (used by getArtistsCounts)
+const dedupeObjArray = (array: Artist[]): Artist[] => {
+  const unique = array.reduce((accumulator: Artist[], current) => {
+    if (!accumulator.find((item) => item.id === current.id)) {
+      accumulator.push(current);
+    }
+    return accumulator;
+  }, []);
+  return unique;
 };
 
 // all the unique artists from static data
