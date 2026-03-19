@@ -4,6 +4,7 @@ import DashboardArtists from "@/components/dashboard/dashboard-artists";
 
 export const metadata: Metadata = {
   title: "My Artists",
+  robots: { index: false, follow: false },
 };
 
 export const dynamic = "force-dynamic";

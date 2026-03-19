@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: title,
   description:
     "Browse top touring EDM DJs and electronic music artists. Find upcoming shows, tour dates and events for your favorite house music and dance music artists.",
+  alternates: {
+    canonical: "https://www.grooverooster.com/artists",
+  },
   openGraph: {
     title: title,
     description:

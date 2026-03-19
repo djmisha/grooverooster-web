@@ -4,6 +4,7 @@ import {
   getLocationData,
   isStateLandingPage,
   getStateInfo,
+  toSlug,
 } from "@/utils/getLocations";
 import { makePageTitle, makePageDescription } from "@/utils/utilities";
 import EventsModule from "@/components/EventsModule/EventsModule";
@@ -11,6 +12,7 @@ import StateLandingPage from "@/components/StateLandingPage/StateLandingPage";
 import { getSDHMEvents } from "@/utils/getEvents";
 import { getCanonicalUrl } from "@/utils/canonicalUrl";
 import { headers } from "next/headers";
+import BreadcrumbStructuredData from "@/components/SEO/BreadcrumbStructuredData";
 
 interface LocationPageProps {
   params: Promise<{ id: string }>;
@@ -118,6 +120,15 @@ export default async function Location({
     if (stateInfo.hasCities) {
       return (
         <Layout home={false} canonicalUrl={canonicalUrl}>
+          <BreadcrumbStructuredData
+            items={[
+              { name: "Home", url: "https://www.grooverooster.com" },
+              {
+                name: `Events in ${stateInfo.name}`,
+                url: `https://www.grooverooster.com/events/${stateInfo.slug}`,
+              },
+            ]}
+          />
           <StateLandingPage
             stateName={stateInfo.name}
             cities={stateInfo.cities}
@@ -154,6 +165,15 @@ export default async function Location({
 
     return (
       <Layout home={false} canonicalUrl={canonicalUrl}>
+        <BreadcrumbStructuredData
+          items={[
+            { name: "Home", url: "https://www.grooverooster.com" },
+            {
+              name: `Events in ${stateInfo.name}`,
+              url: `https://www.grooverooster.com/events/${stateInfo.slug}`,
+            },
+          ]}
+        />
         <EventsModule
           isHome={false}
           key={stateInfo.id}
@@ -197,6 +217,23 @@ export default async function Location({
 
   return (
     <Layout home={false} canonicalUrl={canonicalUrl}>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Home", url: "https://www.grooverooster.com" },
+          ...(locationData.state
+            ? [
+                {
+                  name: `Events in ${locationData.state}`,
+                  url: `https://www.grooverooster.com/events/${toSlug(locationData.state)}`,
+                },
+              ]
+            : []),
+          {
+            name: `Events in ${locationData.city ? `${locationData.city}, ${locationData.state}` : locationData.state}`,
+            url: `https://www.grooverooster.com/events/${locationData.slug}`,
+          },
+        ]}
+      />
       <EventsModule
         isHome={false}
         key={locationData.id}
