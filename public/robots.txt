@@ -1,6 +1,12 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /dashboard/
+Disallow: /private/
+Disallow: /change-password/
+Disallow: /verify-email/
+Disallow: /auth/
+Disallow: /api/
 
 # Host
 Host: https://www.grooverooster.com

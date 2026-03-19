@@ -5,6 +5,7 @@ import DashboardOverview from "@/components/dashboard/dashboard-overview";
 
 export const metadata: Metadata = {
   title: "Dashboard",
+  robots: { index: false, follow: false },
 };
 
 /**

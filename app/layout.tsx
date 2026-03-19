@@ -4,6 +4,7 @@ import ToastProvider from "@/components/ui/ToastProvider.sonner";
 import SkipLink from "@/components/SkipLink/SkipLink";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import NextTopLoader from "nextjs-toploader";
+import OrganizationStructuredData from "@/components/SEO/OrganizationStructuredData";
 import "../styles/tailwind.css";
 import "../styles/global.scss";
 import type { Metadata } from "next";
@@ -82,6 +83,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={poppins.className}>
+        <OrganizationStructuredData />
         <NextTopLoader
           color="#ce3197"
           initialPosition={0.08}

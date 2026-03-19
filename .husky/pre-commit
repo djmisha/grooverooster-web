@@ -6,9 +6,9 @@ echo ""
 
 # Run Prettier format check
 echo "💅 Checking code formatting..."
-if ! yarn format; then
+if ! npx prettier --check .; then
   echo ""
-  echo "❌ Code formatting check failed. Run 'yarn format' to fix formatting issues."
+  echo "❌ Code formatting check failed. Run 'npx prettier --write .' to fix formatting issues."
   exit 1
 fi
 echo "✅ Code formatting passed!"
@@ -16,7 +16,7 @@ echo ""
 
 # Run ESLint
 echo "🔍 Running ESLint..."
-if ! yarn lint; then
+if ! npx next lint; then
   echo ""
   echo "❌ ESLint failed. Please fix the errors before committing."
   exit 1
@@ -26,7 +26,7 @@ echo ""
 
 # Run TypeScript compiler
 echo "🔧 Running TypeScript compiler..."
-if ! yarn tsc --noEmit; then
+if ! npx tsc --noEmit; then
   echo ""
   echo "❌ TypeScript compilation failed. Please fix the type errors before committing."
   exit 1

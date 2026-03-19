@@ -4,6 +4,7 @@ import DashboardProfile from "@/components/dashboard/dashboard-profile";
 
 export const metadata: Metadata = {
   title: "Profile Settings",
+  robots: { index: false, follow: false },
 };
 
 export const dynamic = "force-dynamic";

@@ -5,6 +5,7 @@ import DashboardCities from "@/components/dashboard/dashboard-cities";
 
 export const metadata: Metadata = {
   title: "My Cities",
+  robots: { index: false, follow: false },
 };
 
 export const dynamic = "force-dynamic";
