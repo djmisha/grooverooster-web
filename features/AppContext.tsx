@@ -112,23 +112,39 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     if (!supabase) return; // Skip if supabase is not configured
 
     const fetchUserAndProfile = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      try {
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
 
-      if (user) {
-        // Fetch profile if user exists
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-
-        if (!error && data) {
-          setProfile(data);
+        if (userError) {
+          console.error("Error fetching user:", userError);
+          setProfile(null);
+          return;
         }
-      } else {
-        setProfile(null);
+
+        if (user) {
+          // Fetch profile if user exists
+          const { data, error } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("id", user.id)
+            .single();
+
+          if (error) {
+            console.error("Error fetching user profile:", error);
+            return;
+          }
+
+          if (data) {
+            setProfile(data);
+          }
+        } else {
+          setProfile(null);
+        }
+      } catch (err) {
+        console.error("Unexpected error during user/profile fetch:", err);
       }
     };
 

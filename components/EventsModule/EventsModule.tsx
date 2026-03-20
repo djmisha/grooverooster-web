@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import EventCard from "@/components/EventCard/EventCard";
 import NavigationBar from "@/components/Navigation/NavigataionBar";
@@ -34,7 +34,7 @@ const EventsModule = ({
 }: EventsModuleProps) => {
   const router = useRouter();
   const { openEventId, setOpenEventId } = useEventModalManager(); // Use the hook
-  let [filterVisible, setFilterVisible] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
 
   // Filter out past events based on user's local timezone
   const filteredInitialEvents = useMemo(
@@ -76,123 +76,94 @@ const EventsModule = ({
         searchTermRef.current = searchTerm;
         setFilterVisible(true);
         setSearchTerm("");
-        window.location.href = "#top";
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
   }, [searchTerm, allEvents, currentPage, filterVisible]);
 
-  // Helper function to filter events by genre
-  const filterEventsByGenre = (
-    eventsToFilter: Event[],
-    genre: string | null
-  ): Event[] => {
-    if (!genre) {
-      return eventsToFilter;
-    }
+  /** Scrolls the page to the top smoothly */
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-    return eventsToFilter.filter((event) => {
-      if (event.genres && Array.isArray(event.genres)) {
-        return event.genres.some((g) => g.name === genre);
-      }
-      return false;
-    });
-  };
+  /** Filters an event list by the given genre */
+  const filterEventsByGenre = useCallback(
+    (eventsToFilter: Event[], genre: string | null): Event[] => {
+      if (!genre) return eventsToFilter;
+      return eventsToFilter.filter(
+        (event) =>
+          Array.isArray(event.genres) &&
+          event.genres.some((g) => g.name === genre)
+      );
+    },
+    []
+  );
 
-  // Helper function to get events for current page when not filtering
-  const getPaginatedEvents = () => {
-    if (filterVisible) {
-      // When filtering, show all filtered events (no pagination)
-      return events;
-    }
-
-    // When not filtering, show paginated events
+  /** Returns the slice of events to display on the current page */
+  const displayEvents = useMemo(() => {
+    if (filterVisible) return events;
     const startIndex = (currentPage - 1) * eventsPerPage;
-    const endIndex = startIndex + eventsPerPage;
-    const baseEvents = allEvents.slice(startIndex, endIndex);
-
-    // Apply genre filter if selected
+    const baseEvents = allEvents.slice(startIndex, startIndex + eventsPerPage);
     return filterEventsByGenre(baseEvents, selectedGenre);
-  };
+  }, [
+    filterVisible,
+    events,
+    currentPage,
+    eventsPerPage,
+    allEvents,
+    selectedGenre,
+    filterEventsByGenre,
+  ]);
 
-  // Get total count of visible events for pagination info
-  const getVisibleEventsCount = () => {
+  /** Total number of events used by the pagination widget */
+  const visibleEventsCount = useMemo(() => {
     if (filterVisible) {
       return events.filter((event) => event.isVisible !== false).length;
     }
-    // When genre is selected, count filtered events
     if (selectedGenre) {
       return filterEventsByGenre(allEvents, selectedGenre).length;
     }
     return allEvents.length;
-  };
+  }, [filterVisible, events, selectedGenre, allEvents, filterEventsByGenre]);
 
-  // Handle genre selection
-  const handleGenreSelect = (genre: string | null) => {
-    setSelectedGenre(genre);
-    // Reset to page 1 when genre changes
-    if (currentPage !== 1) {
-      setCurrentPage(1);
+  /** Handles genre pill selection and resets to page 1 */
+  const handleGenreSelect = useCallback(
+    (genre: string | null) => {
+      setSelectedGenre(genre);
+      if (currentPage !== 1) {
+        setCurrentPage(1);
+        router.replace(`/events/${locationData.slug}`, { scroll: false });
+      }
+      scrollToTop();
+    },
+    [currentPage, locationData.slug, router, scrollToTop]
+  );
+
+  /** Handles pagination page changes */
+  const handlePageChange = useCallback(
+    (pageNumber: number) => {
+      setCurrentPage(pageNumber);
+      scrollToTop();
       const newUrl =
-        genre === null
+        pageNumber === 1
           ? `/events/${locationData.slug}`
-          : `/events/${locationData.slug}`;
-
-      // Scroll to top immediately
-      const topElement = document.getElementById("top");
-      if (topElement) {
-        topElement.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
+          : `/events/${locationData.slug}?page=${pageNumber}`;
       router.replace(newUrl, { scroll: false });
-    } else {
-      // Just scroll to top if already on page 1
-      const topElement = document.getElementById("top");
-      if (topElement) {
-        topElement.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  };
+    },
+    [locationData.slug, router, scrollToTop]
+  );
 
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-
-    // Scroll to top immediately
-    const topElement = document.getElementById("top");
-    if (topElement) {
-      topElement.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    // Update URL to include page number using slug instead of id
-    const newUrl =
-      pageNumber === 1
-        ? `/events/${locationData.slug}`
-        : `/events/${locationData.slug}?page=${pageNumber}`;
-
-    // Use router.replace to update URL without full navigation
-    router.replace(newUrl, { scroll: false });
-  };
-
-  // Function to handle clearing filters and returning to remembered page
-  const handleClearFilter = () => {
+  /** Clears active search/date filter and restores the previous page */
+  const handleClearFilter = useCallback(() => {
     setFilterVisible(false);
     setCurrentPage(lastPageBeforeFilter);
-
-    // Scroll to top immediately
-    const topElement = document.getElementById("top");
-    if (topElement) {
-      topElement.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    // Update URL to remembered page using slug instead of id
+    scrollToTop();
     const newUrl =
       lastPageBeforeFilter === 1
         ? `/events/${locationData.slug}`
         : `/events/${locationData.slug}?page=${lastPageBeforeFilter}`;
-
     router.replace(newUrl, { scroll: false });
-  };
-
-  const displayEvents = getPaginatedEvents();
+  }, [lastPageBeforeFilter, locationData.slug, router, scrollToTop]);
 
   return (
     <>
@@ -245,7 +216,7 @@ const EventsModule = ({
           {!filterVisible && (
             <EventsPagination
               currentPage={currentPage}
-              totalEvents={getVisibleEventsCount()}
+              totalEvents={visibleEventsCount}
               eventsPerPage={eventsPerPage}
               onPageChange={handlePageChange}
             />

@@ -110,30 +110,23 @@ export const searchFilter = (
  * Updates the visibility of events based on matched results
  * @param results - Array of event IDs that match the search criteria
  * @param events - Array of event objects to update
- * @returns Updated array of events with isVisible property set
+ * @returns New array of events with isVisible property set (original array is not mutated)
  */
 const showMatchedEvents = (results: EventId[], events: Event[]): Event[] => {
-  events.forEach((event) => {
-    event.isVisible = false;
-    results.forEach((result) => {
-      if (result === event.id) {
-        event.isVisible = true;
-      }
-    });
-  });
-
-  return events;
+  const matchSet = new Set(results);
+  return events.map((event) => ({
+    ...event,
+    isVisible: matchSet.has(event.id),
+  }));
 };
 
 /**
  * Clears search filter by making all events visible
  * @param events - Array of event objects to update
- * @returns Updated array of events with all isVisible properties set to true
+ * @returns New array of events with all isVisible properties set to true (original array is not mutated)
  */
 export const clearSearch = (events: Event[]): Event[] => {
-  events.forEach((event) => {
-    if (!event.isVisible) event.isVisible = true;
-  });
-
-  return events;
+  return events.map((event) =>
+    event.isVisible === false ? { ...event, isVisible: true } : event
+  );
 };
