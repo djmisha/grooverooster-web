@@ -36,7 +36,7 @@ const LocationManager = ({
     throw new Error("LocationManager must be used within AppProvider");
   }
 
-  const { addLocation } = context;
+  const { addLocation, setUserLocation, clearUserLocation } = context;
 
   // Load saved location on mount
   useEffect(() => {
@@ -55,6 +55,7 @@ const LocationManager = ({
     setCurrentLocation(location);
     setHasError(false);
     setErrorMessage("");
+    setUserLocation(location);
 
     if (onLocationChanged) {
       onLocationChanged(location);
@@ -70,6 +71,7 @@ const LocationManager = ({
     setCurrentLocation(location);
     setHasError(false);
     setErrorMessage("");
+    setUserLocation(location);
 
     if (onLocationChanged) {
       onLocationChanged(location);
@@ -78,7 +80,7 @@ const LocationManager = ({
 
   const handleClearLocation = () => {
     setCurrentLocation(null);
-    // updateUserLocation doesn't handle null, so we skip it
+    clearUserLocation();
     setHasError(false);
     setErrorMessage("");
 
