@@ -24,7 +24,8 @@ const LocationSelectModal = ({
   };
 
   const handleLocationChanged = (_location: Location) => {
-    // Location is automatically handled by LocationManager and useLocation hook
+    // Close modal after location is selected
+    setIsModalOpen(false);
   };
 
   // Create LocationManager component for the modal
