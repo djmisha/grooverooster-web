@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { scrollToPageTop } from "@/utils/scrollUtils";
 import EventCard from "@/components/EventCard/EventCard";
 import NavigationBar from "@/components/Navigation/NavigataionBar";
 import { searchFilter } from "@/utils/searchFilter";
@@ -76,15 +77,10 @@ const EventsModule = ({
         searchTermRef.current = searchTerm;
         setFilterVisible(true);
         setSearchTerm("");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        scrollToPageTop();
       }
     }
   }, [searchTerm, allEvents, currentPage, filterVisible]);
-
-  /** Scrolls the page to the top smoothly */
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
 
   /** Filters an event list by the given genre */
   const filterEventsByGenre = useCallback(
@@ -134,36 +130,36 @@ const EventsModule = ({
         setCurrentPage(1);
         router.replace(`/events/${locationData.slug}`, { scroll: false });
       }
-      scrollToTop();
+      scrollToPageTop();
     },
-    [currentPage, locationData.slug, router, scrollToTop]
+    [currentPage, locationData.slug, router]
   );
 
   /** Handles pagination page changes */
   const handlePageChange = useCallback(
     (pageNumber: number) => {
       setCurrentPage(pageNumber);
-      scrollToTop();
+      scrollToPageTop();
       const newUrl =
         pageNumber === 1
           ? `/events/${locationData.slug}`
           : `/events/${locationData.slug}?page=${pageNumber}`;
       router.replace(newUrl, { scroll: false });
     },
-    [locationData.slug, router, scrollToTop]
+    [locationData.slug, router]
   );
 
   /** Clears active search/date filter and restores the previous page */
   const handleClearFilter = useCallback(() => {
     setFilterVisible(false);
     setCurrentPage(lastPageBeforeFilter);
-    scrollToTop();
+    scrollToPageTop();
     const newUrl =
       lastPageBeforeFilter === 1
         ? `/events/${locationData.slug}`
         : `/events/${locationData.slug}?page=${lastPageBeforeFilter}`;
     router.replace(newUrl, { scroll: false });
-  }, [lastPageBeforeFilter, locationData.slug, router, scrollToTop]);
+  }, [lastPageBeforeFilter, locationData.slug, router]);
 
   return (
     <>

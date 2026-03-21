@@ -1,4 +1,5 @@
 import React from "react";
+import { scrollToPageTop } from "@/utils/scrollUtils";
 import {
   Pagination,
   PaginationContent,
@@ -35,16 +36,9 @@ const EventsPagination: React.FC<EventsPaginationProps> = ({
   // Don't show pagination if there's only one page or no events
   if (totalPages <= 1) return null;
 
-  const scrollToTop = () => {
-    const topElement = document.getElementById("top");
-    if (topElement) {
-      topElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const handlePageClick = (pageNumber: number) => {
     onPageChange(pageNumber);
-    scrollToTop();
+    scrollToPageTop();
   };
 
   const getPageNumbers = () => {
