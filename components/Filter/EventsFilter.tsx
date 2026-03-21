@@ -161,10 +161,10 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
 
   return (
     <>
-      <div className="relative w-[calc(100%-20px)] m-2.5 mb-3 bg-white dark:bg-gray-900 transition-colors duration-200 z-10">
+      <div className="relative w-[calc(100%-20px)] m-2.5 mb-1 bg-white dark:bg-gray-900 transition-colors duration-200 z-10">
         <div className="relative flex flex-nowrap items-center justify-around w-full pb-0 bg-white dark:bg-gray-900 text-lg font-semibold border-none left-0 z-[800] md:justify-center md:m-0">
           <div className="hidden h-12 w-32 items-center gap-2 border border-light-grey dark:border-gray-700 bg-white dark:bg-gray-800 px-4 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-200 transition-colors duration-200 md:flex">
-            <FaFilter className="text-xs text-gray-400 dark:text-gray-400" />
+            <FaFilter className="text-xs text-blue" />
             <span className="whitespace-nowrap">Filter By</span>
           </div>
           <div
@@ -185,12 +185,12 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                 className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
                 onClick={() => setIsDateMenuOpen(true)}
               >
-                <FaCalendarAlt className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+                <FaCalendarAlt className="text-base text-blue md:text-xl" />
                 <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
-                  <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                  <div className="text-sm font-semibold leading-tight text-gray-700 dark:text-gray-200 md:text-md">
                     {totalEvents.toLocaleString()}
                   </div>
-                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-400 md:text-sm md:tracking-normal">
                     {totalEvents === 1 ? "Date" : "Dates"}
                   </div>
                 </div>
@@ -201,12 +201,12 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                 className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
                 onClick={() => setIsVenueMenuOpen(true)}
               >
-                <FaMapMarkerAlt className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+                <FaMapMarkerAlt className="text-base text-blue md:text-xl" />
                 <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
-                  <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                  <div className="text-sm font-semibold leading-tight text-gray-700 dark:text-gray-200 md:text-md">
                     {totalVenues.toLocaleString()}
                   </div>
-                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-400 md:text-sm md:tracking-normal">
                     {totalVenues === 1 ? "Venue" : "Venues"}
                   </div>
                 </div>
@@ -217,12 +217,12 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                 className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
                 onClick={() => setIsArtistMenuOpen(true)}
               >
-                <FaUser className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+                <FaUser className="text-base text-blue md:text-xl" />
                 <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
-                  <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                  <div className="text-sm font-semibold leading-tight text-gray-700 dark:text-gray-200 md:text-md">
                     {totalArtists.toLocaleString()}
                   </div>
-                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-400 md:text-sm md:tracking-normal">
                     {totalArtists === 1 ? "Artist" : "Artists"}
                   </div>
                 </div>
@@ -233,12 +233,12 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                 className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
                 onClick={() => setIsFestivalMenuOpen(true)}
               >
-                <FaUsers className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+                <FaUsers className="text-base text-blue md:text-xl" />
                 <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
-                  <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                  <div className="text-sm font-semibold leading-tight text-gray-700 dark:text-gray-200 md:text-md">
                     {totalFestivals.toLocaleString()}
                   </div>
-                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-400 md:text-sm md:tracking-normal">
                     {totalFestivals === 1 ? "Festival" : "Festivals"}
                   </div>
                 </div>
@@ -249,12 +249,12 @@ const EventsFilter = ({ events, setSearchTerm }: EventsFilterProps) => {
                 className="flex w-full cursor-pointer flex-row items-center justify-start gap-3 rounded-lg bg-gray-100 dark:bg-gray-800 px-3 py-2.5 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 active:translate-y-0 md:gap-4 md:px-4 md:py-3"
                 onClick={() => setIsSeriesMenuOpen(true)}
               >
-                <FaRecycle className="text-base text-gray-400 dark:text-gray-400 md:text-xl" />
+                <FaRecycle className="text-base text-blue md:text-xl" />
                 <div className="flex flex-col items-start justify-center gap-0.0 md:flex-row md:items-center md:gap-1.5">
-                  <div className="text-sm font-normal leading-tight text-gray-500 dark:text-gray-300 md:text-md">
+                  <div className="text-sm font-semibold leading-tight text-gray-700 dark:text-gray-200 md:text-md">
                     {totalSeries.toLocaleString()}
                   </div>
-                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-300 md:text-sm md:tracking-normal">
+                  <div className="text-xs font-medium uppercase leading-tight tracking-wide text-gray-500 dark:text-gray-400 md:text-sm md:tracking-normal">
                     {totalSeries === 1 ? "Series" : "Series"}
                   </div>
                 </div>

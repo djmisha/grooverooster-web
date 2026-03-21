@@ -174,7 +174,7 @@ const EventsModule = ({
         id="top"
       >
         <section className="md:w-full md:pb-20 [&_h1]:border-none [&_h1]:text-left [&_h1]:pb-2.5 [&_h1]:leading-tight">
-          <h1 className="mt-4 text-[16px] pl-2 text-gray-500 text-left font-normal  md:mt-4 md:mb-6 md:block md:text-[20px]">
+          <h1 className="mt-4 text-[16px] pl-2 text-gray-800 dark:text-gray-100 text-left font-semibold md:mt-4 md:mb-4 md:block md:text-[20px]">
             {title}
           </h1>
           <EventsFiltered events={events} setSearchTerm={setSearchTerm} />
@@ -194,7 +194,7 @@ const EventsModule = ({
               onGenreSelect={handleGenreSelect}
             />
           )}
-          <div className="grid grid-cols-1 gap-4 p-0 px-2.5 pb-10 pt-4 md:pt-10 transition-all duration-300 ease-out md:grid-cols-2 md:gap-8 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 p-0 px-2.5 pb-10 pt-3 md:pt-6 transition-all duration-300 ease-out md:grid-cols-2 md:gap-8 xl:grid-cols-3">
             {displayEvents?.map((event) => {
               return (
                 <EventCard
