@@ -16,6 +16,7 @@ const FRONTEND_OPEN_ENDPOINTS = [
   "/api/supabase/posttopartists",
   "/api/saveTags",
   "/api/frontend/events",
+  "/api/city-stats",
   // "/api/sdhm",
 ];
 

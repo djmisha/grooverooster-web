@@ -13,6 +13,7 @@ import { getSDHMEvents } from "@/utils/getEvents";
 import { getCanonicalUrl } from "@/utils/canonicalUrl";
 import { headers } from "next/headers";
 import BreadcrumbStructuredData from "@/components/SEO/BreadcrumbStructuredData";
+import { updateCityStatsCache } from "@/utils/cityStatsCache";
 
 interface LocationPageProps {
   params: Promise<{ id: string }>;
@@ -208,6 +209,19 @@ export default async function Location({
         ? parseInt(locationData.id)
         : locationData.id;
     events = await getSDHMEvents(locationId, locationData.city || "");
+
+    // Populate the city stats cache with this location's events.
+    // This is a best-effort, non-blocking operation — it will be skipped if an
+    // unexpired cache entry already exists so that we never slow down the page.
+    if (locationData.city) {
+      updateCityStatsCache(
+        locationData.city,
+        locationData.state,
+        locationData.slug,
+        locationData.id,
+        events
+      );
+    }
   } catch (error) {
     console.error("Error fetching events from SDHM API:", error);
     events = [];
