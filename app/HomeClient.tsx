@@ -9,6 +9,7 @@ import TopArtists from "@/components/Homepage/TopArtists";
 import WelcomeMessage from "@/components/Homepage/WelcomeMessage";
 import ClientNavigationBar from "@/app/ClientNavigationBar";
 import Locator from "@/components/Locator/Locator";
+import CityActivityModule from "@/components/CityActivityModule/CityActivityModule";
 
 /**
  * HomeClient component renders the client-side home page content
@@ -34,6 +35,7 @@ export default function HomeClient({ profile }: { profile: any }) {
       <WelcomeMessage />
       <Locator />
       <TopArtists />
+      <CityActivityModule />
       <Footer />
     </>
   );
