@@ -2,18 +2,17 @@
  * City Statistics Cache
  *
  * A server-side in-process Map that caches computed city activity statistics
- * for 24 hours. Data is populated the first time an events page is loaded for
- * a given location, then reused on subsequent homepage renders without hitting
- * any external API.
+ * for 24 hours. The cache is self-populating: when the API route reads the
+ * cache and finds it empty (e.g. on a cold start), it calls
+ * `populateCacheFromAPI()` which fetches events for all known cities from the
+ * external SDHM API in parallel and computes stats on the spot.
  *
  * Architecture note:
  * ------------------
- * This module uses a module-level singleton Map.  In a standard Node.js server
- * this Map is shared across all requests in the same process.  On Vercel's
- * serverless platform each function instance has its own Map; the cache will be
- * empty on cold starts but will fill up naturally as event pages are visited
- * within the same warm instance.  This matches the issue requirement of keeping
- * all the performance by *not* hitting external APIs again after the first load.
+ * On Vercel's serverless platform each function instance has its own Map.
+ * Because the events page and the city-stats API route run in different
+ * function instances, the events-page population path is kept as a
+ * secondary optimisation but the API route no longer depends on it.
  *
  * Cache TTL: 24 hours (matching the events page refresh cycle).
  * Sync: The cache TTL should be kept in sync with the events API cache headers
@@ -23,12 +22,22 @@
 
 import { CityStats, computeCityStats } from "@/utils/cityStats";
 import { Event } from "@/types";
+import { getLocations, toSlug } from "@/utils/getLocations";
 
 /** Cache TTL in milliseconds (24 hours) */
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
+/** Cooldown between population attempts in milliseconds (5 minutes) */
+const POPULATE_COOLDOWN_MS = 5 * 60 * 1000;
+
 /** Module-level singleton cache — keyed by location slug */
 const cityStatsCache = new Map<string, CityStats>();
+
+/** Timestamp of the last population attempt (prevents hammering) */
+let lastPopulateAttempt = 0;
+
+/** Mutex: a shared Promise that concurrent callers can await */
+let populatingPromise: Promise<void> | null = null;
 
 /**
  * Returns true when a cache entry has expired.
@@ -108,4 +117,110 @@ export const getCityStatsBySlug = (slug: string): CityStats | null => {
  */
 export const clearCityStatsCache = (): void => {
   cityStatsCache.clear();
+  lastPopulateAttempt = 0;
+  populatingPromise = null;
+};
+
+/**
+ * Fetches events for a single city directly from the external SDHM API.
+ * This bypasses the internal `/api/sdhm/` route so there are no
+ * cross-environment auth or base-URL issues.
+ *
+ * @returns Raw events array, or empty array on failure.
+ */
+const fetchEventsForCity = async (
+  locationId: string | number,
+  city: string
+): Promise<Event[]> => {
+  const apiKey = process.env.API_KEY_SDHM;
+  const apiUrl = process.env.API_URL_SDHM;
+
+  if (!apiKey || !apiUrl) return [];
+
+  try {
+    const encodedCity = encodeURIComponent(
+      (typeof city === "string" ? city : "").toLowerCase()
+    );
+    const url = `${apiUrl}/${locationId}/${encodedCity}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+      signal: AbortSignal.timeout(10_000), // 10 s per-city timeout
+    });
+
+    if (!response.ok) return [];
+
+    const data = await response.json();
+    return Array.isArray(data.data) ? data.data : [];
+  } catch {
+    // Silently skip cities that fail (network error, timeout, etc.)
+    return [];
+  }
+};
+
+/**
+ * Populates the in-memory cache by fetching events for all known city
+ * locations directly from the external SDHM API.  Cities are fetched in
+ * parallel for speed.
+ *
+ * Guards:
+ *  - 5-minute cooldown between attempts (prevents hammering on repeated
+ *    homepage loads while the cache is still empty).
+ *  - Shared Promise so concurrent callers await the same run rather than
+ *    getting an empty cache while population is in progress.
+ *  - Individual city failures are silently skipped.
+ */
+export const populateCacheFromAPI = async (): Promise<void> => {
+  // Cooldown: don't retry too soon after a previous attempt
+  if (Date.now() - lastPopulateAttempt < POPULATE_COOLDOWN_MS) return;
+
+  // If a population run is already in progress, await it instead of skipping
+  if (populatingPromise) {
+    await populatingPromise;
+    return;
+  }
+
+  lastPopulateAttempt = Date.now();
+
+  const run = async (): Promise<void> => {
+    try {
+      // Get all city-level locations (filter out state-only entries)
+      const allLocs = getLocations().filter((loc) => !!loc.city);
+      let citiesWithEvents = 0;
+
+      // Fetch events for all cities in parallel
+      await Promise.allSettled(
+        allLocs.map(async (loc) => {
+          const events = await fetchEventsForCity(loc.id, loc.city || "");
+          if (events.length > 0 && loc.city) {
+            const slug = toSlug(loc.city);
+            const stats = computeCityStats(
+              loc.city,
+              loc.state,
+              slug,
+              loc.id,
+              events
+            );
+            cityStatsCache.set(slug, stats);
+            citiesWithEvents += 1;
+          }
+        })
+      );
+
+      console.log(
+        `[CityStatsCache] Populated ${citiesWithEvents} cities with events (${allLocs.length} total locations checked)`
+      );
+    } catch (error) {
+      console.error("[CityStatsCache] Population failed:", error);
+    } finally {
+      populatingPromise = null;
+    }
+  };
+
+  populatingPromise = run();
+  await populatingPromise;
 };

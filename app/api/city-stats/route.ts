@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { getCachedCityStats } from "@/utils/cityStatsCache";
+import {
+  getCachedCityStats,
+  populateCacheFromAPI,
+} from "@/utils/cityStatsCache";
 
 /**
  * GET /api/city-stats
@@ -9,9 +12,12 @@ import { getCachedCityStats } from "@/utils/cityStatsCache";
  * token required — because the data it exposes is already public (derived from
  * publicly visible events pages).
  *
- * The data is populated by the events pages when they process events for a
- * given city.  If no cities have been visited yet (e.g. a fresh cold start)
- * the response will contain an empty array.
+ * Self-populating:
+ * On Vercel serverless every function instance has its own in-memory cache.
+ * If the cache is empty (cold start) the route fetches events for all known
+ * city locations directly from the external SDHM API, computes stats in
+ * parallel, and caches the results before responding.  Subsequent requests
+ * within the same warm instance are served from memory.
  *
  * Cache behaviour:
  * - City stats entries expire after 24 hours server-side.
@@ -24,7 +30,14 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const stats = getCachedCityStats();
+    // Check in-memory cache first
+    let stats = getCachedCityStats();
+
+    // If cache is empty, populate it from the external SDHM API
+    if (stats.length === 0) {
+      await populateCacheFromAPI();
+      stats = getCachedCityStats();
+    }
 
     return NextResponse.json(
       {
