@@ -18,6 +18,7 @@ export const dynamic = "force-dynamic";
 export default async function ProfilePage() {
   try {
     const supabase = await createClient();
+    if (!supabase) redirect("/login");
 
     const { data, error } = await supabase.auth.getUser();
 

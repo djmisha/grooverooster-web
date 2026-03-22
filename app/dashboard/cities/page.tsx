@@ -21,6 +21,15 @@ export default async function DashboardCitiesPage() {
   const supabase = await createClient();
   const locations = locationsData as LocationData[];
 
+  if (!supabase)
+    return (
+      <DashboardCities
+        userId={undefined}
+        initialLocations={[]}
+        allLocations={locations}
+      />
+    );
+
   const { data } = await supabase.auth.getUser();
   const user = data.user;
 

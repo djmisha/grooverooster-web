@@ -1,6 +1,19 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+/**
+ * Validates that a URL is a real URL, not a placeholder
+ */
+const isValidUrl = (url: string | undefined): url is string => {
+  if (!url) return false;
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export async function createClient() {
   const cookieStore = await cookies();
 
@@ -8,8 +21,11 @@ export async function createClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error("Supabase environment variables are not configured");
+  if (!isValidUrl(supabaseUrl) || !supabaseAnonKey) {
+    console.warn(
+      "Supabase environment variables not configured for server client"
+    );
+    return null;
   }
 
   return createServerClient(supabaseUrl, supabaseAnonKey, {

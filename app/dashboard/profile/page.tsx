@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardProfilePage() {
   const supabase = await createClient();
+  if (!supabase) return <DashboardProfile user={null} />;
 
   const { data } = await supabase.auth.getUser();
   const user = data.user;
