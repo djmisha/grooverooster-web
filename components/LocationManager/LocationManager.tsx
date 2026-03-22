@@ -12,6 +12,7 @@ import { Location } from "@/types";
 
 interface LocationManagerProps {
   onLocationChanged?: (location: Location) => void;
+  onViewEvents?: () => void;
   showCurrentLocation?: boolean;
   showShareButton?: boolean;
   showLocationSwitch?: boolean;
@@ -21,6 +22,7 @@ interface LocationManagerProps {
 
 const LocationManager = ({
   onLocationChanged,
+  onViewEvents,
   showCurrentLocation = true,
   showShareButton = true,
   showLocationSwitch = true,
@@ -123,6 +125,7 @@ const LocationManager = ({
               <Button
                 href={getLocationEventsUrl(currentLocation) || undefined}
                 className="flex-1 min-w-[180px]"
+                onClick={onViewEvents}
               >
                 View Events
               </Button>
