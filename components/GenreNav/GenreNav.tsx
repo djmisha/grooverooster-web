@@ -120,12 +120,12 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
 
   return (
     <nav
-      className="w-full bg-white dark:bg-background transition-colors duration-200 pt-1 pb-4"
+      className="w-full bg-white dark:bg-background transition-colors duration-200 pt-2 pb-3"
       aria-label="Genre navigation"
     >
       <div
         ref={scrollContainerRef}
-        className="flex gap-2 overflow-x-auto px-4 scrollbar-hide cursor-grab active:cursor-grabbing"
+        className="flex gap-2 overflow-x-auto px-2.5 scrollbar-hide cursor-grab active:cursor-grabbing"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -149,7 +149,7 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
             ${
               selectedGenre === null
                 ? "bg-pink text-white shadow-md hover:bg-pink/90"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
             }
           `}
           aria-label="Show all genres"
@@ -172,7 +172,7 @@ const GenreNav = ({ events, selectedGenre, onGenreSelect }: GenreNavProps) => {
               ${
                 selectedGenre === genre
                   ? "bg-pink text-white shadow-md hover:bg-pink/90"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
               }
             `}
             aria-label={`Filter by ${genre}`}

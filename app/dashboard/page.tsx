@@ -27,6 +27,11 @@ export default async function DashboardPage() {
   const supabase = await createClient();
   const locations = getLocations();
 
+  if (!supabase)
+    return (
+      <DashboardOverview profile={null} user={null} defaultLocation={null} />
+    );
+
   const { data } = await supabase.auth.getUser();
   const user = data.user;
 

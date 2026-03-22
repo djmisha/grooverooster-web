@@ -31,6 +31,7 @@ const LocationSelectModal = ({
   const LocationManagerComponent = () => (
     <LocationManager
       onLocationChanged={handleLocationChanged}
+      onViewEvents={handleCloseModal}
       title="Choose Location"
       showCurrentLocation={true}
       showShareButton={true}

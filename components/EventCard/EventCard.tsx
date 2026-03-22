@@ -185,13 +185,13 @@ export const EventCard = ({
         <div className="border-t border-gray-200 dark:border-gray-700"></div>
 
         {/* Bottom Section - Date, Venue, Tags */}
-        <div className="px-4 py-6 flex flex-col gap-3">
+        <div className="px-4 py-4 flex flex-col gap-3">
           <div
             className="text-sm leading-7 font-medium flex items-center gap-2 text-gray-600 dark:text-gray-400"
             itemProp="startDate"
             content={daySchema}
           >
-            <FaRegCalendar className="text-gray-600 dark:text-gray-400" />
+            <FaRegCalendar className="text-blue flex-shrink-0" />
             <div>
               {dayOfWeek}, {dayMonth}
             </div>
@@ -203,11 +203,11 @@ export const EventCard = ({
             itemScope
             itemType="http://schema.org/Place"
           >
-            <FaRegBuilding className="text-gray-600 dark:text-gray-400" />
+            <FaRegBuilding className="text-blue flex-shrink-0" />
             <span itemProp="name">{venueName}</span>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-2">
             <EventPills event={event} />
           </div>
         </div>

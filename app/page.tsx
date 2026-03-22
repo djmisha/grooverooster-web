@@ -71,6 +71,7 @@ export default async function Home() {
   try {
     // Use server-side client to check authentication status
     const supabase = await createClient();
+    if (!supabase) throw new Error("Supabase not configured");
     const { data: userData } = await supabase.auth.getUser();
     const user = userData?.user || null;
 
