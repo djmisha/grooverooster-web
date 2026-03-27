@@ -43,3 +43,7 @@ yarn.lock
 
 /docs
 /pages/design-system.env.local
+
+# Docker
+.env
+docker-compose.override.yml

@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable standalone output for Docker optimization
+  // This creates a minimal server with only required files
+  output: "standalone",
   images: {
     remotePatterns: [
       {
