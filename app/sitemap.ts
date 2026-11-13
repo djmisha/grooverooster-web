@@ -1,15 +1,13 @@
 import { MetadataRoute } from "next";
 import { getLocations } from "@/utils/getLocations";
-import { allArtists } from "@/utils/getArtists";
 
 /**
- * Generates the sitemap for the website with all locations and artists
+ * Generates the sitemap for the website with all locations
  * @returns {MetadataRoute.Sitemap} Sitemap array with all URLs
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const URL = "https://www.grooverooster.com";
   const locations = getLocations();
-  const artists = allArtists;
 
   const routes: MetadataRoute.Sitemap = [
     {
@@ -22,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${URL}/cities`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.6,
+      priority: 0.9,
     },
     {
       url: `${URL}/states`,
@@ -34,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${URL}/artists`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.7,
+      priority: 0.8,
     },
   ];
 
@@ -46,13 +44,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // Add artist pages
-  const artistRoutes = artists.map((artist: any) => ({
-    url: `${URL}/artist/${artist.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.7,
-  }));
-
-  return [...routes, ...locationRoutes, ...artistRoutes];
+  return [...routes, ...locationRoutes];
 }
